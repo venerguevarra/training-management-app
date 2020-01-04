@@ -1,6 +1,15 @@
 import { Component, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router, ActivatedRoute } from "@angular/router";
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { first } from 'rxjs/operators';
+
+import { Observable, of, throwError } from 'rxjs';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import 'rxjs/Rx';
+import { catchError, tap, map } from 'rxjs/operators';
+
+import { AuthService } from '../../../shared/auth/auth.service';
 
 @Component({
     selector: 'app-login-page',
@@ -10,21 +19,51 @@ import { Router, ActivatedRoute } from "@angular/router";
 
 export class LoginPageComponent {
 
-    @ViewChild('f', {static: false}) loginForm: NgForm;
+    loginForm: FormGroup;
+    submitted = false;
+    loginError = false;
+    returnUrl: string;
 
-    constructor(private router: Router,
+    constructor(
+        private authService: AuthService,
+        private formBuilder: FormBuilder,
+        private router: Router,
         private route: ActivatedRoute) { }
 
-    // On submit button click
+    ngOnInit() {
+        this.loginForm = this.formBuilder.group({
+            username: ['', Validators.required],
+            password: ['', Validators.required]
+        });
+
+        this.authService.logout();
+
+        // get return url from route parameters or default to '/'
+        this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+    }
+
+    // convenience getter for easy access to form fields
+    get f() { return this.loginForm.controls; }
+
     onSubmit() {
-        this.loginForm.reset();
+        this.submitted = true;
+
+        if (this.loginForm.invalid) {
+            return;
+        }
+
+        this.authService.signinUser(this.f.username.value, this.f.password.value)
+            .pipe(first())
+            .subscribe(data => {
+                this.authService.setToken(data.token);
+                this.router.navigateByUrl(this.returnUrl);
+            },
+            error => {
+                console.log(error);
+            });
+
+        //console.log(this.f.username.value, this.f.password.value);
+        //this.loginForm.reset();
     }
-    // On Forgot password link click
-    onForgotPassword() {
-        this.router.navigate(['forgotpassword'], { relativeTo: this.route.parent });
-    }
-    // On registration link click
-    onRegister() {
-        this.router.navigate(['register'], { relativeTo: this.route.parent });
-    }
+
 }

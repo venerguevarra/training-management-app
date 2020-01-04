@@ -4,6 +4,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { InquiryComponent } from "./inquiry/inquiry.component";
 import { AccountComponent } from './account/account.component';
 
+import { AuthGuard } from '../../shared/auth/auth-guard.service';
+
 const routes: Routes = [
   {
     path: '',
@@ -13,14 +15,16 @@ const routes: Routes = [
         component: InquiryComponent,
         data: {
           title: 'Inquiry'
-        }
+        },
+        canActivate: [AuthGuard]
       },
       {
         path: 'account',
         component: AccountComponent,
         data: {
           title: 'Account'
-        }
+        },
+        canActivate: [AuthGuard]
       }
     ]
   }

@@ -4,10 +4,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from "./shared/shared.module";
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { HttpClientModule, HttpClient } from "@angular/common/http";
+import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { TranslateModule, TranslateLoader } from "@ngx-translate/core";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 
+import { ErrorIntercept } from './service/error-intercept.service';
 import { 
     PerfectScrollbarModule, 
     PERFECT_SCROLLBAR_CONFIG, 
@@ -51,6 +52,11 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     providers: [
       AuthService,
       AuthGuard,
+      {
+        provide: HTTP_INTERCEPTORS,
+        useClass: ErrorIntercept,
+        multi: true
+      },
       {
         provide: PERFECT_SCROLLBAR_CONFIG,
         useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG

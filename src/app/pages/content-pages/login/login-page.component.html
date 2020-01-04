@@ -1,5 +1,7 @@
 <!--Login Page Starts-->
+
 <section id="login">
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
   <div id="login-background">
   <div class="container-fluid">
     <div class="row full-height-vh m-0">
@@ -19,34 +21,41 @@
                     height="230"
                   />
                 </div>
-                <div class="col-lg-6 col-md-12 bg-white px-4 pt-3">
-                  <br/><br/><br/>
-                  <h4 class="card-title mb-2">Login</h4>
-                  <p class="card-text mb-3">
-                    Welcome back, please login to your account.
-                  </p>
-                  <input
-                    type="text"
-                    class="form-control mb-3"
-                    placeholder="Username"
-                  />
-                  <input
-                    type="password"
-                    class="form-control mb-3"
-                    placeholder="Password"
-                  />
-                  <div class="fg-actions d-flex justify-content-between">
-                    <div class="recover-pass">
-                      <button class="btn btn-primary">
-                        <a
-                          [routerLink]="['/pages/login']"
-                          class="text-decoration-none text-white"
-                          >Login</a
-                        >
-                      </button>
+                  <div class="col-lg-6 col-md-12 bg-white px-4 pt-3">
+                    <br/><br/><br/>
+                    <h4 class="card-title mb-2">Login</h4>
+                    <p class="card-text mb-3">
+                      Welcome back, please login to your account.
+                    </p>
+                    <small class="form-text text-muted danger" *ngIf="submitted && f.username.errors && f.username.errors.required">Username required</small>
+                    <input
+                      name="username"
+                      type="text"
+                      class="form-control mb-3"
+                      autocomplete="username"
+                      placeholder="Username"
+                      formControlName="username"
+                      [ngClass]="{ 'is-invalid': submitted && f.username.errors }"/>
+
+                      <small class="form-text text-muted danger" *ngIf="submitted && f.username.errors && f.username.errors.required">Password required</small>
+                    <input
+                      name="password"
+                      type="password"
+                      class="form-control mb-3"
+                      autocomplete="current-password"
+                      placeholder="Password"
+                      formControlName="password"
+                      [ngClass]="{ 'is-invalid': submitted && f.password.errors }"/>
+
+                    <div class="fg-actions d-flex justify-content-between">
+                      <div class="recover-pass">
+                        <button class="btn btn-primary">
+                          <!--<a [routerLink]="['/pages/login']" class="text-decoration-none text-white" >Login</a>-->
+                          <a (ngSubmit) = "onSubmit()" class="text-decoration-none text-white" >Login</a>
+                        </button>
+                      </div>
                     </div>
                   </div>
-                </div>
               </div>
             </div>
           </div>
@@ -55,5 +64,6 @@
     </div>
   </div>
 </div>
+</form>
 </section>
 <!--Login Page Ends-->
