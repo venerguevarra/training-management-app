@@ -45,6 +45,13 @@ export class LoginPageComponent {
     // convenience getter for easy access to form fields
     get f() { return this.loginForm.controls; }
 
+    get username() {
+    return this.loginForm.get('username');
+  }
+
+  get password() {
+    return this.loginForm.get('password');
+  }
     onSubmit() {
         this.submitted = true;
 
@@ -52,6 +59,7 @@ export class LoginPageComponent {
             return;
         }
 
+        
         this.authService.signinUser(this.f.username.value, this.f.password.value)
             .pipe(first())
             .subscribe(data => {
@@ -59,7 +67,7 @@ export class LoginPageComponent {
                 this.router.navigateByUrl(this.returnUrl);
             },
             error => {
-                console.log(error);
+                //console.log(error);
             });
 
         //console.log(this.f.username.value, this.f.password.value);

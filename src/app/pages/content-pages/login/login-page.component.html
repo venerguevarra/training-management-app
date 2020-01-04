@@ -1,7 +1,7 @@
 <!--Login Page Starts-->
 
 <section id="login">
-  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+   <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
   <div id="login-background">
   <div class="container-fluid">
     <div class="row full-height-vh m-0">
@@ -27,7 +27,7 @@
                     <p class="card-text mb-3">
                       Welcome back, please login to your account.
                     </p>
-                    <small class="form-text text-muted danger" *ngIf="submitted && f.username.errors && f.username.errors.required">Username required</small>
+                    <small class="form-text text-muted danger" *ngIf="(f.username.dirty || f.username.touched) && f.username.errors && f.username.errors.required">Username required</small>
                     <input
                       name="username"
                       type="text"
@@ -35,9 +35,9 @@
                       autocomplete="username"
                       placeholder="Username"
                       formControlName="username"
-                      [ngClass]="{ 'is-invalid': submitted && f.username.errors }"/>
+                      [ngClass]="{ 'is-invalid': (f.username.dirty || f.username.touched) && f.username.errors }"/>
 
-                      <small class="form-text text-muted danger" *ngIf="submitted && f.username.errors && f.username.errors.required">Password required</small>
+                      <small class="form-text text-muted danger" *ngIf="(f.password.dirty || f.password.touched) && f.username.errors && f.username.errors.required">Password required</small>
                     <input
                       name="password"
                       type="password"
@@ -45,14 +45,17 @@
                       autocomplete="current-password"
                       placeholder="Password"
                       formControlName="password"
-                      [ngClass]="{ 'is-invalid': submitted && f.password.errors }"/>
+                      [ngClass]="{ 'is-invalid': (f.password.dirty || f.password.touched) && f.password.errors }"/>
 
                     <div class="fg-actions d-flex justify-content-between">
                       <div class="recover-pass">
-                        <button class="btn btn-primary">
+                       
                           <!--<a [routerLink]="['/pages/login']" class="text-decoration-none text-white" >Login</a>-->
-                          <a (ngSubmit) = "onSubmit()" class="text-decoration-none text-white" >Login</a>
-                        </button>
+                          <button [disabled]="loading" class="btn btn-primary text-decoration-none text-white">
+                              Login
+                          </button>
+                        
+  
                       </div>
                     </div>
                   </div>

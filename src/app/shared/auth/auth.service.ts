@@ -31,10 +31,7 @@ export class AuthService {
       password
     };
 
-    return this.httpClient.post<any>(this.AUTHENTICATE_URL, loginRequest, this.HTTP_OPTIONS)
-        .pipe(map(response => {
-            return response;
-        }));
+    return this.httpClient.post<any>(this.AUTHENTICATE_URL, loginRequest, this.HTTP_OPTIONS);    
   }
 
   logout() {
@@ -63,11 +60,9 @@ export class AuthService {
             return response;
         })).pipe(first())
             .subscribe(data => {
-                //this.router.navigate(['/login']);
                 return true;
             },
             error => {
-                console.log(error);
                 return false;
             });;
     
