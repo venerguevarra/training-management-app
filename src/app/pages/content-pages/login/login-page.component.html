@@ -27,7 +27,7 @@
                     <p class="card-text mb-3">
                       Welcome back, please login to your account.
                     </p>
-                    <small class="form-text text-muted danger" *ngIf="(f.username.dirty || f.username.touched) && f.username.errors && f.username.errors.required">Username required</small>
+                    <small class="form-text text-muted danger" *ngIf="hasError('username')">Username required</small>
                     <input
                       name="username"
                       type="text"
@@ -35,9 +35,10 @@
                       autocomplete="username"
                       placeholder="Username"
                       formControlName="username"
-                      [ngClass]="{ 'is-invalid': (f.username.dirty || f.username.touched) && f.username.errors }"/>
+                      [ngClass]="{ 'is-invalid': hasError('username')}"
+                      required/>
 
-                      <small class="form-text text-muted danger" *ngIf="(f.password.dirty || f.password.touched) && f.username.errors && f.username.errors.required">Password required</small>
+                      <small class="form-text text-muted danger" *ngIf="hasError('password')">Password required</small>
                     <input
                       name="password"
                       type="password"
@@ -45,17 +46,13 @@
                       autocomplete="current-password"
                       placeholder="Password"
                       formControlName="password"
-                      [ngClass]="{ 'is-invalid': (f.password.dirty || f.password.touched) && f.password.errors }"/>
+                      [ngClass]="{ 'is-invalid': hasError('password') }"/>
 
                     <div class="fg-actions d-flex justify-content-between">
                       <div class="recover-pass">
-                       
-                          <!--<a [routerLink]="['/pages/login']" class="text-decoration-none text-white" >Login</a>-->
                           <button [disabled]="loading" class="btn btn-primary text-decoration-none text-white">
                               Login
                           </button>
-                        
-  
                       </div>
                     </div>
                   </div>

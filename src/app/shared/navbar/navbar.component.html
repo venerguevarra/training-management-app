@@ -13,8 +13,8 @@
                     <i class="ft-more-vertical"></i>
                 </a>
             </span>
-            <div class="position-relative" style="margin-top: 20px;">
-                <div class="content-header content-sub-header">&nbsp;</div>
+            <div class="position-relative">
+                <div>Welcome, {{user.username}}</div>
             </div>
         </div>
         <div class="navbar-container">
@@ -76,12 +76,16 @@
                             <p class="d-none">User Settings</p>
                         </a>
                         <div ngbDropdownMenu aria-labelledby="dropdownBasic3" class="text-left">
-                            <a class="dropdown-item py-1" href="javascript:;">
+                            <a routerLink="/app/user-profile" class="dropdown-item py-1" href="javascript:;">
                                 <i class="ft-edit mr-2"></i>
-                                <span>My Account</span>
+                                <span>My Profile</span>
+                            </a>
+                            <a routerLink="/app/change-password" class="dropdown-item py-1" href="javascript:;">
+                                <i class="ft-lock mr-2"></i>
+                                <span>Change Password</span>
                             </a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="javascript:;">
+                            <a (click)="logout()" class="dropdown-item" href="javascript:;">
                                 <i class="ft-power mr-2"></i>
                                 <span>Logout</span>
                             </a>

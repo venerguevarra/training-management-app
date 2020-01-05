@@ -10,13 +10,14 @@ import 'rxjs/Rx';
 import { catchError, tap, map } from 'rxjs/operators';
 
 import { AuthService } from '../../../shared/auth/auth.service';
+import { StateService } from '../../../service/state.service';
+import { User } from '../../../model/user';
 
 @Component({
     selector: 'app-login-page',
     templateUrl: './login-page.component.html',
     styleUrls: ['./login-page.component.scss']
 })
-
 export class LoginPageComponent {
 
     loginForm: FormGroup;
@@ -26,6 +27,7 @@ export class LoginPageComponent {
 
     constructor(
         private authService: AuthService,
+        private stateService: StateService,
         private formBuilder: FormBuilder,
         private router: Router,
         private route: ActivatedRoute) { }
@@ -36,22 +38,28 @@ export class LoginPageComponent {
             password: ['', Validators.required]
         });
 
+        this.loginForm.get("username").setValue('admin');
+        this.loginForm.get("password").setValue('Work6ten');
         this.authService.logout();
 
         // get return url from route parameters or default to '/'
-        this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+        this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/app/dashboard';
     }
 
     // convenience getter for easy access to form fields
     get f() { return this.loginForm.controls; }
 
-    get username() {
-    return this.loginForm.get('username');
-  }
+    hasError(field: string) {
+        return ((this.loginForm.get(field).dirty || this.loginForm.get(field).touched) && this.loginForm.get(field).invalid && 
+                    this.loginForm.get(field).errors.required && !this.submitted) || 
+                (
+                    this.loginForm.get(field).untouched && 
+                    this.loginForm.get(field).invalid && 
+                    this.loginForm.get(field).errors.required && 
+                    this.submitted
+                );
+    }
 
-  get password() {
-    return this.loginForm.get('password');
-  }
     onSubmit() {
         this.submitted = true;
 
@@ -59,19 +67,27 @@ export class LoginPageComponent {
             return;
         }
 
-        
         this.authService.signinUser(this.f.username.value, this.f.password.value)
             .pipe(first())
             .subscribe(data => {
                 this.authService.setToken(data.token);
+                let user: User = {
+                    userId: data.userId,
+                    profileId: data.profileId,
+                    firstName: data.firstName,
+                    lastName: data.lastName,
+                    middleInitial: data.middleInitial,
+                    email: data.email,
+                    username: data.username,
+                    token: data.token
+                }
+                this.stateService.setCurrentUser(user);
                 this.router.navigateByUrl(this.returnUrl);
             },
             error => {
-                //console.log(error);
+                console.log(error);
+                this.loginError = true;
             });
-
-        //console.log(this.f.username.value, this.f.password.value);
-        //this.loginForm.reset();
     }
 
 }

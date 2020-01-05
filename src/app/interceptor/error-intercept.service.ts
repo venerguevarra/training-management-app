@@ -7,15 +7,17 @@ import {
 } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
-export class ErrorIntercept implements HttpInterceptor {
+export class ErrorInterceptor implements HttpInterceptor {
+    constructor(private router: Router) {}
+
     intercept(
         request: HttpRequest<any>,
         next: HttpHandler
     ): Observable<HttpEvent<any>> {
         return next.handle(request)
             .pipe(
-                retry(1),
                 catchError((error: HttpErrorResponse) => {
                     let errorMessage = '';
 
@@ -29,7 +31,7 @@ export class ErrorIntercept implements HttpInterceptor {
                         errorMessage = `ERROR_STATUS: ${error.status}, MESSAGE: ${error.message}`;
                     }
                     console.log(errorMessage);
-                    return throwError(errorMessage);
+                    throw error;
                 })
             )
     }

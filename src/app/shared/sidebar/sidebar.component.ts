@@ -41,6 +41,7 @@ export class SidebarComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.config = this.configService.templateConf;
+    // TODO: filter menu items based on user role
     this.menuItems = ROUTES;
     this.logoUrl = 'assets/img/logo.png';
   }

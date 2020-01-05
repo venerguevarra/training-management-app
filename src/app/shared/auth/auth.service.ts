@@ -11,8 +11,8 @@ import { environment } from '../../../environments/environment';
 @Injectable()
 export class AuthService {
   private readonly API_HOST = environment.API_HOST;
-  private readonly AUTHENTICATE_URL: string = `${this.API_HOST}/authenticate`;
-  private readonly VALIDATE_TOKEN_URL: string = `${this.API_HOST}/validate-token`;
+  private readonly AUTHENTICATE_ENDPOINT: string = `${this.API_HOST}/authenticate`;
+  private readonly VALIDATE_TOKEN_ENDPOINT: string = `${this.API_HOST}/validate-token`;
   private token: string;
 
   constructor(
@@ -31,7 +31,7 @@ export class AuthService {
       password
     };
 
-    return this.httpClient.post<any>(this.AUTHENTICATE_URL, loginRequest, this.HTTP_OPTIONS);    
+    return this.httpClient.post<any>(this.AUTHENTICATE_ENDPOINT, loginRequest, this.HTTP_OPTIONS);    
   }
 
   logout() {
@@ -55,7 +55,7 @@ export class AuthService {
       token: this.getToken()
     };
 
-    return this.httpClient.post<any>(this.VALIDATE_TOKEN_URL, tokenRequest, this.HTTP_OPTIONS)
+    return this.httpClient.post<any>(this.VALIDATE_TOKEN_ENDPOINT, tokenRequest, this.HTTP_OPTIONS)
         .pipe(map(response => {
             return response;
         })).pipe(first())

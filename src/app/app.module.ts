@@ -8,7 +8,8 @@ import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from "@angular/common
 import { TranslateModule, TranslateLoader } from "@ngx-translate/core";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 
-import { ErrorIntercept } from './service/error-intercept.service';
+import { ErrorInterceptor } from './interceptor/error-intercept.service';
+import { AuthInterceptor } from './interceptor/auth-intercept.service';
 import { 
     PerfectScrollbarModule, 
     PERFECT_SCROLLBAR_CONFIG, 
@@ -21,6 +22,12 @@ import { FullLayoutComponent } from "./layouts/full/full-layout.component";
 
 import { AuthService } from './shared/auth/auth.service';
 import { AuthGuard } from './shared/auth/auth-guard.service';
+
+import { StorageServiceModule } from 'ngx-webstorage-service';
+
+import { StateService } from './service/state.service';
+import { ToastrModule } from 'ngx-toastr';
+ 
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     suppressScrollX: true,
@@ -35,11 +42,12 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   @NgModule({
     declarations: [AppComponent, FullLayoutComponent, ContentLayoutComponent],
     imports: [
-      BrowserAnimationsModule,
       AppRoutingModule,
       SharedModule,
       HttpClientModule,
       NgbModule.forRoot(),
+      BrowserAnimationsModule,
+      ToastrModule.forRoot(),
       TranslateModule.forRoot({
         loader: {
           provide: TranslateLoader,
@@ -47,11 +55,23 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
           deps: [HttpClient]
         }
       }),
-      PerfectScrollbarModule
+      PerfectScrollbarModule,
+      StorageServiceModule
     ],
     providers: [
+      StateService,
       AuthService,
       AuthGuard,
+      {
+        provide: HTTP_INTERCEPTORS,
+        useClass: ErrorInterceptor,
+        multi: true
+      },
+      {
+        provide: HTTP_INTERCEPTORS,
+        useClass: AuthInterceptor,
+        multi: true
+      },
       {
         provide: PERFECT_SCROLLBAR_CONFIG,
         useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG

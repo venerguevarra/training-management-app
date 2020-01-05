@@ -3,6 +3,10 @@ import { TranslateService } from '@ngx-translate/core';
 
 import { LayoutService } from '../services/layout.service';
 import { ConfigService } from '../services/config.service';
+import { AuthService } from '../auth/auth.service';
+import { Router, ActivatedRoute } from "@angular/router";
+import { StateService } from '../../service/state.service';
+import { User } from '../../model/user';
 
 @Component({
   selector: "app-navbar",
@@ -19,10 +23,20 @@ export class NavbarComponent implements OnInit, AfterViewInit {
 
   public config: any = {};
 
-  constructor(public translate: TranslateService, private layoutService: LayoutService, private configService:ConfigService) {
+  user: any = {};
+
+  constructor(
+    public translate: TranslateService, 
+    private layoutService: LayoutService, 
+    private configService:ConfigService,
+    private router: Router,
+    private authService: AuthService,
+    private stateService: StateService) {
+
     const browserLang: string = translate.getBrowserLang();
     translate.use(browserLang.match(/en|es|pt|de/) ? browserLang : "en");
 
+    this.user = this.stateService.getCurrentUser();
   }
 
   ngOnInit() {
@@ -61,5 +75,10 @@ export class NavbarComponent implements OnInit, AfterViewInit {
     } else {
       this.toggleHideSidebar.emit(true);
     }
+  }
+
+  logout() {
+     this.authService.logout();
+     this.router.navigate(['/login']);
   }
 }
