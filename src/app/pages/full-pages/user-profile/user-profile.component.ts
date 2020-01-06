@@ -36,8 +36,6 @@ export class UserProfileComponent {
 	emailTaken: boolean = false;
 	usernameTaken: boolean = false;
 
-	 
-
 	constructor(
 		private httpClient: HttpClient,
         private stateService: StateService,

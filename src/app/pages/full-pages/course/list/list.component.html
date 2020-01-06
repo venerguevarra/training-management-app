@@ -1,0 +1,71 @@
+<!--Paging dataTable starts-->
+<section id="paging" class="mb-3">
+    <div class="row text-left">
+        <div class="col-12">
+            <div class="content-header">Courses</div><br/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+          <ngx-datatable 
+                  class="material"
+                  [rows]="rows" 
+                  [columnMode]="'force'" 
+                  [headerHeight]="50"
+                  [footerHeight]="50"
+                  rowHeight="auto"
+                  [externalPaging]="true"
+                  [count]="page.totalElements"
+                  [offset]="page.pageNumber"
+                  [limit]="page.size"
+                  (page)="setPage($event)">
+                      <ngx-datatable-column name="Course Name" style="">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                          {{row.name}}
+                        </ng-template>
+                      </ngx-datatable-column>
+                      <ngx-datatable-column name="Description">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                          {{row.description}}
+                        </ng-template>
+                      </ngx-datatable-column>
+                      <ngx-datatable-column name="Course Fee">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                          {{row.courseFee}}
+                        </ng-template>
+                      </ngx-datatable-column>
+                      <ngx-datatable-column name="Number of Days">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                          {{row.numberOfDays}}
+                        </ng-template>
+                      </ngx-datatable-column>
+                      <ngx-datatable-column name="Date Created">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                          {{row.createdDate | date:'MMM d,y h:mm:ss a'}}<br/>
+                          
+                        </ng-template>
+                      </ngx-datatable-column>
+                      <ngx-datatable-column name="Last Modified Date">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                          {{(row.modifiedDate | date:'MMM d,y h:mm:ss a') || "---"}}
+                        </ng-template>
+                      </ngx-datatable-column>
+
+                      <ngx-datatable-column name="Status">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                          {{row.active}}
+                        </ng-template>
+                      </ngx-datatable-column>
+
+                      <ngx-datatable-column name="Action(s)">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                          <button type="button" class="btn btn-success btn-raised mr-1" (click)="detail(row.id)">Edit</button>
+                          <button *ngIf="row.active == 'INACTIVE'" type="button" class="btn btn-danger btn-raised" (click)="activate(row.id)">Activate</button>
+                          <button *ngIf="row.active == 'ACTIVE'" type="button" class="btn btn-danger btn-raised" (click)="deactivate(row.id)">Deactivate</button>
+                        </ng-template>
+                      </ngx-datatable-column>
+                      
+          </ngx-datatable>
+        </div>
+    </div>
+</section>

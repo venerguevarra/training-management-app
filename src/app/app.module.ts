@@ -27,7 +27,8 @@ import { StorageServiceModule } from 'ngx-webstorage-service';
 
 import { StateService } from './service/state.service';
 import { ToastrModule } from 'ngx-toastr';
- 
+
+import 'default-passive-events';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     suppressScrollX: true,

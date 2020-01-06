@@ -52,7 +52,7 @@ const routes: Routes = [
           title: 'Change Password'
         },
         canActivate: [AuthGuard]
-      }
+      }      
     ]
   }
 ];

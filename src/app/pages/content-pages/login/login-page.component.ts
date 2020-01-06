@@ -69,17 +69,18 @@ export class LoginPageComponent {
 
         this.authService.signinUser(this.f.username.value, this.f.password.value)
             .pipe(first())
-            .subscribe(data => {
-                this.authService.setToken(data.token);
+            .subscribe(response => {
+                
+                this.authService.setToken(response.token);
                 let user: User = {
-                    userId: data.userId,
-                    profileId: data.profileId,
-                    firstName: data.firstName,
-                    lastName: data.lastName,
-                    middleInitial: data.middleInitial,
-                    email: data.email,
-                    username: data.username,
-                    token: data.token
+                    userId: response.userId,
+                    profileId: response.profileId,
+                    firstName: response.firstName,
+                    lastName: response.lastName,
+                    middleInitial: response.middleInitial,
+                    email: response.email,
+                    username: response.username,
+                    token: response.token
                 }
                 this.stateService.setCurrentUser(user);
                 this.router.navigateByUrl(this.returnUrl);

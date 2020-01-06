@@ -8,6 +8,8 @@ import 'rxjs/Rx';
 import { catchError, tap, map } from 'rxjs/operators';
 
 import { environment } from '../../../environments/environment';
+import { StateService } from '../../service/state.service';
+
 @Injectable()
 export class AuthService {
   private readonly API_HOST = environment.API_HOST;
@@ -16,14 +18,9 @@ export class AuthService {
   private token: string;
 
   constructor(
+    private stateService: StateService,
     private router: Router,
     private httpClient: HttpClient) {}
-
-  readonly HTTP_OPTIONS = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json'
-    })
-  }
 
   signinUser(username: string, password: string) {
     let loginRequest = {
@@ -31,11 +28,12 @@ export class AuthService {
       password
     };
 
-    return this.httpClient.post<any>(this.AUTHENTICATE_ENDPOINT, loginRequest, this.HTTP_OPTIONS);    
+    return this.httpClient.post<any>(this.AUTHENTICATE_ENDPOINT, loginRequest);    
   }
 
   logout() {
     this.token = null;
+    this.stateService.removeCurrentUser();
   }
 
   getToken() {
@@ -47,24 +45,6 @@ export class AuthService {
   }
 
   isAuthenticated() {    
-    if(this.getToken() == null || this.getToken() === 'undefined') {
-      return false;
-    }
-    
-    let tokenRequest = {
-      token: this.getToken()
-    };
-
-    return this.httpClient.post<any>(this.VALIDATE_TOKEN_ENDPOINT, tokenRequest, this.HTTP_OPTIONS)
-        .pipe(map(response => {
-            return response;
-        })).pipe(first())
-            .subscribe(data => {
-                return true;
-            },
-            error => {
-                return false;
-            });;
-    
+    return this.stateService.hasCurrentUser();
   }
 }

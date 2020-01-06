@@ -14,4 +14,15 @@ export class StateService {
      public getCurrentUser(): User {
           return JSON.parse(this.storage.get('CURRENT_USER'));
      }
+
+     public hasCurrentUser() {
+          if(this.storage.get('CURRENT_USER')) {
+               return true;
+          }
+          return false;
+     }
+
+     public removeCurrentUser() {
+          this.storage.remove('CURRENT_USER');
+     }
 }
