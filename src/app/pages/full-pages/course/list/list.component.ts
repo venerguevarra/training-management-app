@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from "@angular/router";
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
@@ -23,48 +23,45 @@ export class CourseListComponent {
   	private readonly COURSES_ENDPOINT: string = `${this.API_HOST}/courses`;
 
 	rows: any = [];
-	page = new Page();
+	page = 0; 			// current page
+	pageSize = 5;		// number of elements/items per page
+	collectionSize = 0;	// Number of elements/items in the collection
+
 
 	constructor(
 		private httpClient: HttpClient,
 		private router: Router
-	) { 
-		this.page.pageNumber = 0;
-    	this.page.size = 5;
+	) {
 	}
 
 	ngOnInit() {
-		this.setPage({ offset: 0});
-
 		let params = {'size': '5', 'page': '0'};
+		this.retrieveList(params);
+	}
+
+	paginationChange(event) {
+	    let currentPage = this.page - 1;
+		let params = {'size': this.pageSize.toString(), 'page': currentPage.toString()};
+		this.retrieveList(params);
+	}
+
+	paginationSizeChange() {
+		let currentPage = this.page - 1;
+		let params = {'size': this.pageSize.toString(), 'page': currentPage.toString()}
+		this.retrieveList(params);;
+	}
+
+	retrieveList(params) {
 		this.httpClient.get(this.COURSES_ENDPOINT, { params })
 			.subscribe(
 				(data) => {
+					this.collectionSize = data['totalElements'];
 					this.rows = data['elements'];
 				}
 		);
 	}
 
-	setPage(pageInfo) {
-    	this.page.pageNumber = pageInfo.offset;
-
-		let params = {'size': '5', 'page': this.page.pageNumber.toString()};
-		this.httpClient.get(this.COURSES_ENDPOINT, { params })
-			.subscribe(
-				(data) => {
-					console.log('data', data);
-					this.rows = data['elements'];
-					this.page.totalElements = data['totalElements'];
-					this.page.totalPages = data['totalPages'];
-					console.log('page', this.page);
-				},
-				(error) => {
-					console.log(error);
-				}
-		);
-  }
-
-  detail(id) {
+  	detail(id) {
 	  this.router.navigate(['/app/course', id]);
-  }
+  	}
 }

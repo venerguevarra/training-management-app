@@ -1,71 +1,101 @@
-<!--Paging dataTable starts-->
+
+<div class="card">
+  <div class="card-header" style="background-color: #E0F3F4;">
+    <strong>Course</strong>
+    <a href="" class="float-right btn btn-success btn-raised">
+      <i class="fa fa-fw fa-plus-circle"></i> New Course
+    </a>
+  </div>
+  <div class="card-body">
+
+    <div class="col-sm-12">
+      <!--<h5 class="card-title"><i class="fa fa-fw fa-search"></i> Search</h5>-->
+      <br/>
+      <form method="get">
+        <div class="row">
+          <div class="col-sm-2">
+            <div class="form-group">
+              <label>Course Name</label>
+              <input type="email" name="useremail" id="useremaail" class="form-control"  placeholder="Enter user email">
+            </div>
+          </div>
+          <div class="col-sm-2">
+            <div class="form-group">
+              <label>&nbsp;</label>
+              <div>
+                <button type="submit" name="submit" value="search" id="submit" class="btn btn-primary btn-raised mr-2"><i class="fa fa-fw fa-search"></i> Search</button>
+                <a href="" class="btn btn-danger btn-raised"><i class="fa fa-repeat"></i> Clear</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
 <section id="paging" class="mb-3">
-    <div class="row text-left">
-        <div class="col-12">
-            <div class="content-header">Courses</div><br/>
-        </div>
+  <div class="card">
+    <div class="card-header">
     </div>
-    <div class="row">
-        <div class="col-sm-12">
-          <ngx-datatable 
-                  class="material"
-                  [rows]="rows" 
-                  [columnMode]="'force'" 
-                  [headerHeight]="50"
-                  [footerHeight]="50"
-                  rowHeight="auto"
-                  [externalPaging]="true"
-                  [count]="page.totalElements"
-                  [offset]="page.pageNumber"
-                  [limit]="page.size"
-                  (page)="setPage($event)">
-                      <ngx-datatable-column name="Course Name" style="">
-                        <ng-template let-row="row" ngx-datatable-cell-template>
-                          {{row.name}}
-                        </ng-template>
-                      </ngx-datatable-column>
-                      <ngx-datatable-column name="Description">
-                        <ng-template let-row="row" ngx-datatable-cell-template>
-                          {{row.description}}
-                        </ng-template>
-                      </ngx-datatable-column>
-                      <ngx-datatable-column name="Course Fee">
-                        <ng-template let-row="row" ngx-datatable-cell-template>
-                          {{row.courseFee}}
-                        </ng-template>
-                      </ngx-datatable-column>
-                      <ngx-datatable-column name="Number of Days">
-                        <ng-template let-row="row" ngx-datatable-cell-template>
-                          {{row.numberOfDays}}
-                        </ng-template>
-                      </ngx-datatable-column>
-                      <ngx-datatable-column name="Date Created">
-                        <ng-template let-row="row" ngx-datatable-cell-template>
-                          {{row.createdDate | date:'MMM d,y h:mm:ss a'}}<br/>
-                          
-                        </ng-template>
-                      </ngx-datatable-column>
-                      <ngx-datatable-column name="Last Modified Date">
-                        <ng-template let-row="row" ngx-datatable-cell-template>
-                          {{(row.modifiedDate | date:'MMM d,y h:mm:ss a') || "---"}}
-                        </ng-template>
-                      </ngx-datatable-column>
-
-                      <ngx-datatable-column name="Status">
-                        <ng-template let-row="row" ngx-datatable-cell-template>
-                          {{row.active}}
-                        </ng-template>
-                      </ngx-datatable-column>
-
-                      <ngx-datatable-column name="Action(s)">
-                        <ng-template let-row="row" ngx-datatable-cell-template>
-                          <button type="button" class="btn btn-success btn-raised mr-1" (click)="detail(row.id)">Edit</button>
-                          <button *ngIf="row.active == 'INACTIVE'" type="button" class="btn btn-danger btn-raised" (click)="activate(row.id)">Activate</button>
-                          <button *ngIf="row.active == 'ACTIVE'" type="button" class="btn btn-danger btn-raised" (click)="deactivate(row.id)">Deactivate</button>
-                        </ng-template>
-                      </ngx-datatable-column>
-                      
-          </ngx-datatable>
-        </div>
+    <div class="card-body">
+      <div class="col-sm-12">
+        <div class="row">
+          <div class="col-sm-12 table-responsive">
+            <table id="course-table" class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col" style="width:20%;">Course Name</th>
+                  <th scope="col" style="width:20%;">Course Description</th>
+                  <th scope="col" style="width:10%;">Number of Days</th>
+                  <th scope="col" style="width:15%;">Course Fee</th>
+                  <th scope="col" style="width:10%;">Created Date</th>
+                  <th scope="col" style="width:5%;text-align: center;">View</th>
+                  <th scope="col" style="width:5%;text-align: center;">Edit</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let row of rows">
+                  <td scope="row">{{ row.name }}</td>
+                  <td scope="row">{{ row.description }}</td>
+                  <td scope="row">{{ row.numberOfDays }}</td>
+                  <td scope="row">{{row.courseFee | currency: 'PHP '}}</td>
+                  <td scope="row">{{row.createdDate | date: 'MMM d,y'}}</td>
+                  <td scope="row" style="text-align: center;">
+                    <a (click)="detail(row.id)"><i class="ft-eye"></i></a>
+                  </td>
+                  <td scope="row" style="text-align: center;">
+                    <a (click)="detail(row.id)"><i class="ft-edit-2"></i></a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          <div class="d-flex justify-content-between p-2">
+            <ngb-pagination
+                [(page)]="page"
+                [(pageSize)]="pageSize"
+                [(collectionSize)]="collectionSize"
+                [maxSize]="5"
+                [rotate]="true"
+                [boundaryLinks]="true"
+                (pageChange)="paginationChange($event)">
+                <ng-template ngbPaginationFirst>First</ng-template>
+                <ng-template ngbPaginationLast>Last</ng-template>
+                <ng-template ngbPaginationPrevious>Prev</ng-template>
+                <ng-template ngbPaginationNext>Next</ng-template>
+                <ng-template ngbPaginationEllipsis>...</ng-template>
+                <ng-template ngbPaginationNumber let-page>{{ page }}</ng-template>
+            </ngb-pagination>
+            <select class="custom-select" style="width: auto" [(ngModel)]="pageSize" (change)="paginationSizeChange()">
+              <option [ngValue]="5">5 items per page</option>
+              <option [ngValue]="10">10 items per page</option>
+              <option [ngValue]="20">20 items per page</option>
+            </select>
+          </div>
+          </div>
+      </div>
+      </div>
     </div>
+  </div>
+
 </section>

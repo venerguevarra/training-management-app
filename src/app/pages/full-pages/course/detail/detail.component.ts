@@ -5,6 +5,7 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { catchError, tap, map, first } from 'rxjs/operators';
 import 'rxjs/Rx';
 import swal from 'sweetalert2';
+import { ToastrService } from 'ngx-toastr';
 
 import { StateService } from '../../../../service/state.service';
 import { User } from '../../../../model/user';
@@ -19,23 +20,66 @@ export class CourseDetailComponent {
 	private readonly API_HOST = environment.API_HOST;
   	private readonly COURSE_ENDPOINT: string = `${this.API_HOST}/courses`;
 
+	currentUser;
 	courseId;
+	currentForm: FormGroup;
+    submitted = false;
+	genericError: boolean = false;
+	currentCourse;
 
 	constructor(
-		private route: ActivatedRoute,
 		private httpClient: HttpClient,
-		private router: Router
-	) { 
+        private stateService: StateService,
+		private toastr: ToastrService,
+        private formBuilder: FormBuilder,
+        private router: Router,
+        private route: ActivatedRoute) {
+
 		this.route.params.subscribe( params => {
-			console.log(params);
-			if (params['id']) { 
+
+			this.currentForm = this.formBuilder.group({
+				id: ['', [Validators.required]],
+				name: ['', [Validators.required]],
+				fee: ['', [Validators.required]],
+				description: [''],
+				days: ['', [Validators.required]]
+			});
+
+			if (params['id']) {
 				this.courseId = params.id;
+
+				this.httpClient.get(`${this.COURSE_ENDPOINT}/${this.courseId}`).subscribe(
+					(data) => {
+						console.log(data);
+						this.currentCourse = data;
+
+						this.currentForm = this.formBuilder.group({
+							id: [this.currentCourse.id],
+							name: [this.currentCourse.name, [Validators.required]],
+							fee: [this.currentCourse.courseFee, [Validators.required]],
+							description: [this.currentCourse.description],
+							days: [this.currentCourse.numberOfDays, [Validators.required]]
+						});
+					},
+					(error) => {
+						console.log(error);
+					}
+				);
 			}
 		});
-		
+
 	}
 
-	ngOnInit() {
+	get f() { return this.currentForm.controls; }
 
+	ngAfterViewInit() {
+		this.currentUser = this.stateService.getCurrentUser();
+	}
+
+	submit() {
+	}
+
+	cancel() {
+		this.router.navigate(['/app/course']);
 	}
 }

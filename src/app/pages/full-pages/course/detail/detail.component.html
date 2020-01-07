@@ -1,36 +1,60 @@
-<!-- Form actions layout section start -->
-<section id="form-action-layouts">
-
-  <div class="row text-left justify-content-md-center">
-    <div class="col-md-8">
-      <div class="card">
-        <div class="card-header center">
-          <h4 class="card-title" id="from-actions-multiple">Course Detail</h4>          
-        </div>
-        <div class="card-content">
-          <div class="px-3">
-            <hr/>
-            <form class="form">
-              <div class="row justify-content-md-center">
-                <div class="col-md-6">
-                  <div class="form-body">
-                    
-                  </div>
+<div class="row text-left justify-content-md-center">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header pb-2">
+        <h4 class="card-title" id="horz-layout-card-center">Course</h4>
+      </div>
+      <div class="card-content">
+        <div class="px-3">
+          <form class="form form-horizontal striped-rows" [formGroup]="currentForm">
+            <div class="form-body">
+              <div class="form-actions left">Fields with <span class="px-required">*</span> are required.</div>
+              <div class="form-group row">
+                <label class="col-md-3 label-control" for="name">Course Name <span class="px-required">*</span></label>
+                <div class="col-md-9">
+                  <input  formControlName="name"  type="text" id="name" class="form-control" name="name"  [ngClass]="{ 'is-invalid': (f.name.dirty || f.name.touched || submitted) && f.name.invalid && f.name.errors.required}">
+                        <small *ngIf="(f.name.dirty || f.name.touched || submitted) && f.name.invalid && f.name.errors.required" class="form-text text-muted danger">Please enter your current password</small>
                 </div>
               </div>
 
-              <div class="form-actions clearfix center">
-                <div class="buttons-group">
-                  <button type="button" class="btn btn-raised btn-success mr-2" (click)="submit()">Save</button>
-                  <button type="button" class="btn btn-raised btn-secondary" (click)="cancel()">Cancel</button>
+              <div class="form-group row">
+                <label class="col-md-3 label-control" for="description">Description </label>
+                <div class="col-md-9">
+                  <textarea  formControlName="description"  type="text" id="description" class="form-control" name="description"></textarea>
                 </div>
               </div>
-            </form>
-          </div>
+
+              <div class="form-group row">
+                <label class="col-md-3 label-control" for="fee">Fee <span class="px-required">*</span></label>
+                <div class="col-md-9">
+                  <input  formControlName="fee"  type="text" id="fee" class="form-control" name="fee"  [ngClass]="{ 'is-invalid': (f.fee.dirty || f.fee.touched || submitted) && f.fee.invalid && f.fee.errors.required}">
+                  <small *ngIf="(f.fee.dirty || f.fee.touched || submitted) && f.fee.invalid && f.fee.errors.required" class="form-text text-muted danger">Please enter your current password</small>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-md-3 label-control" for="eventRegInput4">Number of Days <span class="px-required">*</span></label>
+                <div class="col-md-9">
+                  <input  formControlName="days"  type="text" id="days" class="form-control" name="days"  [ngClass]="{ 'is-invalid': (f.days.dirty || f.days.touched || submitted) && f.days.invalid && f.days.errors.required}">
+                  <small *ngIf="(f.days.dirty || f.days.touched || submitted) && f.days.invalid && f.days.errors.required" class="form-text text-muted danger">Please enter your current password</small>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-actions center">
+              <button type="button" class="btn btn-raised btn-success mr-2" (click)="submit()">
+                <i class="fa fa-check-square-o"></i> Save
+              </button>
+              <button type="button" class="btn btn-danger btn-raised" (click)="cancel()">
+                <i class="ft-x"></i> Cancel
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
   </div>
+</div>
 
-</section>
+
 <!-- // Form actions layout section end -->

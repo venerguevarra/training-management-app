@@ -1,105 +1,108 @@
 <!-- Form actions layout section start -->
 <section id="form-action-layouts">
+  <div class="card">
+    <div class="card-header" style="background-color: #E0F3F4;">
+      <h3>My </h3>
+    </div>
+    <div class="card-body">
+      <div class="row text-left justify-content-md-center">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-content">
+              <div class="px-3">
+                <form class="form" [formGroup]="currentForm" (ngSubmit)="submit()">
+                  <div class="row justify-content-md-center">
+                    <div class="col-md-6">
+                      <div class="form-body">
+                        <ngb-alert type="danger" [dismissible]="false" *ngIf="genericError">Unable to update profile. Retry again.</ngb-alert>
+                        <ngb-alert type="danger" [dismissible]="false" *ngIf="usernameTaken">Username already taken.</ngb-alert>
+                        <ngb-alert type="danger" [dismissible]="false" *ngIf="emailTaken">Email already taken.</ngb-alert>
 
-  <div class="row text-left justify-content-md-center">
-    <div class="col-md-6">
-      <div class="card">
-        <div class="card-header center">
-          <h4 class="card-title" id="from-actions-multiple">My Profile</h4>          
-        </div>
-        <div class="card-content">
-          <div class="px-3">
-            <hr/>
-            <form class="form" [formGroup]="currentForm" (ngSubmit)="onSubmit()">
-              <div class="row justify-content-md-center">
-                <div class="col-md-6">
-                  <div class="form-body">
-                    <ngb-alert type="danger" [dismissible]="false" *ngIf="genericError">Unable to update profile. Retry again.</ngb-alert>
-                    <ngb-alert type="danger" [dismissible]="false" *ngIf="usernameTaken">Username already taken.</ngb-alert>
-                    <ngb-alert type="danger" [dismissible]="false" *ngIf="emailTaken">Email already taken.</ngb-alert>
-                   
-                    <div class="row">
-                      <div class="form-group col-12 mb-2">
-                        <label for="username">Username</label>
-                        <input 
-                          formControlName="username" 
-                          type="text" 
-                          id="username" 
-                          class="form-control" 
-                          name="username"
-                          [ngClass]="{ 'is-invalid': hasError('username')}">
-                          <small *ngIf="hasError('username')" class="form-text text-muted danger">Username required</small>
-                      </div>
-                    </div>
+                        <div class="row">
+                          <div class="form-group col-12 mb-2">
+                            <label for="username">Username</label><span class="px-required">*</span>
+                            <input
+                              formControlName="username"
+                              type="text"
+                              id="username"
+                              class="form-control"
+                              name="username"
+                              [ngClass]="{ 'is-invalid': hasError('username')}">
+                              <small *ngIf="hasError('username')" class="form-text text-muted danger">Username required</small>
+                          </div>
+                        </div>
 
-                    <div class="row">
-                      <div class="form-group col-12 mb-2">
-                        <label for="email">Email</label>
-                        <input 
-                            formControlName="email" 
-                            type="text" 
-                            id="email" 
-                            class="form-control" 
-                            name="email"
-                            [ngClass]="{ 'is-invalid': hasError('email')}">
-                        <small class="form-text text-muted danger" *ngIf="hasError('email')">Email required</small>
-                        <small class="form-text text-muted danger" *ngIf="currentEmail.errors?.pattern">Please provide a valid email address</small>
-                      </div>
-                    </div>
-                    
-                    <div class="row">
-                      <div class="form-group col-12 mb-2">
-                        <label for="firstName">First Name</label>
-                        <input 
-                            formControlName="firstName" 
-                            type="text" 
-                            id="firstName" 
-                            class="form-control" 
-                            name="firstName"
-                            [ngClass]="{ 'is-invalid': hasError('firstName')}">
-                      </div>
-                    </div>
+                        <div class="row">
+                          <div class="form-group col-12 mb-2">
+                            <label for="email">Email</label><span class="px-required">*</span>
+                            <input
+                                formControlName="email"
+                                type="text"
+                                id="email"
+                                class="form-control"
+                                name="email"
+                                [ngClass]="{ 'is-invalid': hasError('email')}">
+                            <small class="form-text text-muted danger" *ngIf="hasError('email')">Email required</small>
+                            <small class="form-text text-muted danger" *ngIf="currentEmail.errors?.pattern">Please provide a valid email address</small>
+                          </div>
+                        </div>
 
-                    <div class="row">
-                      <div class="form-group col-12 mb-2">
-                        <label for="lastName">Last Name</label>
-                        <input  
-                            formControlName="lastName" 
-                            type="text" 
-                            id="lastName" 
-                            class="form-control" 
-                            name="lastName"
-                            [ngClass]="{ 'is-invalid': hasError('lastName')}">
-                      </div>
-                    </div>
+                        <div class="row">
+                          <div class="form-group col-12 mb-2">
+                            <label for="firstName">First Name</label><span class="px-required">*</span>
+                            <input
+                                formControlName="firstName"
+                                type="text"
+                                id="firstName"
+                                class="form-control"
+                                name="firstName"
+                                [ngClass]="{ 'is-invalid': hasError('firstName')}">
+                          </div>
+                        </div>
 
-                    <div class="row">
-                      <div class="form-group col-12 mb-2">
-                        <label for="middleInitial">Middle Initial</label>
-                        <input 
-                            formControlName="middleInitial" 
-                            type="text" 
-                            id="middleInitial" 
-                            class="form-control" 
-                            name="middleInitial">
+                        <div class="row">
+                          <div class="form-group col-12 mb-2">
+                            <label for="lastName">Last Name</label><span class="px-required">*</span>
+                            <input
+                                formControlName="lastName"
+                                type="text"
+                                id="lastName"
+                                class="form-control"
+                                name="lastName"
+                                [ngClass]="{ 'is-invalid': hasError('lastName')}">
+                          </div>
+                        </div>
+
+                        <div class="row">
+                          <div class="form-group col-12 mb-2">
+                            <label for="middleInitial">Middle Initial</label>
+                            <input
+                                formControlName="middleInitial"
+                                type="text"
+                                id="middleInitial"
+                                class="form-control"
+                                name="middleInitial">
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              </div>
 
-              <div class="form-actions clearfix center">
-                <div class="buttons-group">
-                  <button type="button" class="btn btn-raised btn-success mr-2" (click)="submit()">Save</button>
-                  <button type="button" class="btn btn-raised btn-secondary" (click)="reset()">Reset</button>
-                </div>
+                  <div class="form-actions clearfix center">
+                    <div class="buttons-group">
+                      <button type="button" class="btn btn-raised btn-success mr-2" (click)="submit()">Save</button>
+                      <button type="button" class="btn btn-raised btn-secondary" (click)="reset()">Reset</button>
+                    </div>
+                  </div>
+                </form>
               </div>
-            </form>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+
 
 </section>
 <!-- // Form actions layout section end -->

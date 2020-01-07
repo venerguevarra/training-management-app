@@ -13,3 +13,12 @@
 @import url("../src/assets/css/data-table/index.css");
 @import url("../src/assets/css/data-table/icons.css");
 @import url("../src/assets/css/demo.css"); */
+
+.px-required {
+    color: red;
+}
+
+.required .control-label:after {
+    content:"*";
+    color:red;
+}
