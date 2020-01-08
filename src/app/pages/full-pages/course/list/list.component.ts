@@ -26,7 +26,7 @@ export class CourseListComponent {
 	page = 0; 			// current page
 	pageSize = 5;		// number of elements/items per page
 	collectionSize = 0;	// Number of elements/items in the collection
-
+	isCollapsed = true;
 
 	constructor(
 		private httpClient: HttpClient,
@@ -63,5 +63,9 @@ export class CourseListComponent {
 
   	detail(id) {
 	  this.router.navigate(['/app/course', id]);
+  	}
+
+	navigateToNewForm() {
+	  this.router.navigate(['/app/course', -1]);
   	}
 }

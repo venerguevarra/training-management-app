@@ -20,12 +20,14 @@ export class CourseDetailComponent {
 	private readonly API_HOST = environment.API_HOST;
   	private readonly COURSE_ENDPOINT: string = `${this.API_HOST}/courses`;
 
+	title = 'Course';
 	currentUser;
 	courseId;
 	currentForm: FormGroup;
     submitted = false;
 	genericError: boolean = false;
 	currentCourse;
+	newForm = false;
 
 	constructor(
 		private httpClient: HttpClient,
@@ -47,24 +49,28 @@ export class CourseDetailComponent {
 
 			if (params['id']) {
 				this.courseId = params.id;
+				this.newForm = this.courseId == -1;
 
-				this.httpClient.get(`${this.COURSE_ENDPOINT}/${this.courseId}`).subscribe(
-					(data) => {
-						console.log(data);
-						this.currentCourse = data;
+				if(!this.newForm) {
+					console.log(this.courseId);
+					this.httpClient.get(`${this.COURSE_ENDPOINT}/${this.courseId}`).subscribe(
+						(data) => {
+							console.log(data);
+							this.currentCourse = data;
 
-						this.currentForm = this.formBuilder.group({
-							id: [this.currentCourse.id],
-							name: [this.currentCourse.name, [Validators.required]],
-							fee: [this.currentCourse.courseFee, [Validators.required]],
-							description: [this.currentCourse.description],
-							days: [this.currentCourse.numberOfDays, [Validators.required]]
-						});
-					},
-					(error) => {
-						console.log(error);
-					}
-				);
+							this.currentForm = this.formBuilder.group({
+								id: [this.currentCourse.id],
+								name: [this.currentCourse.name, [Validators.required]],
+								fee: [this.currentCourse.courseFee, [Validators.required]],
+								description: [this.currentCourse.description],
+								days: [this.currentCourse.numberOfDays, [Validators.required]]
+							});
+						},
+						(error) => {
+							console.log(error);
+						}
+					);
+				}
 			}
 		});
 

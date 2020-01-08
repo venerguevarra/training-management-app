@@ -1,36 +1,41 @@
 
 <div class="card">
-  <div class="card-header" style="background-color: #E0F3F4;">
-    <strong>Course</strong>
-    <a href="" class="float-right btn btn-success btn-raised">
+  <div class="card-header px-header-color" style="background-color: #ECEFF1;">
+    <a class="float-left btn btn-info btn-raised mr-2" (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
+      <i class="fa fa-fw ft-search"></i> Search
+    </a>
+    <a class="relative btn btn-success btn-raised" (click)="navigateToNewForm()">
       <i class="fa fa-fw fa-plus-circle"></i> New Course
     </a>
   </div>
-  <div class="card-body">
+  <div class="card-body" id="collapseExample" [ngbCollapse]="isCollapsed">
 
-    <div class="col-sm-12">
-      <!--<h5 class="card-title"><i class="fa fa-fw fa-search"></i> Search</h5>-->
-      <br/>
-      <form method="get">
-        <div class="row">
-          <div class="col-sm-2">
-            <div class="form-group">
-              <label>Course Name</label>
-              <input type="email" name="useremail" id="useremaail" class="form-control"  placeholder="Enter user email">
+    <div >
+      <div class="col-sm-12">
+        <form method="get">
+          <div class="row">
+            <div class="col-sm-4">
+              <div class="form-group">
+                <label>Course Name</label>
+                <input type="email" name="useremail" id="useremaail" class="form-control">
+              </div>
             </div>
-          </div>
-          <div class="col-sm-2">
-            <div class="form-group">
-              <label>&nbsp;</label>
-              <div>
-                <button type="submit" name="submit" value="search" id="submit" class="btn btn-primary btn-raised mr-2"><i class="fa fa-fw fa-search"></i> Search</button>
-                <a href="" class="btn btn-danger btn-raised"><i class="fa fa-repeat"></i> Clear</a>
+            <div class="col-sm-8">
+              <div class="form-group">
+                <label>&nbsp;</label>
+                <div>
+                  <button type="submit" name="submit" value="search" id="submit" class="btn btn-success btn-raised mr-2">
+                    <i class="fa fa-fw fa-check"></i> Submit
+                  </button>
+                  <a class="btn btn-danger btn-raised"><i class="fa fa-repeat"></i> Clear</a>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
+
   </div>
 </div>
 
@@ -45,13 +50,12 @@
             <table id="course-table" class="table table-striped">
               <thead>
                 <tr>
-                  <th scope="col" style="width:20%;">Course Name</th>
-                  <th scope="col" style="width:20%;">Course Description</th>
-                  <th scope="col" style="width:10%;">Number of Days</th>
+                  <th scope="col" style="width:20%;">Name</th>
+                  <th scope="col" style="width:20%;">Description</th>
+                  <th scope="col" style="width:10%;">Days</th>
                   <th scope="col" style="width:15%;">Course Fee</th>
-                  <th scope="col" style="width:10%;">Created Date</th>
-                  <th scope="col" style="width:5%;text-align: center;">View</th>
-                  <th scope="col" style="width:5%;text-align: center;">Edit</th>
+                  <th scope="col" style="width:15%;">Created Date</th>
+                  <th scope="col" style="width:10%;text-align: center;">Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -62,10 +66,8 @@
                   <td scope="row">{{row.courseFee | currency: 'PHP '}}</td>
                   <td scope="row">{{row.createdDate | date: 'MMM d,y'}}</td>
                   <td scope="row" style="text-align: center;">
-                    <a (click)="detail(row.id)"><i class="ft-eye"></i></a>
-                  </td>
-                  <td scope="row" style="text-align: center;">
-                    <a (click)="detail(row.id)"><i class="ft-edit-2"></i></a>
+                    <a (click)="detail(row.id)" class="mr-2" placement="top" ngbTooltip="View"><i class="ft-eye"></i></a>
+                    <a (click)="detail(row.id)" placement="top" ngbTooltip="Edit"><i class="ft-edit-2"></i></a>
                   </td>
                 </tr>
               </tbody>

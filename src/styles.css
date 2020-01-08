@@ -18,7 +18,6 @@
     color: red;
 }
 
-.required .control-label:after {
-    content:"*";
-    color:red;
+.px-header-color {
+    color: #ECEFF1;
 }
