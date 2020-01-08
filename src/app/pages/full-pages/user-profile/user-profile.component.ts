@@ -8,9 +8,11 @@ import swal from 'sweetalert2';
 import { ToastrService } from 'ngx-toastr';
 
 import { StateService } from '../../../service/state.service';
-import { User } from '../../../model/user';
+import { EventService } from '../../../service/event.service';
+import { User } from '../../../model/user.model';
 
 import { environment } from '../../../../environments/environment';
+import { AuthService } from '../../../shared/auth/auth.service';
 
 @Component({
 	selector: 'app-user-profile',
@@ -37,6 +39,8 @@ export class UserProfileComponent {
 	usernameTaken: boolean = false;
 
 	constructor(
+		private authService: AuthService,
+		private eventService: EventService,
 		private httpClient: HttpClient,
         private stateService: StateService,
 		private toastr: ToastrService,
@@ -62,19 +66,19 @@ export class UserProfileComponent {
 	get currentEmail(){ return this.currentForm.get('email') }
 
 	hasError(field: string) {
-        return ((this.currentForm.get(field).dirty 
-					|| this.currentForm.get(field).touched) && 
-						this.currentForm.get(field).invalid && 
-							(this.currentForm.get(field).errors.required) 
-								&& !this.submitted) || 
-                (this.currentForm.get(field).untouched && 
-					this.currentForm.get(field).invalid && 
-						this.currentForm.get(field).errors.required && 
+        return ((this.currentForm.get(field).dirty
+					|| this.currentForm.get(field).touched) &&
+						this.currentForm.get(field).invalid &&
+							(this.currentForm.get(field).errors.required)
+								&& !this.submitted) ||
+                (this.currentForm.get(field).untouched &&
+					this.currentForm.get(field).invalid &&
+						this.currentForm.get(field).errors.required &&
                     		this.submitted);
     }
 
 	submit() {
-		
+
         this.submitted = true;
 
         if (this.currentForm.invalid) {
@@ -109,37 +113,28 @@ export class UserProfileComponent {
 									this.usernameTaken = false;
 									this.emailTaken = false;
 
-									let updatedUser: User = {
-										userId: this.currentUser.userId,
-										profileId: this.currentUser.profileId,
-										firstName: userProfile.firstName,
-										lastName: userProfile.lastName,
-										middleInitial: userProfile.middleInitial,
-										email: userProfile.email,
-										username: userProfile.username,
-										token: this.currentUser.token
-									}
-									this.stateService.setCurrentUser(updatedUser);
-									this.currentUser = this.stateService.getCurrentUser();
-									this.resetCurrentState();
-									this.toastr.success(
-										 'User profile successfully updated.', 
-										 'Success',
-										 {
-											timeOut :  3000,
-											closeButton: true
-										 }
-									);
+									swal.fire({
+										title: 'Profile information successfully updated!',
+										text: "You will be logged out for security purposes. Please login using your updated password.",
+										type: "info",
+										showCancelButton: false,
+										confirmButtonColor: '#3085d6',
+										cancelButtonColor: '#d33',
+										confirmButtonText: 'Logout'
+									}).then(e => {
+										this.authService.logout();
+										this.router.navigate(['/login']);
+									});
 								}
 							},
 							(error) => {
 								this.genericError = error.status != 200 && error.status != 409;
 								this.usernameTaken = error.status == 409 && error.error.status && error.error.status == 'username_already_taken';
-								this.emailTaken = error.status == 409 && error.error.status && error.error.status == 'email_already_taken';	
+								this.emailTaken = error.status == 409 && error.error.status && error.error.status == 'email_already_taken';
 							}
 						);
 			}
-							
+
 		});
     }
 
@@ -168,5 +163,5 @@ export class UserProfileComponent {
 		this.usernameTaken = false;
 		this.emailTaken = false;
 	}
-	
+
 }

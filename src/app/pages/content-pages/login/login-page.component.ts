@@ -11,7 +11,7 @@ import { catchError, tap, map } from 'rxjs/operators';
 
 import { AuthService } from '../../../shared/auth/auth.service';
 import { StateService } from '../../../service/state.service';
-import { User } from '../../../model/user';
+import { User } from '../../../model/user.model';
 
 @Component({
     selector: 'app-login-page',
@@ -50,12 +50,12 @@ export class LoginPageComponent {
     get f() { return this.loginForm.controls; }
 
     hasError(field: string) {
-        return ((this.loginForm.get(field).dirty || this.loginForm.get(field).touched) && this.loginForm.get(field).invalid && 
-                    this.loginForm.get(field).errors.required && !this.submitted) || 
+        return ((this.loginForm.get(field).dirty || this.loginForm.get(field).touched) && this.loginForm.get(field).invalid &&
+                    this.loginForm.get(field).errors.required && !this.submitted) ||
                 (
-                    this.loginForm.get(field).untouched && 
-                    this.loginForm.get(field).invalid && 
-                    this.loginForm.get(field).errors.required && 
+                    this.loginForm.get(field).untouched &&
+                    this.loginForm.get(field).invalid &&
+                    this.loginForm.get(field).errors.required &&
                     this.submitted
                 );
     }
@@ -70,7 +70,7 @@ export class LoginPageComponent {
         this.authService.signinUser(this.f.username.value, this.f.password.value)
             .pipe(first())
             .subscribe(response => {
-                
+
                 this.authService.setToken(response.token);
                 let user: User = {
                     userId: response.userId,

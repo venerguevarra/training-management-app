@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { CourseListComponent } from './list/list.component';
-import { CourseDetailComponent } from './detail/detail.component';
+import { CourseListComponent } from './course-list/list.component';
+import { CourseDetailComponent } from './course-detail/detail.component';
 
 import { AuthGuard } from '../../../shared/auth/auth-guard.service';
 

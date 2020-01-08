@@ -8,7 +8,7 @@ import swal from 'sweetalert2';
 import { ToastrService } from 'ngx-toastr';
 
 import { StateService } from '../../../../service/state.service';
-import { User } from '../../../../model/user';
+import { User } from '../../../../model/user.model';
 import { environment } from '../../../../../environments/environment';
 
 @Component({

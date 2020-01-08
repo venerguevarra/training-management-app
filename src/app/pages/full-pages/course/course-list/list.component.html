@@ -14,20 +14,43 @@
       <div class="col-sm-12">
         <form method="get">
           <div class="row">
-            <div class="col-sm-4">
-              <div class="form-group">
+            <div class="col-sm-3">
+              <div class="form-group" [formGroup]="searchForm">
                 <label>Course Name</label>
-                <input type="email" name="useremail" id="useremaail" class="form-control">
+                <input type="text"
+                       formControlName="courseName"
+                       name="courseName"
+                       id="courseName"
+                       class="form-control">
               </div>
             </div>
-            <div class="col-sm-8">
+            <div class="col-sm-3">
+              <div class="form-group">
+                <label>Created Date</label>
+                <div class="input-group">
+                  <input
+                         name="createdDate"
+                         id="createdDate"
+                         class="form-control"
+                         placeholder="yyyy-mm-dd"
+                         ngbDatepicker
+                         [(ngModel)]="createdDateModel"
+                         #createDatePicker="ngbDatepicker">
+                  <div class="input-group-append">
+                    <div class="input-group-text" (click)="createDatePicker.toggle()">
+                      <i class="fa fa-calendar" style="cursor: pointer;"></i>
+                    </div>
+                  </div>
+                  {{createdDate}}
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6">
               <div class="form-group">
                 <label>&nbsp;</label>
                 <div>
-                  <button type="submit" name="submit" value="search" id="submit" class="btn btn-success btn-raised mr-2">
-                    <i class="fa fa-fw fa-check"></i> Submit
-                  </button>
-                  <a class="btn btn-danger btn-raised"><i class="fa fa-repeat"></i> Clear</a>
+                  <button type="submit" name="submit" value="search" id="submit" class="btn btn-success btn-raised mr-2" (click)="submitSearchForm()"><i class="fa fa-fw fa-check"></i> Submit</button>
+                  <a class="btn btn-danger btn-raised" (click)="clearSearchForm()"><i class="fa fa-repeat"></i> Clear</a>
                 </div>
               </div>
             </div>

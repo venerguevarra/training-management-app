@@ -8,10 +8,11 @@ import swal from 'sweetalert2';
 import { ToastrService } from 'ngx-toastr';
 
 import { StateService } from '../../../service/state.service';
-import { User } from '../../../model/user';
+import { User } from '../../../model/user.model';
 
 import { environment } from '../../../../environments/environment';
 import { MustMatch } from '../../../validator/must-match.validator';
+import { AuthService } from '../../../shared/auth/auth.service';
 
 @Component({
 	selector: 'app-change-password',
@@ -32,6 +33,7 @@ export class ChangePasswordComponent {
 	sameCurrentPasswordError: boolean =  false;
 
 	constructor(
+		private authService: AuthService,
 		private httpClient: HttpClient,
         private stateService: StateService,
 		private toastr: ToastrService,
@@ -70,43 +72,31 @@ export class ChangePasswordComponent {
 			confirmButtonText: 'Change'
 		}).then(e => {
 			if(e.value) {
-				
+
 				let requestBody = {
 					username: this.currentUser.username,
 					password: this.currentForm.get('currentPassword').value,
 					newPassword: this.currentForm.get('newPassword').value
 				};
-									
+
 				this.httpClient
 						.post(this.CHANGE_PASSWORD_ENDPOINT, requestBody, { observe: 'response' })
 						.subscribe(
 							(data) => {
 								if(data.status == 200) {
-									let currentUserData = JSON.parse(JSON.stringify(data.body));
-									let updatedUser: User = {
-										userId: currentUserData.userId,
-										profileId: currentUserData.profileId,
-										firstName: currentUserData.firstName,
-										lastName: currentUserData.lastName,
-										middleInitial: currentUserData.middleInitial,
-										email: currentUserData.email,
-										username: currentUserData.username,
-										token: currentUserData.token
-									}
-									this.stateService.setCurrentUser(updatedUser);
 
-									this.genericError = false;
-									this.invalidPasswordError = false;
-									this.sameCurrentPasswordError = false;
-									this.submitted = false;
-									this.currentForm.reset();
-									this.toastr.success(
-										 'User profile successfully updated.', 
-										 'Success', {
-											timeOut :  3000,
-											closeButton: true
-										 }
-									);
+									swal.fire({
+										title: 'Password successfully changed!',
+										text: "For security purposes you now be automatically logged out.",
+										type: "info",
+										showCancelButton: false,
+										confirmButtonColor: '#3085d6',
+										cancelButtonColor: '#d33',
+										confirmButtonText: 'Change'
+									}).then(e => {
+										this.authService.logout();
+										this.router.navigate(['/login']);
+									});
 								}
 							},
 							(error) => {
@@ -116,8 +106,8 @@ export class ChangePasswordComponent {
 							}
 						);
 			}
-							
+
 		});
 	}
-	
+
 }

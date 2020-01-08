@@ -1,5 +1,5 @@
 <div class="card">
-  <div class="card-header" style="background-color: #E0F3F4;">
+  <div class="card-header" style="background-color: #ECEFF1;">
     <h3 *ngIf="!newForm">{{title}} Details</h3>
     <h3 *ngIf="newForm">New {{title}}</h3>
   </div>
@@ -22,7 +22,7 @@
                     <label class="col-md-3 label-control" for="name">Course Name <span class="px-required">*</span></label>
                     <div class="col-md-9">
                       <input  formControlName="name"  type="text" id="name" class="form-control" name="name"  [ngClass]="{ 'is-invalid': (f.name.dirty || f.name.touched || submitted) && f.name.invalid && f.name.errors.required}">
-                            <small *ngIf="(f.name.dirty || f.name.touched || submitted) && f.name.invalid && f.name.errors.required" class="form-text text-muted danger">Please enter your current password</small>
+                      <small *ngIf="(f.name.dirty || f.name.touched || submitted) && f.name.invalid && f.name.errors.required" class="form-text text-muted danger">Please enter your current password</small>
                     </div>
                   </div>
 

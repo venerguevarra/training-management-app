@@ -4,8 +4,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
-import { CourseListComponent } from './list/list.component';
-import { CourseDetailComponent } from './detail/detail.component';
+import { CourseListComponent } from './course-list/list.component';
+import { CourseDetailComponent } from './course-detail/detail.component';
 
 import { CourseRoutingModule  } from "./course-routing.module";
 

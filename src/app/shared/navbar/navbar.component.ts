@@ -6,7 +6,8 @@ import { ConfigService } from '../services/config.service';
 import { AuthService } from '../auth/auth.service';
 import { Router, ActivatedRoute } from "@angular/router";
 import { StateService } from '../../service/state.service';
-import { User } from '../../model/user';
+import { EventService } from '../../service/event.service';
+import { User } from '../../model/user.model';
 
 @Component({
   selector: "app-navbar",
@@ -26,8 +27,9 @@ export class NavbarComponent implements OnInit, AfterViewInit {
   user: any = {};
 
   constructor(
-    public translate: TranslateService, 
-    private layoutService: LayoutService, 
+    public translate: TranslateService,
+    private eventService: EventService,
+    private layoutService: LayoutService,
     private configService:ConfigService,
     private router: Router,
     private authService: AuthService,
@@ -41,6 +43,12 @@ export class NavbarComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.config = this.configService.templateConf;
+    this.eventService.emitter.subscribe((data) => {
+      console.log(data);
+      if(data.eventType === 'profile-updated') {
+        this.user = this.stateService.getCurrentUser();
+      }
+    });
   }
 
   ngAfterViewInit() {
