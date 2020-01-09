@@ -12,23 +12,23 @@ import { User } from '../../../../model/user.model';
 import { environment } from '../../../../../environments/environment';
 
 @Component({
-	selector: 'app-course-detail',
+	selector: 'app-facilitator-detail',
 	templateUrl: './detail.component.html',
 	styleUrls: ['./detail.component.scss']
 })
-export class CourseDetailComponent {
+export class FacilitatorDetailComponent {
 	private readonly API_HOST = environment.API_HOST;
-  	private readonly ENDPOINT: string = `${this.API_HOST}/courses`;
+  	private readonly ENDPOINT: string = `${this.API_HOST}/facilitators`;
 	private readonly USERS_ENDPOINT: string = `${this.API_HOST}/users`;
-	private readonly LANDING_PAGE: string = '/app/course';
+	private readonly LANDING_PAGE: string = '/app/facilitator';
 
-	title = 'Course';
+	title = 'Facilitator';
 	currentUser;
-	courseId;
+	modelId;
 	currentForm: FormGroup;
     submitted = false;
 	genericError: boolean = false;
-	currentCourse;
+	currentModel;
 	newForm = false;
 	editForm = false;
 	viewForm = false;
@@ -44,41 +44,32 @@ export class CourseDetailComponent {
         private router: Router,
         private route: ActivatedRoute) {
 
+		this.initForm();
+
 		this.route.params.subscribe( params => {
-
-			this.currentForm = this.formBuilder.group({
-				id: [''],
-				name: ['', [Validators.required]],
-				fee: ['', [Validators.required]],
-				description: [''],
-				days: ['', [Validators.required]],
-				status: ['', [Validators.requiredTrue]]
-			});
-
+			
 			if (params['id']) {
-				this.courseId = params.id;
-				this.newForm = this.courseId == -1;
+				this.modelId = params.id;
+				this.newForm = this.modelId == -1;
 
 				if(!this.newForm) {
 					 this.route.queryParams.subscribe(params => {
 						if(params.action === 'view') {
 							this.viewForm = true;
 						} 
-
 						if(params.action === 'edit') {
 							this.editForm = true;
 						}
-
 					});
 				}
 
 				if(this.viewForm || this.editForm) {
-					this.httpClient.get(`${this.ENDPOINT}/${this.courseId}`).subscribe(
+					this.httpClient.get(`${this.ENDPOINT}/${this.modelId}`).subscribe(
 						(data) => {
-							this.currentCourse = data;
+							this.currentModel = data;
 
-							if(this.currentCourse.createdBy != null) {
-								this.httpClient.get(`${this.USERS_ENDPOINT}/${this.currentCourse.createdBy}`).subscribe(
+							if(this.currentModel.createdBy != null) {
+								this.httpClient.get(`${this.USERS_ENDPOINT}/${this.currentModel.createdBy}`).subscribe(
 									(auditData) => {
 										let firstName = auditData['userProfile']['firstName'];
 										let lastName = auditData['userProfile']['lastName'];
@@ -91,8 +82,8 @@ export class CourseDetailComponent {
 							}
 							
 
-							if(this.currentCourse.modifiedBy != null) {
-								this.httpClient.get(`${this.USERS_ENDPOINT}/${this.currentCourse.modifiedBy}`).subscribe(
+							if(this.currentModel.modifiedBy != null) {
+								this.httpClient.get(`${this.USERS_ENDPOINT}/${this.currentModel.modifiedBy}`).subscribe(
 									(auditData) => {
 										let firstName = auditData['userProfile']['firstName'];
 										let lastName = auditData['userProfile']['lastName'];
@@ -103,18 +94,20 @@ export class CourseDetailComponent {
 									}
 								);
 							}
+							
 
 							this.currentForm = this.formBuilder.group({
-								id: [this.currentCourse.id],
-								name: [this.currentCourse.name, [Validators.required]],
-								fee: [this.currentCourse.courseFee, [Validators.required]],
-								description: [this.currentCourse.description],
-								days: [this.currentCourse.numberOfDays, [Validators.required]],
-								createdDate: [this.currentCourse.createdDate],
-								createdBy: [this.currentCourse.createdBy],
-								modifiedDate: [this.currentCourse.modifiedDate],
-								modifiedBy: [this.currentCourse.modifiedBy],
-								status: [this.currentCourse.active]
+								id: [this.currentModel.id],
+								firstName: [this.currentModel.firstName, [Validators.required]],
+								lastName: [this.currentModel.lastName, [Validators.required]],
+								middleInitial: [this.currentModel.middleInitial],
+								email: [this.currentModel.email, [Validators.required]],
+								mobileNumber: [this.currentModel.mobileNumber, [Validators.required]],
+								dailyRate: [this.currentModel.dailyRate, [Validators.required]],
+								createdDate: [this.currentModel.createdDate],
+								createdBy: [this.currentModel.createdBy],
+								modifiedDate: [this.currentModel.modifiedDate],
+								modifiedBy: [this.currentModel.modifiedBy]
 							});
 						},
 						(error) => {
@@ -127,6 +120,18 @@ export class CourseDetailComponent {
 
 	}
 
+	initForm() {
+		this.currentForm = this.formBuilder.group({
+			id: [''],
+			firstName: ['', [Validators.required]],
+			lastName: ['', [Validators.required]],
+			middleInitial: [''],
+			email: ['', [Validators.required]],
+			mobileNumber: ['', [Validators.required]],
+			dailyRate: ['', [Validators.required]]
+		});
+	}
+	
 	get f() { return this.currentForm.controls; }
 
 	ngAfterViewInit() {
@@ -141,7 +146,7 @@ export class CourseDetailComponent {
         }
 
 		swal.fire({
-			text: "Update course?",
+			text: `Update ${this.title}?`,
 			type: "info",
 			showCancelButton: true,
 			confirmButtonColor: '#3085d6',
@@ -150,37 +155,34 @@ export class CourseDetailComponent {
 			allowOutsideClick: false
 		}).then(e => {
 			if(e.value) {
-				let course = {
-					name: this.currentForm.get('name').value,
-					description: this.currentForm.get('description').value,
-					courseFee: this.currentForm.get('fee').value,
-					numberOfDays: this.currentForm.get('days').value,
-					active: this.currentForm.get('status').value,
+				let requestBody = {
+					firstName: this.currentForm.get('firstName').value,
+					lastName: this.currentForm.get('lastName').value,
+					middleInitial: this.currentForm.get('middleInitial').value,
+					email: this.currentForm.get('email').value,
+					mobileNumber: this.currentForm.get('mobileNumber').value,
+					dailyRate: this.currentForm.get('dailyRate').value,
 				};
 
-				let courseId = this.currentForm.get('id').value;
+				let resourceId = this.currentForm.get('id').value;
 
 				this.httpClient
-						.put(`${this.ENDPOINT}/${courseId}`, course, { observe: 'response' })
+						.put(`${this.ENDPOINT}/${resourceId}`, requestBody, { observe: 'response' })
 						.subscribe(
 							(data) => {
+								console.log(data);
 								if(data.status == 200) {
-									this.genericError = false;
-									
 									this.toastr.info(`${this.title} successfully updated.`, 'System', { timeOut: 3000 });
 								}
 							},
 							(error) => {
-								this.genericError = false;
-								
 								if(error.status === 409) {
-									this.toastr.error('Course name already exist.', 'Conlict', { timeOut: 3000 });
+									this.toastr.error('Email or mobile number already exist.', 'Conlict', { timeOut: 3000 });
 								} else if(error.status === 400) {
 									this.toastr.error('Invalid request received by the server.', 'Invalid Request', { timeOut: 3000 });
 								}	else {
 									this.toastr.error('Internal server error.', 'System', { timeOut: 3000 });
 								}
-
 							}
 						);
 			}
@@ -196,30 +198,31 @@ export class CourseDetailComponent {
 
 	saveNew() {
 		this.submitted = true;
-
+		
         if (this.currentForm.invalid) {
             return;
         }
 
 		swal.fire({
-			text: "Save new course?",
+			text: `Save new ${this.title}?`,
 			type: "info",
 			showCancelButton: true,
 			confirmButtonColor: '#3085d6',
 			cancelButtonColor: '#d33',
-			confirmButtonText: 'Save',
-			allowOutsideClick: false
+			confirmButtonText: 'Save'
 		}).then(e => {
 			if(e.value) {
-				let course = {
-					name: this.currentForm.get('name').value,
-					description: this.currentForm.get('description').value,
-					courseFee: this.currentForm.get('fee').value,
-					numberOfDays: this.currentForm.get('days').value,
+				let requestBody = {
+					firstName: this.currentForm.get('firstName').value,
+					lastName: this.currentForm.get('lastName').value,
+					middleInitial: this.currentForm.get('middleInitial').value,
+					email: this.currentForm.get('email').value,
+					mobileNumber: this.currentForm.get('mobileNumber').value,
+					dailyRate: this.currentForm.get('dailyRate').value,
 				};
 
 				this.httpClient
-						.post(this.ENDPOINT, course, { observe: 'response' })
+						.post(this.ENDPOINT, requestBody, { observe: 'response' })
 						.subscribe(
 							(data) => {
 								if(data.status == 201) {
@@ -240,16 +243,13 @@ export class CourseDetailComponent {
 								}
 							},
 							(error) => {
-								this.genericError = false;
-
 								if(error.status === 409) {
-									this.toastr.error('Course name already exist.', 'Conlict', { timeOut: 3000 });
+									this.toastr.error('Email or mobile number already exist.', 'Conlict', { timeOut: 3000 });
 								} else if(error.status === 400) {
 									this.toastr.error('Invalid request received by the server.', 'Invalid Request', { timeOut: 3000 });
 								}	else {
 									this.toastr.error('Internal server error.', 'System', { timeOut: 3000 });
 								}
-
 							}
 						);
 			}
@@ -258,7 +258,10 @@ export class CourseDetailComponent {
 	}
 
 	cancel() {
-		this.router.navigate(['/app/course']);
+		this.router.navigate([this.LANDING_PAGE]);
 	}
 
+	isInvalid(control) {
+		return (control.dirty || control.touched || this.submitted) && control.invalid && control.errors.required;
+	}
 }

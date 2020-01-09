@@ -1,42 +1,61 @@
 <div class="card">
+  
   <div class="card-header" style="background-color: #ECEFF1;">
     <h3 *ngIf="!newForm">{{title}} Details</h3>
     <h3 *ngIf="newForm">New {{title}}</h3>
   </div>
+
   <div class="card-body">
     <div class="row text-left justify-content-md-center">
+      <!-- view form start -->
       <div *ngIf="newForm == false && viewForm == true" class="col-md-6">
         <form class="form form-horizontal striped-rows">
         <br/>
         <div class="form-body">
             <div class="form-group row">
-              <label class="col-md-3 label-control" for="name">Course Name</label>
+              <label class="col-md-3 label-control" for="name">First Name</label>
               <div class="col-md-9">
-                {{f.name.value}}
+                {{f.firstName.value}}
               </div>
             </div>
         </div>
         <div class="form-body">
             <div class="form-group row">
-              <label class="col-md-3 label-control" for="name">Description</label>
+              <label class="col-md-3 label-control" for="name">Last Name</label>
               <div class="col-md-9">
-                {{f.description.value}}
+                {{f.lastName.value}}
               </div>
             </div>
         </div>
         <div class="form-body">
             <div class="form-group row">
-              <label class="col-md-3 label-control" for="name">Fee</label>
+              <label class="col-md-3 label-control" for="name">Middle Initial</label>
               <div class="col-md-9">
-                {{f.fee.value | currency: 'PHP '}}
+                {{f.middleInitial.value}}
               </div>
             </div>
         </div>
-        <div class="form-body">
+         <div class="form-body">
             <div class="form-group row">
-              <label class="col-md-3 label-control" for="name">Number of Days</label>
+              <label class="col-md-3 label-control" for="name">Email Address</label>
               <div class="col-md-9">
-                {{f.days.value }}
+                {{f.email.value}}
+              </div>
+            </div>
+        </div>
+         <div class="form-body">
+            <div class="form-group row">
+              <label class="col-md-3 label-control" for="name">Mobile Number</label>
+              <div class="col-md-9">
+                {{f.mobileNumber.value}}
+              </div>
+            </div>
+        </div>
+         <div class="form-body">
+            <div class="form-group row">
+              <label class="col-md-3 label-control" for="name">Daily Rate</label>
+              <div class="col-md-9">
+                {{f.dailyRate.value | currency: 'PHP '}}
               </div>
             </div>
         </div>
@@ -87,65 +106,77 @@
         </div>
         </form>
       </div>
+      <!-- view form end -->
 
+      <!-- new form and edit form start -->
       <div *ngIf="newForm == true || editForm == true" class="col-md-6">
         <div class="card">
           <div class="card-content">
             <div class="px-3">
-              <form class="form form-horizontal" [formGroup]="currentForm" >
+              <form class="form form-horizontal" [formGroup]="currentForm">
                 
-                <input *ngIf="editForm" type="hidden" formControlName="id" >
+                <input *ngIf="editForm" type="hidden" formControlName="id">
                 
                 <div class="form-body">
                   <div class="form-group row">
                     <label class="col-md-3 label-control">&nbsp;</label>
                     <div class="col-md-9">
-                      <ngb-alert type="danger" [dismissible]="false" *ngIf="genericError">Unable to update profile. Try again.</ngb-alert>
+                      <ngb-alert type="danger" [dismissible]="false" *ngIf="genericError">Unable to update information. Try again.</ngb-alert>
                       Fields with <span class="px-required">*</span> are required.
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-md-3 label-control" for="name">Course Name <span class="px-required">*</span></label>
+                    <label class="col-md-3 label-control" for="name">First Name<span class="px-required">*</span></label>
                     <div class="col-md-9">
-                      <input  formControlName="name"  type="text" id="name" class="form-control" name="name"  [ngClass]="{ 'is-invalid': (f.name.dirty || f.name.touched || submitted) && f.name.invalid && f.name.errors.required}">
-                      <small *ngIf="(f.name.dirty || f.name.touched || submitted) && f.name.invalid && f.name.errors.required" class="form-text text-muted danger">Course name required</small>
+                      <input  formControlName="firstName"  type="text" id="firstName" class="form-control" name="firstName"  [ngClass]="{ 'is-invalid': isInvalid(f.firstName)}">
+                      <small *ngIf="(f.firstName.dirty || f.firstName.touched || submitted) && f.firstName.invalid && f.firstName.errors.required" class="form-text text-muted danger">
+                        First name required
+                      </small>
                     </div>
                   </div>
-
                   <div class="form-group row">
-                    <label class="col-md-3 label-control" for="description">Description </label>
+                    <label class="col-md-3 label-control" for="name">Last Name<span class="px-required">*</span></label>
                     <div class="col-md-9">
-                      <textarea  formControlName="description"  type="text" id="description" class="form-control" name="description"></textarea>
+                      <input  formControlName="lastName"  type="text" id="lastName" class="form-control" name="lastName"  [ngClass]="{ 'is-invalid': isInvalid(f.lastName)}">
+                      <small *ngIf="(f.lastName.dirty || f.lastName.touched || submitted) && f.lastName.invalid && f.lastName.errors.required" class="form-text text-muted danger">
+                        Last name required
+                      </small>
                     </div>
                   </div>
-
                   <div class="form-group row">
-                    <label class="col-md-3 label-control" for="fee">Fee <span class="px-required">*</span></label>
+                    <label class="col-md-3 label-control" for="name">Middle Initial</label>
                     <div class="col-md-9">
-                      <input  formControlName="fee"  type="text" id="fee" class="form-control" name="fee"  [ngClass]="{ 'is-invalid': (f.fee.dirty || f.fee.touched || submitted) && f.fee.invalid && f.fee.errors.required}">
-                      <small *ngIf="(f.fee.dirty || f.fee.touched || submitted) && f.fee.invalid && f.fee.errors.required" class="form-text text-muted danger">Course fee required</small>
+                      <input  formControlName="middleInitial"  type="text" id="middleInitial" class="form-control" name="middleInitial">
                     </div>
                   </div>
-
                   <div class="form-group row">
-                    <label class="col-md-3 label-control" for="eventRegInput4">Number of Days <span class="px-required">*</span></label>
+                    <label class="col-md-3 label-control" for="name">Email<span class="px-required">*</span></label>
                     <div class="col-md-9">
-                      <input formControlName="days"  type="text" id="days" class="form-control" name="days"  [ngClass]="{ 'is-invalid': (f.days.dirty || f.days.touched || submitted) && f.days.invalid && f.days.errors.required}">
-                      <small *ngIf="(f.days.dirty || f.days.touched || submitted) && f.days.invalid && f.days.errors.required" class="form-text text-muted danger">Number of days required</small>
+                      <input  formControlName="email"  type="text" id="email" class="form-control" name="email"  [ngClass]="{ 'is-invalid': isInvalid(f.email)}">
+                      <small *ngIf="(f.email.dirty || f.email.touched || submitted) && f.email.invalid && f.email.errors.required" class="form-text text-muted danger">
+                        Email address required
+                      </small>
                     </div>
                   </div>
-
-                   <div class="form-group row">
-                    <label class="col-md-3 label-control" for="eventRegInput4">Status <span class="px-required">*</span></label>
-                    <div class="col-md-3">
-                      <select formControlName="status" class="custom-select">  
-                        <option value="ACTIVE">Active</option>
-                        <option value="INACTIVE">Inactive</option>
-                    </select>
+                  <div class="form-group row">
+                    <label class="col-md-3 label-control" for="name">Mobile Number<span class="px-required">*</span></label>
+                    <div class="col-md-9">
+                      <input formControlName="mobileNumber" id="mobileNumber" class="form-control" name="mobileNumber" [ngClass]="{ 'is-invalid': isInvalid(f.email)}" type="text">
+                      <small *ngIf="(f.mobileNumber.dirty || f.mobileNumber.touched || submitted) && f.mobileNumber.invalid && f.mobileNumber.errors.required" class="form-text text-muted danger">
+                        Mobile number required
+                      </small>
                     </div>
                   </div>
-
-                 
+                  <div class="form-group row">
+                    <label class="col-md-3 label-control" for="name">Daily Rate<span class="px-required">*</span></label>
+                    <div class="col-md-9">
+                      <input formControlName="dailyRate" id="dailyRate" class="form-control" name="dailyRate" [ngClass]="{ 'is-invalid': isInvalid(f.dailyRate)}" type="text">
+                      <small *ngIf="(f.dailyRate.dirty || f.dailyRate.touched || submitted) && f.dailyRate.invalid && f.dailyRate.errors.required" class="form-text text-muted danger">
+                        Daily rate required
+                      </small>
+                    </div>
+                  </div>
+                  
                   <div class="form-group row">
                     <label class="col-md-3 label-control" for="eventRegInput4">&nbsp;</label>
                     <div class="col-md-9">
@@ -161,17 +192,15 @@
                       </button>
                     </div>
                   </div>
-                  
+
                 </div>
               </form>
             </div>
           </div>
         </div>
       </div>
+      <!-- new form and edit form end -->
     </div>
   </div>
+
 </div>
-
-
-
-<!-- // Form actions layout section end -->

@@ -44,7 +44,6 @@ export class NavbarComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.config = this.configService.templateConf;
     this.eventService.emitter.subscribe((data) => {
-      console.log(data);
       if(data.eventType === 'profile-updated') {
         this.user = this.stateService.getCurrentUser();
       }

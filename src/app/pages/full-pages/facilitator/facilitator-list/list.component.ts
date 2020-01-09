@@ -17,13 +17,13 @@ import { pageConfig } from '../../../page.config';
 	templateUrl: './list.component.html',
 	styleUrls: ['./list.component.scss']
 })
-export class CourseListComponent {
+export class FacilitatorListComponent {
 	private readonly API_HOST = environment.API_HOST;
-  	private readonly ENDPOINT: string = `${this.API_HOST}/courses`;
+  	private readonly ENDPOINT: string = `${this.API_HOST}/facilitators`;
 	private readonly FIND_ENDPOINT: string = `${this.ENDPOINT}/actions/find`;
-	private readonly LANDING_PAGE: string = `/app/course`;
+	private readonly LANDING_PAGE: string = `/app/facilitator`;
 
-	title: string = "Course";
+	title: string = "Facilitator";
 	rows: any = [];
 	page = 0;
 	pageSize = pageConfig.pageSize;
@@ -115,11 +115,26 @@ export class CourseListComponent {
 
 		if(this.searchForm.get('name').value != '') {
 			this.criteria.push({
-				name: 'name',
+				name: 'firstName',
 				value: this.searchForm.get('name').value,
 				operator: 'LIKE',
 				type: 'STRING',
 				logical: 'OR'
+			});
+
+			this.criteria.push({
+				name: 'lastName',
+				value: this.searchForm.get('name').value,
+				operator: 'LIKE',
+				type: 'STRING',
+				logical: 'OR'
+			});
+
+			this.criteria.push({
+				name: 'email',
+				value: this.searchForm.get('name').value,
+				operator: 'LIKE',
+				type: 'STRING'
 			});
 		}
 
@@ -184,7 +199,6 @@ export class CourseListComponent {
 					(data) => {
 						this.collectionSize = data['totalElements'];
 						this.rows = data['elements'];
-						console.log(this.rows);
 					}
 				);
 		}

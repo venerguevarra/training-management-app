@@ -13,17 +13,17 @@ import { environment } from '../../../../../environments/environment';
 import { pageConfig } from '../../../page.config';
 
 @Component({
-	selector: 'app-course-list',
+	selector: 'app-venue-list',
 	templateUrl: './list.component.html',
 	styleUrls: ['./list.component.scss']
 })
-export class CourseListComponent {
+export class VenueListComponent {
 	private readonly API_HOST = environment.API_HOST;
-  	private readonly ENDPOINT: string = `${this.API_HOST}/courses`;
+  	private readonly ENDPOINT: string = `${this.API_HOST}/venues`;
 	private readonly FIND_ENDPOINT: string = `${this.ENDPOINT}/actions/find`;
-	private readonly LANDING_PAGE: string = `/app/course`;
+	private readonly LANDING_PAGE: string = `/app/venue`;
 
-	title: string = "Course";
+	title: string = "Venue";
 	rows: any = [];
 	page = 0;
 	pageSize = pageConfig.pageSize;
@@ -33,7 +33,7 @@ export class CourseListComponent {
 	searchForm: FormGroup;
 	searchFormStatus;
 	criteria;
-	createdDate;
+	createdDate = '';
 
 	defaultPaginationParams = {'size': this.pageSize.toString(), 'page': this.page.toString()};
 
@@ -112,6 +112,9 @@ export class CourseListComponent {
 
 	private getSearchFormCriteria() {
 		this.criteria = [];
+		console.log(this.searchForm.get('name').value);
+		console.log(this.searchForm.get('status').value);
+		console.log(this.searchForm.get('createdDate').value === '');
 
 		if(this.searchForm.get('name').value != '') {
 			this.criteria.push({

@@ -1,4 +1,5 @@
 
+
 <div class="card">
   <div class="card-header" style="padding-top: 10px;">
     <h2><strong>{{title}}</strong></h2>
@@ -6,6 +7,7 @@
 </div>
 
 <div class="card">
+
   <div class="card-header px-header-color" style="background-color: #ECEFF1;">
     <a class="float-left btn btn-success btn-raised mr-2" (click)="navigateToNewForm()">
       <i class="fa fa-fw fa-plus-circle"></i> New {{title}}
@@ -15,10 +17,9 @@
     </a>
     <a class="position-relative btn btn-info btn-raised mr-2" style="background-color: white; color: green;" (click)="clearSearchForm()"><i class="fa fa-repeat"></i> Refresh</a>
   </div>
-  
-  <div class="card-body" id="collapseExample" [ngbCollapse]="isCollapsed">
 
-   <form class="form form-horizontal" [formGroup]="searchForm">
+  <div class="card-body" id="collapseExample" [ngbCollapse]="isCollapsed">
+    <form class="form form-horizontal" [formGroup]="searchForm">
       
       <div>
         <div class="col-sm-12">
@@ -80,13 +81,13 @@
       </div>
 
     </form>
-
   </div>
 </div>
 
 <section id="paging" class="mb-3">
   <div class="card">
-    <div class="card-header"></div>
+    <div class="card-header">
+    </div>
     <div class="card-body">
       <div class="col-sm-12">
         <div class="row">
@@ -94,12 +95,10 @@
             <table id="course-table" class="table table-striped">
               <thead>
                 <tr>
-                  <th scope="col" style="width:20%;">Name</th>
-                  <th scope="col" style="width:20%;">Description</th>
-                  <th scope="col" style="width:10%;">Days</th>
-                  <th scope="col" style="width:10%;">Course Fee</th>
-                  <th scope="col" style="width:15%;">Created Date</th>
-                  <th scope="col" style="width:5%;">Status</th>
+                  <th scope="col" style="width:30%;">Venue Name</th>
+                  <th scope="col" style="width:30%;">Description</th>
+                  <th scope="col" style="width:20%;">Created Date</th>
+                  <th scope="col" style="width:10%;">Status</th>
                   <th scope="col" style="width:10%;text-align: center;">Actions</th>
                 </tr>
               </thead>
@@ -107,13 +106,11 @@
                 <tr *ngFor="let row of rows">
                   <td scope="row">{{ row.name }}</td>
                   <td scope="row">{{ row.description }}</td>
-                  <td scope="row">{{ row.numberOfDays }}</td>
-                  <td scope="row">{{row.courseFee | currency: 'PHP '}}</td>
                   <td scope="row">{{row.createdDate | date: 'MMM d,y'}}</td>
                   <td scope="row">{{ row.active }}</td>
                   <td scope="row" style="text-align: center;">
-                    <a [routerLink]="['/app/course', row.id]" [queryParams]="{action: 'view'}" queryParamsHandling="merge" class="mr-3" placement="top" ngbTooltip="View"><i class="ft-eye"></i></a>
-                    <a [routerLink]="['/app/course', row.id]" [queryParams]="{action: 'edit'}" placement="top" ngbTooltip="Edit"><i class="ft-edit-2"></i></a>
+                    <a [routerLink]="['/app/venue', row.id]" [queryParams]="{action: 'view'}" queryParamsHandling="merge" class="mr-2" placement="top" ngbTooltip="View"><i class="ft-eye"></i></a>
+                    <a [routerLink]="['/app/venue', row.id]" [queryParams]="{action: 'edit'}" placement="top" ngbTooltip="Edit"><i class="ft-edit-2"></i></a>
                   </td>
                 </tr>
               </tbody>

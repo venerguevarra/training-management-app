@@ -9,7 +9,9 @@ import { AccountComponent  } from "./account/account.component";
 import { DashboardComponent  } from "./dashboard/dashboard.component";
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
+import { FacilitatorModule } from './facilitator/facilitator.module';
 import { CourseModule } from './course/course.module';
+import { VenueModule } from './venue/venue.module';
 
 import { FullPageRoutingModule  } from "./full-pages-routing.module";
 
@@ -21,7 +23,9 @@ import { FullPageRoutingModule  } from "./full-pages-routing.module";
         FormsModule,
         ReactiveFormsModule,
         NgxDatatableModule,
-        CourseModule
+        CourseModule,
+        FacilitatorModule,
+        VenueModule
     ],
     exports: [],
     declarations: [
