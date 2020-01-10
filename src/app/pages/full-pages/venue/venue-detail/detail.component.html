@@ -13,17 +13,49 @@
         <br/>
         <div class="form-body">
             <div class="form-group row">
-              <label class="col-md-3 label-control" for="name">Name</label>
+              <label class="col-md-3 label-control" for="name">First Name</label>
               <div class="col-md-9">
-                {{f.name.value}}
+                {{f.firstName.value}}
               </div>
             </div>
         </div>
         <div class="form-body">
             <div class="form-group row">
-              <label class="col-md-3 label-control" for="name">Description</label>
+              <label class="col-md-3 label-control" for="name">Last Name</label>
               <div class="col-md-9">
-                {{f.description.value}}
+                {{f.lastName.value}}
+              </div>
+            </div>
+        </div>
+        <div class="form-body">
+            <div class="form-group row">
+              <label class="col-md-3 label-control" for="name">Middle Initial</label>
+              <div class="col-md-9">
+                {{f.middleInitial.value}}
+              </div>
+            </div>
+        </div>
+         <div class="form-body">
+            <div class="form-group row">
+              <label class="col-md-3 label-control" for="name">Email Address</label>
+              <div class="col-md-9">
+                {{f.email.value}}
+              </div>
+            </div>
+        </div>
+         <div class="form-body">
+            <div class="form-group row">
+              <label class="col-md-3 label-control" for="name">Mobile Number</label>
+              <div class="col-md-9">
+                {{f.mobileNumber.value}}
+              </div>
+            </div>
+        </div>
+         <div class="form-body">
+            <div class="form-group row">
+              <label class="col-md-3 label-control" for="name">Daily Rate</label>
+              <div class="col-md-9">
+                {{f.dailyRate.value | currency: 'PHP '}}
               </div>
             </div>
         </div>
@@ -61,6 +93,15 @@
         </div>
         <div class="form-body">
             <div class="form-group row">
+              <label class="col-md-3 label-control" for="status">Status</label>
+              <div class="col-md-9">
+                <span *ngIf="isRecordActive">Active</span>
+                <span *ngIf="!isRecordActive">Inactive</span>
+              </div>
+            </div>
+        </div>
+        <div class="form-body">
+            <div class="form-group row">
               <label class="col-md-3 label-control">&nbsp;</label>
               <div class="col-md-9">
                 <button type="button" class="btn btn-raised btn-success mr-2" (click)="showEditForm()">
@@ -89,29 +130,42 @@
                   <div class="form-group row">
                     <label class="col-md-3 label-control">&nbsp;</label>
                     <div class="col-md-9">
+                      <ngb-alert type="danger" [dismissible]="false" *ngIf="genericError">Unable to update information. Try again.</ngb-alert>
                       Fields with <span class="px-required">*</span> are required.
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-md-3 label-control" for="name">Name<span class="px-required">*</span></label>
+                    <label class="col-md-3 label-control" for="name">First Name<span class="px-required">*</span></label>
                     <div class="col-md-9">
                       <input  formControlName="name"  type="text" id="name" class="form-control" name="name"  [ngClass]="{ 'is-invalid': isInvalid(f.name)}">
                       <small *ngIf="(f.name.dirty || f.name.touched || submitted) && f.name.invalid && f.name.errors.required" class="form-text text-muted danger">
-                        First name required
+                        Venue name required
                       </small>
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-md-3 label-control" for="name">Description</label>
+                    <label class="col-md-3 label-control" for="name">Description<span class="px-required">*</span></label>
                     <div class="col-md-9">
-                      <textarea  formControlName="description"  type="text" id="description" class="form-control" name="description"></textarea>
+                      <input  formControlName="description"  type="text" id="description" class="form-control" name="description"  [ngClass]="{ 'is-invalid': isInvalid(f.description)}">
+                      <small *ngIf="(f.description.dirty || f.description.touched || submitted) && f.description.invalid && f.description.errors.required" class="form-text text-muted danger">
+                        Description required
+                      </small>
+                    </div>
+                  </div>
+                   <div *ngIf="editForm" class="form-group row">
+                    <label class="col-md-3 label-control" for="status">Active <span class="px-required">*</span></label>
+                    <div class="col-md-3">
+                      <input type="hidden" formControlName="status">
+                      <div class="custom-control custom-checkbox d-inline-block">
+                        <input type="checkbox" id="active" (change)="activeCheckbox($event)" [checked]="isRecordActive" name="active" class="custom-control-input" style="zoom: 2;">
+                        <label class="custom-control-label" for="active">Yes</label>
+                      </div>
                     </div>
                   </div>
                   
                   <div class="form-group row">
                     <label class="col-md-3 label-control" for="eventRegInput4">&nbsp;</label>
                     <div class="col-md-9">
-                      
                       <button *ngIf="editForm" type="button" class="btn btn-raised btn-success mr-2" (click)="update()">
                         <i class="fa fa-check-square-o"></i> Save Changes
                       </button>

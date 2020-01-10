@@ -13,7 +13,7 @@ import { environment } from '../../../../../environments/environment';
 import { pageConfig } from '../../../page.config';
 
 @Component({
-	selector: 'app-course-list',
+	selector: 'app-facilitator-list',
 	templateUrl: './list.component.html',
 	styleUrls: ['./list.component.scss']
 })

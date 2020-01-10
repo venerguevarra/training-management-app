@@ -36,6 +36,8 @@ export class VenueDetailComponent {
 	createdBy = "";
 	modifiedBy = "";
 
+	isRecordActive: boolean = false;
+
 	constructor(
 		private httpClient: HttpClient,
         private stateService: StateService,
@@ -98,12 +100,13 @@ export class VenueDetailComponent {
 
 							this.currentForm = this.formBuilder.group({
 								id: [this.currentModel.id],
-								firsnametName: [this.currentModel.name, [Validators.required]],
-								description: [this.currentModel.description, [Validators.required]],
+								name: [this.currentModel.name, [Validators.required]],
+								description: [this.currentModel.description],
 								createdDate: [this.currentModel.createdDate],
 								createdBy: [this.currentModel.createdBy],
 								modifiedDate: [this.currentModel.modifiedDate],
-								modifiedBy: [this.currentModel.modifiedBy]
+								modifiedBy: [this.currentModel.modifiedBy],
+								status: [this.currentModel.active]
 							});
 						},
 						(error) => {
@@ -120,7 +123,8 @@ export class VenueDetailComponent {
 		this.currentForm = this.formBuilder.group({
 			id: [''],
 			name: ['', [Validators.required]],
-			description: ['', [Validators.required]]
+			description: [''],
+			status: ['']
 		});
 	}
 	
@@ -149,7 +153,8 @@ export class VenueDetailComponent {
 			if(e.value) {
 				let requestBody = {
 					name: this.currentForm.get('name').value,
-					description: this.currentForm.get('description').value
+					description: this.currentForm.get('description').value,
+					status: this.currentForm.get('status').value
 				};
 
 				let resourceId = this.currentForm.get('id').value;
@@ -160,12 +165,12 @@ export class VenueDetailComponent {
 							(data) => {
 								console.log(data);
 								if(data.status == 200) {
-									this.toastr.info(`${this.title} successfully updated.`, 'System', { timeOut: 3000 });
+									this.toastr.success(`${this.title} successfully updated.`, 'System', { timeOut: 3000 });
 								}
 							},
 							(error) => {
 								if(error.status === 409) {
-									this.toastr.error('Venue name already exist.', 'Conlict', { timeOut: 3000 });
+									this.toastr.error('Email or mobile number already exist.', 'Conlict', { timeOut: 3000 });
 								} else if(error.status === 400) {
 									this.toastr.error('Invalid request received by the server.', 'Invalid Request', { timeOut: 3000 });
 								}	else {
@@ -197,7 +202,8 @@ export class VenueDetailComponent {
 			showCancelButton: true,
 			confirmButtonColor: '#3085d6',
 			cancelButtonColor: '#d33',
-			confirmButtonText: 'Save'
+			confirmButtonText: 'Save',
+			allowOutsideClick: false
 		}).then(e => {
 			if(e.value) {
 				let requestBody = {
@@ -212,23 +218,13 @@ export class VenueDetailComponent {
 								if(data.status == 201) {
 									this.genericError = false;
 									
-									swal.fire({
-										title: 'Success',
-										text: `New ${this.title} successfully saved.`,
-										type: "info",
-										showCancelButton: false,
-										confirmButtonColor: '#3085d6',
-										cancelButtonColor: '#d33',
-										confirmButtonText: 'Close',
-										allowOutsideClick: false
-									}).then(e => {
-										this.router.navigate([this.LANDING_PAGE]);
-									});
+									this.toastr.success(`New facilitator successfully saved.`, 'Success', { timeOut: 3000 });
+									this.router.navigate([this.LANDING_PAGE]);
 								}
 							},
 							(error) => {
 								if(error.status === 409) {
-									this.toastr.error('Venue name already exist.', 'Conlict', { timeOut: 3000 });
+									this.toastr.error('Email or mobile number already exist.', 'Conlict', { timeOut: 3000 });
 								} else if(error.status === 400) {
 									this.toastr.error('Invalid request received by the server.', 'Invalid Request', { timeOut: 3000 });
 								}	else {
@@ -241,11 +237,19 @@ export class VenueDetailComponent {
 		});
 	}
 
+	activeCheckbox = (event) => {
+		if(event.currentTarget.checked) {
+			this.f.status.setValue('ACTIVE');
+		} else {
+			this.f.status.setValue('INACTIVE');
+		}
+	}
+
 	cancel() {
 		this.router.navigate([this.LANDING_PAGE]);
 	}
 
-	isInvalid(control) {
+	isInvalid(control:any) {
 		return (control.dirty || control.touched || this.submitted) && control.invalid && control.errors.required;
 	}
 }

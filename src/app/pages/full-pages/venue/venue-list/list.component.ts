@@ -33,7 +33,7 @@ export class VenueListComponent {
 	searchForm: FormGroup;
 	searchFormStatus;
 	criteria;
-	createdDate = '';
+	createdDate;
 
 	defaultPaginationParams = {'size': this.pageSize.toString(), 'page': this.page.toString()};
 
@@ -112,9 +112,6 @@ export class VenueListComponent {
 
 	private getSearchFormCriteria() {
 		this.criteria = [];
-		console.log(this.searchForm.get('name').value);
-		console.log(this.searchForm.get('status').value);
-		console.log(this.searchForm.get('createdDate').value === '');
 
 		if(this.searchForm.get('name').value != '') {
 			this.criteria.push({
@@ -187,7 +184,6 @@ export class VenueListComponent {
 					(data) => {
 						this.collectionSize = data['totalElements'];
 						this.rows = data['elements'];
-						console.log(this.rows);
 					}
 				);
 		}

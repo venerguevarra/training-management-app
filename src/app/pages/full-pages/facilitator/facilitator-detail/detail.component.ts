@@ -36,6 +36,8 @@ export class FacilitatorDetailComponent {
 	createdBy = "";
 	modifiedBy = "";
 
+	isRecordActive: boolean = false;
+
 	constructor(
 		private httpClient: HttpClient,
         private stateService: StateService,
@@ -107,8 +109,11 @@ export class FacilitatorDetailComponent {
 								createdDate: [this.currentModel.createdDate],
 								createdBy: [this.currentModel.createdBy],
 								modifiedDate: [this.currentModel.modifiedDate],
-								modifiedBy: [this.currentModel.modifiedBy]
+								modifiedBy: [this.currentModel.modifiedBy],
+								status: [this.currentModel.active]
 							});
+
+							this.isRecordActive = this.currentModel.active === 'ACTIVE';
 						},
 						(error) => {
 							this.toastr.error('Error has occurred.', 'System', { timeOut: 3000 });
@@ -128,7 +133,8 @@ export class FacilitatorDetailComponent {
 			middleInitial: [''],
 			email: ['', [Validators.required]],
 			mobileNumber: ['', [Validators.required]],
-			dailyRate: ['', [Validators.required]]
+			dailyRate: ['', [Validators.required]],
+			status: ['']
 		});
 	}
 	
@@ -162,6 +168,7 @@ export class FacilitatorDetailComponent {
 					email: this.currentForm.get('email').value,
 					mobileNumber: this.currentForm.get('mobileNumber').value,
 					dailyRate: this.currentForm.get('dailyRate').value,
+					active: this.currentForm.get('status').value
 				};
 
 				let resourceId = this.currentForm.get('id').value;
@@ -172,7 +179,7 @@ export class FacilitatorDetailComponent {
 							(data) => {
 								console.log(data);
 								if(data.status == 200) {
-									this.toastr.info(`${this.title} successfully updated.`, 'System', { timeOut: 3000 });
+									this.toastr.success(`${this.title} successfully updated.`, 'System', { timeOut: 3000 });
 								}
 							},
 							(error) => {
@@ -209,7 +216,8 @@ export class FacilitatorDetailComponent {
 			showCancelButton: true,
 			confirmButtonColor: '#3085d6',
 			cancelButtonColor: '#d33',
-			confirmButtonText: 'Save'
+			confirmButtonText: 'Save',
+			allowOutsideClick: false
 		}).then(e => {
 			if(e.value) {
 				let requestBody = {
@@ -228,18 +236,8 @@ export class FacilitatorDetailComponent {
 								if(data.status == 201) {
 									this.genericError = false;
 									
-									swal.fire({
-										title: 'Success',
-										text: `New ${this.title} successfully saved.`,
-										type: "info",
-										showCancelButton: false,
-										confirmButtonColor: '#3085d6',
-										cancelButtonColor: '#d33',
-										confirmButtonText: 'Close',
-										allowOutsideClick: false
-									}).then(e => {
-										this.router.navigate([this.LANDING_PAGE]);
-									});
+									this.toastr.success(`New facilitator successfully saved.`, 'Success', { timeOut: 3000 });
+									this.router.navigate([this.LANDING_PAGE]);
 								}
 							},
 							(error) => {
@@ -255,6 +253,14 @@ export class FacilitatorDetailComponent {
 			}
 
 		});
+	}
+
+	activeCheckbox = (event) => {
+		if(event.currentTarget.checked) {
+			this.f.status.setValue('ACTIVE');
+		} else {
+			this.f.status.setValue('INACTIVE');
+		}
 	}
 
 	cancel() {
