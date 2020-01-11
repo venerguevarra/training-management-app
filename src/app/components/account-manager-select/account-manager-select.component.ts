@@ -33,11 +33,12 @@ export class AccountManagerSelectComponent {
 		this.dataService.getActive().subscribe(data => {
 			this.data = data;
             this.dataBuffer = this.data.slice(0, this.bufferSize);
-            if(this.selectedAccountManager && this.selectedAccountManager != '') {
-                this.selectedId = this.selectedAccountManager;
-            }
 		});
 	}
+
+    ngOnChanges(){
+        console.log("ngChanges");
+    }
 
 	onScrollToEnd() {
         this.fetchMore();
@@ -45,14 +46,12 @@ export class AccountManagerSelectComponent {
 
     onChange($event) {
         if($event) {
-            this.selectedId = $event.value;
             this.selectedIdEmitter.emit($event.value);
         }
     }
 
     onClear($event) {
         if($event) {
-            this.selectedId = $event.value;
             this.selectedIdEmitter.emit($event.value);
         } else {
             this.selectedIdEmitter.emit('');

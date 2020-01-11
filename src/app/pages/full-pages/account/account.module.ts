@@ -3,16 +3,16 @@ import { CommonModule } from "@angular/common";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
-import { NgSelectModule } from '@ng-select/ng-select';
 
-import { InquiryListComponent } from './inquiry-list/list.component';
-import { InquiryDetailComponent } from './inquiry-detail/detail.component';
+import { AccountListComponent } from './account-list/list.component';
+import { AccountDetailComponent } from './account-detail/detail.component';
 
-import { InquiryRoutingModule  } from "./inquiry-routing.module";
-import { InquiryStatusSelectModule }  from '../../../components/inquiry-status-select/inquiry-status-select.module';
-import { CourseSelectModule }  from '../../../components/course-select/course-select.module';
 import { ChannelSelectModule }  from '../../../components/channel-select/channel-select.module';
 import { AccountManagerSelectModule }  from '../../../components/account-manager-select/account-manager-select.module';
+import { CompanySizeSelectModule }  from '../../../components/company-size-select/company-size-select.module';
+
+
+import { AccountRoutingModule  } from "./account-routing.module";
 
 @NgModule({
     imports: [
@@ -21,18 +21,16 @@ import { AccountManagerSelectModule }  from '../../../components/account-manager
         FormsModule,
         ReactiveFormsModule,
         NgxDatatableModule,
-        InquiryRoutingModule,
-        NgSelectModule,
-        InquiryStatusSelectModule,
-        CourseSelectModule,
+        AccountRoutingModule,
         ChannelSelectModule,
-        AccountManagerSelectModule
+        AccountManagerSelectModule,
+        CompanySizeSelectModule
     ],
     exports: [],
     declarations: [
-        InquiryListComponent,
-        InquiryDetailComponent
+        AccountListComponent,
+        AccountDetailComponent
     ],
     providers: [],
 })
-export class InquiryModule { }
+export class AccountModule { }

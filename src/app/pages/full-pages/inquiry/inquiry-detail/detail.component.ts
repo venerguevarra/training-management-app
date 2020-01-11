@@ -27,6 +27,7 @@ export class InquiryDetailComponent {
 	private readonly API_HOST = environment.API_HOST;
   	private readonly ENDPOINT: string = `${this.API_HOST}/inquiries`;
 	private readonly USERS_ENDPOINT: string = `${this.API_HOST}/users`;
+	private readonly COURSES_ENDPOINT: string = `${this.API_HOST}/courses`;
 	private readonly LANDING_PAGE: string = '/app/inquiry';
 
 	defaultInquiryStatus = "ASSIGNED";
@@ -54,6 +55,10 @@ export class InquiryDetailComponent {
 	selectedCourse = "";
 	selectedAccountManager = "";
 	selectedChannel = "";
+
+	dateOfInquiryView;
+	accountManager;
+	courseName;
 
 	initForm() {
 		this.currentForm = this.formBuilder.group({
@@ -163,13 +168,38 @@ export class InquiryDetailComponent {
 								);
 							}
 
-
 							if(this.currentModel.modifiedBy != null) {
 								this.httpClient.get(`${this.USERS_ENDPOINT}/${this.currentModel.modifiedBy}`).subscribe(
 									(auditData) => {
 										let firstName = auditData['userProfile']['firstName'];
 										let lastName = auditData['userProfile']['lastName'];
 										this.modifiedBy = `${firstName} ${lastName}`;
+									},
+									(errorData) => {
+										this.toastr.error('Error has occurred.', 'System', { timeOut: 3000 });
+									}
+								);
+							}
+
+							if(this.currentModel.accountManager != null) {
+								this.httpClient.get(`${this.USERS_ENDPOINT}/${this.currentModel.accountManager}`).subscribe(
+									(auditData) => {
+										let firstName = auditData['userProfile']['firstName'];
+										let lastName = auditData['userProfile']['lastName'];
+										this.accountManager = `${firstName} ${lastName}`;
+									},
+									(errorData) => {
+										this.toastr.error('Error has occurred.', 'System', { timeOut: 3000 });
+									}
+								);
+							}
+
+							if(this.currentModel.courseId != null) {
+								console.log(this.currentModel.courseId);
+								this.httpClient.get(`${this.COURSES_ENDPOINT}/${this.currentModel.courseId}`).subscribe(
+									(courseData) => {
+										let name = courseData['name'];
+										this.courseName = `${name}`;
 									},
 									(errorData) => {
 										this.toastr.error('Error has occurred.', 'System', { timeOut: 3000 });
@@ -194,12 +224,16 @@ export class InquiryDetailComponent {
 								dateOfInquiry: [this.currentModel.dateOfInquiry, [Validators.required]],
 								inquiryStatus: [this.currentModel.inquiryStatus, [Validators.required]],
 								comment: [this.currentModel.comment],
-								accountManager: [this.currentModel.accountManager, [Validators.required]]
+								accountManager: [this.currentModel.accountManager, [Validators.required]],
+								createdDate: [this.currentModel.createdDate],
+								createdBy: [this.currentModel.createdBy],
+								modifiedDate: [this.currentModel.modifiedDate],
+								modifiedBy: [this.currentModel.modifiedBy],
 							});
 							this.selectedCourse = this.currentModel.courseId;
 							this.selectedAccountManager = this.currentModel.accountManager;
 							this.selectedChannel = this.currentModel.inquiryChannel;
-
+							this.dateOfInquiryView = this.currentModel.dateOfInquiry;
 
 							const inquiryYear =  Number(this.datePipe.transform(this.currentModel.dateOfInquiry, 'yyyy'));
     						const inquiryMonth =  Number(this.datePipe.transform(this.currentModel.dateOfInquiry, 'MM'));
@@ -221,21 +255,6 @@ export class InquiryDetailComponent {
 		});
 
 	}
-
-	formatDate(date) {
-			var d = new Date(date),
-				month = '' + (d.getMonth() + 1),
-				day = '' + d.getDate(),
-				year = d.getFullYear();
-
-			if (month.length < 2)
-				month = '0' + month;
-			if (day.length < 2)
-				day = '0' + day;
-
-			return [year, month, day].join('-');
-		}
-
 
 	get f() { return this.currentForm.controls; }
 

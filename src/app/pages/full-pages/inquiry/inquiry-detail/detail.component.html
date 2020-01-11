@@ -13,20 +13,157 @@
         <br/>
         <div class="form-body">
             <div class="form-group row">
-              <label class="col-md-3 label-control" for="name">Name</label>
+              <label class="col-md-3 label-control" for="name">First Name</label>
               <div class="col-md-9">
-                {{f.name.value}}
+                {{f.firstName.value}}
               </div>
             </div>
         </div>
         <div class="form-body">
             <div class="form-group row">
-              <label class="col-md-3 label-control" for="name">Description</label>
+              <label class="col-md-3 label-control" for="name">Last Name</label>
               <div class="col-md-9">
-                {{f.description.value}}
+                {{f.lastName.value}}
               </div>
             </div>
         </div>
+        <div class="form-body">
+          <div class="form-group row">
+            <label class="col-md-3 label-control" for="name">Middle Initial</label>
+            <div class="col-md-9">
+              {{f.middleInitial.value}}
+            </div>
+          </div>
+      </div>
+      <div class="form-body">
+        <div class="form-group row">
+          <label class="col-md-3 label-control" for="name">Company Name</label>
+          <div class="col-md-9">
+            {{f.companyName.value}}
+          </div>
+        </div>
+    </div>
+    <div class="form-body">
+      <div class="form-group row">
+        <label class="col-md-3 label-control" for="name">Office Address</label>
+        <div class="col-md-9">
+          {{f.lastName.value}}
+        </div>
+      </div>
+  </div>
+  <div class="form-body">
+    <div class="form-group row">
+      <label class="col-md-3 label-control" for="name">Designation</label>
+      <div class="col-md-9">
+        {{f.designation.value}}
+      </div>
+    </div>
+</div>
+<div class="form-body">
+  <div class="form-group row">
+    <label class="col-md-3 label-control" for="name">Email</label>
+    <div class="col-md-9">
+      {{f.email.value}}
+    </div>
+  </div>
+</div>
+<div class="form-body">
+  <div class="form-group row">
+    <label class="col-md-3 label-control" for="name">Mobile Number</label>
+    <div class="col-md-9">
+      {{f.mobileNumber.value}}
+    </div>
+  </div>
+</div>
+<div class="form-body">
+  <div class="form-group row">
+    <label class="col-md-3 label-control" for="name">Office Address</label>
+    <div class="col-md-9">
+      {{f.officeAddress.value}}
+    </div>
+  </div>
+</div>
+<div class="form-body">
+  <div class="form-group row">
+    <label class="col-md-3 label-control" for="name">Mobile Number</label>
+    <div class="col-md-9">
+      {{f.mobileNumber.value}}
+    </div>
+  </div>
+</div>
+
+<div class="form-body">
+  <div class="form-group row">
+    <label class="col-md-3 label-control" for="name">Office Number</label>
+    <div class="col-md-9">
+      {{f.officeNumber.value}}
+    </div>
+  </div>
+</div>
+
+<div class="form-body">
+  <div class="form-group row">
+    <label class="col-md-3 label-control" for="name">Fax Number</label>
+    <div class="col-md-9">
+      {{f.faxNumber.value}}
+    </div>
+  </div>
+</div>
+
+<div class="form-body">
+  <div class="form-group row">
+    <label class="col-md-3 label-control" for="name">Course</label>
+    <div class="col-md-9">
+      {{courseName}}
+    </div>
+  </div>
+</div>
+
+<div class="form-body">
+  <div class="form-group row">
+    <label class="col-md-3 label-control" for="name">Inquiry Channel</label>
+    <div class="col-md-9">
+      {{f.inquiryChannel.value}}
+    </div>
+  </div>
+</div>
+
+<div class="form-body">
+  <div class="form-group row">
+    <label class="col-md-3 label-control" for="createdDate">Date of Inquiry</label>
+    <div class="col-md-9">
+      <span *ngIf="f.createdDate">{{dateOfInquiryView | date: 'MMM d, y'}}</span>
+    </div>
+  </div>
+</div>
+
+<div class="form-body">
+  <div class="form-group row">
+    <label class="col-md-3 label-control" for="name">Inquiry Status</label>
+    <div class="col-md-9">
+      {{f.inquiryStatus.value}}
+    </div>
+  </div>
+</div>
+
+<div class="form-body">
+  <div class="form-group row">
+    <label class="col-md-3 label-control" for="name">Comment</label>
+    <div class="col-md-9">
+      {{f.comment.value}}
+    </div>
+  </div>
+</div>
+
+<div class="form-body">
+  <div class="form-group row">
+    <label class="col-md-3 label-control" for="name">Account Manager</label>
+    <div class="col-md-9">
+      {{accountManager}}
+    </div>
+  </div>
+</div>
+
         <div class="form-body">
             <div class="form-group row">
               <label class="col-md-3 label-control" for="createdDate">Date Created</label>
@@ -56,15 +193,6 @@
               <label class="col-md-3 label-control" for="modifiedBy">Last Modified By</label>
               <div class="col-md-9">
                 {{modifiedBy}}
-              </div>
-            </div>
-        </div>
-        <div class="form-body">
-            <div class="form-group row">
-              <label class="col-md-3 label-control" for="status">Status</label>
-              <div class="col-md-9">
-                <span *ngIf="isRecordActive">Active</span>
-                <span *ngIf="!isRecordActive">Inactive</span>
               </div>
             </div>
         </div>

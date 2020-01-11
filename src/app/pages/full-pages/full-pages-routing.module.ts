@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { AccountComponent } from './account/account.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
@@ -12,14 +11,6 @@ const routes: Routes = [
   {
     path: '',
     children: [
-      {
-        path: 'account',
-        component: AccountComponent,
-        data: {
-          title: 'Account'
-        },
-        canActivate: [AuthGuard]
-      },
       {
         path: 'dashboard',
         component: DashboardComponent,
@@ -43,7 +34,7 @@ const routes: Routes = [
           title: 'Change Password'
         },
         canActivate: [AuthGuard]
-      }      
+      }
     ]
   }
 ];
