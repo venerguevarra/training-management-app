@@ -108,6 +108,7 @@ export class CourseListComponent {
 		this.criteria = [];
 		this.pageSize = pageConfig.pageSize;
 		this.retrieveList(this.defaultPaginationParams);
+		this.toastr.info(`${this.title} list refreshed`, 'System', { timeOut: 3000 });
 	}
 
 	private getSearchFormCriteria() {
@@ -167,16 +168,16 @@ export class CourseListComponent {
 		this.page = 0;
 		
 		this.criteria = this.getSearchFormCriteria();
+		if(this.criteria.length === 0) {
+			this.toastr.error('Please provide search criteria', 'Search', { timeOut: 3000 });
+		}
+
 		let jsonBody = {
 			criteria: this.criteria,
 			page: '0',
 			size: this.pageSize.toString()
 		}
 		
-		if(this.criteria.length === 0) {
-			this.toastr.error('Please provide search criteria', 'Search', { timeOut: 3000 });
-		}
-
 		if(this.criteria.length > 0) {
 			this.httpClient
 				.post(this.FIND_ENDPOINT, jsonBody)
@@ -184,7 +185,6 @@ export class CourseListComponent {
 					(data) => {
 						this.collectionSize = data['totalElements'];
 						this.rows = data['elements'];
-						console.log(this.rows);
 					}
 				);
 		}

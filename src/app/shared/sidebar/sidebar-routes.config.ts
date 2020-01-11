@@ -14,6 +14,9 @@ export const ROUTES: RouteInfo[] = [
          path: '/app/venue', title: 'Venue', icon: 'icon-map', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: []
     },
     {
+         path: '/app/cost', title: 'Costing', icon: 'icon-wallet', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: []
+    },
+    {
          path: '/app/inquiry', title: 'Inquiry', icon: 'icon-envelope', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: []
     },
     {

@@ -5,25 +5,27 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { catchError, tap, map, first } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 import 'rxjs/Rx';
+import { Observable } from 'rxjs';
 import swal from 'sweetalert2';
 
 import { StateService } from '../../../../service/state.service';
 import { User } from '../../../../model/user.model';
 import { environment } from '../../../../../environments/environment';
 import { pageConfig } from '../../../page.config';
+import { CourseDataService, Course } from '../../../../service/course-data.service';
 
 @Component({
-	selector: 'app-facilitator-list',
+	selector: 'app-venue-list',
 	templateUrl: './list.component.html',
 	styleUrls: ['./list.component.scss']
 })
-export class FacilitatorListComponent {
+export class InquiryListComponent {
 	private readonly API_HOST = environment.API_HOST;
-  	private readonly ENDPOINT: string = `${this.API_HOST}/facilitators`;
+  	private readonly ENDPOINT: string = `${this.API_HOST}/inquiries`;
 	private readonly FIND_ENDPOINT: string = `${this.ENDPOINT}/actions/find`;
-	private readonly LANDING_PAGE: string = `/app/facilitator`;
+	private readonly LANDING_PAGE: string = `/app/inquiry`;
 
-	title: string = "Facilitator";
+	title: string = "Inquiry";
 	rows: any = [];
 	page = 0;
 	pageSize = pageConfig.pageSize;
@@ -33,7 +35,39 @@ export class FacilitatorListComponent {
 	searchForm: FormGroup;
 	searchFormStatus;
 	criteria;
-	createdDate;
+	inquiryDateFrom;
+	inquiryDateTo;
+
+	customInquiryStatusData = [
+        {
+            key: "ASSIGNED",
+            label: "Assigned"
+        },
+        {
+            key: "ATTEMPTED_TO_CONTACT",
+            label: "Attempted to contact"
+        },
+        {
+            key: "CONTACTED",
+            label: "Contacted"
+        },
+        {
+            key: "SALES_UNQUALIFIED",
+            label: "Sales Unqualified"
+        },
+        {
+            key: "SALES_QUALIFIED",
+            label: "Sales Qualified"
+        },
+        {
+            key: "DEAL",
+            label: "Deal"
+        },
+        {
+            key: "CLOSED",
+            label: "Closed"
+        }
+    ];
 
 	defaultPaginationParams = {'size': this.pageSize.toString(), 'page': this.page.toString()};
 
@@ -41,7 +75,8 @@ export class FacilitatorListComponent {
 		private toastr: ToastrService,
 		private formBuilder: FormBuilder,
 		private httpClient: HttpClient,
-		private router: Router
+		private router: Router,
+		private courseDateService: CourseDataService
 	) { }
 
 	ngOnInit() {
@@ -49,8 +84,10 @@ export class FacilitatorListComponent {
 
 		this.searchForm = this.formBuilder.group({
 			name: [''],
-			status: ['ALL'],
-			createdDate: ['']			
+			channel: [''],
+			inquiryDateFrom: [''],
+			inquiryDateTo: [''],
+			inquiryStatus: ['']
 		});
 
 		this.criteria = [];
@@ -101,10 +138,13 @@ export class FacilitatorListComponent {
 	clearSearchForm() {
 		this.searchForm = this.formBuilder.group({
 			name: [''],
-			status: ['ALL'],
-			createdDate: ['']			
+			inquiryDateFrom: [''],
+			inquiryDateTo: [''],
+			channel: [''],
+			inquiryStatus: ['']
 		});
-		this.createdDate = '';
+		this.inquiryDateFrom = '';
+		this.inquiryDateTo = '';
 		this.criteria = [];
 		this.pageSize = pageConfig.pageSize;
 		this.retrieveList(this.defaultPaginationParams);
@@ -122,73 +162,112 @@ export class FacilitatorListComponent {
 				type: 'STRING',
 				logical: 'OR'
 			});
-
 			this.criteria.push({
-				name: 'lastName',
+				name: 'firstName',
 				value: this.searchForm.get('name').value,
 				operator: 'LIKE',
 				type: 'STRING',
 				logical: 'OR'
 			});
-
 			this.criteria.push({
 				name: 'email',
 				value: this.searchForm.get('name').value,
 				operator: 'LIKE',
-				type: 'STRING'
-			});
-		}
-
-		if(this.searchForm.get('createdDate').value != '') {
-    		let month = `0${this.searchForm.get('createdDate').value.month}`.slice(-2);
-			let day = `0${this.searchForm.get('createdDate').value.day}`.slice(-2);
-			let year = `${this.searchForm.get('createdDate').value.year}`;
-			this.createdDate = `${year}-${month}-${day}`;
-			this.criteria.push({
-				name: 'createdDate',
-				value: this.createdDate,
-				operator: 'GE',
-				type: 'DATE',
+				type: 'STRING',
 				logical: 'OR'
 			});
 		}
 
-		if(this.searchForm.get('status').value != '') {
-			if(this.searchForm.get('status').value == 'ALL' || this.searchForm.get('status').value == 'ACTIVE') {
+		if(this.searchForm.get('inquiryStatus').value != '') {
+			this.criteria.push({
+				name: 'inquiryStatus',
+				value: this.searchForm.get('inquiryStatus').value,
+				operator: 'EQ',
+				type: 'ENUM',
+				logical: 'OR'
+			});
+		}
+
+		if(this.searchForm.get('channel').value != '') {
+			this.criteria.push({
+				name: 'inquiryChannel',
+				value: this.searchForm.get('channel').value,
+				operator: 'EQ',
+				type: 'ENUM',
+				logical: 'OR'
+			});
+		}
+
+		if(this.searchForm.get('inquiryDateFrom').value != '') {
+    		let month = `0${this.searchForm.get('inquiryDateFrom').value.month}`.slice(-2);
+			let day = `0${this.searchForm.get('inquiryDateFrom').value.day}`.slice(-2);
+			let year = `${this.searchForm.get('inquiryDateFrom').value.year}`;
+			this.inquiryDateFrom = `${year}-${month}-${day}`;
+
+
+			if(this.searchForm.get('inquiryDateTo').value != '') {
 				this.criteria.push({
-					name: 'active',
-					value: 'ACTIVE',
-					paramName: 'activeParam',
-					operator: 'EQ',
-					type: 'ENUM',
-					logical: 'OR'
+					name: 'dateOfInquiry',
+					paramName: 'dateOfInquiryFrom',
+					value: this.inquiryDateFrom,
+					operator: 'GE',
+					type: 'DATE',
+					logical: 'AND'
 				});
-			}
-			
-			if(this.searchForm.get('status').value == 'ALL' || this.searchForm.get('status').value == 'INACTIVE') {
+			} else {
 				this.criteria.push({
-					name: 'active',
-					value: 'INACTIVE',
-					paramName: 'inactiveParam',
-					operator: 'EQ',
-					type: 'ENUM'
+					name: 'dateOfInquiry',
+					paramName: 'dateOfInquiryFrom',
+					value: this.inquiryDateFrom,
+					operator: 'GE',
+					type: 'DATE'
 				});
 			}
 		}
 
+		if(this.searchForm.get('inquiryDateTo').value != '') {
+    		let month = `0${this.searchForm.get('inquiryDateTo').value.month}`.slice(-2);
+			let day = `0${this.searchForm.get('inquiryDateTo').value.day}`.slice(-2);
+			let year = `${this.searchForm.get('inquiryDateTo').value.year}`;
+			this.inquiryDateTo = `${year}-${month}-${day}`;
+			this.criteria.push({
+				name: 'dateOfInquiry',
+				paramName: 'dateOfInquiryTo',
+				value: this.inquiryDateTo,
+				operator: 'LE',
+				type: 'DATE'
+			});
+		}
 		return this.criteria;
 	}
 
+	public onChannelSelected(channel: any) {
+		if(channel) {
+			this.searchForm.controls.channel.setValue(channel);
+		} else {
+			this.searchForm.controls.channel.setValue('');
+		}
+  	}
+
+	public onInquiryStatusSelected(inquiryStatus: any) {
+		console.log(inquiryStatus);
+		if(inquiryStatus) {
+			this.searchForm.controls.inquiryStatus.setValue(inquiryStatus);
+		} else {
+			this.searchForm.controls.inquiryStatus.setValue('');
+		}
+  	}
+
 	submitSearchForm(params) {
 		this.page = 0;
-		
+
 		this.criteria = this.getSearchFormCriteria();
 		let jsonBody = {
 			criteria: this.criteria,
 			page: '0',
 			size: this.pageSize.toString()
 		}
-		
+
 		if(this.criteria.length === 0) {
 			this.toastr.error('Please provide search criteria', 'Search', { timeOut: 3000 });
 		}

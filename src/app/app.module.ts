@@ -7,12 +7,13 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { TranslateModule, TranslateLoader } from "@ngx-translate/core";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
+import { NgSelectModule } from '@ng-select/ng-select';
 
 import { ErrorInterceptor } from './interceptor/error-intercept.service';
 import { AuthInterceptor } from './interceptor/auth-intercept.service';
-import { 
-    PerfectScrollbarModule, 
-    PERFECT_SCROLLBAR_CONFIG, 
+import {
+    PerfectScrollbarModule,
+    PERFECT_SCROLLBAR_CONFIG,
     PerfectScrollbarConfigInterface
   } from 'ngx-perfect-scrollbar';
 
@@ -34,7 +35,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     suppressScrollX: true,
     wheelPropagation: false
   };
-  
+
   export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, "./assets/i18n/", ".json");
   }
@@ -43,6 +44,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   @NgModule({
     declarations: [AppComponent, FullLayoutComponent, ContentLayoutComponent],
     imports: [
+      NgSelectModule,
       AppRoutingModule,
       SharedModule,
       HttpClientModule,
@@ -82,4 +84,3 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     bootstrap: [AppComponent]
   })
   export class AppModule {}
-  

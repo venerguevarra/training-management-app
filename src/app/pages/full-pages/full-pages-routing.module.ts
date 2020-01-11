@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { InquiryComponent } from "./inquiry/inquiry.component";
 import { AccountComponent } from './account/account.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
@@ -13,14 +12,6 @@ const routes: Routes = [
   {
     path: '',
     children: [
-      {
-        path: 'inquiry',
-        component: InquiryComponent,
-        data: {
-          title: 'Inquiry'
-        },
-        canActivate: [AuthGuard]
-      },
       {
         path: 'account',
         component: AccountComponent,

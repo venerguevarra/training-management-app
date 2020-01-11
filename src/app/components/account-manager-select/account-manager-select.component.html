@@ -1,0 +1,22 @@
+<ng-select [items]="data"
+           [virtualScroll]="true"
+           [loading]="loading"
+           bindLabel="name"
+           bindValue="value"
+           placeholder="Select Account Manager"
+           appendTo="body"
+           (scroll)="onScroll($event)"
+           (scrollToEnd)="onScrollToEnd()"
+           (change)="onChange($event)"
+           [(ngModel)]="selectedId"
+           (clear)="onClear($event)"
+           [ngClass]="{'invalid-select': isInvalid}">
+
+      <ng-template ng-header-tmp>
+            <small class="form-text text-muted">Loaded {{dataBuffer.length}} of {{data.length}}</small>
+      </ng-template>
+      <ng-template ng-option-tmp let-item="item" let-index="index">
+            {{item.name}}
+      </ng-template>
+
+</ng-select>

@@ -1,0 +1,10 @@
+<ng-select [items]="data"
+           bindLabel="label"
+           bindValue="key"
+           placeholder="Select Channel"
+           appendTo="body"
+           (change)="onChange($event)"
+           [(ngModel)]="selectedChannel"
+           (clear)="onClear($event)"
+           [ngClass]="{'invalid-select': isInvalid}">
+</ng-select>

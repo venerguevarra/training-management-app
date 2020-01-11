@@ -13,17 +13,17 @@ import { environment } from '../../../../../environments/environment';
 import { pageConfig } from '../../../page.config';
 
 @Component({
-	selector: 'app-facilitator-list',
+	selector: 'app-cost-list',
 	templateUrl: './list.component.html',
 	styleUrls: ['./list.component.scss']
 })
-export class FacilitatorListComponent {
+export class CostListComponent {
 	private readonly API_HOST = environment.API_HOST;
-  	private readonly ENDPOINT: string = `${this.API_HOST}/facilitators`;
+  	private readonly ENDPOINT: string = `${this.API_HOST}/costings`;
 	private readonly FIND_ENDPOINT: string = `${this.ENDPOINT}/actions/find`;
-	private readonly LANDING_PAGE: string = `/app/facilitator`;
+	private readonly LANDING_PAGE: string = `/app/cost`;
 
-	title: string = "Facilitator";
+	title: string = "Training Cost";
 	rows: any = [];
 	page = 0;
 	pageSize = pageConfig.pageSize;
@@ -116,26 +116,11 @@ export class FacilitatorListComponent {
 
 		if(this.searchForm.get('name').value != '') {
 			this.criteria.push({
-				name: 'firstName',
+				name: 'name',
 				value: this.searchForm.get('name').value,
 				operator: 'LIKE',
 				type: 'STRING',
 				logical: 'OR'
-			});
-
-			this.criteria.push({
-				name: 'lastName',
-				value: this.searchForm.get('name').value,
-				operator: 'LIKE',
-				type: 'STRING',
-				logical: 'OR'
-			});
-
-			this.criteria.push({
-				name: 'email',
-				value: this.searchForm.get('name').value,
-				operator: 'LIKE',
-				type: 'STRING'
 			});
 		}
 

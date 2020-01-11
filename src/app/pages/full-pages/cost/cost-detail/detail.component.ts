@@ -12,17 +12,17 @@ import { User } from '../../../../model/user.model';
 import { environment } from '../../../../../environments/environment';
 
 @Component({
-	selector: 'app-venue-detail',
+	selector: 'app-cost-detail',
 	templateUrl: './detail.component.html',
 	styleUrls: ['./detail.component.scss']
 })
-export class VenueDetailComponent {
+export class CostDetailComponent {
 	private readonly API_HOST = environment.API_HOST;
-  	private readonly ENDPOINT: string = `${this.API_HOST}/venues`;
+  	private readonly ENDPOINT: string = `${this.API_HOST}/costings`;
 	private readonly USERS_ENDPOINT: string = `${this.API_HOST}/users`;
-	private readonly LANDING_PAGE: string = '/app/venue';
+	private readonly LANDING_PAGE: string = '/app/cost';
 
-	title = 'Venue';
+	title = 'Training Cost';
 	currentUser;
 	modelId;
 	currentForm: FormGroup;
@@ -158,7 +158,7 @@ export class VenueDetailComponent {
 					description: this.currentForm.get('description').value,
 					active: this.currentForm.get('status').value
 				};
-				console.log(requestBody);
+
 				let resourceId = this.currentForm.get('id').value;
 
 				this.httpClient
@@ -229,7 +229,7 @@ export class VenueDetailComponent {
 									this.toastr.error('Email or mobile number already exist.', 'Conlict', { timeOut: 3000 });
 								} else if(error.status === 400) {
 									this.toastr.error('Invalid request received by the server.', 'Invalid Request', { timeOut: 3000 });
-								}	else {
+								} else {
 									this.toastr.error('Internal server error.', 'System', { timeOut: 3000 });
 								}
 							}

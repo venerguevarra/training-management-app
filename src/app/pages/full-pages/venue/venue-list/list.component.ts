@@ -6,6 +6,7 @@ import { catchError, tap, map, first } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 import 'rxjs/Rx';
 import swal from 'sweetalert2';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { StateService } from '../../../../service/state.service';
 import { User } from '../../../../model/user.model';
@@ -50,7 +51,7 @@ export class VenueListComponent {
 		this.searchForm = this.formBuilder.group({
 			name: [''],
 			status: ['ALL'],
-			createdDate: ['']			
+			createdDate: ['']
 		});
 
 		this.criteria = [];
@@ -102,12 +103,13 @@ export class VenueListComponent {
 		this.searchForm = this.formBuilder.group({
 			name: [''],
 			status: ['ALL'],
-			createdDate: ['']			
+			createdDate: ['']
 		});
 		this.createdDate = '';
 		this.criteria = [];
 		this.pageSize = pageConfig.pageSize;
 		this.retrieveList(this.defaultPaginationParams);
+		this.toastr.info(`${this.title} list refreshed`, 'System', { timeOut: 3000 });
 	}
 
 	private getSearchFormCriteria() {
@@ -148,7 +150,7 @@ export class VenueListComponent {
 					logical: 'OR'
 				});
 			}
-			
+
 			if(this.searchForm.get('status').value == 'ALL' || this.searchForm.get('status').value == 'INACTIVE') {
 				this.criteria.push({
 					name: 'active',
@@ -165,14 +167,14 @@ export class VenueListComponent {
 
 	submitSearchForm(params) {
 		this.page = 0;
-		
+
 		this.criteria = this.getSearchFormCriteria();
 		let jsonBody = {
 			criteria: this.criteria,
 			page: '0',
 			size: this.pageSize.toString()
 		}
-		
+
 		if(this.criteria.length === 0) {
 			this.toastr.error('Please provide search criteria', 'Search', { timeOut: 3000 });
 		}

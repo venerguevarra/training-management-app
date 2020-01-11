@@ -1,6 +1,9 @@
 <!--Login Page Starts-->
 
+<div id="login-background">
+</div>
 <section id="login">
+<div>
    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
   <div id="login-background">
   <div class="container-fluid">
@@ -10,13 +13,11 @@
           <div class="card-content">
             <div class="card-body login-img">
               <div class="row m-0">
-                <div
-                  class="col-lg-6 d-lg-block d-none py-2 px-3 text-center align-middle"
-                >
+                <div class="col-lg-6 d-lg-block d-none py-2 px-3 text-center align-middle">
                   <img
                     src="../../assets/img/gallery/login.png"
                     alt=""
-                    class="img-fluid mt-5"
+                    class="img-fluid mt-0"
                     width="400"
                     height="230"
                   />
@@ -50,7 +51,7 @@
 
                     <div class="fg-actions d-flex justify-content-between">
                       <div class="recover-pass">
-                          <button [disabled]="loading" class="btn btn-primary text-decoration-none text-white">
+                          <button [disabled]="loading" class="btn btn-primary text-decoration-none text-white" style="background-color: #277298;">
                               Login
                           </button>
                       </div>
@@ -65,5 +66,6 @@
   </div>
 </div>
 </form>
+</div>
 </section>
 <!--Login Page Ends-->

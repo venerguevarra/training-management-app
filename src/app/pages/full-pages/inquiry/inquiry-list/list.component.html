@@ -1,5 +1,3 @@
-
-
 <div class="card">
   <div class="card-header" style="padding-top: 10px;">
     <h2><strong>{{title}}</strong></h2>
@@ -25,7 +23,7 @@
       <div>
         <div class="col-sm-12">
             <div class="row">
-                <div class="col-sm-3">
+                <div class="col-sm-2">
                   <div class="form-group">
                     <label>Name</label>
                     <input type="text"
@@ -36,32 +34,35 @@
                   </div>
                 </div>
 
-                <div class="col-sm-1">
-                  <label class="label-control">Status</label>
-                  <div>
-                    <select formControlName="status" class="custom-select">
-                      <option value="ALL">All</option>
-                      <option value="ACTIVE">Active</option>
-                      <option value="INACTIVE">Inactive</option>
-                    </select>
+                <div class="col-sm-2">
+                  <div class="form-group">
+                    <label>Inquiry Status</label>
+                    <input type="hidden" formControlName="inquiryStatus">
+                    <app-inquiry-status-select [customData]="customInquiryStatusData" (selectedIdEmitter)="onInquiryStatusSelected($event)"></app-inquiry-status-select>
                   </div>
                 </div>
 
-
+                <div class="col-sm-2">
+                  <div class="form-group">
+                    <label>Inquiry Channel</label>
+                    <input type="hidden" formControlName="channel">
+                    <app-channel-select (selectedIdEmitter)="onChannelSelected($event)"></app-channel-select>
+                  </div>
+                </div>
               <div class="col-sm-3">
                 <div class="form-group">
-                  <label>Created Date</label>
+                  <label>Inquiry Date From</label>
                   <div class="input-group">
                     <input
-                          name="createdDate"
-                          id="createdDate"
+                          name="inquiryDateFrom"
+                          id="inquiryDateFrom"
                           class="form-control"
                           placeholder="yyyy-mm-dd"
                           ngbDatepicker
-                          formControlName="createdDate"
-                          #createDatePicker="ngbDatepicker">
+                          formControlName="inquiryDateFrom"
+                          #createDatePickeFrom="ngbDatepicker">
                     <div class="input-group-append">
-                      <div class="input-group-text" (click)="createDatePicker.toggle()">
+                      <div class="input-group-text" (click)="createDatePickeFrom.toggle()">
                         <i class="fa fa-calendar" style="cursor: pointer;"></i>
                       </div>
                     </div>
@@ -71,13 +72,32 @@
 
               <div class="col-sm-3">
                 <div class="form-group">
-                  <label>&nbsp;</label>
-                  <div>
-                    <button type="submit" name="submit" value="search" id="submit" class="btn btn-success btn-raised mr-2" (click)="submitSearchForm()"><i class="fa fa-fw fa-check"></i> Submit</button>
+                  <label>Inquiry Date To</label>
+                  <div class="input-group">
+                    <input
+                          name="inquiryDateTo"
+                          id="inquiryDateTo"
+                          class="form-control"
+                          placeholder="yyyy-mm-dd"
+                          ngbDatepicker
+                          formControlName="inquiryDateTo"
+                          #createDatePickerTo="ngbDatepicker">
+                    <div class="input-group-append">
+                      <div class="input-group-text" (click)="createDatePickerTo.toggle()">
+                        <i class="fa fa-calendar" style="cursor: pointer;"></i>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
+
+
+
+              <div>
+                <button type="submit" name="submit" value="search" id="submit" class="btn btn-success btn-raised" (click)="submitSearchForm()"><i class="fa fa-fw fa-check"></i> Submit</button>
+              </div>
+
         </div>
       </div>
 
@@ -97,22 +117,26 @@
             <table id="course-table" class="table table-striped">
               <thead>
                 <tr>
-                  <th scope="col" style="width:30%;">Name</th>
-                  <th scope="col" style="width:30%;">Description</th>
-                  <th scope="col" style="width:20%;">Created Date</th>
-                  <th scope="col" style="width:15%;">Status</th>
-                  <th scope="col" style="width:15%;text-align: center;">Actions</th>
+                  <th scope="col" style="width:20%;">First Name</th>
+                  <th scope="col" style="width:20%;">Last Name</th>
+                  <th scope="col" style="width:20%;">Email Address</th>
+                  <th scope="col" style="width:10%;">Channel</th>
+                  <th scope="col" style="width:15%;">Inquiry Date</th>
+                  <th scope="col" style="width:15%;">Created Date</th>
+                  <th scope="col" style="width:5%;text-align: center;">Actions</th>
                 </tr>
               </thead>
               <tbody>
                 <tr *ngFor="let row of rows">
-                  <td scope="row">{{ row.name }}</td>
-                  <td scope="row">{{ row.description }}</td>
+                  <td scope="row">{{ row.firstName }}</td>
+                  <td scope="row">{{ row.lastName }}</td>
+                  <td scope="row">{{ row.email }}</td>
+                  <td scope="row">{{ row.inquiryChannel }}</td>
+                  <td scope="row">{{row.dateOfInquiry | date: 'MMM d,y'}}</td>
                   <td scope="row">{{row.createdDate | date: 'MMM d,y'}}</td>
-                  <td scope="row">{{row.active}}</td>
                   <td scope="row" style="text-align: center;">
-                    <a [routerLink]="['/app/venue', row.id]" [queryParams]="{action: 'view'}" queryParamsHandling="merge" class="mr-2" placement="top" ngbTooltip="View"><i class="ft-eye"></i></a>
-                    <a [routerLink]="['/app/venue', row.id]" [queryParams]="{action: 'edit'}" placement="top" ngbTooltip="Edit"><i class="ft-edit-2"></i></a>
+                    <a [routerLink]="['/app/inquiry', row.id]" [queryParams]="{action: 'view'}" queryParamsHandling="merge" class="mr-2" placement="top" ngbTooltip="View"><i class="ft-eye"></i></a>
+                    <a [routerLink]="['/app/inquiry', row.id]" [queryParams]="{action: 'edit'}" placement="top" ngbTooltip="Edit"><i class="ft-edit-2"></i></a>
                   </td>
                 </tr>
               </tbody>
@@ -145,11 +169,4 @@
     </div>
   </div>
 
-
-<!--
-  <p>You can pass an existing component as content of the modal window. In this case remember to add content component
-    as an <code>entryComponents</code> section of your <code>NgModule</code>.</p>
-
-    <button class="btn btn-lg btn-outline-primary" (click)="open()">Launch demo modal</button>
--->
 </section>
