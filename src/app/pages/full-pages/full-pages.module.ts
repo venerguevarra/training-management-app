@@ -14,7 +14,9 @@ import { CourseModule } from './course/course.module';
 import { VenueModule } from './venue/venue.module';
 import { CostModule } from './cost/cost.module';
 import { InquiryModule } from './inquiry/inquiry.module';
+import { MarketingInquiryModule } from './marketing-inquiry/marketing-inquiry.module';
 import { AccountModule } from './account/account.module';
+import { ContactModule } from './contact/contact.module';
 
 import { FullPageRoutingModule  } from "./full-pages-routing.module";
 
@@ -26,13 +28,15 @@ import { FullPageRoutingModule  } from "./full-pages-routing.module";
         FormsModule,
         ReactiveFormsModule,
         NgxDatatableModule,
+        NgSelectModule,
         CourseModule,
         FacilitatorModule,
         VenueModule,
         CostModule,
         InquiryModule,
+        MarketingInquiryModule,
         AccountModule,
-        NgSelectModule
+        ContactModule
     ],
     exports: [],
     declarations: [

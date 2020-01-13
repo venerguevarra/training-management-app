@@ -20,8 +20,6 @@ export class CompanySizeSelectComponent {
     @Input() isInvalid: boolean;
     @Input() selectedValue = "";
 
-    selectedId = '-1';
-
     data = [
         {
             key: "A",
@@ -63,14 +61,14 @@ export class CompanySizeSelectComponent {
 
     onChange($event) {
         if($event) {
-            this.selectedId = $event.key;
+            this.selectedValue = $event.key;
             this.selectedIdEmitter.emit($event.key);
         }
     }
 
     onClear($event) {
         if($event) {
-            this.selectedId = $event.key;
+            this.selectedValue = $event.key;
             this.selectedIdEmitter.emit($event.key);
         } else {
             this.selectedIdEmitter.emit('');

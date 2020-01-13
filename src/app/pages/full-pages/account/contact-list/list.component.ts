@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation, ViewChild } from "@angular/core";
+import { Component, ViewEncapsulation, ViewChild, Input } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router, ActivatedRoute } from "@angular/router";
 import {
@@ -18,17 +18,20 @@ import { environment } from "../../../../../environments/environment";
 import { pageConfig } from "../../../page.config";
 
 @Component({
-  selector: "app-account-list",
+  selector: "app-contact-list",
   templateUrl: "./list.component.html",
   styleUrls: ["./list.component.scss"]
 })
-export class AccountListComponent {
-  private readonly API_HOST = environment.API_HOST;
-  private readonly ENDPOINT: string = `${this.API_HOST}/accounts`;
-  private readonly FIND_ENDPOINT: string = `${this.ENDPOINT}/actions/find`;
-  private readonly LANDING_PAGE: string = `/app/account`;
+export class ContactListComponent {
+  @Input() accountId;
+  @Input() accountName;
 
-  title: string = "Account";
+  private readonly API_HOST = environment.API_HOST;
+  private readonly ENDPOINT: string = `${this.API_HOST}/contacts`;
+  private readonly FIND_ENDPOINT: string = `${this.ENDPOINT}/actions/find`;
+  private readonly LANDING_PAGE: string = `/app/contact`;
+
+  title: string = "Contact";
   rows: any = [];
   page = 0;
   pageSize = pageConfig.pageSize;
@@ -39,7 +42,7 @@ export class AccountListComponent {
   searchFormStatus;
   criteria;
   createdDate;
-  selectedAccountManager = "";
+  selectedAccountId = "";
 
   defaultPaginationParams = {
     size: this.pageSize.toString(),
@@ -50,8 +53,7 @@ export class AccountListComponent {
     private toastr: ToastrService,
     private formBuilder: FormBuilder,
     private httpClient: HttpClient,
-    private router: Router,
-    private stateService: StateService
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -60,20 +62,11 @@ export class AccountListComponent {
     this.searchForm = this.formBuilder.group({
       name: [""],
       status: ["ALL"],
-      accountManager: [""],
       createdDate: [""]
     });
 
     this.criteria = [];
   }
-
-  onAccountManagerSelected = (accountManagerId: any) => {
-    if (accountManagerId) {
-      this.searchForm.controls.accountManager.setValue(accountManagerId);
-    } else {
-      this.searchForm.controls.accountManager.setValue("");
-    }
-  };
 
   paginationChange(event) {
     this.paginationSizeChange();
@@ -101,14 +94,16 @@ export class AccountListComponent {
   }
 
   navigateToNewForm() {
-    this.router.navigate([`${this.LANDING_PAGE}`, -1]);
+    this.router.navigate([`${this.LANDING_PAGE}`, -1], {
+      queryParams: { accountId: this.accountId }
+    });
   }
 
   clearSearchForm() {
     this.searchForm = this.formBuilder.group({
       name: [""],
       status: ["ALL"],
-      accountManager: [""],
+      accountId: [""],
       createdDate: [""]
     });
     this.createdDate = "";
@@ -123,30 +118,70 @@ export class AccountListComponent {
     this.criteria = [];
 
     this.criteria.push({
-      name: "accountManager",
-      value: this.stateService.getCurrentUser().userId,
+      name: "accountId",
+      value: this.accountId,
       operator: "EQ",
       type: "UUID",
       logical: "AND"
     });
 
     if (this.searchForm) {
-      if (this.searchForm.get("name").value != "") {
+      let nameSearch = this.searchForm.get("name").value;
+      if (nameSearch != "") {
         this.criteria.push({
-          name: "name",
-          value: this.searchForm.get("name").value,
+          name: "firstName",
+          value: nameSearch,
           operator: "LIKE",
           type: "STRING",
           logical: "OR"
         });
-      }
-
-      if (this.searchForm.get("accountManager").value != "") {
         this.criteria.push({
-          name: "accountManager",
-          value: this.searchForm.get("accountManager").value,
-          operator: "EQ",
-          type: "UUID",
+          name: "lastName",
+          value: nameSearch,
+          operator: "LIKE",
+          type: "STRING",
+          logical: "OR"
+        });
+        this.criteria.push({
+          name: "middleInitial",
+          value: nameSearch,
+          operator: "LIKE",
+          type: "STRING",
+          logical: "OR"
+        });
+        this.criteria.push({
+          name: "email",
+          value: nameSearch,
+          operator: "LIKE",
+          type: "STRING",
+          logical: "OR"
+        });
+        this.criteria.push({
+          name: "mobileNumber",
+          value: nameSearch,
+          operator: "LIKE",
+          type: "STRING",
+          logical: "OR"
+        });
+        this.criteria.push({
+          name: "designation",
+          value: nameSearch,
+          operator: "LIKE",
+          type: "STRING",
+          logical: "OR"
+        });
+        this.criteria.push({
+          name: "officeNumber",
+          value: nameSearch,
+          operator: "LIKE",
+          type: "STRING",
+          logical: "OR"
+        });
+        this.criteria.push({
+          name: "faxNumber",
+          value: nameSearch,
+          operator: "LIKE",
+          type: "STRING",
           logical: "OR"
         });
       }
@@ -167,11 +202,11 @@ export class AccountListComponent {
         });
       }
 
-      if (this.searchForm.get("status").value != "") {
-        if (
-          this.searchForm.get("status").value == "ALL" ||
-          this.searchForm.get("status").value == "ACTIVE"
-        ) {
+      if (
+        this.searchForm.get("status").value != "" &&
+        this.searchForm.get("status").value != "ALL"
+      ) {
+        if (this.searchForm.get("status").value == "ACTIVE") {
           this.criteria.push({
             name: "active",
             value: "ACTIVE",
@@ -182,10 +217,7 @@ export class AccountListComponent {
           });
         }
 
-        if (
-          this.searchForm.get("status").value == "ALL" ||
-          this.searchForm.get("status").value == "INACTIVE"
-        ) {
+        if (this.searchForm.get("status").value == "INACTIVE") {
           this.criteria.push({
             name: "active",
             value: "INACTIVE",

@@ -4,16 +4,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
-import { AccountListComponent } from './account-list/list.component';
-import { AccountDetailComponent } from './account-detail/detail.component';
-import { ContactListComponent } from  './contact-list/list.component';
+import { ContactDetailComponent } from './contact-detail/detail.component';
 
 import { ChannelSelectModule }  from '../../../components/channel-select/channel-select.module';
 import { AccountManagerSelectModule }  from '../../../components/account-manager-select/account-manager-select.module';
 import { CompanySizeSelectModule }  from '../../../components/company-size-select/company-size-select.module';
 
-
-import { AccountRoutingModule  } from "./account-routing.module";
+import { ContactRoutingModule  } from "./contact-routing.module";
 
 @NgModule({
     imports: [
@@ -22,17 +19,15 @@ import { AccountRoutingModule  } from "./account-routing.module";
         FormsModule,
         ReactiveFormsModule,
         NgxDatatableModule,
-        AccountRoutingModule,
+        ContactRoutingModule,
         ChannelSelectModule,
         AccountManagerSelectModule,
         CompanySizeSelectModule
     ],
     exports: [],
     declarations: [
-        AccountListComponent,
-        AccountDetailComponent,
-        ContactListComponent
+        ContactDetailComponent
     ],
     providers: [],
 })
-export class AccountModule { }
+export class ContactModule { }

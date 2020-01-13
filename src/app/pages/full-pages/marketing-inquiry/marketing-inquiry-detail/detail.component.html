@@ -1,0 +1,394 @@
+<div class="card">
+
+  <div class="card-header" style="background-color: #ECEFF1;">
+    <h3 *ngIf="!newForm">{{title}} Details</h3>
+    <h3 *ngIf="newForm">New {{title}}</h3>
+  </div>
+
+  <div class="card-body">
+    <div class="row text-left justify-content-md-center">
+      <!-- view form start -->
+      <div *ngIf="newForm == false && viewForm == true" class="col-md-6">
+        <form class="form form-horizontal striped-rows">
+        <br/>
+        <div class="form-body">
+            <div class="form-group row">
+              <label class="col-md-3 label-control" for="name">First Name</label>
+              <div class="col-md-9">
+                {{f.firstName.value}}
+              </div>
+            </div>
+        </div>
+        <div class="form-body">
+            <div class="form-group row">
+              <label class="col-md-3 label-control" for="name">Last Name</label>
+              <div class="col-md-9">
+                {{f.lastName.value}}
+              </div>
+            </div>
+        </div>
+        <div class="form-body">
+          <div class="form-group row">
+            <label class="col-md-3 label-control" for="name">Middle Initial</label>
+            <div class="col-md-9">
+              {{f.middleInitial.value}}
+            </div>
+          </div>
+      </div>
+      <div class="form-body">
+        <div class="form-group row">
+          <label class="col-md-3 label-control" for="name">Company Name</label>
+          <div class="col-md-9">
+            {{f.companyName.value}}
+          </div>
+        </div>
+    </div>
+    <div class="form-body">
+      <div class="form-group row">
+        <label class="col-md-3 label-control" for="name">Office Address</label>
+        <div class="col-md-9">
+          {{f.lastName.value}}
+        </div>
+      </div>
+  </div>
+  <div class="form-body">
+    <div class="form-group row">
+      <label class="col-md-3 label-control" for="name">Designation</label>
+      <div class="col-md-9">
+        {{f.designation.value}}
+      </div>
+    </div>
+</div>
+<div class="form-body">
+  <div class="form-group row">
+    <label class="col-md-3 label-control" for="name">Email</label>
+    <div class="col-md-9">
+      {{f.email.value}}
+    </div>
+  </div>
+</div>
+<div class="form-body">
+  <div class="form-group row">
+    <label class="col-md-3 label-control" for="name">Mobile Number</label>
+    <div class="col-md-9">
+      {{f.mobileNumber.value}}
+    </div>
+  </div>
+</div>
+<div class="form-body">
+  <div class="form-group row">
+    <label class="col-md-3 label-control" for="name">Office Address</label>
+    <div class="col-md-9">
+      {{f.officeAddress.value}}
+    </div>
+  </div>
+</div>
+<div class="form-body">
+  <div class="form-group row">
+    <label class="col-md-3 label-control" for="name">Mobile Number</label>
+    <div class="col-md-9">
+      {{f.mobileNumber.value}}
+    </div>
+  </div>
+</div>
+
+<div class="form-body">
+  <div class="form-group row">
+    <label class="col-md-3 label-control" for="name">Office Number</label>
+    <div class="col-md-9">
+      {{f.officeNumber.value}}
+    </div>
+  </div>
+</div>
+
+<div class="form-body">
+  <div class="form-group row">
+    <label class="col-md-3 label-control" for="name">Fax Number</label>
+    <div class="col-md-9">
+      {{f.faxNumber.value}}
+    </div>
+  </div>
+</div>
+
+<div class="form-body">
+  <div class="form-group row">
+    <label class="col-md-3 label-control" for="name">Course</label>
+    <div class="col-md-9">
+      {{courseName}}
+    </div>
+  </div>
+</div>
+
+<div class="form-body">
+  <div class="form-group row">
+    <label class="col-md-3 label-control" for="name">Inquiry Channel</label>
+    <div class="col-md-9">
+      {{f.inquiryChannel.value}}
+    </div>
+  </div>
+</div>
+
+<div class="form-body">
+  <div class="form-group row">
+    <label class="col-md-3 label-control" for="createdDate">Date of Inquiry</label>
+    <div class="col-md-9">
+      <span *ngIf="f.createdDate">{{dateOfInquiryView | date: 'MMM d, y'}}</span>
+    </div>
+  </div>
+</div>
+
+<div class="form-body">
+  <div class="form-group row">
+    <label class="col-md-3 label-control" for="name">Inquiry Status</label>
+    <div class="col-md-9">
+      {{f.inquiryStatus.value}}
+    </div>
+  </div>
+</div>
+
+<div class="form-body">
+  <div class="form-group row">
+    <label class="col-md-3 label-control" for="name">Comment</label>
+    <div class="col-md-9">
+      {{f.comment.value}}
+    </div>
+  </div>
+</div>
+
+<div class="form-body">
+  <div class="form-group row">
+    <label class="col-md-3 label-control" for="name">Account Manager</label>
+    <div class="col-md-9">
+      {{accountManager}}
+    </div>
+  </div>
+</div>
+
+        <div class="form-body">
+            <div class="form-group row">
+              <label class="col-md-3 label-control" for="createdDate">Date Created</label>
+              <div class="col-md-9">
+                <span *ngIf="f.createdDate">{{f.createdDate.value | date: 'MMM d, y h:mm:ss a'}}</span>
+              </div>
+            </div>
+        </div>
+        <div class="form-body">
+            <div class="form-group row">
+              <label class="col-md-3 label-control" for="createdBy">Created By</label>
+              <div class="col-md-9">
+                {{createdBy}}
+              </div>
+            </div>
+        </div>
+        <div class="form-body">
+            <div class="form-group row">
+              <label class="col-md-3 label-control" for="modifiedDate">Last Modified Date</label>
+              <div class="col-md-9">
+                <span *ngIf="f.modifiedDate">{{f.modifiedDate.value | date: 'MMM d, y h:mm:ss a'}}</span>
+              </div>
+            </div>
+        </div>
+        <div class="form-body">
+            <div class="form-group row">
+              <label class="col-md-3 label-control" for="modifiedBy">Last Modified By</label>
+              <div class="col-md-9">
+                {{modifiedBy}}
+              </div>
+            </div>
+        </div>
+        <div class="form-body">
+            <div class="form-group row">
+              <label class="col-md-3 label-control">&nbsp;</label>
+              <div class="col-md-9">
+                <button type="button" class="btn btn-raised btn-success mr-2" (click)="showEditForm()">
+                  <i class="fa fa-check-square-o"></i> Edit
+                </button>
+                <button type="button" class="btn btn-danger btn-raised" (click)="cancel()">
+                  <i class="ft-x"></i> Cancel
+                </button>
+              </div>
+            </div>
+        </div>
+        </form>
+      </div>
+      <!-- view form end -->
+
+      <!-- new form and edit form start -->
+      <div *ngIf="newForm == true || editForm == true" class="col-md-6">
+
+        <div class="card">
+          <div class="card-content">
+            <div class="px-3">
+              <form class="form form-horizontal" [formGroup]="currentForm">
+
+                <input *ngIf="editForm" type="hidden" formControlName="id">
+
+                <div class="form-body">
+                  <div class="form-group row">
+                    <label class="col-md-3 label-control">&nbsp;</label>
+                    <div class="col-md-9">
+                      <ngb-alert type="danger" [dismissible]="false" *ngIf="genericError">Unable to update information. Try again.</ngb-alert>
+                      Fields with <span class="px-required">*</span> are required.
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-md-3 label-control" for="name">First Name<span class="px-required">*</span></label>
+                    <div class="col-md-9">
+                      <input  formControlName="firstName"  type="text" id="firstName" class="form-control" name="firstName"  [ngClass]="{ 'is-invalid': isInvalid(f.firstName)}">
+                      <small *ngIf="(f.firstName.dirty || f.firstName.touched || submitted) && f.firstName.invalid && f.firstName.errors.required" class="form-text text-muted danger">
+                        First name required
+                      </small>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-md-3 label-control" for="name">Last Name<span class="px-required">*</span></label>
+                    <div class="col-md-9">
+                      <input  formControlName="lastName"  type="text" id="lastName" class="form-control" name="lastName"  [ngClass]="{ 'is-invalid': isInvalid(f.lastName)}">
+                      <small *ngIf="(f.lastName.dirty || f.lastName.touched || submitted) && f.lastName.invalid && f.lastName.errors.required" class="form-text text-muted danger">
+                        Last name required
+                      </small>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-md-3 label-control" for="name">Middle Initial</label>
+                    <div class="col-md-9">
+                      <input  formControlName="middleInitial"  type="text" id="middleInitial" class="form-control" name="middleInitial">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-md-3 label-control" for="name">Company Name<span class="px-required">*</span></label>
+                    <div class="col-md-9">
+                      <input  formControlName="companyName"  type="text" id="companyName" class="form-control" name="companyName"  [ngClass]="{ 'is-invalid': isInvalid(f.companyName)}">
+                      <small *ngIf="(f.companyName.dirty || f.companyName.touched || submitted) && f.companyName.invalid && f.companyName.errors.required" class="form-text text-muted danger">
+                        Company name required
+                      </small>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-md-3 label-control" for="name">Course Inquired<span class="px-required">*</span></label>
+                    <div class="col-md-9">
+                      <input type="hidden" formControlName="courseId">
+                      <app-course-select (selectedIdEmitter)="onCourseSelected($event)" [isInvalid]="isCourseIdInvalid" [selectedCourse]="selectedCourse"></app-course-select>
+                      <small *ngIf="isCourseIdInvalid" class="form-text text-muted danger">Course inquired required</small>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-md-3 label-control" for="name">Account Manager<span class="px-required">*</span></label>
+                    <div class="col-md-9">
+                      <input type="hidden" formControlName="accountManager">
+                      <app-account-manager-select (selectedIdEmitter)="onAccountManagerSelected($event)" [selectedAccountManager]="selectedAccountManager" [isInvalid]="isAccountManagerIdInvalid"></app-account-manager-select>
+                      <small *ngIf="isAccountManagerIdInvalid" class="form-text text-muted danger">Account manager required</small>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-md-3 label-control" for="name">Office Address</label>
+                    <div class="col-md-9">
+                      <textarea  formControlName="officeAddress"  type="text" id="officeAddress" class="form-control" name="officeAddress"></textarea>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-md-3 label-control" for="name">Designation</label>
+                    <div class="col-md-9">
+                      <input  formControlName="designation"  type="text" id="designation" class="form-control" name="designation">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-md-3 label-control" for="name">Email<span class="px-required">*</span></label>
+                    <div class="col-md-9">
+                      <input  formControlName="email"  type="text" id="email" class="form-control" name="email"  [ngClass]="{ 'is-invalid': isInvalid(f.email)}">
+                      <small *ngIf="(f.email.dirty || f.email.touched || submitted) && f.email.invalid && f.email.errors.required" class="form-text text-muted danger">
+                        Email required
+                      </small>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-md-3 label-control" for="name">Mobile Number<span class="px-required">*</span></label>
+                    <div class="col-md-9">
+                      <input  formControlName="mobileNumber"  type="text" id="mobileNumber" class="form-control" name="mobileNumber"  [ngClass]="{ 'is-invalid': isInvalid(f.mobileNumber)}">
+                      <small *ngIf="(f.mobileNumber.dirty || f.mobileNumber.touched || submitted) && f.mobileNumber.invalid && f.mobileNumber.errors.required" class="form-text text-muted danger">
+                        Mobile number required
+                      </small>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-md-3 label-control" for="name">Office Number</label>
+                    <div class="col-md-9">
+                      <input  formControlName="officeNumber"  type="text" id="officeNumber" class="form-control" name="officeNumber">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-md-3 label-control" for="name">Fax Number</label>
+                    <div class="col-md-9">
+                      <input  formControlName="faxNumber"  type="text" id="faxNumber" class="form-control" name="faxNumber">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-md-3 label-control" for="name">Inquiry Channel<span class="px-required">*</span></label>
+                    <div class="col-md-9">
+                      <input type="hidden" formControlName="inquiryChannel">
+                      <app-channel-select (selectedIdEmitter)="onChannelSelected($event)" [selectedChannel]="selectedChannel" [isInvalid]="isChannelInvalid"></app-channel-select>
+                      <small *ngIf="isChannelInvalid" class="form-text text-muted danger">Inquiry channel required</small>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-md-3 label-control" for="name">Inquiry Date<span class="px-required">*</span></label>
+                    <div class="col-md-9">
+                      <div class="input-group">
+                        <input
+                              name="dateOfInquiry"
+                              id="dateOfInquiry"
+                              class="form-control"
+                              placeholder="yyyy-mm-dd"
+                              ngbDatepicker
+                              formControlName="dateOfInquiry"
+                              #inquiryDatePicker="ngbDatepicker"
+                              [ngClass]="{ 'is-invalid': isInvalid(f.dateOfInquiry)}">
+                        <div class="input-group-append">
+                          <div class="input-group-text" (click)="inquiryDatePicker.toggle()">
+                            <i class="fa fa-calendar" style="cursor: pointer;"></i>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <input type="hidden" formControlName="inquiryStatus" [value]="defaultInquiryStatus">
+                  <div class="form-group row">
+                    <label class="col-md-3 label-control" for="name">Comment</label>
+                    <div class="col-md-9">
+                      <textarea  formControlName="comment"  type="text" id="comment" class="form-control" name="comment"></textarea>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label class="col-md-3 label-control" for="name">Inquiry Status</label>
+                    <div class="col-md-9">
+                      {{f.inquiryStatus.value}}
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label class="col-md-3 label-control" for="eventRegInput4">&nbsp;</label>
+                    <div class="col-md-9">
+                      <button *ngIf="editForm" type="button" class="btn btn-raised btn-success mr-2" (click)="update()">
+                        <i class="fa fa-check-square-o"></i> Save Changes
+                      </button>
+                      <button *ngIf="newForm" type="button" class="btn btn-raised btn-success mr-2" (click)="saveNew()">
+                        <i class="fa fa-check-square-o"></i> Save
+                      </button>
+                      <button type="button" class="btn btn-danger btn-raised" (click)="cancel()">
+                        <i class="ft-x"></i> Cancel
+                      </button>
+                    </div>
+                  </div>
+
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- new form and edit form end -->
+    </div>
+  </div>
+
+</div>

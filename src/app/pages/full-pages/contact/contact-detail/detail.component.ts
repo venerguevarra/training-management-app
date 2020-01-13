@@ -12,17 +12,18 @@ import { User } from '../../../../model/user.model';
 import { environment } from '../../../../../environments/environment';
 
 @Component({
-	selector: 'app-account-detail',
+	selector: 'app-contact-detail',
 	templateUrl: './detail.component.html',
 	styleUrls: ['./detail.component.scss']
 })
-export class AccountDetailComponent {
+export class ContactDetailComponent {
 	private readonly API_HOST = environment.API_HOST;
-  	private readonly ENDPOINT: string = `${this.API_HOST}/accounts`;
+  	private readonly ENDPOINT: string = `${this.API_HOST}/contacts`;
 	private readonly USERS_ENDPOINT: string = `${this.API_HOST}/users`;
-	private readonly LANDING_PAGE: string = '/app/account';
+	private readonly ACCOUNT_ENDPOINT: string = `${this.API_HOST}/accounts`;
+	private readonly LANDING_PAGE: string = '/app/contact';
 
-	title = 'Account';
+	title = 'Contact';
 	currentUser;
 	modelId;
 	currentForm: FormGroup;
@@ -36,12 +37,7 @@ export class AccountDetailComponent {
 	modifiedBy = "";
 
 	isRecordActive: boolean = false;
-	isChannelInvalid = false;
-	isAccountManagerIdInvalid = false;
-	selectedChannel = "";
-	selectedAccountManager = "";
-	selectedCompanySize = "";
-
+	parentAccountId: string = "";
 	accountName = "";
 
 	constructor(
@@ -52,13 +48,26 @@ export class AccountDetailComponent {
         private router: Router,
         private route: ActivatedRoute) {
 
-		this.initForm();
-
 		this.route.params.subscribe( params => {
+			this.parentAccountId = this.route.snapshot.queryParamMap.get('accountId');
+
+			if(!this.parentAccountId) {
+				this.toastr.error('Cannot find account ID.', 'System', { timeOut: 3000 });
+				this.router.navigate(['/app/account']);
+				return;
+			}
+
+			this.httpClient.get(`${this.ACCOUNT_ENDPOINT}/${this.parentAccountId}`).subscribe(
+				(account) => {
+					this.accountName = account['name'];
+				}
+			);
 
 			if (params['id']) {
 				this.modelId = params.id;
 				this.newForm = this.modelId == -1;
+
+				this.initForm();
 
 				if(!this.newForm) {
 					 this.route.queryParams.subscribe(params => {
@@ -105,15 +114,15 @@ export class AccountDetailComponent {
 
 							this.currentForm = this.formBuilder.group({
 								id: [this.currentModel.id],
-								name: [this.currentModel.name, [Validators.required]],
-								description: [this.currentModel.description],
-								officeAddress: [this.currentModel.officeAddress],
-								billingAddress: [this.currentModel.billingAddress],
-								tin: [this.currentModel.tin],
-								website: [this.currentModel.website],
-								companySize: [this.currentModel.companySize],
-								channel: [this.currentModel.channel],
-								accountManager: [this.currentModel.accountManager, [Validators.required]],
+								firstName: [this.currentModel.firstName, [Validators.required]],
+								lastName: [this.currentModel.lastName, [Validators.required]],
+								middleInitial: [this.currentModel.middleInitial],
+								email: [this.currentModel.email, [Validators.required]],
+								mobileNumber: [this.currentModel.mobileNumber, [Validators.required]],
+								designation: [this.currentModel.designation],
+								officeNumber: [this.currentModel.officeNumber],
+								faxNumber: [this.currentModel.faxNumber],
+								accountId: [this.currentModel.accountId, [Validators.required]],
 								createdDate: [this.currentModel.createdDate],
 								createdBy: [this.currentModel.createdBy],
 								modifiedDate: [this.currentModel.modifiedDate],
@@ -121,11 +130,7 @@ export class AccountDetailComponent {
 								status: [this.currentModel.active]
 							});
 
-							this.selectedAccountManager = this.currentModel.accountManager;
-							this.selectedChannel = this.currentModel.channel;
-							this.selectedCompanySize = this.currentModel.companySize;
 							this.isRecordActive = this.currentModel.active === 'ACTIVE';
-							this.accountName = this.currentModel.name;
 						},
 						(error) => {
 							this.toastr.error('Error has occurred.', 'System', { timeOut: 3000 });
@@ -140,15 +145,15 @@ export class AccountDetailComponent {
 	initForm() {
 		this.currentForm = this.formBuilder.group({
 			id: [''],
-			name: ['', [Validators.required]],
-			description: [''],
-			officeAddress: [''],
-			billingAddress: [''],
-			tin: [''],
-			website: [''],
-			companySize: [''],
-			channel: [''],
-			accountManager: ['', [Validators.required]],
+			firstName: ['', [Validators.required]],
+			lastName: ['', [Validators.required]],
+			middleInitial: [''],
+			email: ['', [Validators.required]],
+			mobileNumber: ['', [Validators.required]],
+			designation: [''],
+			officeNumber: [''],
+			faxNumber: [''],
+			accountId: [this.parentAccountId],
 			status: [''],
 		});
 	}
@@ -177,15 +182,16 @@ export class AccountDetailComponent {
 		}).then(e => {
 			if(e.value) {
 				let requestBody = {
-					name: this.currentForm.get('name').value,
-					description: this.currentForm.get('description').value,
-					officeAddress: this.currentForm.get('officeAddress').value,
-					billingAddress: this.currentForm.get('billingAddress').value,
-					tin: this.currentForm.get('tin').value,
-					website: this.currentForm.get('website').value,
-					companySize: this.currentForm.get('companySize').value,
-					channel: this.currentForm.get('channel').value == "" ? "NONE" : this.currentForm.get('channel').value,
-					accountManager: this.currentForm.get('accountManager').value
+					firstName: this.currentForm.get('firstName').value,
+					lastName: this.currentForm.get('lastName').value,
+					middleInitial: this.currentForm.get('middleInitial').value,
+					email: this.currentForm.get('email').value,
+					mobileNumber: this.currentForm.get('mobileNumber').value,
+					designation: this.currentForm.get('designation').value,
+					officeNumber: this.currentForm.get('officeNumber').value,
+					faxNumber: this.currentForm.get('faxNumber').value,
+					accountId: this.currentForm.get('accountId').value,
+					active: this.currentForm.get('status').value
 				};
 
 				let resourceId = this.currentForm.get('id').value;
@@ -222,17 +228,7 @@ export class AccountDetailComponent {
 	saveNew() {
 		this.submitted = true;
 
-		let hasError = false;
-
-		if(this.f.accountManager.value == '' || this.f.accountManager.value == 'undefined' || this.f.accountManager == null) {
-			this.isAccountManagerIdInvalid = true;
-			hasError = true;
-		} else {
-			this.isAccountManagerIdInvalid = false;
-			hasError = false;
-		}
-
-        if (this.currentForm.invalid || hasError) {
+        if (this.currentForm.invalid) {
             return;
         }
 
@@ -247,18 +243,16 @@ export class AccountDetailComponent {
 		}).then(e => {
 			if(e.value) {
 				let requestBody = {
-					name: this.currentForm.get('name').value,
-					description: this.currentForm.get('description').value,
-					officeAddress: this.currentForm.get('officeAddress').value,
-					billingAddress: this.currentForm.get('billingAddress').value,
-					tin: this.currentForm.get('tin').value,
-					website: this.currentForm.get('website').value,
-					companySize: this.currentForm.get('companySize').value,
-					channel: this.currentForm.get('channel').value == "" ? "NONE" : this.currentForm.get('channel').value,
-					accountManager: this.currentForm.get('accountManager').value
+					firstName: this.currentForm.get('firstName').value,
+					lastName: this.currentForm.get('lastName').value,
+					middleInitial: this.currentForm.get('middleInitial').value,
+					email: this.currentForm.get('email').value,
+					mobileNumber: this.currentForm.get('mobileNumber').value,
+					designation: this.currentForm.get('designation').value,
+					officeNumber: this.currentForm.get('officeNumber').value,
+					faxNumber: this.currentForm.get('faxNumber').value,
+					accountId: this.currentForm.get('accountId').value
 				};
-
-
 
 				this.httpClient
 						.post(this.ENDPOINT, requestBody, { observe: 'response' })
@@ -292,47 +286,8 @@ export class AccountDetailComponent {
 		}
 	}
 
-	onCompanySizeHandler = (event) => {
-		if(event) {
-			this.f.companySize.setValue(event);
-		} else {
-			this.f.companySize.setValue('');
-		}
-	}
-
-	onChannelSelected = (channel: any) => {
-		if(channel) {
-			this.selectedChannel = channel;
-			this.f.channel.setValue(channel);
-		} else {
-			this.f.channel.setValue('');
-		}
-  	}
-
-	onAccountManagerSelected = (accountManagerId: any) => {
-		if(accountManagerId) {
-			this.isAccountManagerIdInvalid = false;
-			this.f.accountManager.setValue(accountManagerId);
-		} else {
-			this.f.accountManager.setValue('');
-			this.isAccountManagerIdInvalid = true;
-
-		}
-  	}
-
-	 assignToMe = () => {
-		 console.log("a");
-		 this.selectedAccountManager = this.currentUser.userId;
-		 console.log(this.selectedAccountManager);
-	 }
-
 	cancel() {
-		this.router.navigate([this.LANDING_PAGE]);
-	}
-
-	cancelEdit() {
-		this.editForm = false;
-		this.viewForm = true;
+		this.router.navigate(['/app/account']);
 	}
 
 	isInvalid(control:any) {

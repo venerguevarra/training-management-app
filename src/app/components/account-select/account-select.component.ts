@@ -9,19 +9,19 @@ import swal from 'sweetalert2';
 import { ToastrService } from 'ngx-toastr';
 
 import { environment } from '../../../environments/environment';
-import { AccountManagerDataService, AccountManager } from '../../service/account-manager-data.service';
-import { StateService } from '../../service/state.service';
+import { AccountDataService, Account } from '../../service/account-data.service';
 
 @Component({
-	selector: 'app-account-manager-select',
-	templateUrl: './account-manager-select.component.html',
-	styleUrls: ['./account-manager-select.component.scss']
+	selector: 'app-account-select',
+	templateUrl: './account-select.component.html',
+	styleUrls: ['./account-select.component.scss']
 })
-export class AccountManagerSelectComponent {
+export class AccountSelectComponent {
     @Output() private selectedIdEmitter = new EventEmitter<any>();
     @Input() isInvalid: boolean;
-    @Input() selectedAccountManager;
-    @Input() currentUser: boolean;
+    @Input() selectedAccount;
+
+    selectedId = '-1';
 
 	data = [];
     dataBuffer = [];
@@ -29,10 +29,7 @@ export class AccountManagerSelectComponent {
     numberOfItemsFromEndBeforeFetchingMore = 10;
     loading = false;
 
-    constructor(
-        private dataService: AccountManagerDataService,
-        private stateService: StateService
-    ) {
+    constructor(private dataService: AccountDataService) {
 		this.initReferences();
 	}
 
@@ -40,9 +37,6 @@ export class AccountManagerSelectComponent {
 		this.dataService.getActive().subscribe(data => {
 			this.data = data;
             this.dataBuffer = this.data.slice(0, this.bufferSize);
-            if(this.currentUser) {
-                this.selectedAccountManager = this.stateService.getCurrentUser().userId;
-            }
 		});
 	}
 
