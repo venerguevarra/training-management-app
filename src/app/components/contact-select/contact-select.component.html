@@ -3,21 +3,22 @@
            [loading]="loading"
            bindLabel="name"
            bindValue="id"
-           placeholder="Select Course"
+           placeholder="Select Contact"
            appendTo="body"
            (scroll)="onScroll($event)"
            (scrollToEnd)="onScrollToEnd()"
            [(ngModel)]="selectedId"
            (change)="onChange($event)"
            (clear)="onClear($event)"
-           [ngClass]="{'invalid-select': isInvalid}">
+           [ngClass]="{'invalid-select': isInvalid}"
+           [searchFn]="search">
 
       <ng-template ng-header-tmp>
             <small class="form-text text-muted">Loaded {{coursesBuffer.length}} of {{courses.length}}</small>
       </ng-template>
       <ng-template ng-option-tmp let-item="item" let-index="index">
             {{item.name}} <br/>
-            <div style="color:red;">{{item.courseFee | currency: 'PHP '}}</div>
+            <i class="ft-mail"></i> <span class="mr-2">{{item.data.email}}</span> <i class="ft-phone"></i> {{item.data.mobileNumber}}
       </ng-template>
 
 </ng-select>

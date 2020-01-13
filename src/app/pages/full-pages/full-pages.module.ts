@@ -17,6 +17,7 @@ import { InquiryModule } from './inquiry/inquiry.module';
 import { MarketingInquiryModule } from './marketing-inquiry/marketing-inquiry.module';
 import { AccountModule } from './account/account.module';
 import { ContactModule } from './contact/contact.module';
+import { DealModule } from './deal/deal.module';
 
 import { FullPageRoutingModule  } from "./full-pages-routing.module";
 
@@ -36,7 +37,8 @@ import { FullPageRoutingModule  } from "./full-pages-routing.module";
         InquiryModule,
         MarketingInquiryModule,
         AccountModule,
-        ContactModule
+        ContactModule,
+        DealModule
     ],
     exports: [],
     declarations: [

@@ -320,12 +320,6 @@ export class AccountDetailComponent {
 		}
   	}
 
-	 assignToMe = () => {
-		 console.log("a");
-		 this.selectedAccountManager = this.currentUser.userId;
-		 console.log(this.selectedAccountManager);
-	 }
-
 	cancel() {
 		this.router.navigate([this.LANDING_PAGE]);
 	}

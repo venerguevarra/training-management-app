@@ -10,20 +10,20 @@ import { ToastrService } from 'ngx-toastr';
 
 
 import { environment } from '../../../environments/environment';
-import { CourseDataService, Course } from '../../service/course-data.service';
+import { InquiryDataService } from '../../service/inquiry-data.service';
 
 @Component({
-	selector: 'app-course-select',
-	templateUrl: './course-select.component.html',
-	styleUrls: ['./course-select.component.scss']
+	selector: 'app-inquiry-select',
+	templateUrl: './inquiry-select.component.html',
+	styleUrls: ['./inquiry-select.component.scss']
 })
-export class CourseSelectComponent {
+export class InquirySelectComponent {
     @Output() private selectedIdEmitter = new EventEmitter<any>();
 
     @Input() isInvalid: boolean;
-    @Input() selectedCourse = '';
+    @Input() accountManager: string;
+    @Input() selectedInquiry = '';
 
-	courses$: Observable<Course[]>;
     selectedId;
 
 	courses = [];
@@ -51,16 +51,27 @@ export class CourseSelectComponent {
     }
 
 	initReferences() {
-		this.courseDataService.getActiveCourses().subscribe(courses => {
-			this.courses = courses;
-            this.coursesBuffer = this.courses.slice(0, this.bufferSize);
-            if(this.selectedCourse && this.selectedCourse != '') {
-                this.selectedId = this.selectedCourse;
-            }
-		});
+        if(this.accountManager) {
+            this.inquiryDataService.getActiveByAccountManager(this.accountManager).subscribe(courses => {
+                this.courses = courses;
+                this.coursesBuffer = this.courses.slice(0, this.bufferSize);
+                if(this.selectedInquiry && this.selectedInquiry != '') {
+                    this.selectedId = this.selectedInquiry;
+                }
+		    });
+        } else {
+            this.inquiryDataService.getActive().subscribe(courses => {
+                this.courses = courses;
+                this.coursesBuffer = this.courses.slice(0, this.bufferSize);
+                if(this.selectedInquiry && this.selectedInquiry != '') {
+                    this.selectedId = this.selectedInquiry;
+                }
+		    });
+        }
+
 	}
 
-	 onScrollToEnd() {
+	onScrollToEnd() {
         this.fetchMore();
     }
 
@@ -79,7 +90,7 @@ export class CourseSelectComponent {
         private formBuilder: FormBuilder,
         private router: Router,
         private route: ActivatedRoute,
-        private courseDataService: CourseDataService) {
+        private inquiryDataService: InquiryDataService) {
 		this.initReferences();
 	}
 

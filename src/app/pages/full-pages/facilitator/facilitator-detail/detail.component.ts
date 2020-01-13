@@ -49,7 +49,7 @@ export class FacilitatorDetailComponent {
 		this.initForm();
 
 		this.route.params.subscribe( params => {
-			
+
 			if (params['id']) {
 				this.modelId = params.id;
 				this.newForm = this.modelId == -1;
@@ -58,7 +58,7 @@ export class FacilitatorDetailComponent {
 					 this.route.queryParams.subscribe(params => {
 						if(params.action === 'view') {
 							this.viewForm = true;
-						} 
+						}
 						if(params.action === 'edit') {
 							this.editForm = true;
 						}
@@ -82,7 +82,7 @@ export class FacilitatorDetailComponent {
 									}
 								);
 							}
-							
+
 
 							if(this.currentModel.modifiedBy != null) {
 								this.httpClient.get(`${this.USERS_ENDPOINT}/${this.currentModel.modifiedBy}`).subscribe(
@@ -96,7 +96,7 @@ export class FacilitatorDetailComponent {
 									}
 								);
 							}
-							
+
 
 							this.currentForm = this.formBuilder.group({
 								id: [this.currentModel.id],
@@ -137,7 +137,7 @@ export class FacilitatorDetailComponent {
 			status: ['']
 		});
 	}
-	
+
 	get f() { return this.currentForm.controls; }
 
 	ngAfterViewInit() {
@@ -177,7 +177,6 @@ export class FacilitatorDetailComponent {
 						.put(`${this.ENDPOINT}/${resourceId}`, requestBody, { observe: 'response' })
 						.subscribe(
 							(data) => {
-								console.log(data);
 								if(data.status == 200) {
 									this.toastr.success(`${this.title} successfully updated.`, 'System', { timeOut: 3000 });
 								}
@@ -205,7 +204,7 @@ export class FacilitatorDetailComponent {
 
 	saveNew() {
 		this.submitted = true;
-		
+
         if (this.currentForm.invalid) {
             return;
         }
@@ -235,7 +234,7 @@ export class FacilitatorDetailComponent {
 							(data) => {
 								if(data.status == 201) {
 									this.genericError = false;
-									
+
 									this.toastr.success(`New facilitator successfully saved.`, 'Success', { timeOut: 3000 });
 									this.router.navigate([this.LANDING_PAGE]);
 								}

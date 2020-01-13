@@ -1,20 +1,19 @@
-<span *ngIf="currentUser"></span>
-<ng-select [items]="data"
+<ng-select [items]="courses"
            [virtualScroll]="true"
            [loading]="loading"
            bindLabel="name"
            bindValue="id"
-           placeholder="Select Account Manager"
+           placeholder="Select Inquiry"
            appendTo="body"
            (scroll)="onScroll($event)"
            (scrollToEnd)="onScrollToEnd()"
+           [(ngModel)]="selectedId"
            (change)="onChange($event)"
-           [(ngModel)]="selectedAccountManager"
            (clear)="onClear($event)"
            [ngClass]="{'invalid-select': isInvalid}">
 
       <ng-template ng-header-tmp>
-            <small class="form-text text-muted">Loaded {{dataBuffer.length}} of {{data.length}}</small>
+            <small class="form-text text-muted">Loaded {{coursesBuffer.length}} of {{courses.length}}</small>
       </ng-template>
       <ng-template ng-option-tmp let-item="item" let-index="index">
             {{item.name}}

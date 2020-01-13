@@ -165,7 +165,6 @@ export class CostDetailComponent {
 						.put(`${this.ENDPOINT}/${resourceId}`, requestBody, { observe: 'response' })
 						.subscribe(
 							(data) => {
-								console.log(data);
 								if(data.status == 200) {
 									this.toastr.success(`${this.title} successfully updated.`, 'System', { timeOut: 3000 });
 								}

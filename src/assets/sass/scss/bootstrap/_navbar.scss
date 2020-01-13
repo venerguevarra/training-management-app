@@ -26,9 +26,9 @@
         margin-top: 4px;
       }
     }
-     
-       
-  }    
+
+
+  }
 
   .notification{
     position: absolute;
@@ -37,9 +37,9 @@
   }
 }
 
-@media (max-width: 767px) {    
+@media (max-width: 767px) {
     //For responsive mega menu
-    #navbar-mobile.navbar-collapse {           
+    #navbar-mobile.navbar-collapse {
         .navbar-nav {
             margin: 0;
             flex-flow: row wrap;
@@ -56,8 +56,8 @@
 /* For sm screen*/
     @include media-breakpoint-down(md) {
         .navbar-header {
-            width: 100% !important;                    
-        }      
+            width: 100% !important;
+        }
             .navbar-container {
                 width: 100%;
                 display: table;
@@ -71,14 +71,14 @@
     // Media queries for device support
 // =========================================
 @include media-breakpoint-down(md) {
-    .header-navbar {        
-        .navbar-container {           
+    .header-navbar {
+        .navbar-container {
             ul.navbar-nav {
                 li {
-                    float: right !important;                   
+                    float: right !important;
                     > a.nav-link {
-                        padding: 0.5rem 0.5rem;                        
-                    } 
+                        padding: 0.5rem 0.5rem;
+                    }
                 }
             }
         }
@@ -87,12 +87,12 @@
 
 [dir="rtl"]{
     @include media-breakpoint-down(md) {
-        .header-navbar {        
-            .navbar-container {           
+        .header-navbar {
+            .navbar-container {
                 ul.navbar-nav {
                     li {
-                        float: left !important;                   
-                        
+                        float: left !important;
+
                     }
                 }
             }

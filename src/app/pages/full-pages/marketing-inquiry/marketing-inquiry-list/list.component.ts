@@ -254,7 +254,6 @@ export class MarketingInquiryListComponent {
   	}
 
 	public onInquiryStatusSelected(inquiryStatus: any) {
-		console.log(inquiryStatus);
 		if(inquiryStatus) {
 			this.searchForm.controls.inquiryStatus.setValue(inquiryStatus);
 		} else {

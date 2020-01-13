@@ -86,7 +86,6 @@ export class LoginPageComponent {
                 this.router.navigateByUrl(this.returnUrl);
             },
             error => {
-                console.log(error);
                 this.loginError = true;
             });
     }

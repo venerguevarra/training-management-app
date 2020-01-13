@@ -10,20 +10,20 @@ import { ToastrService } from 'ngx-toastr';
 
 
 import { environment } from '../../../environments/environment';
-import { CourseDataService, Course } from '../../service/course-data.service';
+import { ContactDataService } from '../../service/contact-data.service';
 
 @Component({
-	selector: 'app-course-select',
-	templateUrl: './course-select.component.html',
-	styleUrls: ['./course-select.component.scss']
+	selector: 'app-contact-select',
+	templateUrl: './contact-select.component.html',
+	styleUrls: ['./contact-select.component.scss']
 })
-export class CourseSelectComponent {
+export class ContactSelectComponent {
     @Output() private selectedIdEmitter = new EventEmitter<any>();
 
     @Input() isInvalid: boolean;
-    @Input() selectedCourse = '';
+    @Input() accountId: string;
+    @Input() selectedContact = '';
 
-	courses$: Observable<Course[]>;
     selectedId;
 
 	courses = [];
@@ -51,16 +51,27 @@ export class CourseSelectComponent {
     }
 
 	initReferences() {
-		this.courseDataService.getActiveCourses().subscribe(courses => {
-			this.courses = courses;
-            this.coursesBuffer = this.courses.slice(0, this.bufferSize);
-            if(this.selectedCourse && this.selectedCourse != '') {
-                this.selectedId = this.selectedCourse;
-            }
-		});
+        if(this.accountId) {
+            this.contactDataService.getActiveByAccountId(this.accountId).subscribe(courses => {
+                this.courses = courses;
+                this.coursesBuffer = this.courses.slice(0, this.bufferSize);
+                if(this.selectedContact && this.selectedContact != '') {
+                    this.selectedId = this.selectedContact;
+                }
+		    });
+        } else {
+            this.contactDataService.getActive().subscribe(courses => {
+                this.courses = courses;
+                this.coursesBuffer = this.courses.slice(0, this.bufferSize);
+                if(this.selectedContact && this.selectedContact != '') {
+                    this.selectedId = this.selectedContact;
+                }
+		    });
+        }
+
 	}
 
-	 onScrollToEnd() {
+	onScrollToEnd() {
         this.fetchMore();
     }
 
@@ -79,7 +90,7 @@ export class CourseSelectComponent {
         private formBuilder: FormBuilder,
         private router: Router,
         private route: ActivatedRoute,
-        private courseDataService: CourseDataService) {
+        private contactDataService: ContactDataService) {
 		this.initReferences();
 	}
 
@@ -92,5 +103,11 @@ export class CourseSelectComponent {
             this.loading = false;
             this.coursesBuffer = this.coursesBuffer.concat(more);
         }, 200)
+    }
+
+    search(term: string, item) {
+        term = term.toLowerCase();
+        console.log(term, item)
+        return item.name.toLowerCase().indexOf(term) > -1;
     }
 }

@@ -14,8 +14,6 @@ import { environment } from '../../../../../environments/environment';
 import { DatePipe } from '@angular/common';
 
 declare var $: any;
-console.log(`jQuery version: ${$.fn.jquery}`);
-
 
 @Component({
 	selector: 'app-inquiry-detail',
@@ -92,12 +90,13 @@ export class InquiryDetailComponent {
 		}
   	}
 
-	public onCourseSelected(courseId: any) {
-		if(courseId) {
-			this.f.courseId.setValue(courseId);
+	public onCourseSelected(course: any) {
+		if(course) {
+			this.f.courseId.setValue(course.id);
 			this.isCourseIdInvalid = false;
 
 		} else {
+			this.f.courseId.setValue('');
 			this.isCourseIdInvalid = true;
 		}
   	}
@@ -108,6 +107,7 @@ export class InquiryDetailComponent {
 			this.isChannelInvalid = false;
 
 		} else {
+			this.f.inquiryChannel.setValue('');
 			this.isChannelInvalid = true;
 		}
   	}
@@ -195,7 +195,6 @@ export class InquiryDetailComponent {
 							}
 
 							if(this.currentModel.courseId != null) {
-								console.log(this.currentModel.courseId);
 								this.httpClient.get(`${this.COURSES_ENDPOINT}/${this.currentModel.courseId}`).subscribe(
 									(courseData) => {
 										let name = courseData['name'];
@@ -263,11 +262,42 @@ export class InquiryDetailComponent {
 	}
 
 	update() {
-		console.log("update");
-
 		this.submitted = true;
 
-        if (this.currentForm.invalid) {
+		let hasError = false;
+		if(this.f.courseId.value == '' || this.f.courseId.value == 'undefined' || this.f.courseId == null) {
+			this.isCourseIdInvalid = true;
+			hasError = true;
+		} else {
+			this.isCourseIdInvalid = false;
+			hasError = false;
+		}
+
+		if(this.f.accountManager.value == '' || this.f.accountManager.value == 'undefined' || this.f.accountManager == null) {
+			this.isAccountManagerIdInvalid = true;
+			hasError = true;
+		} else {
+			this.isAccountManagerIdInvalid = false;
+			hasError = false;
+		}
+
+		if(this.f.inquiryChannel.value == '' || this.f.inquiryChannel.value == 'undefined' || this.f.inquiryChannel == null) {
+			this.isChannelInvalid = true;
+			hasError = true;
+		} else {
+			this.isChannelInvalid = false;
+			hasError = false;
+		}
+
+		if(this.f.inquiryStatus.value == '' || this.f.inquiryStatus.value == 'undefined' || this.f.inquiryStatus == null) {
+			this.isInquiryStatusInvalid = true;
+			hasError = true;
+		} else {
+			this.isInquiryStatusInvalid = false;
+			hasError = false;
+		}
+
+        if (this.currentForm.invalid || hasError) {
             return;
         }
 
@@ -310,7 +340,6 @@ export class InquiryDetailComponent {
 						.put(`${this.ENDPOINT}/${resourceId}`, requestBody, { observe: 'response' })
 						.subscribe(
 							(data) => {
-								console.log(data);
 								if(data.status == 200) {
 									this.toastr.success(`${this.title} successfully updated.`, 'System', { timeOut: 3000 });
 								}
@@ -373,7 +402,6 @@ export class InquiryDetailComponent {
 		}
 
         if (this.currentForm.invalid || hasError) {
-			console.log(this.currentForm);
             return;
         }
 

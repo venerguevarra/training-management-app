@@ -158,14 +158,14 @@ export class VenueDetailComponent {
 					description: this.currentForm.get('description').value,
 					active: this.currentForm.get('status').value
 				};
-				console.log(requestBody);
+
 				let resourceId = this.currentForm.get('id').value;
 
 				this.httpClient
 						.put(`${this.ENDPOINT}/${resourceId}`, requestBody, { observe: 'response' })
 						.subscribe(
 							(data) => {
-								console.log(data);
+
 								if(data.status == 200) {
 									this.toastr.success(`${this.title} successfully updated.`, 'System', { timeOut: 3000 });
 								}

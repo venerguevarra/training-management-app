@@ -1,5 +1,5 @@
-<div>
-  <div *ngIf="viewForm" class="card">
+<div *ngIf="viewForm">
+  <div class="card">
     <div class="card-header" style="background-color: #ECEFF1;">
       <h3>{{f.name.value}} {{title}} Details</h3>
     </div>
@@ -119,6 +119,7 @@
     <!--Collapsible Accordion Ends-->
   </div>
   <app-contact-list [accountId]="modelId" [accountName]="accountName"></app-contact-list>
+  <app-deal-list [accountId]="modelId" [accountName]="accountName"></app-deal-list>
 </div>
 
 <!-- START: ACCOUNT NEW FORM or EDIT FORM-->

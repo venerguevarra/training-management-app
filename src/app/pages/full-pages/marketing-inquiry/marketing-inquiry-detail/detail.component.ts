@@ -14,7 +14,6 @@ import { environment } from '../../../../../environments/environment';
 import { DatePipe } from '@angular/common';
 
 declare var $: any;
-console.log(`jQuery version: ${$.fn.jquery}`);
 
 
 @Component({
@@ -89,16 +88,18 @@ export class MarketingInquiryDetailComponent {
 
 		} else {
 			this.isAccountManagerIdInvalid = true;
+			this.f.accountManager.setValue('');
 		}
   	}
 
-	public onCourseSelected(courseId: any) {
-		if(courseId) {
-			this.f.courseId.setValue(courseId);
+	public onCourseSelected(course: any) {
+		if(course) {
+			this.f.courseId.setValue(course);
 			this.isCourseIdInvalid = false;
 
 		} else {
 			this.isCourseIdInvalid = true;
+			this.f.courseId.setValue('');
 		}
   	}
 
@@ -109,6 +110,7 @@ export class MarketingInquiryDetailComponent {
 
 		} else {
 			this.isChannelInvalid = true;
+			this.f.inquiryChannel.setValue('');
 		}
   	}
 
@@ -119,6 +121,7 @@ export class MarketingInquiryDetailComponent {
 
 		} else {
 			this.isInquiryStatusInvalid = true;
+			this.f.inquiryStatus.setValue('');
 		}
   	}
 
@@ -195,7 +198,6 @@ export class MarketingInquiryDetailComponent {
 							}
 
 							if(this.currentModel.courseId != null) {
-								console.log(this.currentModel.courseId);
 								this.httpClient.get(`${this.COURSES_ENDPOINT}/${this.currentModel.courseId}`).subscribe(
 									(courseData) => {
 										let name = courseData['name'];
@@ -263,11 +265,42 @@ export class MarketingInquiryDetailComponent {
 	}
 
 	update() {
-		console.log("update");
-
 		this.submitted = true;
 
-        if (this.currentForm.invalid) {
+        let hasError = false;
+		if(this.f.courseId.value == '' || this.f.courseId.value == 'undefined' || this.f.courseId == null) {
+			this.isCourseIdInvalid = true;
+			hasError = true;
+		} else {
+			this.isCourseIdInvalid = false;
+			hasError = false;
+		}
+
+		if(this.f.accountManager.value == '' || this.f.accountManager.value == 'undefined' || this.f.accountManager == null) {
+			this.isAccountManagerIdInvalid = true;
+			hasError = true;
+		} else {
+			this.isAccountManagerIdInvalid = false;
+			hasError = false;
+		}
+
+		if(this.f.inquiryChannel.value == '' || this.f.inquiryChannel.value == 'undefined' || this.f.inquiryChannel == null) {
+			this.isChannelInvalid = true;
+			hasError = true;
+		} else {
+			this.isChannelInvalid = false;
+			hasError = false;
+		}
+
+		if(this.f.inquiryStatus.value == '' || this.f.inquiryStatus.value == 'undefined' || this.f.inquiryStatus == null) {
+			this.isInquiryStatusInvalid = true;
+			hasError = true;
+		} else {
+			this.isInquiryStatusInvalid = false;
+			hasError = false;
+		}
+
+        if (this.currentForm.invalid || hasError) {
             return;
         }
 
@@ -310,7 +343,6 @@ export class MarketingInquiryDetailComponent {
 						.put(`${this.ENDPOINT}/${resourceId}`, requestBody, { observe: 'response' })
 						.subscribe(
 							(data) => {
-								console.log(data);
 								if(data.status == 200) {
 									this.toastr.success(`${this.title} successfully updated.`, 'System', { timeOut: 3000 });
 								}
@@ -373,7 +405,6 @@ export class MarketingInquiryDetailComponent {
 		}
 
         if (this.currentForm.invalid || hasError) {
-			console.log(this.currentForm);
             return;
         }
 

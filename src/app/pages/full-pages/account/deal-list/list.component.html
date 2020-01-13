@@ -1,4 +1,4 @@
-<h4 class="mt-3">{{accountName}} Contacts</h4>
+<h4 class="mt-3">{{accountName}} Deals</h4>
 <div class="card">
 
   <div class="card-header px-header-color" style="background-color: #ECEFF1;">
@@ -26,8 +26,29 @@
                 <input type="text" formControlName="name" name="name" id="name" class="form-control">
               </div>
             </div>
-
             <div class="col-sm-3">
+              <div class="form-group">
+                <label>Stage</label>
+                <select formControlName="stage" class="custom-select">
+                  <option value="PROPOSAL">Propsal</option>
+                  <option value="CLOSED_WON">Closed Won</option>
+                  <option value="CLOSED_LOST">Closed Lost</option>
+                  <option value="CLOSED_LOST_TO_COMPETITION">Closed Lost to Competition</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-sm-2">
+              <label class="label-control">Deal Type</label>
+              <div>
+                <select formControlName="type" class="custom-select">
+                  <option value="NEW_BUSINESS">New Business</option>
+                  <option value="EXISTING_BUSINESS">Existing Business</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-sm-2">
               <label class="label-control">Status</label>
               <div>
                 <select formControlName="status" class="custom-select">
@@ -38,8 +59,7 @@
               </div>
             </div>
 
-
-            <div class="col-sm-3">
+            <div class="col-sm-2">
               <div class="form-group">
                 <label>Created Date</label>
                 <div class="input-group">
@@ -54,13 +74,10 @@
               </div>
             </div>
           </div>
-
-
-          <div>
-            <button type="submit" name="submit" value="search" id="submit" class="btn btn-success btn-raised mr-2"
-              (click)="submitSearchForm()"><i class="fa fa-fw fa-check"></i> Submit</button>
-          </div>
-
+          <button type="submit" name="submit" value="search" id="submit" class="btn btn-success btn-raised mr-2"
+            (click)="submitSearchForm()"><i class="fa fa-fw fa-check"></i> Submit</button>
+        </div>
+        <div>
         </div>
       </div>
 
@@ -80,31 +97,32 @@
             <table id="course-table" class="table table-striped">
               <thead>
                 <tr>
-                  <th scope="col" style="width:15%;">First Name</th>
-                  <th scope="col" style="width:15%;">Last Name</th>
-                  <th scope="col" style="width:10%;">Middle Initial</th>
-                  <th scope="col" style="width:15%;">Email</th>
-                  <th scope="col" style="width:15%;">Mobile Number</th>
+                  <th scope="col" style="width:20%;">Name</th>
+                  <th scope="col" style="width:20%;">Deal Amount</th>
+                  <th scope="col" style="width:20%;">Stage</th>
+                  <th scope="col" style="width:10%;">Status</th>
                   <th scope="col" style="width:15%;">Created Date</th>
-                  <th scope="col" style="width:5%;">Status</th>
-                  <th scope="col" style="width:10%;text-align: center;">Actions</th>
+                  <th scope="col" style="width:15%;text-align: center;">Actions</th>
                 </tr>
               </thead>
               <tbody>
                 <tr *ngFor="let row of rows">
-                  <td scope="row">{{ row.firstName }}</td>
-                  <td scope="row">{{ row.lastName }}</td>
-                  <td scope="row">{{ row.middleInitial }}</td>
-                  <td scope="row">{{ row.email }}</td>
-                  <td scope="row">{{ row.mobileNumber }}</td>
-                  <td scope="row">{{row.createdDate | date: 'MMM d,y'}}</td>
+                  <td scope="row">{{ row.name }}</td>
+                  <td scope="row">{{ row.totalDealAmount }}</td>
+                  <td scope="row">
+                    <span *ngIf="row.stage === 'PROPOSAL'">PROPOSAL</span>
+                    <span *ngIf="row.stage === 'CLOSED_WON'">CLOSED WON</span>
+                    <span *ngIf="row.stage === 'CLOSED_LOST'">CLOSED LOST</span>
+                    <span *ngIf="row.stage === 'CLOSED_LOST_TO_COMPETITION'">CLOSED WON TO COMPETITION</span>
+                  </td>
                   <td scope="row">{{row.active}}</td>
+                  <td scope="row">{{row.createdDate | date: 'MMM d,y'}}</td>
                   <td scope="row" style="text-align: center;">
-                    <a [routerLink]="['/app/contact', row.id]" [queryParams]="{action: 'view', accountId: this.accountId}"
+                    <a [routerLink]="['/app/deal', row.id]" [queryParams]="{action: 'view', accountId: this.accountId}"
                       queryParamsHandling="merge" class="mr-2" placement="top" ngbTooltip="View"><i
                         class="ft-eye"></i></a>
-                    <a [routerLink]="['/app/contact', row.id]" [queryParams]="{action: 'edit', accountId: this.accountId}" placement="top"
-                      ngbTooltip="Edit"><i class="ft-edit-2"></i></a>
+                    <a [routerLink]="['/app/deal', row.id]" [queryParams]="{action: 'edit', accountId: this.accountId}"
+                      placement="top" ngbTooltip="Edit"><i class="ft-edit-2"></i></a>
                   </td>
                 </tr>
               </tbody>

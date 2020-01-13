@@ -18,20 +18,20 @@ import { environment } from "../../../../../environments/environment";
 import { pageConfig } from "../../../page.config";
 
 @Component({
-  selector: "app-contact-list",
+  selector: "app-deal-list",
   templateUrl: "./list.component.html",
   styleUrls: ["./list.component.scss"]
 })
-export class ContactListComponent {
+export class DealListComponent {
   @Input() accountId;
   @Input() accountName;
 
   private readonly API_HOST = environment.API_HOST;
-  private readonly ENDPOINT: string = `${this.API_HOST}/contacts`;
+  private readonly ENDPOINT: string = `${this.API_HOST}/deals`;
   private readonly FIND_ENDPOINT: string = `${this.ENDPOINT}/actions/find`;
-  private readonly LANDING_PAGE: string = `/app/contact`;
+  private readonly LANDING_PAGE: string = `/app/deal`;
 
-  title: string = "Contact";
+  title: string = "Deal";
   rows: any = [];
   page = 0;
   pageSize = pageConfig.pageSize;
@@ -62,6 +62,8 @@ export class ContactListComponent {
     this.searchForm = this.formBuilder.group({
       name: [""],
       status: ["ALL"],
+      stage: [''],
+      type: [''],
       createdDate: [""]
     });
 
@@ -103,7 +105,8 @@ export class ContactListComponent {
     this.searchForm = this.formBuilder.group({
       name: [""],
       status: ["ALL"],
-      accountId: [""],
+      stage: [""],
+      type: [""],
       createdDate: [""]
     });
     this.createdDate = "";
@@ -129,62 +132,33 @@ export class ContactListComponent {
       let nameSearch = this.searchForm.get("name").value;
       if (nameSearch != "") {
         this.criteria.push({
-          name: "firstName",
-          value: nameSearch,
-          operator: "LIKE",
-          type: "STRING",
-          logical: "OR"
-        });
-        this.criteria.push({
-          name: "lastName",
-          value: nameSearch,
-          operator: "LIKE",
-          type: "STRING",
-          logical: "OR"
-        });
-        this.criteria.push({
-          name: "middleInitial",
-          value: nameSearch,
-          operator: "LIKE",
-          type: "STRING",
-          logical: "OR"
-        });
-        this.criteria.push({
-          name: "email",
-          value: nameSearch,
-          operator: "LIKE",
-          type: "STRING",
-          logical: "OR"
-        });
-        this.criteria.push({
-          name: "mobileNumber",
-          value: nameSearch,
-          operator: "LIKE",
-          type: "STRING",
-          logical: "OR"
-        });
-        this.criteria.push({
-          name: "designation",
-          value: nameSearch,
-          operator: "LIKE",
-          type: "STRING",
-          logical: "OR"
-        });
-        this.criteria.push({
-          name: "officeNumber",
-          value: nameSearch,
-          operator: "LIKE",
-          type: "STRING",
-          logical: "OR"
-        });
-        this.criteria.push({
-          name: "faxNumber",
+          name: "name",
           value: nameSearch,
           operator: "LIKE",
           type: "STRING",
           logical: "OR"
         });
       }
+
+       if (this.searchForm.get("stage").value != "") {
+         this.criteria.push({
+          name: "stage",
+          value: this.searchForm.get("stage").value,
+          operator: "EQ",
+          type: "ENUM",
+          logical: "OR"
+        });
+       }
+
+       if (this.searchForm.get("type").value != "") {
+         this.criteria.push({
+          name: "type",
+          value: this.searchForm.get("type").value,
+          operator: "EQ",
+          type: "ENUM",
+          logical: "OR"
+        });
+       }
 
       if (this.searchForm.get("createdDate").value != "") {
         let month = `0${this.searchForm.get("createdDate").value.month}`.slice(
