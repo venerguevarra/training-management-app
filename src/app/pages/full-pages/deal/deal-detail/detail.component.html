@@ -11,32 +11,32 @@
             <br />
             <div class="form-body">
               <div class="form-group row">
-                <label class="col-md-3 label-control" for="name">Name</label>
-                <div class="col-md-9">
+                <label class="col-md-4 label-control" for="name">Name</label>
+                <div class="col-md-8">
                   {{f.name.value}}
                 </div>
               </div>
             </div>
             <div class="form-body">
               <div class="form-group row">
-                <label class="col-md-3 label-control" for="name">Description</label>
-                <div class="col-md-9">
+                <label class="col-md-4 label-control" for="name">Description</label>
+                <div class="col-md-8">
                   {{f.description.value}}
                 </div>
               </div>
             </div>
             <div class="form-body">
               <div class="form-group row">
-                <label class="col-md-3 label-control" for="name">Account Manager</label>
-                <div class="col-md-9">
+                <label class="col-md-4 label-control" for="name">Account Manager</label>
+                <div class="col-md-8">
                   {{f.accountManager.value}}
                 </div>
               </div>
             </div>
             <div class="form-body">
               <div class="form-group row">
-                <label class="col-md-3 label-control" for="name">Stage</label>
-                <div class="col-md-9">
+                <label class="col-md-4 label-control" for="name">Stage</label>
+                <div class="col-md-8">
                   <span *ngIf="f.stage.value === 'PROPOSAL'">PROPOSAL</span>
                   <span *ngIf="f.stage.value === 'CLOSED_WON'">CLOSED WON</span>
                   <span *ngIf="f.stage.value === 'CLOSED_LOST'">CLOSED LOST</span>
@@ -46,8 +46,8 @@
             </div>
             <div class="form-body">
               <div class="form-group row">
-                <label class="col-md-3 label-control" for="name">VAT Registration</label>
-                <div class="col-md-9">
+                <label class="col-md-4 label-control" for="name">VAT Registration</label>
+                <div class="col-md-8">
                   <span *ngIf="f.vatRegistration.value === 'VAT_EXEMPT'">VAT Exempt</span>
                   <span *ngIf="f.vatRegistration.value === 'VAT_INCLUSIVE'">VAT Inclusive</span>
                   <span *ngIf="f.vatRegistration.value === 'ZERO_RATE'">Zero Rate</span>
@@ -56,8 +56,8 @@
             </div>
             <div class="form-body">
               <div class="form-group row">
-                <label class="col-md-3 label-control" for="name">Deal Type</label>
-                <div class="col-md-9">
+                <label class="col-md-4 label-control" for="name">Deal Type</label>
+                <div class="col-md-8">
                   <span *ngIf="f.type.value === 'NEW_BUSINESS'">New Business</span>
                   <span *ngIf="f.type.value === 'EXISTING_BUSINESS'">Existing Business</span>
                 </div>
@@ -65,90 +65,91 @@
             </div>
             <div class="form-body">
               <div class="form-group row">
-                <label class="col-md-3 label-control" for="name">Total Deal Amount</label>
-                <div class="col-md-9">
+                <label class="col-md-4 label-control" for="name">Total Deal Amount</label>
+                <div class="col-md-8">
                   {{f.totalDealAmount.value | currency: 'PHP '}}
                 </div>
               </div>
             </div>
             <div class="form-body">
               <div class="form-group row">
-                <label class="col-md-3 label-control" for="name">Course Fee</label>
-                <div class="col-md-9">
+                <label class="col-md-4 label-control" for="name">Course Fee</label>
+                <div class="col-md-8">
                   {{f.courseFee.value | currency: 'PHP '}}
                 </div>
               </div>
             </div>
             <div class="form-body">
               <div class="form-group row">
-                <label class="col-md-3 label-control" for="name">Number of Participants</label>
-                <div class="col-md-9">
+                <label class="col-md-4 label-control" for="name">Number of Participants</label>
+                <div class="col-md-8">
                   {{f.numberOfParticipants.value}}
                 </div>
               </div>
             </div>
             <div class="form-body">
               <div class="form-group row">
-                <label class="col-md-3 label-control" for="name">Account</label>
-                <div class="col-md-9">
+                <label class="col-md-4 label-control" for="name">Account</label>
+                <div class="col-md-8">
                   {{accountNameLabel}}
                 </div>
               </div>
             </div>
             <div class="form-body">
               <div class="form-group row">
-                <label class="col-md-3 label-control" for="name">Contact</label>
-                <div class="col-md-9">
-                  {{contactLabel.fullName}} <br/>
+                <label class="col-md-4 label-control" for="name">Contact</label>
+                <div class="col-md-8">
+                  {{contactLabel.fullName}} <br />
                   <small class="form-text text-muted"><i class="ft-mail"></i> {{contactLabel.email}}</small>
-                  <small class="form-text text-muted"><i class="ft-phone-call"></i> {{contactLabel.mobileNumber}}</small>
+                  <small class="form-text text-muted"><i class="ft-phone-call"></i>
+                    {{contactLabel.mobileNumber}}</small>
                 </div>
               </div>
             </div>
             <div class="form-body">
               <div class="form-group row">
-                <label class="col-md-3 label-control" for="name">Course</label>
-                <div class="col-md-9">
+                <label class="col-md-4 label-control" for="name">Course</label>
+                <div class="col-md-8">
                   {{courseLabel}}
                 </div>
               </div>
             </div>
             <div class="form-body">
               <div class="form-group row">
-                <label class="col-md-3 label-control" for="createdDate">Date Created</label>
-                <div class="col-md-9">
+                <label class="col-md-4 label-control" for="createdDate">Date Created</label>
+                <div class="col-md-8">
                   <span *ngIf="f.createdDate">{{f.createdDate.value | date: 'MMM d, y h:mm:ss a'}}</span>
                 </div>
               </div>
             </div>
             <div class="form-body">
               <div class="form-group row">
-                <label class="col-md-3 label-control" for="createdBy">Created By</label>
-                <div class="col-md-9">
+                <label class="col-md-4 label-control" for="createdBy">Created By</label>
+                <div class="col-md-8">
                   {{createdBy}}
                 </div>
               </div>
             </div>
             <div class="form-body">
               <div class="form-group row">
-                <label class="col-md-3 label-control" for="modifiedDate">Last Modified Date</label>
-                <div class="col-md-9">
+                <label class="col-md-4 label-control" for="modifiedDate">Last Modified Date</label>
+                <div class="col-md-8">
                   <span *ngIf="f.modifiedDate">{{f.modifiedDate.value | date: 'MMM d, y h:mm:ss a'}}</span>
                 </div>
               </div>
             </div>
             <div class="form-body">
               <div class="form-group row">
-                <label class="col-md-3 label-control" for="modifiedBy">Last Modified By</label>
-                <div class="col-md-9">
+                <label class="col-md-4 label-control" for="modifiedBy">Last Modified By</label>
+                <div class="col-md-8">
                   {{modifiedBy}}
                 </div>
               </div>
             </div>
             <div class="form-body">
               <div class="form-group row">
-                <label class="col-md-3 label-control" for="status">Status</label>
-                <div class="col-md-9">
+                <label class="col-md-4 label-control" for="status">Status</label>
+                <div class="col-md-8">
                   <span *ngIf="isRecordActive">Active</span>
                   <span *ngIf="!isRecordActive">Inactive</span>
                 </div>
@@ -156,8 +157,8 @@
             </div>
             <div class="form-body">
               <div class="form-group row">
-                <label class="col-md-3 label-control">&nbsp;</label>
-                <div class="col-md-9">
+                <label class="col-md-4 label-control">&nbsp;</label>
+                <div class="col-md-8">
                   <button type="button" class="btn btn-raised btn-success mr-2" (click)="showEditForm()">
                     <i class="fa fa-check-square-o"></i> Edit
                   </button>
@@ -196,15 +197,14 @@
 
                 <div class="form-body">
                   <div class="form-group row">
-                    <label class="col-md-3 label-control">&nbsp;</label>
-                    <div class="col-md-9">
+                    <label class="col-md-5 label-control">&nbsp;</label>
+                    <div class="col-md-7">
                       Fields with <span class="px-required">*</span> are required.
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-md-3 label-control" for="name">Deal Name<span
-                        class="px-required">*</span></label>
-                    <div class="col-md-9">
+                    <label class="col-md-5 label-control" for="name">Deal Name<span class="px-required">*</span></label>
+                    <div class="col-md-7">
                       <input formControlName="name" type="text" id="name" class="form-control" name="name"
                         [ngClass]="{ 'is-invalid': isInvalid(f.name)}">
                       <small
@@ -215,16 +215,21 @@
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-md-3 label-control" for="name">Description</label>
-                    <div class="col-md-9">
-                      <textarea formControlName="description" type="text" id="description" class="form-control" name="description" style="resize: none;"></textarea>
+                    <label class="col-md-5 label-control" for="name">Description</label>
+                    <div class="col-md-7">
+                      <textarea formControlName="description" type="text" id="description" class="form-control"
+                        name="description" style="resize: none;"></textarea>
                     </div>
                   </div>
 
                   <div class="form-group row">
-                    <label class="col-md-3 label-control" for="name">No. of Participants<span class="px-required">*</span></label>
-                    <div class="col-md-9">
-                      <input formControlName="numberOfParticipants" type="text" id="numberOfParticipants" class="form-control" name="numberOfParticipants" [ngClass]="{ 'is-invalid': isInvalid(f.numberOfParticipants)}" (blur)="calculateTotalDealAmount()">
+                    <label class="col-md-5 label-control" for="name">No. of Participants<span
+                        class="px-required">*</span></label>
+                    <div class="col-md-7">
+                      <input formControlName="numberOfParticipants" type="text" id="numberOfParticipants"
+                        class="form-control" name="numberOfParticipants"
+                        [ngClass]="{ 'is-invalid': isInvalid(f.numberOfParticipants)}"
+                        (blur)="calculateTotalDealAmount()">
                       <small
                         *ngIf="(f.numberOfParticipants.dirty || f.numberOfParticipants.touched || submitted) && f.numberOfParticipants.invalid && f.numberOfParticipants.errors.required"
                         class="form-text text-muted danger">
@@ -234,17 +239,22 @@
                   </div>
 
                   <div class="form-group row">
-                    <label class="col-md-3 label-control" for="name">Course Inquired<span class="px-required">*</span></label>
-                    <div class="col-md-9">
+                    <label class="col-md-5 label-control" for="name">Course Inquired<span
+                        class="px-required">*</span></label>
+                    <div class="col-md-7">
                       <input type="hidden" formControlName="courseId">
-                      <app-course-select (selectedIdEmitter)="onCourseSelected($event)" [isInvalid]="isCourseIdInvalid" [selectedCourse]="selectedCourse"></app-course-select>
-                      <small *ngIf="isCourseIdInvalid" class="form-text text-muted danger">Course inquired required</small>
+                      <app-course-select (selectedIdEmitter)="onCourseSelected($event)" [isInvalid]="isCourseIdInvalid"
+                        [selectedCourse]="selectedCourse"></app-course-select>
+                      <small *ngIf="isCourseIdInvalid" class="form-text text-muted danger">Course inquired
+                        required</small>
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-md-3 label-control" for="name">Course Fee<span class="px-required">*</span></label>
-                    <div class="col-md-9">
-                      <input formControlName="courseFee" type="text" id="courseFee" class="form-control" name="courseFee" [ngClass]="{ 'is-invalid': isInvalid(f.courseFee)}">
+                    <label class="col-md-5 label-control" for="name">Course Fee<span
+                        class="px-required">*</span></label>
+                    <div class="col-md-7">
+                      <input formControlName="courseFee" type="text" id="courseFee" class="form-control"
+                        name="courseFee" [ngClass]="{ 'is-invalid': isInvalid(f.courseFee)}">
                       <small
                         *ngIf="(f.courseFee.dirty || f.courseFee.touched || submitted) && f.courseFee.invalid && f.courseFee.errors.required"
                         class="form-text text-muted danger">
@@ -253,9 +263,12 @@
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-md-3 label-control" for="name">Deal Amount<span class="px-required">*</span></label>
-                    <div class="col-md-9">
-                      <input formControlName="totalDealAmount" type="text" id="totalDealAmount" class="form-control" name="totalDealAmount" [ngClass]="{ 'is-invalid': isInvalid(f.totalDealAmount)}" [readonly]="true">
+                    <label class="col-md-5 label-control" for="name">Deal Amount<span
+                        class="px-required">*</span></label>
+                    <div class="col-md-7">
+                      <input formControlName="totalDealAmount" type="text" id="totalDealAmount" class="form-control"
+                        name="totalDealAmount" [ngClass]="{ 'is-invalid': isInvalid(f.totalDealAmount)}"
+                        [readonly]="true">
                       <small
                         *ngIf="(f.totalDealAmount.dirty || f.totalDealAmount.touched || submitted) && f.totalDealAmount.invalid && f.totalDealAmount.errors.required"
                         class="form-text text-muted danger">
@@ -265,23 +278,36 @@
                   </div>
                   <input formControlName="accountManager" type="hidden">
                   <div class="form-group row">
-                    <label class="col-md-3 label-control" for="name">Deal Stage<span class="px-required">*</span></label>
-                    <div class="col-md-9">
-                      <label *ngIf="f.stage.value === 'PROPOSAL'">PROPOSAL</label>
-                      <label *ngIf="f.stage.value === 'CLOSED_WON'">CLOSED WON</label>
-                      <label *ngIf="f.stage.value === 'CLOSED_LOST'">CLOSED LOST</label>
-                      <label *ngIf="f.stage.value === 'CLOSED_LOST_TO_COMPETITION'">CLOSED WON TO COMPETITION</label>
-                      <input formControlName="stage" type="hidden">
+                    <label class="col-md-5 label-control" for="name">Deal Stage<span
+                        class="px-required">*</span></label>
+                    <div class="col-md-7">
+                      <select formControlName="stage" class="custom-select">
+                        <option value="PROPOSAL">Proposal</option>
+                        <option value="CLOSED_WON">Closed Won</option>
+                        <option value="CLOSED_LOST">Closed Lost</option>
+                        <option value="CLOSED_LOST_TO_COMPETITION">Closed Lost to Competition</option>
+                      </select>
+                      <a class="btn btn-raised btn-info mt-2" (click)="updateDealStage()">
+                        <i class="fa fa-check-square-o"></i> Update Deal Stage
+                      </a>
                       <small
                         *ngIf="editForm && (f.stage.dirty || f.stage.touched || submitted) && f.stage.invalid && f.stage.errors.required"
                         class="form-text text-muted danger">
                         Deal stage required
                       </small>
+                      <!--
+                      <label *ngIf="f.stage.value === 'PROPOSAL'">PROPOSAL</label>
+                      <label *ngIf="f.stage.value === 'CLOSED_WON'">CLOSED WON</label>
+                      <label *ngIf="f.stage.value === 'CLOSED_LOST'">CLOSED LOST</label>
+                      <label *ngIf="f.stage.value === 'CLOSED_LOST_TO_COMPETITION'">CLOSED WON TO COMPETITION</label>
+                      <input formControlName="stage" type="hidden">
+                      -->
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-md-3 label-control" for="name">VAT Registration<span class="px-required">*</span></label>
-                    <div class="col-md-9">
+                    <label class="col-md-5 label-control" for="name">VAT Registration<span
+                        class="px-required">*</span></label>
+                    <div class="col-md-7">
                       <select formControlName="vatRegistration" class="custom-select">
                         <option value="VAT_INCLUSIVE">VAT Inclusive</option>
                         <option value="VAT_EXEMPT">VAT Exempt</option>
@@ -290,8 +316,8 @@
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-md-3 label-control" for="name">Deal Type<span class="px-required">*</span></label>
-                    <div class="col-md-9">
+                    <label class="col-md-5 label-control" for="name">Deal Type<span class="px-required">*</span></label>
+                    <div class="col-md-7">
                       <select formControlName="type" class="custom-select">
                         <option value="NEW_BUSINESS">New Business</option>
                         <option value="EXISTING_BUSINESS">Existing Business</option>
@@ -306,11 +332,14 @@
                   <input formControlName="accountId" type="hidden">
 
                   <div class="form-group row">
-                    <label class="col-md-3 label-control" for="name">Contact Inquired<span class="px-required">*</span></label>
-                    <div class="col-md-9">
+                    <label class="col-md-5 label-control" for="name">Contact Inquired<span
+                        class="px-required">*</span></label>
+                    <div class="col-md-7">
                       <input type="hidden" formControlName="courseId">
-                      <app-contact-select [accountId]="parentAccountId" (selectedIdEmitter)="onContactSelected($event)" [isInvalid]="isCourseIdInvalid" [selectedContact]="selectedContact"></app-contact-select>
-                      <small *ngIf="isContactIdInvalid" class="form-text text-muted danger">Contact inquired required</small>
+                      <app-contact-select [accountId]="parentAccountId" (selectedIdEmitter)="onContactSelected($event)"
+                        [isInvalid]="isCourseIdInvalid" [selectedContact]="selectedContact"></app-contact-select>
+                      <small *ngIf="isContactIdInvalid" class="form-text text-muted danger">Contact inquired
+                        required</small>
                     </div>
                   </div>
                   <!--
@@ -323,8 +352,8 @@
                   -->
 
                   <div *ngIf="editForm" class="form-group row">
-                    <label class="col-md-3 label-control" for="status">Active <span class="px-required">*</span></label>
-                    <div class="col-md-3">
+                    <label class="col-md-5 label-control" for="status">Active <span class="px-required">*</span></label>
+                    <div class="col-md-7">
                       <input type="hidden" formControlName="status">
                       <div class="custom-control custom-checkbox d-inline-block">
                         <input type="checkbox" id="active" (change)="activeCheckbox($event)" [checked]="isRecordActive"
@@ -335,14 +364,15 @@
                   </div>
 
                   <div class="form-group row">
-                    <label class="col-md-3 label-control" for="eventRegInput4">&nbsp;</label>
-                    <div class="col-md-9">
+                    <label class="col-md-5 label-control" for="status">&nbsp;</label>
+                    <div class="col-md-7">
                       <button *ngIf="editForm" type="button" class="btn btn-raised btn-success mr-2" (click)="update()">
                         <i class="fa fa-check-square-o"></i> Save Changes
                       </button>
                       <button *ngIf="newForm" type="button" class="btn btn-raised btn-success mr-2" (click)="saveNew()">
                         <i class="fa fa-check-square-o"></i> Save
                       </button>
+
                       <button type="button" class="btn btn-danger btn-raised" (click)="cancel()">
                         <i class="ft-x"></i> Cancel
                       </button>

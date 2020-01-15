@@ -161,15 +161,18 @@ export class InquiryListComponent {
       logical: "AND"
     });
 
-    this.criteria.push({
-      name: "inquiryStatus",
-      value: "ASSIGNED",
-      operator: "EQ",
-      type: "ENUM",
-      logical: "OR"
-    });
+
 
     if (this.searchForm) {
+      if (this.searchForm.get("inquiryStatus").value != "") {
+        this.criteria.push({
+          name: "inquiryStatus",
+          value: this.searchForm.get("inquiryStatus").value,
+          operator: "EQ",
+          type: "ENUM",
+          logical: "AND"
+        });
+      }
       if (this.searchForm.get("name").value != "") {
         this.criteria.push({
           name: "firstName",
@@ -190,17 +193,7 @@ export class InquiryListComponent {
           value: this.searchForm.get("name").value,
           operator: "LIKE",
           type: "STRING",
-          logical: "OR"
-        });
-      }
-
-      if (this.searchForm.get("inquiryStatus").value != "") {
-        this.criteria.push({
-          name: "inquiryStatus",
-          value: this.searchForm.get("inquiryStatus").value,
-          operator: "EQ",
-          type: "ENUM",
-          logical: "OR"
+          logical: "AND"
         });
       }
 
@@ -210,7 +203,7 @@ export class InquiryListComponent {
           value: this.searchForm.get("channel").value,
           operator: "EQ",
           type: "ENUM",
-          logical: "OR"
+          logical: "AND"
         });
       }
 

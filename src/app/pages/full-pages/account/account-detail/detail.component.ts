@@ -157,6 +157,7 @@ export class AccountDetailComponent {
 
 	ngAfterViewInit() {
 		this.currentUser = this.stateService.getCurrentUser();
+		this.f.accountManager.setValue(this.currentUser.userId);
 	}
 
 	update() {
@@ -223,6 +224,8 @@ export class AccountDetailComponent {
 		this.submitted = true;
 
 		let hasError = false;
+
+		this.currentForm.controls['accountManager'].markAsTouched();
 
 		if(this.f.accountManager.value == '' || this.f.accountManager.value == 'undefined' || this.f.accountManager == null) {
 			this.isAccountManagerIdInvalid = true;
