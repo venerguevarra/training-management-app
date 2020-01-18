@@ -10,6 +10,7 @@ import { ToastrService } from 'ngx-toastr';
 import { StateService } from '../../../../service/state.service';
 import { User } from '../../../../model/user.model';
 import { environment } from '../../../../../environments/environment';
+import { RoutingStateService } from '../../../../service/routing-state.service';
 
 @Component({
 	selector: 'app-cost-detail',
@@ -44,7 +45,8 @@ export class CostDetailComponent {
 		private toastr: ToastrService,
         private formBuilder: FormBuilder,
         private router: Router,
-        private route: ActivatedRoute) {
+        private route: ActivatedRoute,
+		private routingStateService: RoutingStateService) {
 
 		this.initForm();
 
@@ -247,7 +249,7 @@ export class CostDetailComponent {
 	}
 
 	cancel() {
-		this.router.navigate([this.LANDING_PAGE]);
+		this.router.navigateByUrl(this.routingStateService.getPreviousUrl());
 	}
 
 	isInvalid(control:any) {

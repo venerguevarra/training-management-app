@@ -33,7 +33,6 @@ export class CourseSelectComponent {
     loading = false;
 
     onChange($event) {
-        console.log('change', $event);
         if($event) {
             this.selectedId = $event.id;
             this.selectedIdEmitter.emit($event);
@@ -41,7 +40,6 @@ export class CourseSelectComponent {
     }
 
     onClear($event) {
-        console.log('clear', $event);
         if($event) {
             this.selectedId = $event.id;
             this.selectedIdEmitter.emit($event);
@@ -87,7 +85,7 @@ export class CourseSelectComponent {
         const len = this.coursesBuffer.length;
         const more = this.courses.slice(len, this.bufferSize + len);
         this.loading = true;
-        // using timeout here to simulate backend API delay
+
         setTimeout(() => {
             this.loading = false;
             this.coursesBuffer = this.coursesBuffer.concat(more);

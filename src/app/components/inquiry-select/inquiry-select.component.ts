@@ -98,7 +98,7 @@ export class InquirySelectComponent {
         const len = this.coursesBuffer.length;
         const more = this.courses.slice(len, this.bufferSize + len);
         this.loading = true;
-        // using timeout here to simulate backend API delay
+
         setTimeout(() => {
             this.loading = false;
             this.coursesBuffer = this.coursesBuffer.concat(more);

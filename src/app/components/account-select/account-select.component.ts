@@ -21,7 +21,7 @@ export class AccountSelectComponent {
     @Input() isInvalid: boolean;
     @Input() selectedAccount;
 
-    selectedId = '-1';
+    selectedId;
 
 	data = [];
     dataBuffer = [];
@@ -46,12 +46,14 @@ export class AccountSelectComponent {
 
     onChange($event) {
         if($event) {
+            this.selectedId = $event.id;
             this.selectedIdEmitter.emit($event.value);
         }
     }
 
     onClear($event) {
         if($event) {
+            this.selectedId = $event.id;
             this.selectedIdEmitter.emit($event.value);
         } else {
             this.selectedIdEmitter.emit('');

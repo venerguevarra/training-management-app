@@ -98,7 +98,7 @@ export class ContactSelectComponent {
         const len = this.coursesBuffer.length;
         const more = this.courses.slice(len, this.bufferSize + len);
         this.loading = true;
-        // using timeout here to simulate backend API delay
+
         setTimeout(() => {
             this.loading = false;
             this.coursesBuffer = this.coursesBuffer.concat(more);
@@ -107,7 +107,6 @@ export class ContactSelectComponent {
 
     search(term: string, item) {
         term = term.toLowerCase();
-        console.log(term, item)
         return item.name.toLowerCase().indexOf(term) > -1;
     }
 }

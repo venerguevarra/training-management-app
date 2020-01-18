@@ -31,3 +31,30 @@
     border-color: #dc3545;
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 3px #fde6e8;
 }
+
+.fc-widget-header .fc-title {
+    color: black;
+}
+
+.ngb-tp-meridian button.btn, .ngb-tp-meridian button.btn-outline-primary {
+    margin-bottom: 0px;
+}
+
+.custom-day {
+    text-align: center;
+    padding: 0.185rem 0.25rem;
+    display: inline-block;
+    height: 2rem;
+    width: 2rem;
+    color: black;
+  }
+  .custom-day.focused {
+    background-color: #e6e6e6;
+  }
+  .custom-day.range, .custom-day:hover {
+    background-color: rgb(2, 117, 216);
+    color: white;
+  }
+  .custom-day.faded {
+    background-color: rgba(2, 117, 216, 0.5);
+  }

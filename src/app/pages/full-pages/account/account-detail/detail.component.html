@@ -1,264 +1,264 @@
 <div *ngIf="viewForm">
-  <div class="card">
-    <div class="card-header" style="background-color: #ECEFF1;">
-      <h3>{{f.name.value}} {{title}} Details</h3>
+    <div class="card">
+      <div class="card-header" style="background-color: #ECEFF1;">
+        <h3>{{f.name.value}} {{title}} Details</h3>
+      </div>
+      <div class="card-body">
+        <div class="row text-left justify-content-md-center">
+          <!-- view form start -->
+          <div *ngIf="newForm == false && viewForm == true" class="col-md-6">
+            <form class="form form-horizontal striped-rows">
+              <br />
+              <div class="form-body">
+                <div class="form-group row">
+                  <label class="col-md-3 label-control" for="name">Name</label>
+                  <div class="col-md-9">
+                    {{f.name.value}}
+                  </div>
+                </div>
+              </div>
+              <div class="form-body">
+                <div class="form-group row">
+                  <label class="col-md-3 label-control" for="name">Description</label>
+                  <div class="col-md-9">
+                    {{f.description.value}}
+                  </div>
+                </div>
+              </div>
+              <div class="form-body">
+                <div class="form-group row">
+                  <label class="col-md-3 label-control" for="name">Office Address</label>
+                  <div class="col-md-9">
+                    {{f.officeAddress.value}}
+                  </div>
+                </div>
+              </div>
+              <div class="form-body">
+                <div class="form-group row">
+                  <label class="col-md-3 label-control" for="name">Billing Address</label>
+                  <div class="col-md-9">
+                    {{f.billingAddress.value}}
+                  </div>
+                </div>
+              </div>
+              <div class="form-body">
+                <div class="form-group row">
+                  <label class="col-md-3 label-control" for="name">TIN</label>
+                  <div class="col-md-9">
+                    {{f.tin.value}}
+                  </div>
+                </div>
+              </div>
+              <div class="form-body">
+                <div class="form-group row">
+                  <label class="col-md-3 label-control" for="name">Website</label>
+                  <div class="col-md-9">
+                    {{f.website.value}}
+                  </div>
+                </div>
+              </div>
+              <div class="form-body">
+                <div class="form-group row">
+                  <label class="col-md-3 label-control" for="createdDate">Date Created</label>
+                  <div class="col-md-9">
+                    <span *ngIf="f.createdDate">{{f.createdDate.value | date: 'MMM d, y h:mm:ss a'}}</span>
+                  </div>
+                </div>
+              </div>
+              <div class="form-body">
+                <div class="form-group row">
+                  <label class="col-md-3 label-control" for="createdBy">Created By</label>
+                  <div class="col-md-9">
+                    {{createdBy}}
+                  </div>
+                </div>
+              </div>
+              <div class="form-body">
+                <div class="form-group row">
+                  <label class="col-md-3 label-control" for="modifiedDate">Last Modified Date</label>
+                  <div class="col-md-9">
+                    <span *ngIf="f.modifiedDate">{{f.modifiedDate.value | date: 'MMM d, y h:mm:ss a'}}</span>
+                  </div>
+                </div>
+              </div>
+              <div class="form-body">
+                <div class="form-group row">
+                  <label class="col-md-3 label-control" for="modifiedBy">Last Modified By</label>
+                  <div class="col-md-9">
+                    {{modifiedBy}}
+                  </div>
+                </div>
+              </div>
+              <div class="form-body">
+                <div class="form-group row">
+                  <label class="col-md-3 label-control" for="status">Status</label>
+                  <div class="col-md-9">
+                    <span *ngIf="isRecordActive">Active</span>
+                    <span *ngIf="!isRecordActive">Inactive</span>
+                  </div>
+                </div>
+              </div>
+              <div class="form-body">
+                <div class="form-group row">
+                  <label class="col-md-3 label-control">&nbsp;</label>
+                  <div class="col-md-9">
+                    <button type="button" class="btn btn-raised btn-success mr-2" (click)="showEditForm()">
+                      <i class="fa fa-check-square-o"></i> Edit
+                    </button>
+                    <button type="button" class="btn btn-danger btn-raised" (click)="cancel()">
+                      <i class="ft-x"></i> Cancel
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+          <!-- view form end -->
+        </div>
+      </div>
+      <!--Collapsible Accordion Ends-->
     </div>
+    <app-contact-list [accountId]="modelId" [accountName]="accountName" [previousUrl]="previousUrl"></app-contact-list>
+    <app-deal-list [accountId]="modelId" [accountName]="accountName" [previousUrl]="previousUrl"></app-deal-list>
+  </div>
+
+  <!-- START: ACCOUNT NEW FORM or EDIT FORM-->
+  <div *ngIf="newForm == true || editForm == true" class="card">
+    <div class="card-header" style="background-color: #ECEFF1;">
+      <h3 *ngIf="editForm">{{f.name.value}} {{title}} Details</h3>
+      <h3 *ngIf="newForm">New {{title}}</h3>
+    </div>
+
     <div class="card-body">
       <div class="row text-left justify-content-md-center">
-        <!-- view form start -->
-        <div *ngIf="newForm == false && viewForm == true" class="col-md-6">
-          <form class="form form-horizontal striped-rows">
-            <br />
-            <div class="form-body">
-              <div class="form-group row">
-                <label class="col-md-3 label-control" for="name">Name</label>
-                <div class="col-md-9">
-                  {{f.name.value}}
-                </div>
-              </div>
-            </div>
-            <div class="form-body">
-              <div class="form-group row">
-                <label class="col-md-3 label-control" for="name">Description</label>
-                <div class="col-md-9">
-                  {{f.description.value}}
-                </div>
-              </div>
-            </div>
-            <div class="form-body">
-              <div class="form-group row">
-                <label class="col-md-3 label-control" for="name">Office Address</label>
-                <div class="col-md-9">
-                  {{f.officeAddress.value}}
-                </div>
-              </div>
-            </div>
-            <div class="form-body">
-              <div class="form-group row">
-                <label class="col-md-3 label-control" for="name">Billing Address</label>
-                <div class="col-md-9">
-                  {{f.billingAddress.value}}
-                </div>
-              </div>
-            </div>
-            <div class="form-body">
-              <div class="form-group row">
-                <label class="col-md-3 label-control" for="name">TIN</label>
-                <div class="col-md-9">
-                  {{f.tin.value}}
-                </div>
-              </div>
-            </div>
-            <div class="form-body">
-              <div class="form-group row">
-                <label class="col-md-3 label-control" for="name">Website</label>
-                <div class="col-md-9">
-                  {{f.website.value}}
-                </div>
-              </div>
-            </div>
-            <div class="form-body">
-              <div class="form-group row">
-                <label class="col-md-3 label-control" for="createdDate">Date Created</label>
-                <div class="col-md-9">
-                  <span *ngIf="f.createdDate">{{f.createdDate.value | date: 'MMM d, y h:mm:ss a'}}</span>
-                </div>
-              </div>
-            </div>
-            <div class="form-body">
-              <div class="form-group row">
-                <label class="col-md-3 label-control" for="createdBy">Created By</label>
-                <div class="col-md-9">
-                  {{createdBy}}
-                </div>
-              </div>
-            </div>
-            <div class="form-body">
-              <div class="form-group row">
-                <label class="col-md-3 label-control" for="modifiedDate">Last Modified Date</label>
-                <div class="col-md-9">
-                  <span *ngIf="f.modifiedDate">{{f.modifiedDate.value | date: 'MMM d, y h:mm:ss a'}}</span>
-                </div>
-              </div>
-            </div>
-            <div class="form-body">
-              <div class="form-group row">
-                <label class="col-md-3 label-control" for="modifiedBy">Last Modified By</label>
-                <div class="col-md-9">
-                  {{modifiedBy}}
-                </div>
-              </div>
-            </div>
-            <div class="form-body">
-              <div class="form-group row">
-                <label class="col-md-3 label-control" for="status">Status</label>
-                <div class="col-md-9">
-                  <span *ngIf="isRecordActive">Active</span>
-                  <span *ngIf="!isRecordActive">Inactive</span>
-                </div>
-              </div>
-            </div>
-            <div class="form-body">
-              <div class="form-group row">
-                <label class="col-md-3 label-control">&nbsp;</label>
-                <div class="col-md-9">
-                  <button type="button" class="btn btn-raised btn-success mr-2" (click)="showEditForm()">
-                    <i class="fa fa-check-square-o"></i> Edit
-                  </button>
-                  <button type="button" class="btn btn-danger btn-raised" (click)="cancel()">
-                    <i class="ft-x"></i> Cancel
-                  </button>
-                </div>
-              </div>
-            </div>
-          </form>
-        </div>
-        <!-- view form end -->
-      </div>
-    </div>
-    <!--Collapsible Accordion Ends-->
-  </div>
-  <app-contact-list [accountId]="modelId" [accountName]="accountName"></app-contact-list>
-  <app-deal-list [accountId]="modelId" [accountName]="accountName"></app-deal-list>
-</div>
+        <!-- new form and edit form start -->
+        <div *ngIf="newForm == true || editForm == true" class="col-md-6">
+          <div class="card">
+            <div class="card-content">
+              <div class="px-3">
+                <form class="form form-horizontal" [formGroup]="currentForm">
 
-<!-- START: ACCOUNT NEW FORM or EDIT FORM-->
-<div *ngIf="newForm == true || editForm == true" class="card">
-  <div class="card-header" style="background-color: #ECEFF1;">
-    <h3 *ngIf="editForm">{{f.name.value}} {{title}} Details</h3>
-    <h3 *ngIf="newForm">New {{title}}</h3>
-  </div>
+                  <input *ngIf="editForm" type="hidden" formControlName="id">
 
-  <div class="card-body">
-    <div class="row text-left justify-content-md-center">
-      <!-- new form and edit form start -->
-      <div *ngIf="newForm == true || editForm == true" class="col-md-6">
-        <div class="card">
-          <div class="card-content">
-            <div class="px-3">
-              <form class="form form-horizontal" [formGroup]="currentForm">
-
-                <input *ngIf="editForm" type="hidden" formControlName="id">
-
-                <div class="form-body">
-                  <div class="form-group row">
-                    <label class="col-md-3 label-control">&nbsp;</label>
-                    <div class="col-md-9">
-                      Fields with <span class="px-required">*</span> are required.
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-md-3 label-control" for="name">Account Name<span
-                        class="px-required">*</span></label>
-                    <div class="col-md-9">
-                      <input formControlName="name" type="text" id="name" class="form-control" name="name"
-                        [ngClass]="{ 'is-invalid': isInvalid(f.name)}">
-                      <small
-                        *ngIf="(f.name.dirty || f.name.touched || submitted) && f.name.invalid && f.name.errors.required"
-                        class="form-text text-muted danger">
-                        Account name required
-                      </small>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-md-3 label-control" for="name">Account Manager<span
-                        class="px-required">*</span></label>
-                    <div class="col-md-9">
-                      <input type="hidden" formControlName="accountManager">
-                      <app-account-manager-select (selectedIdEmitter)="onAccountManagerSelected($event)"
-                        [selectedAccountManager]="selectedAccountManager" [isInvalid]="isAccountManagerIdInvalid"
-                        currentUser="true"></app-account-manager-select>
-                      <small *ngIf="isAccountManagerIdInvalid" class="form-text text-muted danger">
-                        Select an account manager
-                      </small>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-md-3 label-control" for="name">Description</label>
-                    <div class="col-md-9">
-                      <input formControlName="description" type="text" id="description" class="form-control"
-                        name="description">
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-md-3 label-control" for="name">Website</label>
-                    <div class="col-md-9">
-                      <input formControlName="website" type="text" id="website" class="form-control" name="website">
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-md-3 label-control" for="name">Office Address</label>
-                    <div class="col-md-9">
-                      <textarea formControlName="officeAddress" type="text" id="officeAddress" class="form-control"
-                        name="officeAddress"></textarea>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-md-3 label-control" for="name">Billing Address</label>
-                    <div class="col-md-9">
-                      <textarea formControlName="billingAddress" type="text" id="billingAddress" class="form-control"
-                        name="billingAddress"></textarea>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-md-3 label-control" for="name">TIN</label>
-                    <div class="col-md-9">
-                      <input formControlName="tin" type="text" id="tin" class="form-control" name="tin">
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-md-3 label-control" for="name">Company Size</label>
-                    <div class="col-md-9">
-                      <input formControlName="companySize" type="hidden" id="companySize" name="companySize">
-                      <app-company-size-select (selectedIdEmitter)="onCompanySizeHandler($event)"
-                        [selectedValue]="selectedCompanySize"></app-company-size-select>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-md-3 label-control" for="name">Channel</label>
-                    <div class="col-md-9">
-                      <input formControlName="channel" type="hidden">
-                      <app-channel-select (selectedIdEmitter)="onChannelSelected($event)"
-                        [selectedChannel]="selectedChannel"></app-channel-select>
-                      <small *ngIf="isChannelInvalid" class="form-text text-muted danger">Inquiry channel
-                        required</small>
-                    </div>
-                  </div>
-                  <div *ngIf="editForm" class="form-group row">
-                    <label class="col-md-3 label-control" for="status">Active <span class="px-required">*</span></label>
-                    <div class="col-md-3">
-                      <input type="hidden" formControlName="status">
-                      <div class="custom-control custom-checkbox d-inline-block">
-                        <input type="checkbox" id="active" (change)="activeCheckbox($event)" [checked]="isRecordActive"
-                          name="active" class="custom-control-input" style="zoom: 2;">
-                        <label class="custom-control-label" for="active">Yes</label>
+                  <div class="form-body">
+                    <div class="form-group row">
+                      <label class="col-md-3 label-control">&nbsp;</label>
+                      <div class="col-md-9">
+                        Fields with <span class="px-required">*</span> are required.
                       </div>
                     </div>
-                  </div>
-
-                  <div class="form-group row">
-                    <label class="col-md-3 label-control" for="eventRegInput4">&nbsp;</label>
-                    <div class="col-md-9">
-                      <button *ngIf="editForm" type="button" class="btn btn-raised btn-success mr-2" (click)="update()">
-                        <i class="fa fa-check-square-o"></i> Save Changes
-                      </button>
-                      <button *ngIf="newForm" type="button" class="btn btn-raised btn-success mr-2" (click)="saveNew()">
-                        <i class="fa fa-check-square-o"></i> Save
-                      </button>
-                      <button type="button" class="btn btn-danger btn-raised" (click)="cancelEdit()">
-                        <i class="ft-x"></i> Cancel
-                      </button>
+                    <div class="form-group row">
+                      <label class="col-md-3 label-control" for="name">Account Name<span
+                          class="px-required">*</span></label>
+                      <div class="col-md-9">
+                        <input formControlName="name" type="text" id="name" class="form-control" name="name"
+                          [ngClass]="{ 'is-invalid': isInvalid(f.name)}">
+                        <small
+                          *ngIf="(f.name.dirty || f.name.touched || submitted) && f.name.invalid && f.name.errors.required"
+                          class="form-text text-muted danger">
+                          Account name required
+                        </small>
+                      </div>
                     </div>
-                  </div>
+                    <div class="form-group row">
+                      <label class="col-md-3 label-control" for="name">Account Manager<span
+                          class="px-required">*</span></label>
+                      <div class="col-md-9">
+                        <input type="hidden" formControlName="accountManager">
+                        <app-account-manager-select (selectedIdEmitter)="onAccountManagerSelected($event)"
+                          [selectedAccountManager]="selectedAccountManager" [isInvalid]="isAccountManagerIdInvalid"
+                          currentUser="true"></app-account-manager-select>
+                        <small *ngIf="isAccountManagerIdInvalid" class="form-text text-muted danger">
+                          Select an account manager
+                        </small>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-md-3 label-control" for="name">Description</label>
+                      <div class="col-md-9">
+                        <input formControlName="description" type="text" id="description" class="form-control"
+                          name="description">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-md-3 label-control" for="name">Website</label>
+                      <div class="col-md-9">
+                        <input formControlName="website" type="text" id="website" class="form-control" name="website">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-md-3 label-control" for="name">Office Address</label>
+                      <div class="col-md-9">
+                        <textarea formControlName="officeAddress" type="text" id="officeAddress" class="form-control"
+                          name="officeAddress"></textarea>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-md-3 label-control" for="name">Billing Address</label>
+                      <div class="col-md-9">
+                        <textarea formControlName="billingAddress" type="text" id="billingAddress" class="form-control"
+                          name="billingAddress"></textarea>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-md-3 label-control" for="name">TIN</label>
+                      <div class="col-md-9">
+                        <input formControlName="tin" type="text" id="tin" class="form-control" name="tin">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-md-3 label-control" for="name">Company Size</label>
+                      <div class="col-md-9">
+                        <input formControlName="companySize" type="hidden" id="companySize" name="companySize">
+                        <app-company-size-select (selectedIdEmitter)="onCompanySizeHandler($event)"
+                          [selectedValue]="selectedCompanySize"></app-company-size-select>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-md-3 label-control" for="name">Channel</label>
+                      <div class="col-md-9">
+                        <input formControlName="channel" type="hidden">
+                        <app-channel-select (selectedIdEmitter)="onChannelSelected($event)"
+                          [selectedChannel]="selectedChannel"></app-channel-select>
+                        <small *ngIf="isChannelInvalid" class="form-text text-muted danger">Inquiry channel
+                          required</small>
+                      </div>
+                    </div>
+                    <div *ngIf="editForm" class="form-group row">
+                      <label class="col-md-3 label-control" for="status">Active <span class="px-required">*</span></label>
+                      <div class="col-md-3">
+                        <input type="hidden" formControlName="status">
+                        <div class="custom-control custom-checkbox d-inline-block">
+                          <input type="checkbox" id="active" (change)="activeCheckbox($event)" [checked]="isRecordActive"
+                            name="active" class="custom-control-input" style="zoom: 2;">
+                          <label class="custom-control-label" for="active">Yes</label>
+                        </div>
+                      </div>
+                    </div>
 
-                </div>
-              </form>
+                    <div class="form-group row">
+                      <label class="col-md-3 label-control" for="eventRegInput4">&nbsp;</label>
+                      <div class="col-md-9">
+                        <button *ngIf="editForm" type="button" class="btn btn-raised btn-success mr-2" (click)="update()">
+                          <i class="fa fa-check-square-o"></i> Save Changes
+                        </button>
+                        <button *ngIf="newForm" type="button" class="btn btn-raised btn-success mr-2" (click)="saveNew()">
+                          <i class="fa fa-check-square-o"></i> Save
+                        </button>
+                        <button type="button" class="btn btn-danger btn-raised" (click)="cancelEdit()">
+                          <i class="ft-x"></i> Cancel
+                        </button>
+                      </div>
+                    </div>
+
+                  </div>
+                </form>
+              </div>
             </div>
           </div>
         </div>
+        <!-- new form and edit form end -->
       </div>
-      <!-- new form and edit form end -->
     </div>
   </div>
-</div>
-<!-- END: ACCOUNT NEW FORM or EDIT FORM -->
+  <!-- END: ACCOUNT NEW FORM or EDIT FORM -->

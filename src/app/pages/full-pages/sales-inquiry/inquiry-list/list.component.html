@@ -7,13 +7,20 @@
 <div class="card">
 
   <div class="card-header px-header-color" style="background-color: #ECEFF1;">
-    <a class="float-left btn btn-success btn-raised mr-2" (click)="navigateToNewForm()">
-      <i class="fa fa-fw fa-plus-circle"></i> New {{title}}
-    </a>
-    <a class="position-relative btn btn-info btn-raised mr-2" (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
-      <i class="fa fa-fw ft-search"></i> Search
-    </a>
-    <a class="position-relative btn btn-info btn-raised mr-2" style="background-color: white; color: green;" (click)="clearSearchForm()"><i class="fa fa-repeat"></i> Refresh</a>
+    <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+      <div class="btn-group-md">
+        <a class="btn btn-primary btn-raised mr-2" (click)="navigateToNewForm()">
+          <i class="fa fa-fw fa-plus-circle"></i> New {{title}}
+        </a>
+        <a class="btn btn-success btn-raised mr-2" (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed"
+          aria-controls="collapseExample">
+          <i class="fa fa-fw ft-search"></i> Search
+        </a>
+        <a class="btn btn-danger btn-raised" style="background-color: white; color: green;" (click)="clearSearchForm()">
+          <i class="fa fa-repeat"></i> Refresh
+        </a>
+      </div>
+    </div>
   </div>
 
   <div class="card-body" id="collapseExample" [ngbCollapse]="isCollapsed">
@@ -23,7 +30,7 @@
       <div>
         <div class="col-sm-12">
             <div class="row">
-                <div class="col-sm-2">
+                <div class="col-md-6">
                   <div class="form-group">
                     <label>Name</label>
                     <input type="text"
@@ -34,7 +41,7 @@
                   </div>
                 </div>
 
-                <div class="col-sm-2">
+                <div class="col-md-6">
                   <div class="form-group">
                     <label>Inquiry Status</label>
                     <input type="hidden" formControlName="inquiryStatus">
@@ -42,14 +49,14 @@
                   </div>
                 </div>
 
-                <div class="col-sm-2">
+                <div class="col-md-6">
                   <div class="form-group">
                     <label>Inquiry Channel</label>
                     <input type="hidden" formControlName="channel">
                     <app-channel-select (selectedIdEmitter)="onChannelSelected($event)"></app-channel-select>
                   </div>
                 </div>
-              <div class="col-sm-3">
+              <div class="col-md-6">
                 <div class="form-group">
                   <label>Inquiry Date From</label>
                   <div class="input-group">
@@ -70,7 +77,7 @@
                 </div>
               </div>
 
-              <div class="col-sm-3">
+              <div class="col-md-6">
                 <div class="form-group">
                   <label>Inquiry Date To</label>
                   <div class="input-group">
@@ -117,12 +124,12 @@
             <table id="course-table" class="table table-striped">
               <thead>
                 <tr>
-                  <th scope="col" style="width:20%;">First Name</th>
-                  <th scope="col" style="width:20%;">Last Name</th>
-                  <th scope="col" style="width:20%;">Email Address</th>
+                  <th scope="col" style="width:10%;">First Name</th>
+                  <th scope="col" style="width:15%;">Last Name</th>
+                  <th scope="col" style="width:25%;">Email Address</th>
                   <th scope="col" style="width:10%;">Channel</th>
                   <th scope="col" style="width:15%;">Inquiry Date</th>
-                  <th scope="col" style="width:15%;">Created Date</th>
+                  <th scope="col" style="width:15%;">Inquiry Status</th>
                   <th scope="col" style="width:5%;text-align: center;">Actions</th>
                 </tr>
               </thead>
@@ -133,7 +140,15 @@
                   <td scope="row">{{ row.email }}</td>
                   <td scope="row">{{ row.inquiryChannel }}</td>
                   <td scope="row">{{row.dateOfInquiry | date: 'MMM d,y'}}</td>
-                  <td scope="row">{{row.createdDate | date: 'MMM d,y'}}</td>
+                  <td scope="row">
+                    <span *ngIf="row.inquiryStatus == 'ASSIGNED'">ASSIGNED</span>
+                    <span *ngIf="row.inquiryStatus == 'ATTEMPTED_TO_CONTACT'">ATTEMPTED TO CONTACT</span>
+                    <span *ngIf="row.inquiryStatus == 'CONTACTED'">CONTACTED</span>
+                    <span *ngIf="row.inquiryStatus == 'SALES_QUALIFIED'">QUALIFIED</span>
+                    <span *ngIf="row.inquiryStatus == 'SALES_UNQUALIFIED'">UNQUALIFIED</span>
+                    <span *ngIf="row.inquiryStatus == 'CONVERTED_TO_ACCOUNT'">CONVERTED TO ACCOUNT</span>
+                    <span *ngIf="row.inquiryStatus == 'DEAL'">DEAL</span>
+                  </td>
                   <td scope="row" style="text-align: center;">
                     <a [routerLink]="['/app/inquiry', row.id]" [queryParams]="{action: 'view'}" queryParamsHandling="merge" class="mr-2" placement="top" ngbTooltip="View"><i class="ft-eye"></i></a>
                     <a [routerLink]="['/app/inquiry', row.id]" [queryParams]="{action: 'edit'}" placement="top" ngbTooltip="Edit"><i class="ft-edit-2"></i></a>

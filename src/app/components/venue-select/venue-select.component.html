@@ -1,0 +1,23 @@
+<ng-select [items]="venues"
+           [virtualScroll]="true"
+           [loading]="loading"
+           bindLabel="name"
+           bindValue="id"
+           placeholder="Select Venue"
+           appendTo="body"
+           (scroll)="onScroll($event)"
+           (scrollToEnd)="onScrollToEnd()"
+           [(ngModel)]="selectedId"
+           (change)="onChange($event)"
+           (clear)="onClear($event)"
+           [ngClass]="{'invalid-select': isInvalid}">
+
+      <ng-template ng-header-tmp>
+            <small class="form-text text-muted">Loaded {{dataBuffer.length}} of {{venues.length}}</small>
+      </ng-template>
+      <ng-template ng-option-tmp let-item="item" let-index="index">
+            {{item.name}} <br/>
+            <div class='font-small-2'>{{item.description}}</div>
+      </ng-template>
+
+</ng-select>

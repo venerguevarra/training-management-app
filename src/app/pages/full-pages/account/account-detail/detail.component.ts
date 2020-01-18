@@ -22,6 +22,7 @@ export class AccountDetailComponent {
 	private readonly USERS_ENDPOINT: string = `${this.API_HOST}/users`;
 	private readonly LANDING_PAGE: string = '/app/account';
 
+
 	title = 'Account';
 	currentUser;
 	modelId;
@@ -43,6 +44,7 @@ export class AccountDetailComponent {
 	selectedCompanySize = "";
 
 	accountName = "";
+	previousUrl = `${this.LANDING_PAGE}`;
 
 	constructor(
 		private httpClient: HttpClient,
@@ -58,6 +60,7 @@ export class AccountDetailComponent {
 
 			if (params['id']) {
 				this.modelId = params.id;
+				this.previousUrl = `${this.previousUrl}/${this.modelId}?action=view`;
 				this.newForm = this.modelId == -1;
 
 				if(!this.newForm) {

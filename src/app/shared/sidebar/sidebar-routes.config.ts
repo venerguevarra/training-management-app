@@ -12,8 +12,48 @@ export const ROUTES: RouteInfo[] = [
     submenu: []
   },
   {
+    path: "/app/schedule",
+    title: "Schedule",
+    icon: "fas fa-list-alt",
+    class: "",
+    badge: "",
+    badgeClass: "",
+    isExternalLink: false,
+    submenu: []
+  },
+  {
+    path: "/app/training-calendar",
+    title: "Calendar",
+    icon: "fas icon-calendar",
+    class: "",
+    badge: "",
+    badgeClass: "",
+    isExternalLink: false,
+    submenu: []
+  },
+  {
     path: "/app/marketing-inquiry",
     title: "Inquiry",
+    icon: "fas fa-mail-bulk",
+    class: "",
+    badge: "",
+    badgeClass: "",
+    isExternalLink: false,
+    submenu: []
+  },
+  {
+    path: "/app/deal",
+    title: "Deal",
+    icon: "fas fa fa-money",
+    class: "",
+    badge: "",
+    badgeClass: "",
+    isExternalLink: false,
+    submenu: []
+  },
+  {
+    path: "/app/contact",
+    title: "Contact",
     icon: "fas fa-mail-bulk",
     class: "",
     badge: "",

@@ -10,6 +10,7 @@ import { ToastrService } from 'ngx-toastr';
 import { StateService } from '../../../../service/state.service';
 import { User } from '../../../../model/user.model';
 import { environment } from '../../../../../environments/environment';
+import { RoutingStateService } from '../../../../service/routing-state.service';
 
 @Component({
 	selector: 'app-course-detail',
@@ -44,7 +45,8 @@ export class CourseDetailComponent {
 		private toastr: ToastrService,
         private formBuilder: FormBuilder,
         private router: Router,
-        private route: ActivatedRoute) {
+        private route: ActivatedRoute,
+		private routingStateService: RoutingStateService) {
 
 		this.initForm();
 
@@ -58,7 +60,7 @@ export class CourseDetailComponent {
 					 this.route.queryParams.subscribe(params => {
 						if(params.action === 'view') {
 							this.viewForm = true;
-						} 
+						}
 
 						if(params.action === 'edit') {
 							this.editForm = true;
@@ -84,7 +86,7 @@ export class CourseDetailComponent {
 									}
 								);
 							}
-							
+
 
 							if(this.currentModel.modifiedBy != null) {
 								this.httpClient.get(`${this.USERS_ENDPOINT}/${this.currentModel.modifiedBy}`).subscribe(
@@ -163,13 +165,13 @@ export class CourseDetailComponent {
 							(data) => {
 								if(data.status == 200) {
 									this.genericError = false;
-									
+
 									this.toastr.success(`${this.title} successfully updated.`, 'System', { timeOut: 3000 });
 								}
 							},
 							(error) => {
 								this.genericError = false;
-								
+
 								if(error.status === 409) {
 									this.toastr.error('Course name already exist.', 'Conlict', { timeOut: 3000 });
 								} else if(error.status === 400) {
@@ -221,7 +223,7 @@ export class CourseDetailComponent {
 							(data) => {
 								if(data.status == 201) {
 									this.genericError = false;
-									
+
 									this.toastr.success(`${this.currentForm.get('name').value} course successfully saved.`, 'Success', { timeOut: 3000 });
 									this.router.navigate([this.LANDING_PAGE]);
 								}
@@ -251,7 +253,7 @@ export class CourseDetailComponent {
 	}
 
 	cancel() {
-		this.router.navigate(['/app/course']);
+		this.router.navigateByUrl(this.routingStateService.getPreviousUrl());
 	}
 
 	initForm() {

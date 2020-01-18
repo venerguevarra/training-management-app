@@ -31,7 +31,10 @@ import { AccountRoutingModule  } from "./account-routing.module";
         CourseSelectModule,
         ContactSelectModule
     ],
-    exports: [],
+    exports: [
+        ContactListComponent,
+        DealListComponent
+    ],
     declarations: [
         AccountListComponent,
         AccountDetailComponent,

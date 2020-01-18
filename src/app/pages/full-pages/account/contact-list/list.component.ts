@@ -25,6 +25,7 @@ import { pageConfig } from "../../../page.config";
 export class ContactListComponent {
   @Input() accountId;
   @Input() accountName;
+  @Input() previousUrl;
 
   private readonly API_HOST = environment.API_HOST;
   private readonly ENDPOINT: string = `${this.API_HOST}/contacts`;
@@ -42,7 +43,6 @@ export class ContactListComponent {
   searchFormStatus;
   criteria;
   createdDate;
-  selectedAccountId = "";
 
   defaultPaginationParams = {
     size: this.pageSize.toString(),
@@ -57,7 +57,7 @@ export class ContactListComponent {
   ) {}
 
   ngOnInit() {
-    this.submitSearchForm();
+    this.submitSearchForm(null);
 
     this.searchForm = this.formBuilder.group({
       name: [""],
@@ -117,13 +117,15 @@ export class ContactListComponent {
   private getSearchFormCriteria() {
     this.criteria = [];
 
-    this.criteria.push({
-      name: "accountId",
-      value: this.accountId,
-      operator: "EQ",
-      type: "UUID",
-      logical: "AND"
-    });
+    if (this.accountId && this.accountId != "") {
+      this.criteria.push({
+        name: "accountId",
+        value: this.accountId,
+        operator: "EQ",
+        type: "UUID",
+        logical: "AND"
+      });
+    }
 
     if (this.searchForm) {
       let nameSearch = this.searchForm.get("name").value;
@@ -232,27 +234,32 @@ export class ContactListComponent {
     return this.criteria;
   }
 
-  submitSearchForm() {
+  submitSearchForm($event) {
     this.page = 0;
 
-    this.criteria = this.getSearchFormCriteria();
-    let jsonBody = {
+    let jsonBody = {};
+
+    if ($event) {
+      this.criteria = this.getSearchFormCriteria();
+
+      if (this.criteria.length === 0) {
+        this.toastr.error("Please provide search criteria", "Search", {
+          timeOut: 3000
+        });
+      }
+    } else {
+      this.criteria = [];
+    }
+
+    jsonBody = {
       criteria: this.criteria,
       page: "0",
       size: this.pageSize.toString()
     };
 
-    if (this.criteria.length === 0) {
-      this.toastr.error("Please provide search criteria", "Search", {
-        timeOut: 3000
-      });
-    }
-
-    if (this.criteria.length > 0) {
-      this.httpClient.post(this.FIND_ENDPOINT, jsonBody).subscribe(data => {
-        this.collectionSize = data["totalElements"];
-        this.rows = data["elements"];
-      });
-    }
+    this.httpClient.post(this.FIND_ENDPOINT, jsonBody).subscribe(data => {
+      this.collectionSize = data["totalElements"];
+      this.rows = data["elements"];
+    });
   }
 }

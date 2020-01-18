@@ -351,7 +351,7 @@
                       </div>
                     </div>
                   </div>
-                  <input type="hidden" formControlName="inquiryStatus" [value]="defaultInquiryStatus">
+                  <!--<input type="hidden" formControlName="inquiryStatus" [value]="defaultInquiryStatus">-->
                   <div class="form-group row">
                     <label class="col-md-3 label-control" for="name">Comment</label>
                     <div class="col-md-9">
@@ -362,7 +362,14 @@
                   <div class="form-group row">
                     <label class="col-md-3 label-control" for="name">Inquiry Status</label>
                     <div class="col-md-9">
-                      {{f.inquiryStatus.value}}
+                      <select formControlName="inquiryStatus" class="custom-select">
+                        <option value="ASSIGNED">ASSIGNED</option>
+                        <option value="ATTEMPTED_TO_CONTACT">Attempted to Contact</option>
+                        <option value="CONTACTED">Contacted</option>
+                        <option value="SALES_UNQUALIFIED">Unqualified</option>
+                        <option value="CONVERTED_TO_ACCOUNT">Converted to Account</option>
+                        <option value="DEAL">Deal</option>
+                      </select>
                     </div>
                   </div>
 

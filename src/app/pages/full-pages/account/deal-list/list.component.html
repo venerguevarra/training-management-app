@@ -2,15 +2,20 @@
 <div class="card">
 
   <div class="card-header px-header-color" style="background-color: #ECEFF1;">
-    <a class="float-left btn btn-success btn-raised mr-2" (click)="navigateToNewForm()">
-      <i class="fa fa-fw fa-plus-circle"></i> New {{title}}
-    </a>
-    <a class="position-relative btn btn-info btn-raised mr-2" (click)="isCollapsed = !isCollapsed"
-      [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
-      <i class="fa fa-fw ft-search"></i> Search
-    </a>
-    <a class="position-relative btn btn-info btn-raised mr-2" style="background-color: white; color: green;"
-      (click)="clearSearchForm()"><i class="fa fa-repeat"></i> Refresh</a>
+    <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+      <div class="btn-group-md">
+        <a class="btn btn-primary btn-raised mr-2" (click)="navigateToNewForm()">
+          <i class="fa fa-fw fa-plus-circle"></i> New {{title}}
+        </a>
+        <a class="btn btn-success btn-raised mr-2" (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed"
+          aria-controls="collapseExample">
+          <i class="fa fa-fw ft-search"></i> Search
+        </a>
+        <a class="btn btn-danger btn-raised" style="background-color: white; color: green;" (click)="clearSearchForm()">
+          <i class="fa fa-repeat"></i> Refresh
+        </a>
+      </div>
+    </div>
   </div>
 
   <div class="card-body" id="collapseExample" [ngbCollapse]="isCollapsed">
@@ -52,7 +57,7 @@
               <label class="label-control">Status</label>
               <div>
                 <select formControlName="status" class="custom-select">
-                  <option value="ALL">All</option>
+                  <option value="ALL">Select</option>
                   <option value="ACTIVE">Active</option>
                   <option value="INACTIVE">Inactive</option>
                 </select>
@@ -75,7 +80,7 @@
             </div>
           </div>
           <button type="submit" name="submit" value="search" id="submit" class="btn btn-success btn-raised mr-2"
-            (click)="submitSearchForm()"><i class="fa fa-fw fa-check"></i> Submit</button>
+            (click)="submitSearchForm($event)"><i class="fa fa-fw fa-check"></i> Submit</button>
         </div>
         <div>
         </div>
@@ -100,8 +105,8 @@
                   <th scope="col" style="width:20%;">Name</th>
                   <th scope="col" style="width:20%;">Deal Amount</th>
                   <th scope="col" style="width:20%;">Stage</th>
-                  <th scope="col" style="width:10%;">Status</th>
                   <th scope="col" style="width:15%;">Created Date</th>
+                  <th scope="col" style="width:10%;">Status</th>
                   <th scope="col" style="width:15%;text-align: center;">Actions</th>
                 </tr>
               </thead>
@@ -115,13 +120,13 @@
                     <span *ngIf="row.stage === 'CLOSED_LOST'">CLOSED LOST</span>
                     <span *ngIf="row.stage === 'CLOSED_LOST_TO_COMPETITION'">CLOSED WON TO COMPETITION</span>
                   </td>
-                  <td scope="row">{{row.active}}</td>
                   <td scope="row">{{row.createdDate | date: 'MMM d,y'}}</td>
+                  <td scope="row">{{row.active}}</td>
                   <td scope="row" style="text-align: center;">
                     <a [routerLink]="['/app/deal', row.id]" [queryParams]="{action: 'view', accountId: this.accountId}"
                       queryParamsHandling="merge" class="mr-2" placement="top" ngbTooltip="View"><i
                         class="ft-eye"></i></a>
-                    <a [routerLink]="['/app/deal', row.id]" [queryParams]="{action: 'edit', accountId: this.accountId}"
+                    <a *ngIf="accountId" [routerLink]="['/app/deal', row.id]" [queryParams]="{action: 'edit', accountId: this.accountId}"
                       placement="top" ngbTooltip="Edit"><i class="ft-edit-2"></i></a>
                   </td>
                 </tr>

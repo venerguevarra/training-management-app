@@ -1,0 +1,21 @@
+<div>
+
+<full-calendar
+      #calendar
+      defaultView="dayGridMonth"
+      [header]="{
+        left: 'prev,next',
+        center: 'title',
+        right: 'today, myCustomButton'
+      }"
+      [customButtons]="calendarOptions.customButtons"
+      [agendaEventMinHeight]="100"
+      [eventLimit]="true"
+      [displayEventTime]="false"
+      [plugins]="calendarPlugins"
+      [events]="calendarEvents"
+      (dateClick)="handleDateClick($event)"
+      (eventClick)="eventClicked($event)"
+    ></full-calendar>
+  </div>
+

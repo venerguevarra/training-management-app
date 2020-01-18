@@ -8,6 +8,10 @@ import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from "@angular/common
 import { TranslateModule, TranslateLoader } from "@ngx-translate/core";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 import { NgSelectModule } from '@ng-select/ng-select';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { FullCalendarModule } from '@fullcalendar/angular';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+
 
 import { ErrorInterceptor } from './interceptor/error-intercept.service';
 import { AuthInterceptor } from './interceptor/auth-intercept.service';
@@ -27,6 +31,7 @@ import { AuthGuard } from './shared/auth/auth-guard.service';
 import { StorageServiceModule } from 'ngx-webstorage-service';
 
 import { StateService } from './service/state.service';
+import { RoutingStateService } from './service/routing-state.service';
 import { ToastrModule } from 'ngx-toastr';
 
 import 'default-passive-events';
@@ -59,9 +64,15 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         }
       }),
       PerfectScrollbarModule,
-      StorageServiceModule
+      StorageServiceModule,
+      CalendarModule.forRoot({
+        provide: DateAdapter,
+        useFactory: adapterFactory
+      }),
+      FullCalendarModule
     ],
     providers: [
+      RoutingStateService,
       StateService,
       AuthService,
       AuthGuard,

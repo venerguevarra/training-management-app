@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { ScheduleCalendarComponent } from './schedule-calendar/schedule-calendar.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 
@@ -16,6 +17,14 @@ const routes: Routes = [
         component: DashboardComponent,
         data: {
           title: 'Dashboard'
+        },
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'training-calendar',
+        component: ScheduleCalendarComponent,
+        data: {
+          title: 'Training Calendar'
         },
         canActivate: [AuthGuard]
       },

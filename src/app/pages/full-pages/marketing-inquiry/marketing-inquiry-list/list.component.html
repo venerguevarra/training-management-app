@@ -23,7 +23,7 @@
       <div>
         <div class="col-sm-12">
             <div class="row">
-                <div class="col-sm-2">
+                <div class="col-md-6 col-sm-2">
                   <div class="form-group">
                     <label>Name</label>
                     <input type="text"
@@ -34,7 +34,7 @@
                   </div>
                 </div>
 
-                <div class="col-sm-2">
+                <div class="col-md-6 col-sm-2">
                   <div class="form-group">
                     <label>Inquiry Status</label>
                     <input type="hidden" formControlName="inquiryStatus">
@@ -42,14 +42,14 @@
                   </div>
                 </div>
 
-                <div class="col-sm-2">
+                <div class="col-md-6 col-sm-2">
                   <div class="form-group">
                     <label>Inquiry Channel</label>
                     <input type="hidden" formControlName="channel">
                     <app-channel-select (selectedIdEmitter)="onChannelSelected($event)"></app-channel-select>
                   </div>
                 </div>
-              <div class="col-sm-3">
+              <div class="col-md-6 col-sm-3">
                 <div class="form-group">
                   <label>Inquiry Date From</label>
                   <div class="input-group">
@@ -70,7 +70,7 @@
                 </div>
               </div>
 
-              <div class="col-sm-3">
+              <div class="col-md-6 col-sm-3">
                 <div class="form-group">
                   <label>Inquiry Date To</label>
                   <div class="input-group">
@@ -90,6 +90,7 @@
                   </div>
                 </div>
               </div>
+
             </div>
 
 

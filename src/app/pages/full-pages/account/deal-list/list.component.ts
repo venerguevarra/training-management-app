@@ -25,6 +25,7 @@ import { pageConfig } from "../../../page.config";
 export class DealListComponent {
   @Input() accountId;
   @Input() accountName;
+  @Input() previousUrl;
 
   private readonly API_HOST = environment.API_HOST;
   private readonly ENDPOINT: string = `${this.API_HOST}/deals`;
@@ -42,7 +43,6 @@ export class DealListComponent {
   searchFormStatus;
   criteria;
   createdDate;
-  selectedAccountId = "";
 
   defaultPaginationParams = {
     size: this.pageSize.toString(),
@@ -56,14 +56,14 @@ export class DealListComponent {
     private router: Router
   ) {}
 
-  ngOnInit() {
-    this.submitSearchForm();
 
+  ngOnInit() {
+    this.submitSearchForm(null);
     this.searchForm = this.formBuilder.group({
       name: [""],
       status: ["ALL"],
-      stage: [''],
-      type: [''],
+      stage: [""],
+      type: [""],
       createdDate: [""]
     });
 
@@ -120,13 +120,15 @@ export class DealListComponent {
   private getSearchFormCriteria() {
     this.criteria = [];
 
-    this.criteria.push({
-      name: "accountId",
-      value: this.accountId,
-      operator: "EQ",
-      type: "UUID",
-      logical: "AND"
-    });
+    if (this.accountId && this.accountId != "") {
+      this.criteria.push({
+        name: "accountId",
+        value: this.accountId,
+        operator: "EQ",
+        type: "UUID",
+        logical: "AND"
+      });
+    }
 
     if (this.searchForm) {
       let nameSearch = this.searchForm.get("name").value;
@@ -140,25 +142,25 @@ export class DealListComponent {
         });
       }
 
-       if (this.searchForm.get("stage").value != "") {
-         this.criteria.push({
+      if (this.searchForm.get("stage").value != "") {
+        this.criteria.push({
           name: "stage",
           value: this.searchForm.get("stage").value,
           operator: "EQ",
           type: "ENUM",
           logical: "OR"
         });
-       }
+      }
 
-       if (this.searchForm.get("type").value != "") {
-         this.criteria.push({
+      if (this.searchForm.get("type").value != "") {
+        this.criteria.push({
           name: "type",
           value: this.searchForm.get("type").value,
           operator: "EQ",
           type: "ENUM",
           logical: "OR"
         });
-       }
+      }
 
       if (this.searchForm.get("createdDate").value != "") {
         let month = `0${this.searchForm.get("createdDate").value.month}`.slice(
@@ -206,27 +208,32 @@ export class DealListComponent {
     return this.criteria;
   }
 
-  submitSearchForm() {
+  submitSearchForm($event) {
     this.page = 0;
 
-    this.criteria = this.getSearchFormCriteria();
-    let jsonBody = {
+    let jsonBody = {};
+
+    if ($event) {
+      this.criteria = this.getSearchFormCriteria();
+
+      if (this.criteria.length === 0) {
+        this.toastr.error("Please provide search criteria", "Search", {
+          timeOut: 3000
+        });
+      }
+    } else {
+      this.criteria = [];
+    }
+
+    jsonBody = {
       criteria: this.criteria,
       page: "0",
       size: this.pageSize.toString()
     };
 
-    if (this.criteria.length === 0) {
-      this.toastr.error("Please provide search criteria", "Search", {
-        timeOut: 3000
-      });
-    }
-
-    if (this.criteria.length > 0) {
-      this.httpClient.post(this.FIND_ENDPOINT, jsonBody).subscribe(data => {
-        this.collectionSize = data["totalElements"];
-        this.rows = data["elements"];
-      });
-    }
+    this.httpClient.post(this.FIND_ENDPOINT, jsonBody).subscribe(data => {
+      this.collectionSize = data["totalElements"];
+      this.rows = data["elements"];
+    });
   }
 }

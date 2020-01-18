@@ -1,6 +1,7 @@
-import { Component } from "@angular/core";
+import { Component, Input } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { Router, ActivatedRoute } from "@angular/router";
+import { Router, ActivatedRoute, RoutesRecognized } from "@angular/router";
+import { filter, pairwise } from "rxjs/operators";
 import {
   HttpClient,
   HttpHeaders,
@@ -12,6 +13,7 @@ import swal from "sweetalert2";
 import { ToastrService } from "ngx-toastr";
 
 import { StateService } from "../../../../service/state.service";
+import { RoutingStateService } from "../../../../service/routing-state.service"
 import { User } from "../../../../model/user.model";
 import { environment } from "../../../../../environments/environment";
 
@@ -59,6 +61,7 @@ export class DealDetailComponent {
   selectedCourse: string;
   selectedContact: string;
   selectedInquiry: string;
+  previousUrl: string;
 
   constructor(
     private httpClient: HttpClient,
@@ -66,24 +69,14 @@ export class DealDetailComponent {
     private toastr: ToastrService,
     private formBuilder: FormBuilder,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private routingStateService: RoutingStateService
+
   ) {
+    this.previousUrl = this.routingStateService.getPreviousUrl();
+
     this.route.params.subscribe(params => {
       this.parentAccountId = this.route.snapshot.queryParamMap.get("accountId");
-
-      if (!this.parentAccountId) {
-        this.toastr.error("Cannot find account ID.", "System", {
-          timeOut: 3000
-        });
-        this.router.navigate(["/app/account"]);
-        return;
-      }
-
-      this.httpClient
-        .get(`${this.ACCOUNT_ENDPOINT}/${this.parentAccountId}`)
-        .subscribe(account => {
-          this.accountName = account["name"];
-        });
 
       if (params["id"]) {
         this.modelId = params.id;
@@ -142,6 +135,14 @@ export class DealDetailComponent {
                     }
                   );
               }
+
+              let existingAccountId = (this.parentAccountId) ? this.parentAccountId :  this.currentModel.accountId;
+              // get account name
+              this.httpClient
+                .get(`${this.ACCOUNT_ENDPOINT}/${existingAccountId}`)
+                .subscribe(account => {
+                  this.accountName = account["name"];
+                });
 
               if (this.currentModel.accountId != null) {
                 this.httpClient
@@ -577,7 +578,7 @@ export class DealDetailComponent {
   };
 
   cancel() {
-    this.router.navigate(["/app/account"]);
+    this.router.navigateByUrl(this.previousUrl);
   }
 
   isInvalid(control: any) {

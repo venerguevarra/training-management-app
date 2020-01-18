@@ -10,6 +10,7 @@ import { ToastrService } from 'ngx-toastr';
 import { StateService } from '../../../../service/state.service';
 import { User } from '../../../../model/user.model';
 import { environment } from '../../../../../environments/environment';
+import { RoutingStateService } from '../../../../service/routing-state.service';
 
 @Component({
 	selector: 'app-venue-detail',
@@ -44,7 +45,8 @@ export class VenueDetailComponent {
 		private toastr: ToastrService,
         private formBuilder: FormBuilder,
         private router: Router,
-        private route: ActivatedRoute) {
+        private route: ActivatedRoute,
+		private routingStateService: RoutingStateService) {
 
 		this.initForm();
 
@@ -248,7 +250,7 @@ export class VenueDetailComponent {
 	}
 
 	cancel() {
-		this.router.navigate([this.LANDING_PAGE]);
+		this.router.navigateByUrl(this.routingStateService.getPreviousUrl());
 	}
 
 	isInvalid(control:any) {

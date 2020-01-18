@@ -1,4 +1,4 @@
-@import '~perfect-scrollbar/css/perfect-scrollbar.css';
+@import "~perfect-scrollbar/css/perfect-scrollbar.css";
 @import "scss/variables";
 @import "../../../node_modules/bootstrap/scss/bootstrap";
 @import "~prismjs/plugins/toolbar/prism-toolbar.css";
@@ -11,5 +11,46 @@
 @import "scss/core";
 @import "scss/fonts/weather-icons";
 @import "scss/plugins";
-@import '~ngx-ui-switch/ui-switch.component.scss';
+@import "~ngx-ui-switch/ui-switch.component.scss";
 @import "~@ng-select/ng-select/themes/default.theme.css";
+@import "~@fullcalendar/core/main.css";
+@import "~@fullcalendar/daygrid/main.css";
+
+#calendar {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.fc-button-group button, .fc-filter-button {
+  background-color: #009da0;
+}
+
+.fc-button-group button:hover, .fc-filter-button:hover {
+    background-color: #009da0;
+    color: white;
+  }
+
+.fc-button-group button:hover {
+  background-color: none !important;
+}
+
+.fc-today-button {
+  background-color: #ff586b;
+}
+
+.fc-today-button .fc-today-button:hover {
+    background-color: #ff586b;
+  }
+
+.fc-event {
+
+}
+.fc-title {
+    color: white;
+}
+
+.fc-content {
+    padding: 2px;
+    padding-left: 5px;
+    padding-top: 5px;
+}

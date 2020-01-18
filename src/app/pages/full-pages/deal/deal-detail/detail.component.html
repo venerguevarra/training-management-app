@@ -159,7 +159,7 @@
               <div class="form-group row">
                 <label class="col-md-4 label-control">&nbsp;</label>
                 <div class="col-md-8">
-                  <button type="button" class="btn btn-raised btn-success mr-2" (click)="showEditForm()">
+                  <button *ngIf="parentAccountId && parentAccountId != ''" type="button" class="btn btn-raised btn-success mr-2" (click)="showEditForm()">
                     <i class="fa fa-check-square-o"></i> Edit
                   </button>
                   <button type="button" class="btn btn-danger btn-raised" (click)="cancel()">
@@ -366,6 +366,7 @@
                   <div class="form-group row">
                     <label class="col-md-5 label-control" for="status">&nbsp;</label>
                     <div class="col-md-7">
+
                       <button *ngIf="editForm" type="button" class="btn btn-raised btn-success mr-2" (click)="update()">
                         <i class="fa fa-check-square-o"></i> Save Changes
                       </button>

@@ -1,0 +1,26 @@
+<ng-select [items]="facilitators"
+           [virtualScroll]="true"
+           [loading]="loading"
+           bindLabel="firstName"
+           bindValue="id"
+           placeholder="Select Facilitator"
+           appendTo="body"
+           (scroll)="onScroll($event)"
+           (scrollToEnd)="onScrollToEnd()"
+           [(ngModel)]="selectedFacilitator"
+           (change)="onChange($event)"
+           (clear)="onClear($event)"
+           [ngClass]="{'invalid-select': isInvalid}">
+
+      <ng-template ng-header-tmp>
+            <small class="form-text text-muted">Loaded {{dataBuffer.length}} of {{facilitators.length}}</small>
+      </ng-template>
+      <ng-template ng-option-tmp let-item="item" let-index="index">
+            {{item.firstName}} {{item.lastName}} <br/>
+            <div class='font-small-2'>{{item.email}}</div>
+      </ng-template>
+      <ng-template ng-label-tmp let-item="item">
+            <span >{{ item.firstName + ' ' + item.lastName }}</span>
+      </ng-template>
+
+</ng-select>

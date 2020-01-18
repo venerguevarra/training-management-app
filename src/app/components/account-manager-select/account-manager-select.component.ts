@@ -78,7 +78,7 @@ export class AccountManagerSelectComponent {
         const len = this.dataBuffer.length;
         const more = this.data.slice(len, this.bufferSize + len);
         this.loading = true;
-        // using timeout here to simulate backend API delay
+
         setTimeout(() => {
             this.loading = false;
             this.dataBuffer = this.dataBuffer.concat(more);
