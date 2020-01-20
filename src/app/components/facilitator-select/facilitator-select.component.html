@@ -20,7 +20,7 @@
             <div class='font-small-2'>{{item.email}}</div>
       </ng-template>
       <ng-template ng-label-tmp let-item="item">
-            <span >{{ item.firstName + ' ' + item.lastName }}</span>
+            <span *ngIf="item.firstName && item.lastName">{{ item.firstName + ' ' + item.lastName }}</span>
       </ng-template>
 
 </ng-select>

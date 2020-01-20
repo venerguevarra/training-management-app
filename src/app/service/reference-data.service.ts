@@ -20,6 +20,20 @@ export class ReferenceDataService {
 
     }
 
+    findAll(entity: string): Observable<any[]> {
+        const ACTIVE_ENDPOINT: string = `${this.API_HOST}/${entity}/actions/find-list`;
+
+        return this.http.get<any[]>(ACTIVE_ENDPOINT);
+
+    }
+
+    deleteById(entity: string, id: string): Observable<any[]> {
+        const ACTIVE_ENDPOINT: string = `${this.API_HOST}/${entity}/${id}`;
+
+        return this.http.delete<any[]>(ACTIVE_ENDPOINT);
+
+    }
+
     getEntityData(entity: string, id:string): Observable<any[]> {
         const RESOURCE_ENDPOINT: string = `${this.API_HOST}/${entity}/${id}`;
 

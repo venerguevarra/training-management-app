@@ -1,0 +1,116 @@
+<div class="row">
+  <div class="col-md-12">
+
+    <div class="card">
+      <div class="card-content">
+        <div class="px-3">
+          <div class="card-header pb-1">
+            <h4 class="card-title" id="basic-layout-form">Facilitators</h4>
+          </div>
+          <div>
+            <!--Striped rows Light Starts-->
+            <section id="striped-light">
+              <div class="row text-left">
+
+                <div class="col-sm-12">
+                  <div class="card">
+                    <div class="card-content">
+                      <div class="card-body">
+                        <form class="form" [formGroup]="facilitatorScheduleForm">
+                          <input type="hidden" formControlName="facilitatorId">
+                          <input type="hidden" formControlName="courseScheduleId">
+                          <input type="hidden" formControlName="courseId">
+                          <input type="hidden" formControlName="startDate">
+                          <input type="hidden" formControlName="endDate">
+                          <input type="hidden" formControlName="days">
+
+                          <div class="form-body">
+                            <div class="row">
+                              <div class="col-md-4">
+                                <label for="facilitatorId">Facilitator</label>
+                                <app-facilitator-select (selectedIdEmitter)="onFacilitatorSelected($event)"
+                                  [isInvalid]="isFacilitatorIdInvalid" [selectedFacilitator]="selectedFacilitator">
+                                </app-facilitator-select>
+                                <small *ngIf="isFacilitatorIdInvalid" class="form-text text-muted danger">Facilitator
+                                  required</small><br />
+                              </div>
+
+                              <div class="col-md-4">
+                                <label for="rate">Daily Rate</label>
+                                <input class="form-control" type="number" formControlName="rate"
+                                  [ngClass]="{ 'is-invalid': isInvalid(f.rate)}">
+                                <small
+                                  *ngIf="(f.rate.dirty || f.rate.touched || submitted) && f.rate.invalid && f.rate.errors.required"
+                                  class="form-text text-muted danger">
+                                  Daily rate required
+                                </small>
+                              </div>
+
+                              <div class="col-md-4">
+                                <label for="professionalFee">Professional Fee</label>
+                                <input class="form-control" type="number" formControlName="professionalFee" [disabled]="true">
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="text-left">
+                            <button type="button" class="btn btn-raised btn-raised btn-success mr-1" (click)="save()">
+                              <i class="fa fa-check-square-o"></i> Add
+                            </button>
+                            <button type="button" class="btn btn-raised btn-raised btn-danger" (click)="refresh()">
+                              <i class="ft-x"></i> Reset
+                            </button>
+                          </div>
+                        </form>
+
+                        <div class="card black mr-1" style="background-color: #CFD8DC;">
+                          <div class="card-content">
+                            <div class="px-3 py-3">
+                              <div class="media">
+                                <div class="media-body black text-left">
+                                  <h3 class="mb-1 black" style="color: black;">{{getFacilitatorCost() || 0 | currency: 'PHP '}} </h3>
+                                  <span>Total Professional Fee</span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <table class="table table-striped">
+                          <thead>
+                            <tr>
+                              <th>#</th>
+                              <th>Facilitator</th>
+                              <th>Daily Rate</th>
+                              <th>Number of Days</th>
+                              <th>Professional Fee</th>
+                              <th>Action</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr *ngFor="let item of assignedFacilitators; index as i">
+                              <th scope="row">{{i + 1}}</th>
+                              <td><app-facilitator-detail [id]="item.facilitatorId" [showEmail]="true" [showMobileNumber]="true"></app-facilitator-detail></td>
+                              <td>{{item.rate}}</td>
+                              <td>{{item.numberOfDays}}</td>
+                              <td>{{item.totalProfessionalFee}}</td>
+                              <td>
+                                <button type="button" class="btn btn-raised btn-raised btn-danger mr-1" (click)="removeFacilitator(item.id)">
+                                  <i class="ft-x"></i> Remove
+                                </button>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+            <!--Striped rows Light Ends-->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -4,7 +4,7 @@
   <div class="card-header px-header-color" style="background-color: #ECEFF1;">
     <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
       <div class="btn-group-md">
-        <a class="btn btn-primary btn-raised mr-2" (click)="navigateToNewForm()">
+        <a *ngIf="accountId" class="btn btn-primary btn-raised mr-2" (click)="navigateToNewForm()">
           <i class="fa fa-fw fa-plus-circle"></i> New {{title}}
         </a>
         <a class="btn btn-success btn-raised mr-2" (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed"

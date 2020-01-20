@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter,Input, SimpleChanges } from '@angular/core';
+import { Component, Output, EventEmitter,Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from "@angular/router";
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
@@ -14,55 +14,55 @@ import { ReferenceDataService } from '../../service/reference-data.service';
 import { EventService } from '../../service/event.service';
 
 @Component({
-	selector: 'app-facilitator-select',
-	templateUrl: './facilitator-select.component.html',
-	styleUrls: ['./facilitator-select.component.scss']
+	selector: 'app-cost-select',
+	templateUrl: './cost-select.component.html',
+	styleUrls: ['./cost-select.component.scss']
 })
-export class FacilitatorSelectComponent {
+export class CostSelectComponent {
     @Output() private selectedIdEmitter = new EventEmitter<any>();
 
     @Input() isInvalid: boolean;
-    @Input() selectedFacilitator = '';
+    @Input() selectedCosting = '';
 
-	facilitators = [];
+	costings = [];
     dataBuffer = [];
     bufferSize = 50;
     numberOfItemsFromEndBeforeFetchingMore = 10;
     loading = false;
 
-    ngOnChanges(changes: SimpleChanges) {
-        if(changes['isInvalid']) {
-            this.initReferences();
-        }
-    }
-
     onChange($event) {
         if($event) {
+            this.selectedCosting = $event.id;
             this.selectedIdEmitter.emit($event);
+        } else {
+            this.selectedCosting = "";
+            this.selectedIdEmitter.emit('');
         }
     }
 
     onClear($event) {
         if($event) {
+            this.selectedCosting = $event.id;
             this.selectedIdEmitter.emit($event);
         } else {
+            this.selectedCosting = "";
             this.selectedIdEmitter.emit('');
         }
     }
 
 	initReferences() {
-		this.referenceDataService.getActiveReferenceData('facilitators').subscribe(data => {
-			this.facilitators = data;
-            this.dataBuffer = this.facilitators.slice(0, this.bufferSize);
+		this.referenceDataService.getActiveReferenceData('costings').subscribe(data => {
+			this.costings = data;
+            this.dataBuffer = this.costings.slice(0, this.bufferSize);
 		});
 	}
 
-	 onScrollToEnd() {
+	onScrollToEnd() {
         this.fetchMore();
     }
 
     onScroll({ end }) {
-        if (this.loading || this.facilitators.length <= this.dataBuffer.length) {
+        if (this.loading || this.costings.length <= this.dataBuffer.length) {
             return;
         }
 
@@ -79,17 +79,18 @@ export class FacilitatorSelectComponent {
         private referenceDataService: ReferenceDataService,
         private eventService: EventService) {
 		this.initReferences();
+
         eventService.emitter.subscribe(item => {
-			if(item && item.eventType && item.eventType === 'refresh-facilitator-select') {
+			if(item && item.eventType && item.eventType === 'refresh-cost-select') {
                 this.initReferences();
-                this.selectedFacilitator = null;
+                this.selectedCosting = null;
             }
 		});
 	}
 
 	private fetchMore() {
         const len = this.dataBuffer.length;
-        const more = this.facilitators.slice(len, this.bufferSize + len);
+        const more = this.costings.slice(len, this.bufferSize + len);
         this.loading = true;
 
         setTimeout(() => {

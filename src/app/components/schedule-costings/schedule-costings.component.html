@@ -1,0 +1,94 @@
+<div class="row">
+  <div class="col-md-12">
+
+    <div class="card">
+
+      <div class="card-content">
+
+
+        <div class="px-3">
+          <div class="card-header">
+            <h4 class="card-title" id="basic-layout-form">Training Costs</h4>
+          </div>
+          <div>
+            <!--Striped rows Light Starts-->
+            <section id="striped-light">
+              <div class="row text-left">
+
+                <div class="col-sm-12">
+                  <div class="card">
+                    <div class="card-content">
+                      <div class="card-body">
+                        <form class="form" [formGroup]="costingForm">
+                          <input type="hidden" formControlName="courseScheduleId">
+
+
+                          <div class="form-body">
+                            <div class="row">
+                              <div class="col-md-3">
+                                <label for="facilitatorId">Cost</label>
+                                <app-cost-select (selectedIdEmitter)="onCostingSelected($event)" [isInvalid]="isCostingIdInvalid" [selectedCosting]="selectedCosting"></app-cost-select>
+                                <small *ngIf="isCostingIdInvalid" class="form-text text-muted danger">Cost required</small><br />
+                              </div>
+
+                              <div class="col-md-2">
+                                <label for="rate">Amount</label>
+                                <input class="form-control" type="number" formControlName="amount" [ngClass]="{ 'is-invalid': isInvalid(f.amount)}" (blur)="calculateTotalAmount()">
+                                <small *ngIf="(f.amount.dirty || f.amount.touched || submitted) && f.amount.invalid && f.amount.errors.required" class="form-text text-muted danger">
+                                  Daily rate required
+                                </small>
+                              </div>
+
+                              <div class="col-md-2">
+                                <label for="professionalFee">Quantity</label>
+                                <input class="form-control" type="number" formControlName="multiplier" (blur)="calculateTotalAmount()">
+                              </div>
+
+                              <div class="col-md-2">
+                                <label for="rate">Total Amount</label>
+                                <input class="form-control" type="number" formControlName="totalAmount" [disabled]="true">
+                              </div>
+
+                              <div class="col-md-3">
+                                <label for="facilitatorId">Note</label>
+                                <input class="form-control" type="text" formControlName="comment" [disabled]="true">
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="text-left mt-2">
+                            <button type="button" class="btn btn-raised btn-raised btn-success mr-1" (click)="save()">
+                              <i class="fa fa-check-square-o"></i> Add
+                            </button>
+                            <button type="button" class="btn btn-raised btn-raised btn-danger" (click)="refresh()">
+                              <i class="ft-x"></i> Reset
+                            </button>
+                          </div>
+                        </form>
+
+                        <div class="card black mr-1" style="background-color: #CFD8DC;">
+                          <div class="card-content">
+                            <div class="px-3 py-3">
+                              <div class="media">
+                                <div class="media-body black text-left">
+                                  <h3 class="mb-1 black" style="color: black;">{{ 0 | currency: 'PHP '}} </h3>
+                                  <span>Total Professional Fee</span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+            <!--Striped rows Light Ends-->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

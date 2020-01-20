@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, SimpleChanges } from '@angular/core';
+import { FormGroup, FormBuilder, Validators, FormControl, FormArray, NgForm } from '@angular/forms';
 import { Router, ActivatedRoute } from "@angular/router";
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { catchError, tap, map, first } from 'rxjs/operators';
@@ -13,6 +13,7 @@ import { User } from '../../../../model/user.model';
 import { environment } from '../../../../../environments/environment';
 import { RoutingStateService } from '../../../../service/routing-state.service';
 import * as moment from "moment";
+import { EventService } from '../../../../service/event.service';
 
 @Component({
 	selector: 'app-schedule',
@@ -43,8 +44,6 @@ export class ScheduleDetailComponent {
 	selectedCourse: string;
 	isVenueIdInvalid: boolean = false;
 	selectedVenue: string;
-	isFacilitatorIdInvalid: boolean = false;
-	selectedFacilitator: string;
 
 	defaultStartTime = {hour: 9, minute: 0};
 	defaultEndTime = {hour: 18, minute: 0};
@@ -78,7 +77,8 @@ export class ScheduleDetailComponent {
         private router: Router,
         private route: ActivatedRoute,
 		private routingStateService: RoutingStateService,
-		private dateParser: NgbDateParserFormatter) {
+		private dateParser: NgbDateParserFormatter,
+		private eventService: EventService) {
 
 		this.initForm();
 
@@ -136,7 +136,6 @@ export class ScheduleDetailComponent {
 								id: [this.currentModel.id],
 								courseId: [this.currentModel.courseId, [Validators.required]],
 								venueId: [this.currentModel.venueId],
-								facilitatorId: [this.currentModel.facilitatorId],
 								registeredParticipants: [this.currentModel.registeredParticipants],
 								startDate: [this.currentModel.startDate],
 								endDate: [this.currentModel.endDate],
@@ -144,7 +143,6 @@ export class ScheduleDetailComponent {
 								endTime: [this.currentModel.endTime],
 								courseFee: [this.currentModel.courseFee],
 								numberOfDays: [this.currentModel.numberOfDays],
-								facilitatorDailyRate: [this.currentModel.facilitatorDailyRate],
 								createdDate: [this.currentModel.createdDate],
 								createdBy: [this.currentModel.createdBy],
 								modifiedDate: [this.currentModel.modifiedDate],
@@ -210,7 +208,6 @@ export class ScheduleDetailComponent {
 							this.formattedEndTime = this.formatTime(this.currentModel.endTime);
 							this.selectedCourse = this.currentModel.courseId;
 							this.selectedVenue = this.currentModel.venueId;
-							this.selectedFacilitator = this.currentModel.facilitatorId;
 						},
 						(error) => {
 							this.toastr.error('Error has occurred.', 'System', { timeOut: 3000 });
@@ -219,7 +216,6 @@ export class ScheduleDetailComponent {
 				}
 			}
 		});
-
 	}
 
 	formatTime(input) {
@@ -231,7 +227,6 @@ export class ScheduleDetailComponent {
 			id: [''],
 			courseId: ['', [Validators.required]],
 			venueId: ['', [Validators.required]],
-			facilitatorId: ['', [Validators.required]],
 			registeredParticipants: ['', [Validators.required]],
 			status: ['SCHEDULE_WAITING', [Validators.required]],
 			startDate: ['', [Validators.required]],
@@ -239,10 +234,8 @@ export class ScheduleDetailComponent {
 			startTime: [this.defaultStartTime, [Validators.required]],
 			endTime: [this.defaultEndTime, [Validators.required]],
 			courseFee: ['', [Validators.required]],
-			numberOfDays: ['', [Validators.required]],
-			facilitatorDailyRate: ['', [Validators.required]]
-		})
-
+			numberOfDays: ['', [Validators.required]]
+		});
 	}
 
 	get f() { return this.currentForm.controls; }
@@ -299,14 +292,6 @@ export class ScheduleDetailComponent {
 			hasError = false;
 		}
 
-		if (this.formControlInvalid(this.f.facilitatorId)) {
-			this.isFacilitatorIdInvalid = true;
-			hasError = true;
-		} else {
-			this.isFacilitatorIdInvalid = false;
-			hasError = false;
-		}
-
         if (this.currentForm.invalid || hasError) {
             return;
         }
@@ -321,35 +306,119 @@ export class ScheduleDetailComponent {
 			allowOutsideClick: false
 		}).then(e => {
 			if(e.value) {
+				let startTimeHourParam = `0${this.f.startTime.value.hour}`.slice(-2);
+				let startTimeMinuteParam = `0${this.f.startTime.value.minute}`.slice(-2);
+				let startTimeParam = `${startTimeHourParam}:${startTimeMinuteParam}`;
+				console.log(startTimeParam);
+
+				let endTimeHourParam = `0${this.f.endTime.value.hour}`.slice(-2);
+				let endTimeMinuteParam = `0${this.f.endTime.value.minute}`.slice(-2);
+				let endTimeParam = `${endTimeHourParam}:${endTimeMinuteParam}`;
+				console.log(endTimeParam);
+
 				let requestBody = {
-					name: this.currentForm.get('name').value,
-					description: this.currentForm.get('description').value,
-					active: this.currentForm.get('status').value
+					courseId: this.currentForm.get('courseId').value,
+					venueId: this.currentForm.get('venueId').value,
+					registeredParticipants: this.currentForm.get('registeredParticipants').value,
+					status: this.currentForm.get('status').value,
+					startDate: this.currentForm.get('startDate').value,
+					endDate: this.currentForm.get('endDate').value,
+					startTime: startTimeParam,
+					endTime: endTimeParam,
+					courseFee: this.currentForm.get('courseFee').value,
+					numberOfDays: this.currentForm.get('numberOfDays').value
 				};
 
 				let resourceId = this.currentForm.get('id').value;
 
-				this.httpClient
-						.put(`${this.ENDPOINT}/${resourceId}`, requestBody, { observe: 'response' })
-						.subscribe(
-							(data) => {
-								if(data.status == 200) {
-									this.toastr.success(`${this.title} successfully updated.`, 'System', { timeOut: 3000 });
-								}
-							},
-							(error) => {
-								if(error.status === 409) {
-									this.toastr.error('Email or mobile number already exist.', 'Conlict', { timeOut: 3000 });
-								} else if(error.status === 400) {
-									this.toastr.error('Invalid request received by the server.', 'Invalid Request', { timeOut: 3000 });
-								}	else {
-									this.toastr.error('Internal server error.', 'System', { timeOut: 3000 });
-								}
+				this.checkFacilitatorScheduleConflict(
+					resourceId,
+					this.currentForm.get('startDate').value,
+					this.currentForm.get('endDate').value
+				).then(e => {
+					if(e['items'].length > 0) {
+
+						let innerHtml = ""
+						for (var item of e['items']) {
+							if(item.courseSchedule.startDate == item.courseSchedule.endDate) {
+								innerHtml += `${item.facilitator.firstName} ${item.facilitator.lastName} - ${item.courseSchedule.startDate}<br/>`;
+							} else {
+								innerHtml += `${item.facilitator.firstName} ${item.facilitator.lastName} - ${item.courseSchedule.startDate} to ${item.courseSchedule.endDate}<br/>`;
 							}
-						);
+
+						}
+						swal.fire({
+							html: innerHtml,
+							type: "error",
+							title: "Facilitator schedule conflict!",
+							showCancelButton: false,
+							confirmButtonColor: '#3085d6',
+							cancelButtonColor: '#d33',
+							confirmButtonText: 'OK',
+							allowOutsideClick: false
+						});
+					} else {
+						this.httpClient
+							.put(`${this.ENDPOINT}/${resourceId}`, requestBody, { observe: 'response' })
+							.subscribe(
+								(data) => {
+									if(data.status == 200) {
+										this.toastr.success(`${this.title} successfully updated.`, 'System', { timeOut: 3000 });
+										this.eventService.emitter.emit({eventType: 'course-schedule-updated'});
+									}
+								},
+								(error) => {
+									if(error.status === 409) {
+										let errorMessage =  `There is already an existing schedule. <br/> ${this.f.startDate.value} - ${this.f.endDate.value}`;
+										swal.fire({
+											html: errorMessage,
+											type: "error",
+											title: "Schedule Conflict",
+											showCancelButton: false,
+											confirmButtonColor: '#3085d6',
+											cancelButtonColor: '#d33',
+											confirmButtonText: 'OK',
+											allowOutsideClick: false
+										});
+									} else if(error.status === 400) {
+										this.toastr.error('Invalid request received by the server.', 'Invalid Request', { timeOut: 3000 });
+									} else {
+										this.toastr.error('Internal server error.', 'System', { timeOut: 3000 });
+									}
+								}
+							);
+					}
+				}).catch(error => {
+					this.toastr.error('Internal server error.', 'System', { timeOut: 3000 });
+				});
+
+
 			}
 
 		});
+	}
+
+	checkFacilitatorScheduleConflict(courseScheduleId:string, startDate:string, endDate: string) {
+		let promise = new Promise((resolve, reject) => {
+			let apiURL = `${this.API_HOST}/course-schedule-facilitators/actions/find-facilitator-conflict`;
+			let requestBody = {
+				courseScheduleId,
+				startDate,
+				endDate
+			}
+			this.httpClient.post(apiURL, requestBody)
+			.toPromise()
+			.then(
+				res => {
+					resolve(res);
+				},
+				msg => {
+					reject(msg);
+				}
+			);
+		});
+
+		return promise;
 	}
 
 	showEditForm() {
@@ -406,14 +475,6 @@ export class ScheduleDetailComponent {
 			hasError = false;
 		}
 
-		if (this.formControlInvalid(this.f.facilitatorId)) {
-			this.isFacilitatorIdInvalid = true;
-			hasError = true;
-		} else {
-			this.isFacilitatorIdInvalid = false;
-			hasError = false;
-		}
-
         if (this.currentForm.invalid || hasError) {
             return;
         }
@@ -429,30 +490,25 @@ export class ScheduleDetailComponent {
 		}).then(e => {
 			if(e.value) {
 
-
 				let startTimeHourParam = `0${this.f.startTime.value.hour}`.slice(-2);
 				let startTimeMinuteParam = `0${this.f.startTime.value.minute}`.slice(-2);
 				let startTimeParam = `${startTimeHourParam}:${startTimeMinuteParam}`;
-				console.log(startTimeParam);
 
 				let endTimeHourParam = `0${this.f.endTime.value.hour}`.slice(-2);
 				let endTimeMinuteParam = `0${this.f.endTime.value.minute}`.slice(-2);
 				let endTimeParam = `${endTimeHourParam}:${endTimeMinuteParam}`;
-				console.log(endTimeParam);
 
 				let requestBody = {
 					courseId: this.currentForm.get('courseId').value,
 					venueId: this.currentForm.get('venueId').value,
-					facilitatorId: this.currentForm.get('facilitatorId').value,
 					registeredParticipants: this.currentForm.get('registeredParticipants').value,
-					status: this.currentForm.get('status').value,
+					status: 'SCHEDULE_WAITING',
 					startDate: this.currentForm.get('startDate').value,
 					endDate: this.currentForm.get('endDate').value,
 					startTime: startTimeParam,
 					endTime: endTimeParam,
 					courseFee: this.currentForm.get('courseFee').value,
 					numberOfDays: this.currentForm.get('numberOfDays').value,
-					facilitatorDailyRate: this.currentForm.get('facilitatorDailyRate').value
 				};
 
 				this.httpClient
@@ -462,18 +518,15 @@ export class ScheduleDetailComponent {
 								if(data.status == 201) {
 									this.genericError = false;
 
-									this.toastr.success(`New facilitator successfully saved.`, 'Success', { timeOut: 3000 });
+									this.toastr.success(`New schedule successfully saved.`, 'Success', { timeOut: 3000 });
 									this.router.navigate([this.LANDING_PAGE]);
 								}
 							},
 							(error) => {
 								if(error.status === 409) {
-									let errorMessage =  (error.error.status === 'facilitator_conflict') ?
-										`Facilitator has an existing schedule` :
-										`There is already an existing schedule. ${this.f.startDate.value} - ${this.f.endDate.value}`;
-									console.log(error);
+									let errorMessage =  `There is already an existing schedule. <br/> ${this.f.startDate.value} - ${this.f.endDate.value}`;
 									swal.fire({
-										text: errorMessage,
+										html: errorMessage,
 										type: "error",
 										title: "Schedule Conflict",
 										showCancelButton: false,
@@ -510,18 +563,29 @@ export class ScheduleDetailComponent {
 		return (control.dirty || control.touched || this.submitted) && control.invalid && control.errors.required;
 	}
 
+	updateRevenueModel() {
+		if(!this.currentForm.invalid) {
+			this.revenueModel.grossRevenue = parseFloat(this.f.courseFee.value) * parseInt(this.f.registeredParticipants.value);
+			this.revenueModel.netRevenue = this.revenueModel.grossRevenue - this.revenueModel.scheduleCost;
+			this.revenueModel.profitMargin = ((this.revenueModel.netRevenue / this.revenueModel.grossRevenue) * 100);
+		}
+
+	}
+
 	public onCourseSelected(course: any) {
 		if (course) {
 			this.f.courseFee.setValue(course.courseFee);
 			this.f.numberOfDays.setValue(course.numberOfDays);
 			this.f.courseId.setValue(course.id);
 			this.isCourseIdInvalid = false;
+
 		} else {
 			this.isCourseIdInvalid = true;
 			this.f.courseId.setValue("");
 			this.f.numberOfDays.setValue('');
 			this.f.courseFee.setValue('');
 		}
+		this.updateRevenueModel();
   	}
 
 	public onVenueSelected(venue: any) {
@@ -534,26 +598,28 @@ export class ScheduleDetailComponent {
 		}
   	}
 
-	public onFacilitatorSelected(facilitator: any) {
-		console.log(facilitator);
+	/*public onFacilitatorSelected(facilitator: any) {
 		if (facilitator) {
 			this.f.facilitatorId.setValue(facilitator.id);
 			this.f.facilitatorDailyRate.setValue(facilitator.dailyRate);
 			this.isFacilitatorIdInvalid = false;
+			this.updateRevenueModel();
 		} else {
 			this.isFacilitatorIdInvalid = true;
 			this.f.facilitatorId.setValue("");
 			this.f.facilitatorDailyRate.setValue('');
 		}
-  	}
+  	}*/
 
 	onDateSelection(date: NgbDate) {
+		console.log(this.selectedStartDate, this.selectedEndDate);
 		if (!this.selectedStartDate && !this.selectedEndDate) {
 			this.selectedStartDate = date;
 			let month = `0${this.selectedStartDate.month}`.slice(-2);
 			let day = `0${this.selectedStartDate.day}`.slice(-2);
 			let year = `${this.selectedStartDate.year}`;
 			this.f.startDate.setValue(`${year}-${month}-${day}`);
+			this.f.endDate.setValue(`${year}-${month}-${day}`);
 		} else if (this.selectedStartDate && !this.selectedEndDate && date.after(this.selectedStartDate)) {
 			this.selectedEndDate = date;
 			let month = `0${this.selectedEndDate.month}`.slice(-2);
@@ -567,6 +633,7 @@ export class ScheduleDetailComponent {
 			let day = `0${this.selectedStartDate.day}`.slice(-2);
 			let year = `${this.selectedStartDate.year}`;
 			this.f.startDate.setValue(`${year}-${month}-${day}`);
+			this.f.endDate.setValue(`${year}-${month}-${day}`);
 		}
 
 		if(!this.f.startDate || !this.f.startDate.value ||  this.f.startDate.value == "") {
