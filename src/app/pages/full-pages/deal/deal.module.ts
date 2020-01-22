@@ -10,6 +10,7 @@ import { DealRoutingModule } from './deal-routing.module';
 import { CourseSelectModule } from '../../../components/course-select/course-select.module';
 import { ContactSelectModule } from '../../../components/contact-select/contact-select.module';
 import { InquirySelectModule } from '../../../components/inquiry-select/inquiry-select.module';
+import { UserProfileDetailModule } from '../../../components/user-profile-detail/user-profile-detail.module';
 
 @NgModule({
     imports: [
@@ -21,7 +22,8 @@ import { InquirySelectModule } from '../../../components/inquiry-select/inquiry-
         DealRoutingModule,
         CourseSelectModule,
         ContactSelectModule,
-        InquirySelectModule
+        InquirySelectModule,
+        UserProfileDetailModule
     ],
     exports: [],
     declarations: [

@@ -80,12 +80,13 @@ export class InquiryDetailComponent {
 		});
 	}
 
-	public onAccountManagerSelected(accountManagerId: any) {
-		if(accountManagerId) {
-			this.f.accountManager.setValue(accountManagerId);
+	public onAccountManagerSelected(accountManager: any) {
+		if(accountManager) {
+			this.f.accountManager.setValue(accountManager.id);
 			this.isAccountManagerIdInvalid = false;
 
 		} else {
+			this.f.accountManager.setValue('');
 			this.isAccountManagerIdInvalid = true;
 		}
   	}
@@ -163,7 +164,7 @@ export class InquiryDetailComponent {
 										this.createdBy = `${firstName} ${lastName}`;
 									},
 									(errorData) => {
-										this.toastr.error('Error has occurred.', 'System', { timeOut: 3000 });
+										this.toastr.error('Error has occurred.', 'Failed Request', { timeOut: 3000 });
 									}
 								);
 							}
@@ -176,7 +177,7 @@ export class InquiryDetailComponent {
 										this.modifiedBy = `${firstName} ${lastName}`;
 									},
 									(errorData) => {
-										this.toastr.error('Error has occurred.', 'System', { timeOut: 3000 });
+										this.toastr.error('Error has occurred.', 'Failed Request', { timeOut: 3000 });
 									}
 								);
 							}
@@ -189,7 +190,7 @@ export class InquiryDetailComponent {
 										this.accountManager = `${firstName} ${lastName}`;
 									},
 									(errorData) => {
-										this.toastr.error('Error has occurred.', 'System', { timeOut: 3000 });
+										this.toastr.error('Error has occurred.', 'Failed Request', { timeOut: 3000 });
 									}
 								);
 							}
@@ -201,7 +202,7 @@ export class InquiryDetailComponent {
 										this.courseName = `${name}`;
 									},
 									(errorData) => {
-										this.toastr.error('Error has occurred.', 'System', { timeOut: 3000 });
+										this.toastr.error('Error has occurred.', 'Failed Request', { timeOut: 3000 });
 									}
 								);
 							}
@@ -246,7 +247,7 @@ export class InquiryDetailComponent {
 
 						},
 						(error) => {
-							this.toastr.error('Error has occurred.', 'System', { timeOut: 3000 });
+							this.toastr.error('Error has occurred.', 'Failed Request', { timeOut: 3000 });
 						}
 					);
 				}
@@ -302,7 +303,8 @@ export class InquiryDetailComponent {
         }
 
 		swal.fire({
-			text: `Update ${this.title}?`,
+			title: 'Confirmation',
+			text: `Update ${this.title} details?`,
 			type: "info",
 			showCancelButton: true,
 			confirmButtonColor: '#3085d6',
@@ -346,11 +348,11 @@ export class InquiryDetailComponent {
 							},
 							(error) => {
 								if(error.status === 409) {
-									this.toastr.error('Email or mobile number already exist.', 'Conlict', { timeOut: 3000 });
+									this.toastr.error('Email or mobile number already exist.', 'Failed Request', { timeOut: 3000 });
 								} else if(error.status === 400) {
-									this.toastr.error('Invalid request received by the server.', 'Invalid Request', { timeOut: 3000 });
+									this.toastr.error('Invalid request received by the server.', 'Failed Request', { timeOut: 3000 });
 								}	else {
-									this.toastr.error('Internal server error.', 'System', { timeOut: 3000 });
+									this.toastr.error('Internal server error.', 'Failed Request', { timeOut: 3000 });
 								}
 							}
 						);
@@ -406,8 +408,9 @@ export class InquiryDetailComponent {
         }
 
 		swal.fire({
+			title: 'Confirmation',
 			text: `Save new ${this.title}?`,
-			type: "info",
+			type: "question",
 			showCancelButton: true,
 			confirmButtonColor: '#3085d6',
 			cancelButtonColor: '#d33',
@@ -451,11 +454,11 @@ export class InquiryDetailComponent {
 							},
 							(error) => {
 								if(error.status === 409) {
-									this.toastr.error('Email or mobile number already exist.', 'Conlict', { timeOut: 3000 });
+									this.toastr.error('Email or mobile number already exist.', 'Failed Request', { timeOut: 3000 });
 								} else if(error.status === 400) {
-									this.toastr.error('Invalid request received by the server.', 'Invalid Request', { timeOut: 3000 });
+									this.toastr.error('Invalid request received by the server.', 'Failed Request', { timeOut: 3000 });
 								}	else {
-									this.toastr.error('Internal server error.', 'System', { timeOut: 3000 });
+									this.toastr.error('Internal server error.', 'Failed Request', { timeOut: 3000 });
 								}
 							}
 						);

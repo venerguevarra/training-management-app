@@ -52,13 +52,13 @@ export class AccountManagerSelectComponent {
 
     onChange($event) {
         if($event) {
-            this.selectedIdEmitter.emit($event.value);
+            this.selectedIdEmitter.emit($event);
         }
     }
 
     onClear($event) {
         if($event) {
-            this.selectedIdEmitter.emit($event.value);
+            this.selectedIdEmitter.emit($event);
         } else {
             this.selectedIdEmitter.emit('');
         }

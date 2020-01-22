@@ -112,7 +112,7 @@ export class DealDetailComponent {
                       this.createdBy = `${firstName} ${lastName}`;
                     },
                     errorData => {
-                      this.toastr.error("Error has occurred.", "System", {
+                      this.toastr.error("Error has occurred.", "Failed Request", {
                         timeOut: 3000
                       });
                     }
@@ -129,7 +129,7 @@ export class DealDetailComponent {
                       this.modifiedBy = `${firstName} ${lastName}`;
                     },
                     errorData => {
-                      this.toastr.error("Error has occurred.", "System", {
+                      this.toastr.error("Error has occurred.", "Failed Request", {
                         timeOut: 3000
                       });
                     }
@@ -154,7 +154,7 @@ export class DealDetailComponent {
                       this.accountNameLabel = data["name"];
                     },
                     errorData => {
-                      this.toastr.error("Error has occurred.", "System", {
+                      this.toastr.error("Error has occurred.", "Failed Request", {
                         timeOut: 3000
                       });
                     }
@@ -173,7 +173,7 @@ export class DealDetailComponent {
                       this.contactLabel.email = `${data["email"]}`;
                     },
                     errorData => {
-                      this.toastr.error("Error has occurred.", "System", {
+                      this.toastr.error("Error has occurred.", "Failed Request", {
                         timeOut: 3000
                       });
                     }
@@ -188,7 +188,7 @@ export class DealDetailComponent {
                       this.courseLabel = `${data["name"]}`;
                     },
                     errorData => {
-                      this.toastr.error("Error has occurred.", "System", {
+                      this.toastr.error("Error has occurred.", "Failed Request", {
                         timeOut: 3000
                       });
                     }
@@ -230,7 +230,7 @@ export class DealDetailComponent {
               this.selectedCourse = this.currentModel["courseId"];
             },
             error => {
-              this.toastr.error("Error has occurred.", "System", {
+              this.toastr.error("Error has occurred.", "Failed Request", {
                 timeOut: 3000
               });
             }
@@ -275,7 +275,6 @@ export class DealDetailComponent {
   }
 
   public onContactSelected(contact: any) {
-    console.log(contact);
     if (contact) {
       this.f.contactId.setValue(contact.id);
       this.isContactIdInvalid = false;
@@ -342,7 +341,7 @@ export class DealDetailComponent {
 					if (data.status == 200) {
 					this.toastr.success(
 						`${this.accountName} deal stage successfully updated.`,
-						"System",
+						"Failed Request",
 						{ timeOut: 3000 }
 					);
 					}
@@ -350,7 +349,7 @@ export class DealDetailComponent {
 				error => {
 					this.toastr.error(
 						`Failed to update ${this.accountName} deal stage`,
-						"Conlict",
+						"Failed Request",
 						{ timeOut: 3000 }
 					);
 				}
@@ -443,17 +442,17 @@ export class DealDetailComponent {
                 if (error.status === 409) {
                   this.toastr.error(
                     "Email or mobile number already exist.",
-                    "Conlict",
+                    "Failed Request",
                     { timeOut: 3000 }
                   );
                 } else if (error.status === 400) {
                   this.toastr.error(
                     "Invalid request received by the server.",
-                    "Invalid Request",
+                    "Failed Request",
                     { timeOut: 3000 }
                   );
                 } else {
-                  this.toastr.error("Internal server error.", "System", {
+                  this.toastr.error("Internal server error.", "Failed Request", {
                     timeOut: 3000
                   });
                 }
@@ -549,17 +548,17 @@ export class DealDetailComponent {
               },
               error => {
                 if (error.status === 409) {
-                  this.toastr.error("Conflict occured.", "Conlict", {
+                  this.toastr.error("Conflict occured.", "Failed Request", {
                     timeOut: 3000
                   });
                 } else if (error.status === 400) {
                   this.toastr.error(
                     "Invalid request received by the server.",
-                    "Invalid Request",
+                    "Failed Request",
                     { timeOut: 3000 }
                   );
                 } else {
-                  this.toastr.error("Internal server error.", "System", {
+                  this.toastr.error("Internal server error.", "Failed Request", {
                     timeOut: 3000
                   });
                 }

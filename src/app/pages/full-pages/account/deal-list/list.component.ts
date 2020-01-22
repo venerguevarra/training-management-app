@@ -217,7 +217,7 @@ export class DealListComponent {
       this.criteria = this.getSearchFormCriteria();
 
       if (this.criteria.length === 0) {
-        this.toastr.error("Please provide search criteria", "Search", {
+        this.toastr.error("Please provide search criteria", "Failed Request", {
           timeOut: 3000
         });
       }

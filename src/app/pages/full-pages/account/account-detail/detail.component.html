@@ -118,12 +118,10 @@
       </div>
       <!--Collapsible Accordion Ends-->
     </div>
-    <app-contact-list [accountId]="modelId" [accountName]="accountName" [previousUrl]="previousUrl"></app-contact-list>
-    <app-deal-list [accountId]="modelId" [accountName]="accountName" [previousUrl]="previousUrl"></app-deal-list>
-  </div>
+</div>
 
-  <!-- START: ACCOUNT NEW FORM or EDIT FORM-->
-  <div *ngIf="newForm == true || editForm == true" class="card">
+<!-- START: ACCOUNT NEW FORM or EDIT FORM-->
+<div *ngIf="newForm == true || editForm == true" class="card">
     <div class="card-header" style="background-color: #ECEFF1;">
       <h3 *ngIf="editForm">{{f.name.value}} {{title}} Details</h3>
       <h3 *ngIf="newForm">New {{title}}</h3>
@@ -260,5 +258,8 @@
         <!-- new form and edit form end -->
       </div>
     </div>
-  </div>
-  <!-- END: ACCOUNT NEW FORM or EDIT FORM -->
+</div>
+<!-- END: ACCOUNT NEW FORM or EDIT FORM -->
+
+<app-contact-list [accountId]="modelId" [accountName]="accountName" [previousUrl]="previousUrl"></app-contact-list>
+<app-deal-list [accountId]="modelId" [accountName]="accountName" [previousUrl]="previousUrl"></app-deal-list>

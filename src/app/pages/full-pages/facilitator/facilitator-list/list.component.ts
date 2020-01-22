@@ -50,7 +50,7 @@ export class FacilitatorListComponent {
 		this.searchForm = this.formBuilder.group({
 			name: [''],
 			status: ['ALL'],
-			createdDate: ['']			
+			createdDate: ['']
 		});
 
 		this.criteria = [];
@@ -102,7 +102,7 @@ export class FacilitatorListComponent {
 		this.searchForm = this.formBuilder.group({
 			name: [''],
 			status: ['ALL'],
-			createdDate: ['']			
+			createdDate: ['']
 		});
 		this.createdDate = '';
 		this.criteria = [];
@@ -164,7 +164,7 @@ export class FacilitatorListComponent {
 					logical: 'OR'
 				});
 			}
-			
+
 			if(this.searchForm.get('status').value == 'ALL' || this.searchForm.get('status').value == 'INACTIVE') {
 				this.criteria.push({
 					name: 'active',
@@ -181,16 +181,16 @@ export class FacilitatorListComponent {
 
 	submitSearchForm(params) {
 		this.page = 0;
-		
+
 		this.criteria = this.getSearchFormCriteria();
 		let jsonBody = {
 			criteria: this.criteria,
 			page: '0',
 			size: this.pageSize.toString()
 		}
-		
+
 		if(this.criteria.length === 0) {
-			this.toastr.error('Please provide search criteria', 'Search', { timeOut: 3000 });
+			this.toastr.error('Please provide search criteria', 'Failed Request', { timeOut: 3000 });
 		}
 
 		if(this.criteria.length > 0) {

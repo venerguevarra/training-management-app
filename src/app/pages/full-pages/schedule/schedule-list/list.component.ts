@@ -171,7 +171,7 @@ export class ScheduleListComponent {
 		}
 
 		if(this.criteria.length === 0) {
-			this.toastr.error('Please provide search criteria', 'Search', { timeOut: 3000 });
+			this.toastr.error('Please provide search criteria', 'Failed Request', { timeOut: 3000 });
 		}
 
 		if(this.criteria.length > 0) {

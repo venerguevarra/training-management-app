@@ -45,10 +45,10 @@ time = {hour: 13, minute: 30};
   ];
 
   eventClicked($event) {
-    console.log($event.event.extendedProps.user.id);
+
   }
 
   handleDateClick($event) {
-    console.log($event);
+
   }
 }

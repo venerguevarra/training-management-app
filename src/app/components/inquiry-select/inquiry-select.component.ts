@@ -33,7 +33,6 @@ export class InquirySelectComponent {
     loading = false;
 
     onChange($event) {
-        console.log('change', $event);
         if($event) {
             this.selectedId = $event.id;
             this.selectedIdEmitter.emit($event);
@@ -41,7 +40,6 @@ export class InquirySelectComponent {
     }
 
     onClear($event) {
-        console.log('clear', $event);
         if($event) {
             this.selectedId = $event.id;
             this.selectedIdEmitter.emit($event);

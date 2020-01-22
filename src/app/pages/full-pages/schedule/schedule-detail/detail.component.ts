@@ -69,6 +69,8 @@ export class ScheduleDetailComponent {
 		scheduleCost: 0
 	}
 
+	registrationCount = 0;
+	actualRegistrationCount = 0;
 	constructor(
 		private httpClient: HttpClient,
         private stateService: StateService,
@@ -83,10 +85,15 @@ export class ScheduleDetailComponent {
 		this.initForm();
 
 		this.route.params.subscribe( params => {
-
 			if (params['id']) {
 				this.modelId = params.id;
 				this.newForm = this.modelId == -1;
+
+				this.eventService.emitter.subscribe((data) => {
+					if(data.eventType === 'course-schedule-costings-updated') {
+						this.calculateRevenue(this.modelId);
+					}
+				});
 
 				if(!this.newForm) {
 					 this.route.queryParams.subscribe(params => {
@@ -112,11 +119,10 @@ export class ScheduleDetailComponent {
 										this.createdBy = `${firstName} ${lastName}`;
 									},
 									(errorData) => {
-										this.toastr.error('Error has occurred.', 'System', { timeOut: 3000 });
+										this.toastr.error('Error has occurred.', 'Failed Request', { timeOut: 3000 });
 									}
 								);
 							}
-
 
 							if(this.currentModel.modifiedBy != null) {
 								this.httpClient.get(`${this.USERS_ENDPOINT}/${this.currentModel.modifiedBy}`).subscribe(
@@ -126,7 +132,7 @@ export class ScheduleDetailComponent {
 										this.modifiedBy = `${firstName} ${lastName}`;
 									},
 									(errorData) => {
-										this.toastr.error('Error has occurred.', 'System', { timeOut: 3000 });
+										this.toastr.error('Error has occurred.', 'Failed Request', { timeOut: 3000 });
 									}
 								);
 							}
@@ -137,6 +143,7 @@ export class ScheduleDetailComponent {
 								courseId: [this.currentModel.courseId, [Validators.required]],
 								venueId: [this.currentModel.venueId],
 								registeredParticipants: [this.currentModel.registeredParticipants],
+								actualRegisteredParticipants: [this.currentModel.actualRegisteredParticipants],
 								startDate: [this.currentModel.startDate],
 								endDate: [this.currentModel.endDate],
 								startTime: [this.currentModel.startTime],
@@ -210,12 +217,42 @@ export class ScheduleDetailComponent {
 							this.selectedVenue = this.currentModel.venueId;
 						},
 						(error) => {
-							this.toastr.error('Error has occurred.', 'System', { timeOut: 3000 });
+							this.toastr.error('Error has occurred.', 'Failed Request', { timeOut: 3000 });
 						}
 					);
 				}
 			}
 		});
+
+
+	}
+
+	calculateRevenue(id: string): Promise<any> {
+		let promise = new Promise((resolve, reject) => {
+		const ACTIVE_ENDPOINT: string = `${this.ENDPOINT}/actions/calculate-revenue/${id}`;
+
+		this.httpClient
+			.post<any[]>(ACTIVE_ENDPOINT, {})
+			.toPromise()
+			.then(
+				res => {
+					this.revenueModel.scheduleCost = res['scheduleCost'];
+					this.revenueModel.netRevenue = res['netRevenue'];
+					this.revenueModel.actualNetRevenue = res['actualNetRevenue'];
+					this.revenueModel.grossRevenue = res['grossRevenue'];
+					this.revenueModel.actualGrossRevenue = res['actualGrossRevenue'];
+					this.revenueModel.profitMargin = res['profitMargin'];
+					this.revenueModel.actualProfitMargin = res['actualProfitMargin'];
+					resolve(res);
+				},
+				msg => {
+					this.toastr.error('Failed to fetch revenue information.', 'Invalid Request', { timeOut: 3000 });
+					reject(msg);
+				}
+			);
+		});
+
+		return promise;
 	}
 
 	formatTime(input) {
@@ -228,6 +265,8 @@ export class ScheduleDetailComponent {
 			courseId: ['', [Validators.required]],
 			venueId: ['', [Validators.required]],
 			registeredParticipants: ['', [Validators.required]],
+			actualRegisteredParticipants: [''],
+			scheduleCost: [''],
 			status: ['SCHEDULE_WAITING', [Validators.required]],
 			startDate: ['', [Validators.required]],
 			endDate: ['', [Validators.required]],
@@ -297,24 +336,23 @@ export class ScheduleDetailComponent {
         }
 
 		swal.fire({
-			text: `Update ${this.title}?`,
-			type: "info",
+			title: "Confirm Schedule Update",
+			text: `Do you wish to continue?`,
+			type: "question",
 			showCancelButton: true,
 			confirmButtonColor: '#3085d6',
 			cancelButtonColor: '#d33',
-			confirmButtonText: 'Save',
+			confirmButtonText: 'Update',
 			allowOutsideClick: false
 		}).then(e => {
 			if(e.value) {
 				let startTimeHourParam = `0${this.f.startTime.value.hour}`.slice(-2);
 				let startTimeMinuteParam = `0${this.f.startTime.value.minute}`.slice(-2);
 				let startTimeParam = `${startTimeHourParam}:${startTimeMinuteParam}`;
-				console.log(startTimeParam);
 
 				let endTimeHourParam = `0${this.f.endTime.value.hour}`.slice(-2);
 				let endTimeMinuteParam = `0${this.f.endTime.value.minute}`.slice(-2);
 				let endTimeParam = `${endTimeHourParam}:${endTimeMinuteParam}`;
-				console.log(endTimeParam);
 
 				let requestBody = {
 					courseId: this.currentForm.get('courseId').value,
@@ -383,13 +421,13 @@ export class ScheduleDetailComponent {
 									} else if(error.status === 400) {
 										this.toastr.error('Invalid request received by the server.', 'Invalid Request', { timeOut: 3000 });
 									} else {
-										this.toastr.error('Internal server error.', 'System', { timeOut: 3000 });
+										this.toastr.error('Internal server error.', 'Failed Request', { timeOut: 3000 });
 									}
 								}
 							);
 					}
 				}).catch(error => {
-					this.toastr.error('Internal server error.', 'System', { timeOut: 3000 });
+					this.toastr.error('Internal server error.', 'Failed Request', { timeOut: 3000 });
 				});
 
 
@@ -536,9 +574,9 @@ export class ScheduleDetailComponent {
 										allowOutsideClick: false
 									});
 								} else if(error.status === 400) {
-									this.toastr.error('Invalid request received by the server.', 'Invalid Request', { timeOut: 3000 });
+									this.toastr.error('Invalid request received by the server.', 'Failed Request', { timeOut: 3000 });
 								} else {
-									this.toastr.error('Internal server error.', 'System', { timeOut: 3000 });
+									this.toastr.error('Internal server error.', 'Failed Request', { timeOut: 3000 });
 								}
 							}
 						);
@@ -612,7 +650,6 @@ export class ScheduleDetailComponent {
   	}*/
 
 	onDateSelection(date: NgbDate) {
-		console.log(this.selectedStartDate, this.selectedEndDate);
 		if (!this.selectedStartDate && !this.selectedEndDate) {
 			this.selectedStartDate = date;
 			let month = `0${this.selectedStartDate.month}`.slice(-2);

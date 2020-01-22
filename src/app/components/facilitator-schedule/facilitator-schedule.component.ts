@@ -57,12 +57,6 @@ export class FacilitatorScheduleComponent {
     ) {
 		this.facilitatorScheduleForm = this.createFacilitatorScheduleFormGroup();
 
-		const ACTIVE_ENDPOINT: string = `${this.API_HOST}/course-schedule-facilitators/actions/facilitator-schedule/${this.courseScheduleId}`;
-
-		this.httpClient.get<any[]>(ACTIVE_ENDPOINT).subscribe(data => {
-			this.assignedFacilitators = data['items'];
-		});
-
 		this.eventService.emitter.subscribe((data) => {
 			if(data.eventType === 'course-schedule-updated') {
 				this.updateFacilitatorScheduleTable();
@@ -103,7 +97,6 @@ export class FacilitatorScheduleComponent {
 			this.selectedFacilitatorObject = null;
 		}
   	}
-
 
 	createFacilitatorScheduleFormGroup(): FormGroup {
 		return this.formBuilder.group({
@@ -150,10 +143,15 @@ export class FacilitatorScheduleComponent {
 
         	this.httpClient.get<any[]>(ACTIVE_ENDPOINT).subscribe(data => {
 				this.assignedFacilitators = data['items'];
-				console.log(data);
 			});;
         }
     }
+
+	private sendCostingsUpdatedEvent() : void {
+		this.eventService.emitter.emit({
+			eventType: 'course-schedule-costings-updated'
+		});
+	}
 
 	save() {
 		this.submitted = true;
@@ -200,6 +198,7 @@ export class FacilitatorScheduleComponent {
 								if(data.status == 201) {
 									this.toastr.success(`Facilitator successfully assigned.`, 'Success', { timeOut: 3000 });
 									this.refresh();
+									this.sendCostingsUpdatedEvent();
 
 									if(this.facilitatorScheduleForm.get('courseScheduleId').value) {
 										this.updateFacilitatorScheduleTable();
@@ -208,13 +207,18 @@ export class FacilitatorScheduleComponent {
 							},
 							(error) => {
 								if(error.status === 409) {
-									let errorMessage =  (error.error.status === 'facilitator_conflict') ?
-										`Facilitator has an existing schedule` :
-										`There is already an existing schedule. ${this.f.startDate.value} - ${this.f.endDate.value}`;
+									let errorMessage = '';
+
+									if(error.error.status === 'facilitator_conflict') {
+										errorMessage =  `There is already an existing schedule. <br/> ${this.f.startDate.value} - ${this.f.endDate.value}`;
+									} else if(error.error.status === 'facilitator_already_assigned') {
+										errorMessage =  `Facilitator already assigned to the current schedule:<br/> ${this.f.startDate.value} - ${this.f.endDate.value}`;
+									}
+
 									swal.fire({
-										text: errorMessage,
+										html: errorMessage,
 										type: "error",
-										title: "Schedule Conflict",
+										title: "Facilitator Schedule Conflict",
 										showCancelButton: false,
 										confirmButtonColor: '#3085d6',
 										cancelButtonColor: '#d33',
@@ -222,9 +226,9 @@ export class FacilitatorScheduleComponent {
 										allowOutsideClick: false
 									});
 								} else if(error.status === 400) {
-									this.toastr.error('Invalid request received by the server.', 'Invalid Request', { timeOut: 3000 });
+									this.toastr.error('Invalid request received by the server.', 'Failed Request', { timeOut: 3000 });
 								} else {
-									this.toastr.error('Internal server error.', 'System', { timeOut: 3000 });
+									this.toastr.error('Internal server error.', 'Failed Request', { timeOut: 3000 });
 								}
 							}
 						);
@@ -252,24 +256,50 @@ export class FacilitatorScheduleComponent {
 		this.eventService.emitter.emit({
 			eventType: 'refresh-facilitator-select'
 		});
+
+		this.facilitatorScheduleForm = this.createFacilitatorScheduleFormGroup();
+		this.f.courseScheduleId.setValue(this.courseScheduleId);
+		this.f.courseId.setValue(this.courseId);
 	}
 
 	formControlInvalid(control: any) {
 		return (control.value == "" || control.value == "undefined" || control == null);
 	}
 
-	removeFacilitator(facilitatorId: any) {
-		this.referenceDataService.deleteById('course-schedule-facilitators', facilitatorId).subscribe(e=> {
-			if(this.facilitatorScheduleForm.get('courseScheduleId').value) {
-				const ACTIVE_ENDPOINT: string = `${this.API_HOST}/course-schedule-facilitators/actions/facilitator-schedule/${this.facilitatorScheduleForm.get('courseScheduleId').value}`;
+	removeFacilitator(id: any, facilitatorId: any) {
+		this.referenceDataService.findById('facilitators', facilitatorId).then(e=>{
+			let fullName = `${e.firstName} ${e.lastName}`;
 
-				this.httpClient.get<any[]>(ACTIVE_ENDPOINT).subscribe(data => {
-					this.assignedFacilitators = data['items'];
-					console.log('DATA', data);
-				});;
-			}
-		})
+			swal.fire({
+				title: 'Confirmation',
+				text: `Remove ${fullName} from the current course schedule?`,
+				type: "question",
+				showCancelButton: true,
+				confirmButtonColor: '#3085d6',
+				cancelButtonColor: '#d33',
+				confirmButtonText: 'Remove',
+				allowOutsideClick: false
+			}).then(e => {
+				if(e.value) {
+					this.referenceDataService.deleteById('course-schedule-facilitators', id).subscribe(e => {
+						this.sendCostingsUpdatedEvent();
+						if(this.facilitatorScheduleForm.get('courseScheduleId').value) {
+							const ACTIVE_ENDPOINT: string = `${this.API_HOST}/course-schedule-facilitators/actions/facilitator-schedule/${this.facilitatorScheduleForm.get('courseScheduleId').value}`;
 
+							this.httpClient.get<any[]>(ACTIVE_ENDPOINT).subscribe(data => {
+								this.assignedFacilitators = data['items'];
+							}, error=>{
+								this.toastr.error('Failed to remove facilitator.', 'Failed Request', { timeOut: 3000 });
+							});
+						}
+					}, error => {
+						this.toastr.error('Failed to remove facilitator.', 'Failed Request', { timeOut: 3000 });
+					});
+				}
+		});
+		}).catch((err)=>{
+			this.toastr.error('Failed to remove facilitator.', 'Failed Request', { timeOut: 3000 });
+		});
 	}
 
 }

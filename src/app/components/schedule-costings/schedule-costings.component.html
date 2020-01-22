@@ -1,11 +1,7 @@
 <div class="row">
   <div class="col-md-12">
-
     <div class="card">
-
       <div class="card-content">
-
-
         <div class="px-3">
           <div class="card-header">
             <h4 class="card-title" id="basic-layout-form">Training Costs</h4>
@@ -14,23 +10,25 @@
             <!--Striped rows Light Starts-->
             <section id="striped-light">
               <div class="row text-left">
-
                 <div class="col-sm-12">
-                  <div class="card">
                     <div class="card-content">
-                      <div class="card-body">
+                      <div class="card-body" style="padding-top: 10px;">
+                        <div class="card black mr-1" style="background-color: #CFD8DC;">
+                          <div class="card-content">
+                            <div class="px-3 py-3">
+                              <div class="media">
+                                <div class="media-body black text-left">
+                                  <h3 class="mb-1 black" style="color: black;">{{getTotalCost() || 0 | currency: 'PHP '}} </h3>
+                                  <span>Total Professional Fee</span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                         <form class="form" [formGroup]="costingForm">
                           <input type="hidden" formControlName="courseScheduleId">
-
-
                           <div class="form-body">
                             <div class="row">
-                              <div class="col-md-3">
-                                <label for="facilitatorId">Cost</label>
-                                <app-cost-select (selectedIdEmitter)="onCostingSelected($event)" [isInvalid]="isCostingIdInvalid" [selectedCosting]="selectedCosting"></app-cost-select>
-                                <small *ngIf="isCostingIdInvalid" class="form-text text-muted danger">Cost required</small><br />
-                              </div>
-
                               <div class="col-md-2">
                                 <label for="rate">Amount</label>
                                 <input class="form-control" type="number" formControlName="amount" [ngClass]="{ 'is-invalid': isInvalid(f.amount)}" (blur)="calculateTotalAmount()">
@@ -41,7 +39,16 @@
 
                               <div class="col-md-2">
                                 <label for="professionalFee">Quantity</label>
-                                <input class="form-control" type="number" formControlName="multiplier" (blur)="calculateTotalAmount()">
+                                <input class="form-control" type="number" formControlName="multiplier" [ngClass]="{ 'is-invalid': isInvalid(f.multiplier)}" (blur)="calculateTotalAmount()">
+                                <small *ngIf="(f.multiplier.dirty || f.multiplier.touched || submitted) && f.multiplier.invalid && f.multiplier.errors.required" class="form-text text-muted danger">
+                                  Multiplier required
+                                </small>
+                              </div>
+
+                              <div class="col-md-3">
+                                <label for="facilitatorId">Cost</label>
+                                <app-cost-select (selectedIdEmitter)="onCostingSelected($event)" [isInvalid]="isCostingIdInvalid" [selectedCosting]="selectedCosting"></app-cost-select>
+                                <small *ngIf="isCostingIdInvalid" class="form-text text-muted danger">Cost required</small><br />
                               </div>
 
                               <div class="col-md-2">
@@ -66,22 +73,36 @@
                           </div>
                         </form>
 
-                        <div class="card black mr-1" style="background-color: #CFD8DC;">
-                          <div class="card-content">
-                            <div class="px-3 py-3">
-                              <div class="media">
-                                <div class="media-body black text-left">
-                                  <h3 class="mb-1 black" style="color: black;">{{ 0 | currency: 'PHP '}} </h3>
-                                  <span>Total Professional Fee</span>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-
+                        <table class="table table-striped">
+                          <thead>
+                            <tr>
+                              <th>#</th>
+                              <th>Cost ID</th>
+                              <th>Amount</th>
+                              <th>Multiplier</th>
+                              <th>Total Amount</th>
+                              <th>Comment</th>
+                              <th>Action</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr *ngFor="let item of costingsData; index as i">
+                              <th scope="row">{{i + 1}}</th>
+                              <td><app-cost-detail [id]="item.costId"></app-cost-detail></td>
+                              <td>{{item.amount || 0 | currency: 'PHP '}}</td>
+                              <td>{{item.multiplier}}</td>
+                              <td>{{item.totalAmount || 0 | currency: 'PHP '}}</td>
+                              <td>{{item.comment}}</td>
+                              <td>
+                                <button type="button" class="btn btn-raised btn-raised btn-danger mr-1" (click)="removeCosting(item.id, item.costId)">
+                                  <i class="ft-x"></i> Remove
+                                </button>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
                     </div>
-                  </div>
                 </div>
               </div>
             </section>

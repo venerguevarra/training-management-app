@@ -7,6 +7,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 
 import { SchedulingCostingsComponent }  from './schedule-costings.component';
 import { CostSelectModule } from '../cost-select/cost-select.module';
+import { CostDetailModule } from '../cost-detail/cost-detail.module';
 @NgModule({
     imports: [
         CommonModule,
@@ -15,7 +16,8 @@ import { CostSelectModule } from '../cost-select/cost-select.module';
         ReactiveFormsModule,
         NgxDatatableModule,
         NgSelectModule,
-        CostSelectModule
+        CostSelectModule,
+        CostDetailModule
     ],
     exports: [
         SchedulingCostingsComponent

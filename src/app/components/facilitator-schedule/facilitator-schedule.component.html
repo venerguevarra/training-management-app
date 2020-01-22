@@ -1,6 +1,5 @@
 <div class="row">
   <div class="col-md-12">
-
     <div class="card">
       <div class="card-content">
         <div class="px-3">
@@ -8,15 +7,26 @@
             <h4 class="card-title" id="basic-layout-form">Facilitators</h4>
           </div>
           <div>
-            <!--Striped rows Light Starts-->
             <section id="striped-light">
               <div class="row text-left">
-
                 <div class="col-sm-12">
-                  <div class="card">
                     <div class="card-content">
-                      <div class="card-body">
+                      <div class="card-body" style="padding-top: 10px;">
+                        <div class="card black mr-1" style="background-color: #CFD8DC;">
+                          <div class="card-content">
+                            <div class="px-3 py-3">
+                              <div class="media">
+                                <div class="media-body black text-left">
+                                  <h3 class="mb-1 black" style="color: black;">{{getFacilitatorCost() || 0 | currency: 'PHP '}} </h3>
+                                  <span>Total Professional Fee</span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
                         <form class="form" [formGroup]="facilitatorScheduleForm">
+
                           <input type="hidden" formControlName="facilitatorId">
                           <input type="hidden" formControlName="courseScheduleId">
                           <input type="hidden" formControlName="courseId">
@@ -63,18 +73,6 @@
                           </div>
                         </form>
 
-                        <div class="card black mr-1" style="background-color: #CFD8DC;">
-                          <div class="card-content">
-                            <div class="px-3 py-3">
-                              <div class="media">
-                                <div class="media-body black text-left">
-                                  <h3 class="mb-1 black" style="color: black;">{{getFacilitatorCost() || 0 | currency: 'PHP '}} </h3>
-                                  <span>Total Professional Fee</span>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
                         <table class="table table-striped">
                           <thead>
                             <tr>
@@ -90,11 +88,11 @@
                             <tr *ngFor="let item of assignedFacilitators; index as i">
                               <th scope="row">{{i + 1}}</th>
                               <td><app-facilitator-detail [id]="item.facilitatorId" [showEmail]="true" [showMobileNumber]="true"></app-facilitator-detail></td>
-                              <td>{{item.rate}}</td>
+                              <td>{{item.rate || 0 | currency: 'PHP '}}</td>
                               <td>{{item.numberOfDays}}</td>
-                              <td>{{item.totalProfessionalFee}}</td>
+                              <td>{{item.totalProfessionalFee || 0 | currency: 'PHP '}}</td>
                               <td>
-                                <button type="button" class="btn btn-raised btn-raised btn-danger mr-1" (click)="removeFacilitator(item.id)">
+                                <button type="button" class="btn btn-raised btn-raised btn-danger mr-1" (click)="removeFacilitator(item.id, item.facilitatorId)">
                                   <i class="ft-x"></i> Remove
                                 </button>
                               </td>
@@ -103,11 +101,9 @@
                         </table>
                       </div>
                     </div>
-                  </div>
                 </div>
               </div>
             </section>
-            <!--Striped rows Light Ends-->
           </div>
         </div>
       </div>

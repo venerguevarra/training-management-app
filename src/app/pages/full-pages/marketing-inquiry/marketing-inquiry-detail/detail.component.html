@@ -1,3 +1,5 @@
+
+
 <div class="card">
 
   <div class="card-header" style="background-color: #ECEFF1;">
@@ -6,15 +8,15 @@
   </div>
 
   <div class="card-body">
-    <div class="row text-left justify-content-md-center">
+    <div class="row justify-content-md-center">
       <!-- view form start -->
       <div *ngIf="newForm == false && viewForm == true" class="col-md-6">
         <form class="form form-horizontal striped-rows">
         <br/>
         <div class="form-body">
             <div class="form-group row">
-              <label class="col-md-3 label-control" for="name">First Name</label>
-              <div class="col-md-9">
+              <label class="col-md-6 label-control" for="name">First Name</label>
+              <div class="col-md-6">
                 {{f.firstName.value}}
               </div>
             </div>

@@ -29,7 +29,7 @@
               <div class="form-group row">
                 <label class="col-md-4 label-control" for="name">Account Manager</label>
                 <div class="col-md-8">
-                  {{f.accountManager.value}}
+                  <app-user-profile-detail [id]="f.accountManager.value"></app-user-profile-detail>
                 </div>
               </div>
             </div>
@@ -342,14 +342,6 @@
                         required</small>
                     </div>
                   </div>
-                  <!--
-                  <div class="form-group row">
-                    <label class="col-md-3 label-control" for="name">Inquiry</label>
-                    <div class="col-md-9">
-                      <app-inquiry-select [accountManager]="f.accountManager.value" (selectedIdEmitter)="onInquirySelected($event)" [selectedInquiry]="selectedInquiry"></app-inquiry-select>
-                    </div>
-                  </div>
-                  -->
 
                   <div *ngIf="editForm" class="form-group row">
                     <label class="col-md-5 label-control" for="status">Active <span class="px-required">*</span></label>

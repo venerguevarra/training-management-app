@@ -166,7 +166,7 @@ export class MarketingInquiryDetailComponent {
 										this.createdBy = `${firstName} ${lastName}`;
 									},
 									(errorData) => {
-										this.toastr.error('Error has occurred.', 'System', { timeOut: 3000 });
+										this.toastr.error('Error has occurred.', 'Failed Request', { timeOut: 3000 });
 									}
 								);
 							}
@@ -179,7 +179,7 @@ export class MarketingInquiryDetailComponent {
 										this.modifiedBy = `${firstName} ${lastName}`;
 									},
 									(errorData) => {
-										this.toastr.error('Error has occurred.', 'System', { timeOut: 3000 });
+										this.toastr.error('Error has occurred.', 'Failed Request', { timeOut: 3000 });
 									}
 								);
 							}
@@ -192,7 +192,7 @@ export class MarketingInquiryDetailComponent {
 										this.accountManager = `${firstName} ${lastName}`;
 									},
 									(errorData) => {
-										this.toastr.error('Error has occurred.', 'System', { timeOut: 3000 });
+										this.toastr.error('Error has occurred.', 'Failed Request', { timeOut: 3000 });
 									}
 								);
 							}
@@ -204,7 +204,7 @@ export class MarketingInquiryDetailComponent {
 										this.courseName = `${name}`;
 									},
 									(errorData) => {
-										this.toastr.error('Error has occurred.', 'System', { timeOut: 3000 });
+										this.toastr.error('Error has occurred.', 'Failed Request', { timeOut: 3000 });
 									}
 								);
 							}
@@ -249,7 +249,7 @@ export class MarketingInquiryDetailComponent {
 
 						},
 						(error) => {
-							this.toastr.error('Error has occurred.', 'System', { timeOut: 3000 });
+							this.toastr.error('Error has occurred.', 'Failed Request', { timeOut: 3000 });
 						}
 					);
 				}
@@ -349,11 +349,11 @@ export class MarketingInquiryDetailComponent {
 							},
 							(error) => {
 								if(error.status === 409) {
-									this.toastr.error('Email or mobile number already exist.', 'Conlict', { timeOut: 3000 });
+									this.toastr.error('Email or mobile number already exist.', 'Failed Request', { timeOut: 3000 });
 								} else if(error.status === 400) {
-									this.toastr.error('Invalid request received by the server.', 'Invalid Request', { timeOut: 3000 });
+									this.toastr.error('Invalid request received by the server.', 'Failed Request', { timeOut: 3000 });
 								}	else {
-									this.toastr.error('Internal server error.', 'System', { timeOut: 3000 });
+									this.toastr.error('Internal server error.', 'Failed Request', { timeOut: 3000 });
 								}
 							}
 						);
@@ -454,11 +454,11 @@ export class MarketingInquiryDetailComponent {
 							},
 							(error) => {
 								if(error.status === 409) {
-									this.toastr.error('Email or mobile number already exist.', 'Conlict', { timeOut: 3000 });
+									this.toastr.error('Email or mobile number already exist.', 'Failed Request', { timeOut: 3000 });
 								} else if(error.status === 400) {
-									this.toastr.error('Invalid request received by the server.', 'Invalid Request', { timeOut: 3000 });
+									this.toastr.error('Invalid request received by the server.', 'Failed Request', { timeOut: 3000 });
 								}	else {
-									this.toastr.error('Internal server error.', 'System', { timeOut: 3000 });
+									this.toastr.error('Internal server error.', 'Failed Request', { timeOut: 3000 });
 								}
 							}
 						);

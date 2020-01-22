@@ -29,6 +29,7 @@ export class SchedulingCostingsComponent {
 	submitted: boolean = false;
 
 	selectedCosting;
+	selectedCostingObject;
 	isCostingIdInvalid: boolean = false;
 
 	constructor(
@@ -41,14 +42,19 @@ export class SchedulingCostingsComponent {
 		private toastr: ToastrService
     ) {
 		this.costingForm = this.createFormGroup();
-		this.fetchCostingsData();
 	}
 
-	fetchCostingsData() {
-		const GET_COSTINGS_ENDPOINT: string = `${this.API_HOST}/course-schedules/${this.courseScheduleId}/costings`;
+	fetchCostingsData(courseScheduleId: string) {
 
-		this.httpClient.get<any[]>(GET_COSTINGS_ENDPOINT).subscribe(data => {
-			this.costingsData = data['items'];
+		const GET_COSTINGS_ENDPOINT: string = `${this.API_HOST}/course-schedules/${courseScheduleId}/costings`;
+		this.httpClient.get<any[]>(`${this.API_HOST}/course-schedules/${courseScheduleId}/costings`).subscribe(data => {
+			this.costingsData = data['costings'];
+		});
+	}
+
+	private sendCostingsUpdatedEvent() : void {
+		this.eventService.emitter.emit({
+			eventType: 'course-schedule-costings-updated'
 		});
 	}
 
@@ -68,25 +74,24 @@ export class SchedulingCostingsComponent {
 			.subscribe(
 				(data) => {
 					if(data.status == 201) {
-						this.toastr.success(`Cost successfully assigned.`, 'Success', { timeOut: 3000 });
 						this.refresh();
-
-						if(this.costingForm.get('courseScheduleId').value) {
-							this.fetchCostingsData();
-						}
+						this.fetchCostingsData(this.courseScheduleId);
+						this.toastr.success(`Cost successfully added.`, 'Success', { timeOut: 3000 });
+						this.sendCostingsUpdatedEvent();
 					}
 				},
 				(error) => {
-					if(error.status === 400) {
-						this.toastr.error('Invalid request received by the server.', 'Invalid Request', { timeOut: 3000 });
+					if(error.status == 409) {
+						this.toastr.error('Cost already exist.', 'Failed request', { timeOut: 3000 });
+					} else if(error.status === 400) {
+						this.toastr.error('Invalid request received by the server.', 'Failed request', { timeOut: 3000 });
 					} else {
-						this.toastr.error('Internal server error.', 'System', { timeOut: 3000 });
+						this.toastr.error('Internal server error.', 'Failed request', { timeOut: 3000 });
 					}
 				}
 			);
 	}
 
-	selectedCostingObject;
 	onCostingSelected($event): void {
 		if ($event) {
 			this.selectedCostingObject = $event;
@@ -112,10 +117,10 @@ export class SchedulingCostingsComponent {
 	createFormGroup(): FormGroup {
 		return this.formBuilder.group({
 			costId: ['', Validators.required],
-			courseScheduleId: ['', Validators.required],
+			courseScheduleId: [this.courseScheduleId, Validators.required],
 			amount: ['', Validators.required],
 			totalAmount: [''],
-			multiplier: ['1'],
+			multiplier: ['', Validators.required],
 			comment: ['']
 		});
 	}
@@ -123,7 +128,7 @@ export class SchedulingCostingsComponent {
 	ngOnChanges(changes: SimpleChanges) {
 		if (changes['courseScheduleId'] && changes['courseScheduleId'].currentValue) {
 			this.f.courseScheduleId.setValue(changes['courseScheduleId'].currentValue);
-			this.fetchCostingsData();
+			this.fetchCostingsData(changes['courseScheduleId'].currentValue);
         }
     }
 
@@ -136,6 +141,8 @@ export class SchedulingCostingsComponent {
 		let inputMultiplier = 0;
 		if(this.costingForm.get("multiplier").value) {
 			inputMultiplier = parseFloat(this.costingForm.get("multiplier").value);
+		} else {
+			inputMultiplier = 1;
 		}
 
 		let totalAmount = inputAmount * inputMultiplier;
@@ -158,26 +165,36 @@ export class SchedulingCostingsComponent {
             return;
         }
 
-
-		swal.fire({
-			title: "Facilitator Assignment",
-			text: `Assign?`,
-			type: "info",
-			showCancelButton: true,
-			confirmButtonColor: '#3085d6',
-			cancelButtonColor: '#d33',
-			confirmButtonText: 'Save',
-			allowOutsideClick: false
-		}).then(e => {
-			if(e.value) {
-				this.postCostingsData();
-			}
+		this.referenceDataService.findById('costings', this.f.costId.value).then(e=>{
+			let name = `${e.name}`;
+			swal.fire({
+				title: "Costings",
+				text: `Add ${name} cost with the amount of ${this.f.totalAmount.value}?`,
+				type: "info",
+				showCancelButton: true,
+				confirmButtonColor: '#3085d6',
+				cancelButtonColor: '#d33',
+				confirmButtonText: 'Save',
+				allowOutsideClick: false
+			}).then(e => {
+				if(e.value) {
+					this.postCostingsData();
+				}
+			});
+		}).catch((err)=>{
+			this.toastr.error('Failed to add cost.', 'Failed Request', { timeOut: 3000 });
 		});
 	}
 
 	refresh() {
+		this.costingForm = this.createFormGroup();
+
 		this.submitted = false;
 		this.f.costId.setValue("");
+		this.f.amount.setValue("");
+		this.f.totalAmount.setValue("");
+		this.f.multiplier.setValue("");
+		this.f.comment.setValue("");
 		this.selectedCosting = null;
 		this.selectedCostingObject = null;
 		this.isCostingIdInvalid = false;
@@ -186,7 +203,42 @@ export class SchedulingCostingsComponent {
 		});
 	}
 
-	removeCosting(facilitatorId: any) {
+	removeCosting(courseCostId: any, costId: any) {
+		this.referenceDataService.findById('costings', costId).then(e=>{
+			let name = `${e.name}`;
+
+			swal.fire({
+				title: 'Confirmation',
+				text: `Remove ${name} cost from the current course schedule?`,
+				type: "question",
+				showCancelButton: true,
+				confirmButtonColor: '#3085d6',
+				cancelButtonColor: '#d33',
+				confirmButtonText: 'Remove',
+				allowOutsideClick: false
+			}).then(e => {
+				if(e.value) {
+					this.referenceDataService.deleteById('course-costings', courseCostId).subscribe(e=> {
+						this.refresh();
+						this.sendCostingsUpdatedEvent();
+						this.fetchCostingsData(this.courseScheduleId);
+					});
+				}
+		});
+		}).catch((err)=>{
+			this.toastr.error('Failed to remove cost.', 'Failed Request', { timeOut: 3000 });
+		});
 	}
+
+	getTotalCost(): number {
+		let sum = 0;
+		if(this.costingsData) {
+			for (let i = 0; i < this.costingsData.length; i++) {
+				sum += this.costingsData[i].totalAmount;
+			}
+		}
+
+		return sum;
+  	}
 
 }

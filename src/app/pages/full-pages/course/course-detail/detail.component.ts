@@ -82,7 +82,7 @@ export class CourseDetailComponent {
 										this.createdBy = `${firstName} ${lastName}`;
 									},
 									(errorData) => {
-										this.toastr.error('Error has occurred.', 'System', { timeOut: 3000 });
+										this.toastr.error('Error has occurred.', 'Failed Request', { timeOut: 3000 });
 									}
 								);
 							}
@@ -96,7 +96,7 @@ export class CourseDetailComponent {
 										this.modifiedBy = `${firstName} ${lastName}`;
 									},
 									(errorData) => {
-										this.toastr.error('Error has occurred.', 'System', { timeOut: 3000 });
+										this.toastr.error('Error has occurred.', 'Failed Request', { timeOut: 3000 });
 									}
 								);
 							}
@@ -117,7 +117,7 @@ export class CourseDetailComponent {
 							this.isRecordActive = this.currentModel.active === 'ACTIVE';
 						},
 						(error) => {
-							this.toastr.error('Error has occurred.', 'System', { timeOut: 3000 });
+							this.toastr.error('Error has occurred.', 'Failed Request', { timeOut: 3000 });
 						}
 					);
 				}
@@ -173,11 +173,11 @@ export class CourseDetailComponent {
 								this.genericError = false;
 
 								if(error.status === 409) {
-									this.toastr.error('Course name already exist.', 'Conlict', { timeOut: 3000 });
+									this.toastr.error('Course name already exist.', 'Failed Request', { timeOut: 3000 });
 								} else if(error.status === 400) {
-									this.toastr.error('Invalid request received by the server.', 'Invalid Request', { timeOut: 3000 });
+									this.toastr.error('Invalid request received by the server.', 'Failed Request', { timeOut: 3000 });
 								}	else {
-									this.toastr.error('Internal server error.', 'System', { timeOut: 3000 });
+									this.toastr.error('Internal server error.', 'Failed Request', { timeOut: 3000 });
 								}
 
 							}
@@ -230,11 +230,11 @@ export class CourseDetailComponent {
 							},
 							(error) => {
 								if(error.status === 409) {
-									this.toastr.error('Course name already exist.', 'Conlict', { timeOut: 3000 });
+									this.toastr.error('Course name already exist.', 'Failed Request', { timeOut: 3000 });
 								} else if(error.status === 400) {
-									this.toastr.error('Invalid request received by the server.', 'Invalid Request', { timeOut: 3000 });
+									this.toastr.error('Invalid request received by the server.', 'Failed Request', { timeOut: 3000 });
 								}	else {
-									this.toastr.error('Internal server error.', 'System', { timeOut: 3000 });
+									this.toastr.error('Internal server error.', 'Failed Request', { timeOut: 3000 });
 								}
 
 							}

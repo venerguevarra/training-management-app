@@ -270,10 +270,9 @@ export class MarketingInquiryListComponent {
 			page: '0',
 			size: this.pageSize.toString()
 		}
-		console.log(this.criteria);
 
 		if(this.criteria.length === 0) {
-			this.toastr.error('Please provide search criteria', 'Search', { timeOut: 3000 });
+			this.toastr.error('Please provide search criteria', 'Failed Request', { timeOut: 3000 });
 		}
 
 		if(this.criteria.length > 0) {
