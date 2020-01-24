@@ -1,3 +1,4 @@
+<ngx-spinner></ngx-spinner>
 <div>
   <div *ngIf="viewForm" class="card">
     <div class="card-header" style="background-color: #ECEFF1;">
@@ -203,6 +204,12 @@
                     </div>
                   </div>
                   <div class="form-group row">
+                    <label class="col-md-5 label-control" for="name">Account Name<span class="px-required">*</span></label>
+                    <div class="col-md-7">
+                      {{accountName}}
+                    </div>
+                  </div>
+                  <div class="form-group row">
                     <label class="col-md-5 label-control" for="name">Deal Name<span class="px-required">*</span></label>
                     <div class="col-md-7">
                       <input formControlName="name" type="text" id="name" class="form-control" name="name"
@@ -239,14 +246,13 @@
                   </div>
 
                   <div class="form-group row">
-                    <label class="col-md-5 label-control" for="name">Course Inquired<span
+                    <label class="col-md-5 label-control" for="name">Course<span
                         class="px-required">*</span></label>
                     <div class="col-md-7">
                       <input type="hidden" formControlName="courseId">
                       <app-course-select (selectedIdEmitter)="onCourseSelected($event)" [isInvalid]="isCourseIdInvalid"
                         [selectedCourse]="selectedCourse"></app-course-select>
-                      <small *ngIf="isCourseIdInvalid" class="form-text text-muted danger">Course inquired
-                        required</small>
+                      <small *ngIf="isCourseIdInvalid" class="form-text text-muted danger">Course required</small>
                     </div>
                   </div>
                   <div class="form-group row">
@@ -287,7 +293,7 @@
                         <option value="CLOSED_LOST">Closed Lost</option>
                         <option value="CLOSED_LOST_TO_COMPETITION">Closed Lost to Competition</option>
                       </select>
-                      <a class="btn btn-raised btn-info mt-2" (click)="updateDealStage()">
+                      <a *ngIf="editForm" class="btn btn-raised btn-info mt-2" (click)="updateDealStage()">
                         <i class="fa fa-check-square-o"></i> Update Deal Stage
                       </a>
                       <small
@@ -332,11 +338,11 @@
                   <input formControlName="accountId" type="hidden">
 
                   <div class="form-group row">
-                    <label class="col-md-5 label-control" for="name">Contact Inquired<span
+                    <label class="col-md-5 label-control" for="name">Contact<span
                         class="px-required">*</span></label>
                     <div class="col-md-7">
                       <input type="hidden" formControlName="courseId">
-                      <app-contact-select [accountId]="parentAccountId" (selectedIdEmitter)="onContactSelected($event)"
+                      <app-contact-select [accountId]="accountId" (selectedIdEmitter)="onContactSelected($event)"
                         [isInvalid]="isCourseIdInvalid" [selectedContact]="selectedContact"></app-contact-select>
                       <small *ngIf="isContactIdInvalid" class="form-text text-muted danger">Contact inquired
                         required</small>

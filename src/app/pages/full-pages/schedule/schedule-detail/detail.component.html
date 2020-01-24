@@ -61,7 +61,7 @@
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-md-4 label-control" for="name">Min. # of Pax<span
+                  <label class="col-md-4 label-control" for="name">Target Registrations<span
                       class="px-required">*</span></label>
                   <div class="col-md-4">
                     <input (blur)="updateRevenueModel()" formControlName="registeredParticipants" type="number"
@@ -70,16 +70,64 @@
                     <small
                       *ngIf="(f.registeredParticipants.dirty || f.registeredParticipants.touched || submitted) && f.registeredParticipants.invalid && f.registeredParticipants.errors.required"
                       class="form-text text-muted danger">
-                      No. of participants required
+                      Target registrations required
                     </small>
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-md-4 label-control" for="name">Total No. of Registration</label>
+                  <label class="col-md-4 label-control" for="name">Total Cost</label>
+                  <div class="col-md-4">
+                      <span>{{revenueModel.scheduleCost || 0 | currency : 'PHP ' }}</span>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-4 label-control" for="name">Gross Revenue</label>
+                  <div class="col-md-4">
+                    <span>{{revenueModel.grossRevenue || 0 | currency: 'PHP '}}</span>
+                  </div>
+              </div>
+
+              <div class="form-group row">
+                  <label class="col-md-4 label-control" for="name">Net Revenue</label>
+                  <div class="col-md-4">
+                    <span>{{revenueModel.netRevenue || 0 | currency: 'PHP '}}</span>
+                  </div>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-md-4 label-control" for="name">Profit Margin</label>
+                <div class="col-md-4">
+                    <span>{{revenueModel.profitMargin || 0 | number : '1.2-2' }} %</span>
+                </div>
+              </div>
+                <div class="form-group row">
+                  <label class="col-md-4 label-control" for="name">Total Registration</label>
                   <div class="col-md-4">
                       <span>{{f.actualRegisteredParticipants.value || 0}}</span>
                   </div>
                 </div>
+
+                <div class="form-group row">
+                    <label class="col-md-4 label-control" for="name">Actual Gross Revenue</label>
+                    <div class="col-md-4">
+                      <span>{{revenueModel.actualGrossRevenue || 0 | currency: 'PHP '}}</span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-4 label-control" for="name">Actual Net Revenue</label>
+                  <div class="col-md-4">
+                    <span>{{revenueModel.actualNetRevenue || 0 | currency: 'PHP '}}</span>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-4 label-control" for="name">Actual Profit Margin</label>
+                  <div class="col-md-4">
+                      <span>{{revenueModel.actualProfitMargin || 0 | number : '1.2-2' }} %</span>
+                  </div>
+              </div>
+
                 <div class="form-group row">
                   <label class="col-md-4 label-control" for="name">Status<span class="px-required">*</span></label>
                   <div *ngIf="editForm" class="col-md-4">
@@ -135,55 +183,6 @@
                     <small *ngIf="isEndTimeValid && submitted" class="form-text text-muted danger">End time
                       required</small>
                   </div>
-                </div>
-
-                <div class="form-group row">
-                  <label class="col-md-4 label-control" for="name">Total Cost</label>
-                  <div class="col-md-4">
-                      <span>{{revenueModel.scheduleCost || 0 | currency : 'PHP ' }}</span>
-                  </div>
-                </div>
-
-                <div class="form-group row">
-                    <label class="col-md-4 label-control" for="name">Actual Profit Margin</label>
-                    <div class="col-md-4">
-                        <span>{{revenueModel.actualProfitMargin || 0 | number : '1.2-2' }} %</span>
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label class="col-md-4 label-control" for="name">Profit Margin</label>
-                    <div class="col-md-4">
-                        <span>{{revenueModel.profitMargin || 0 | number : '1.2-2' }} %</span>
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label class="col-md-4 label-control" for="name">Actual Gross Revenue</label>
-                    <div class="col-md-4">
-                      <span>{{revenueModel.actualGrossRevenue || 0 | currency: 'PHP '}}</span>
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label class="col-md-4 label-control" for="name">Gross Revenue</label>
-                    <div class="col-md-4">
-                      <span>{{revenueModel.grossRevenue || 0 | currency: 'PHP '}}</span>
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label class="col-md-4 label-control" for="name">Actual Net Revenue</label>
-                    <div class="col-md-4">
-                      <span>{{revenueModel.actualNetRevenue || 0 | currency: 'PHP '}}</span>
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label class="col-md-4 label-control" for="name">Net Revenue</label>
-                    <div class="col-md-4">
-                      <span>{{revenueModel.netRevenue || 0 | currency: 'PHP '}}</span>
-                    </div>
                 </div>
 
                 <div class="form-group row">
@@ -272,6 +271,22 @@
                   </div>
               </div>
 
+
+
+              <div class="form-group row">
+                <label class="col-md-4 label-control" for="name">Course Fee</label>
+                <div class="col-md-4">
+                    {{f.courseFee.value | currency: 'PHP '}}
+                </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-md-4 label-control" for="name">Total No. of Registration</label>
+              <div class="col-md-4">
+                  <span>{{f.actualRegisteredParticipants.value || 0}}</span>
+              </div>
+            </div>
+
               <div class="form-group row">
                 <label class="col-md-4 label-control" for="name">Total Cost</label>
                 <div class="col-md-4">
@@ -279,19 +294,22 @@
                 </div>
               </div>
 
-              <div class="form-group row">
-                <label class="col-md-4 label-control" for="name">Min. No. of Pax</label>
-                <div class="col-md-4">
-                    <span>{{f.registeredParticipants.value || 0}}</span>
-                </div>
-              </div>
+
 
               <div class="form-group row">
-                <label class="col-md-4 label-control" for="name">Total No. of Registration</label>
+                <label class="col-md-4 label-control" for="name">Actual Gross Revenue</label>
                 <div class="col-md-4">
-                    <span>{{f.actualRegisteredParticipants.value || 0}}</span>
+                  <span>{{revenueModel.actualGrossRevenue || 0 | currency: 'PHP '}}</span>
                 </div>
-              </div>
+            </div>
+
+              <div class="form-group row">
+                <label class="col-md-4 label-control" for="name">Actual Net Revenue</label>
+                <div class="col-md-4">
+                  <span>{{revenueModel.actualNetRevenue || 0 | currency: 'PHP '}}</span>
+                </div>
+            </div>
+
 
               <div class="form-group row">
                   <label class="col-md-4 label-control" for="name">Actual Profit Margin</label>
@@ -300,38 +318,32 @@
                   </div>
               </div>
 
+
+              <div class="form-group row">
+                <label class="col-md-4 label-control" for="name">Target Registration</label>
+                <div class="col-md-4">
+                    <span>{{f.registeredParticipants.value || 0}}</span>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-md-4 label-control" for="name">Gross Revenue</label>
+                <div class="col-md-4">
+                  <span>{{revenueModel.grossRevenue || 0 | currency: 'PHP '}}</span>
+                </div>
+            </div>
+
+              <div class="form-group row">
+                <label class="col-md-4 label-control" for="name">Net Revenue</label>
+                <div class="col-md-4">
+                  <span>{{revenueModel.netRevenue || 0 | currency: 'PHP '}}</span>
+                </div>
+            </div>
+
               <div class="form-group row">
                   <label class="col-md-4 label-control" for="name">Profit Margin</label>
                   <div class="col-md-4">
                       <span>{{revenueModel.profitMargin || 0 | number : '1.2-2' }} %</span>
-                  </div>
-              </div>
-
-              <div class="form-group row">
-                  <label class="col-md-4 label-control" for="name">Actual Gross Revenue</label>
-                  <div class="col-md-4">
-                    <span>{{revenueModel.actualGrossRevenue || 0 | currency: 'PHP '}}</span>
-                  </div>
-              </div>
-
-              <div class="form-group row">
-                  <label class="col-md-4 label-control" for="name">Gross Revenue</label>
-                  <div class="col-md-4">
-                    <span>{{revenueModel.grossRevenue || 0 | currency: 'PHP '}}</span>
-                  </div>
-              </div>
-
-              <div class="form-group row">
-                  <label class="col-md-4 label-control" for="name">Actual Net Revenue</label>
-                  <div class="col-md-4">
-                    <span>{{revenueModel.actualNetRevenue || 0 | currency: 'PHP '}}</span>
-                  </div>
-              </div>
-
-              <div class="form-group row">
-                  <label class="col-md-4 label-control" for="name">Net Revenue</label>
-                  <div class="col-md-4">
-                    <span>{{revenueModel.netRevenue || 0 | currency: 'PHP '}}</span>
                   </div>
               </div>
 

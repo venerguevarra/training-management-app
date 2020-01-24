@@ -96,11 +96,11 @@
             <table id="course-table" class="table table-striped">
               <thead>
                 <tr>
-                  <th scope="col" style="width:30%;">Account Name</th>
-                  <th scope="col" style="width:30%;">Description</th>
-                  <th scope="col" style="width:20%;">Created Date</th>
+                  <th scope="col" style="width:25%;">Account Name</th>
+                  <th scope="col" style="width:25%;">Description</th>
+                  <th scope="col" style="width:25%;">Created Date</th>
                   <th scope="col" style="width:10%;">Status</th>
-                  <th scope="col" style="width:20%;text-align: center;">Actions</th>
+                  <th scope="col" style="width:25%;text-align: center;">Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -115,10 +115,9 @@
                         class="ft-eye"></i></a>
                     <a [routerLink]="['/app/account', row.id]" [queryParams]="{action: 'edit'}" placement="top"
                       ngbTooltip="Edit"><i class="ft-edit-2 mr-2"></i></a>
+                    <!--
                       <a [routerLink]="['/app/contact', -1]" [queryParams]="{accountId: row.id}" placement="top"
-                      ngbTooltip="Add Contact"><i class="ft-user-plus"></i></a>
-
-
+                      ngbTooltip="Add Contact"><i class="ft-user-plus"></i></a>-->
                   </td>
                 </tr>
               </tbody>

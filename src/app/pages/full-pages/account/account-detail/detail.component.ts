@@ -154,14 +154,12 @@ export class AccountDetailComponent {
 			accountManager: ['', [Validators.required]],
 			status: [''],
 		});
-	}
 
-	get f() { return this.currentForm.controls; }
-
-	ngAfterViewInit() {
 		this.currentUser = this.stateService.getCurrentUser();
 		this.f.accountManager.setValue(this.currentUser.userId);
 	}
+
+	get f() { return this.currentForm.controls; }
 
 	update() {
 		this.submitted = true;

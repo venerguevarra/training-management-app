@@ -51,7 +51,7 @@ export const ROUTES: RouteInfo[] = [
     isExternalLink: false,
     submenu: []
   },
-  {
+  /*{
     path: "/app/contact",
     title: "Contact",
     icon: "fas fa-mail-bulk",
@@ -60,7 +60,7 @@ export const ROUTES: RouteInfo[] = [
     badgeClass: "",
     isExternalLink: false,
     submenu: []
-  },
+  },*/
   {
     path: "",
     title: "Administration",

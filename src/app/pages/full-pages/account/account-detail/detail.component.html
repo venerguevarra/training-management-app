@@ -243,7 +243,10 @@
                         <button *ngIf="newForm" type="button" class="btn btn-raised btn-success mr-2" (click)="saveNew()">
                           <i class="fa fa-check-square-o"></i> Save
                         </button>
-                        <button type="button" class="btn btn-danger btn-raised" (click)="cancelEdit()">
+                        <button *ngIf="editForm" type="button" class="btn btn-danger btn-raised" (click)="cancelEdit()">
+                          <i class="ft-x"></i> Cancel
+                        </button>
+                        <button *ngIf="newForm" type="button" class="btn btn-danger btn-raised" (click)="cancel()">
                           <i class="ft-x"></i> Cancel
                         </button>
                       </div>
@@ -261,5 +264,6 @@
 </div>
 <!-- END: ACCOUNT NEW FORM or EDIT FORM -->
 
-<app-contact-list [accountId]="modelId" [accountName]="accountName" [previousUrl]="previousUrl"></app-contact-list>
-<app-deal-list [accountId]="modelId" [accountName]="accountName" [previousUrl]="previousUrl"></app-deal-list>
+<app-contact-list *ngIf="editForm || viewForm" [accountId]="modelId" [accountName]="accountName" [previousUrl]="previousUrl"></app-contact-list>
+<app-deal-list *ngIf="editForm || viewForm" [accountId]="modelId" [accountName]="accountName" [previousUrl]="previousUrl"></app-deal-list>
+<app-registration-list *ngIf="editForm || viewForm" [accountId]="modelId" [accountName]="accountName" [previousUrl]="previousUrl"></app-registration-list>

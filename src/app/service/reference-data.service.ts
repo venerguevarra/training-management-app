@@ -9,8 +9,30 @@ import { environment } from "../../environments/environment";
 })
 export class ReferenceDataService {
   private readonly API_HOST = environment.API_HOST;
+  private readonly ACTIVE_RESOURCE_ENDPOINT: string = `${this.API_HOST}/references`;
+  private readonly REGISTRATION_EMAIL_ENDPOINT: string = `${this.API_HOST}/course-registrations/actions/send-registration-email`;
 
   constructor(private http: HttpClient) {}
+
+  sendRegistrationEmail(courseRegistrationId: string): Observable<any[]> {
+    return this.http.post<any[]>(`${this.REGISTRATION_EMAIL_ENDPOINT}/${courseRegistrationId}`, {});
+  }
+
+  getActiveReferences(referenceEntity: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.ACTIVE_RESOURCE_ENDPOINT}/${referenceEntity}`);
+  }
+
+  getActiveReferencesByAccountId(referenceEntity: string, id: string = null): Observable<any[]> {
+    return this.http.get<any[]>(
+      `${this.ACTIVE_RESOURCE_ENDPOINT}/${referenceEntity}?accountId=${id}`
+    );
+  }
+
+  getActiveReferencesByCourseId(referenceEntity: string, id: string = null): Observable<any[]> {
+    return this.http.get<any[]>(
+      `${this.ACTIVE_RESOURCE_ENDPOINT}/${referenceEntity}?courseId=${id}`
+    );
+  }
 
   getActiveReferenceData(entity: string): Observable<any[]> {
     const ACTIVE_ENDPOINT: string = `${this.API_HOST}/${entity}/actions/find-all-active?type=all`;

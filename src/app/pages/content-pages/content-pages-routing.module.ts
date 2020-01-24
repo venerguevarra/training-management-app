@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from '../../shared/auth/auth-guard.service';
 
 import { LoginPageComponent } from "./login/login-page.component";
+import { RegistrationPageComponent } from "./registration/registration.component";
 
 const routes: Routes = [
   {
@@ -17,7 +18,20 @@ const routes: Routes = [
         }
       }
     ]
+  },
+  {
+    path: '',
+    children: [
+      {
+        path: 'registration',
+        component: RegistrationPageComponent,
+        data: {
+          title: 'Registration Page'
+        }
+      }
+    ]
   }
+
 ];
 
 @NgModule({

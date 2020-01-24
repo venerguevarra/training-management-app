@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation, ViewChild, Input, SimpleChanges } from "@angular/core";
+import { Component, ViewEncapsulation, ViewChild, Input } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router, ActivatedRoute } from "@angular/router";
 import {
@@ -18,21 +18,21 @@ import { environment } from "../../../../../environments/environment";
 import { pageConfig } from "../../../page.config";
 
 @Component({
-  selector: "app-contact-list",
+  selector: "app-registration-list",
   templateUrl: "./list.component.html",
   styleUrls: ["./list.component.scss"]
 })
-export class ContactListComponent {
+export class RegistrationListComponent {
   @Input() accountId;
   @Input() accountName;
   @Input() previousUrl;
 
   private readonly API_HOST = environment.API_HOST;
-  private readonly ENDPOINT: string = `${this.API_HOST}/contacts`;
+  private readonly ENDPOINT: string = `${this.API_HOST}/course-registrations`;
   private readonly FIND_ENDPOINT: string = `${this.ENDPOINT}/actions/find`;
-  private readonly LANDING_PAGE: string = `/app/contact`;
+  private readonly LANDING_PAGE: string = `/app/registration`;
 
-  title: string = "Contact";
+  title: string = "Registration";
   rows: any = [];
   page = 0;
   pageSize = pageConfig.pageSize;
@@ -56,20 +56,28 @@ export class ContactListComponent {
     private router: Router
   ) {}
 
-  ngOnChanges(changes: SimpleChanges) {
-        if (changes['accountId'] && changes['accountId'].currentValue) {
-            this.accountId = changes['accountId'].currentValue;
-        }
-  }
-
   ngOnInit() {
+    //this.submitSearchForm(null);
     this.searchForm = this.formBuilder.group({
       name: [""],
-      status: ["ALL"],
+      status: [""],
+      stage: [""],
+      type: [""],
       createdDate: [""]
     });
 
     this.criteria = [];
+
+    let jsonBody = {
+      criteria: this.getSearchFormCriteria(),
+      page: "0",
+      size: this.pageSize.toString()
+    };
+
+    this.httpClient.post(this.FIND_ENDPOINT, jsonBody).subscribe(data => {
+      this.collectionSize = data["totalElements"];
+      this.rows = data["elements"];
+    });
   }
 
   paginationChange(event) {
@@ -107,7 +115,8 @@ export class ContactListComponent {
     this.searchForm = this.formBuilder.group({
       name: [""],
       status: ["ALL"],
-      accountId: [""],
+      stage: [""],
+      type: [""],
       createdDate: [""]
     });
     this.createdDate = "";
@@ -118,7 +127,7 @@ export class ContactListComponent {
     });
   }
 
-  private getSearchFormCriteria() {
+  getSearchFormCriteria() {
     this.criteria = [];
 
     if (this.accountId && this.accountId != "") {
@@ -132,65 +141,16 @@ export class ContactListComponent {
     }
 
     if (this.searchForm) {
-      let nameSearch = this.searchForm.get("name").value;
-      if (nameSearch != "") {
+      if (this.searchForm.get("status").value != "") {
         this.criteria.push({
-          name: "firstName",
-          value: nameSearch,
-          operator: "LIKE",
-          type: "STRING",
-          logical: "OR"
-        });
-        this.criteria.push({
-          name: "lastName",
-          value: nameSearch,
-          operator: "LIKE",
-          type: "STRING",
-          logical: "OR"
-        });
-        this.criteria.push({
-          name: "middleInitial",
-          value: nameSearch,
-          operator: "LIKE",
-          type: "STRING",
-          logical: "OR"
-        });
-        this.criteria.push({
-          name: "email",
-          value: nameSearch,
-          operator: "LIKE",
-          type: "STRING",
-          logical: "OR"
-        });
-        this.criteria.push({
-          name: "mobileNumber",
-          value: nameSearch,
-          operator: "LIKE",
-          type: "STRING",
-          logical: "OR"
-        });
-        this.criteria.push({
-          name: "designation",
-          value: nameSearch,
-          operator: "LIKE",
-          type: "STRING",
-          logical: "OR"
-        });
-        this.criteria.push({
-          name: "officeNumber",
-          value: nameSearch,
-          operator: "LIKE",
-          type: "STRING",
-          logical: "OR"
-        });
-        this.criteria.push({
-          name: "faxNumber",
-          value: nameSearch,
-          operator: "LIKE",
-          type: "STRING",
+          name: "status",
+          value: this.searchForm.get("status").value,
+          operator: "EQ",
+          type: "ENUM",
           logical: "OR"
         });
       }
+
 
       if (this.searchForm.get("createdDate").value != "") {
         let month = `0${this.searchForm.get("createdDate").value.month}`.slice(
@@ -207,32 +167,6 @@ export class ContactListComponent {
           logical: "OR"
         });
       }
-
-      if (
-        this.searchForm.get("status").value != "" &&
-        this.searchForm.get("status").value != "ALL"
-      ) {
-        if (this.searchForm.get("status").value == "ACTIVE") {
-          this.criteria.push({
-            name: "active",
-            value: "ACTIVE",
-            paramName: "activeParam",
-            operator: "EQ",
-            type: "ENUM",
-            logical: "OR"
-          });
-        }
-
-        if (this.searchForm.get("status").value == "INACTIVE") {
-          this.criteria.push({
-            name: "active",
-            value: "INACTIVE",
-            paramName: "inactiveParam",
-            operator: "EQ",
-            type: "ENUM"
-          });
-        }
-      }
     }
 
     return this.criteria;
@@ -240,6 +174,8 @@ export class ContactListComponent {
 
   submitSearchForm($event) {
     this.page = 0;
+
+    let jsonBody = {};
 
     if ($event) {
       this.criteria = this.getSearchFormCriteria();
@@ -249,9 +185,11 @@ export class ContactListComponent {
           timeOut: 3000
         });
       }
+    } else {
+      this.criteria = [];
     }
 
-    let jsonBody = {
+    jsonBody = {
       criteria: this.criteria,
       page: "0",
       size: this.pageSize.toString()

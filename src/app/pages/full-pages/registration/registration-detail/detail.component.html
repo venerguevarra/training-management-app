@@ -1,0 +1,293 @@
+<h4 class="card-title pt-2" id="basic-layout-form"><span *ngIf="newForm"></span>{{title}} Details</h4>
+
+<div class="row" [hidden]="!editForm">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-content">
+        <div class="px-3">
+          <div class="card-content">
+            <form class=" form form-horizontal" [formGroup]="currentForm">
+              <input *ngIf="editForm" type="hidden" formControlName="id">
+
+              <div class="form-body">
+
+                <div class="form-group row pt-4">
+                  <label class="col-md-4 label-control">&nbsp;</label>
+                  <div class="col-md-4">
+                    Fields with <span class="px-required">*</span> are required.
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-4 label-control" for="name">Account Name</label>
+                  <div class="col-md-4">
+                    {{accountName}}
+                  </div>
+                </div>
+                <input type="hidden" formControlName="accountManager">
+                <div class="form-group row">
+                  <label class="col-md-4 label-control" for="name">Deal<span class="px-required">*</span></label>
+                  <div class="col-md-4">
+                    <input type="hidden" formControlName="accountId">
+                    <app-deal-select [accountId]="accountId" (selectedIdEmitter)="onDealSelected($event)" [isInvalid]="isDealIdInvalid" [selectedDeal]="selectedDealId"></app-deal-select>
+                    <small *ngIf="isDealIdInvalid" class="form-text text-muted danger">Deal inquired required</small>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-4 label-control" for="name">Available Schedules<span class="px-required">*</span></label>
+                  <div class="col-md-4">
+                    <input type="hidden" formControlName="accountId">
+                    <app-schedule-select [courseId]="selectedCourseId" (scheduleEmitter)="onScheduleLoaded($event)" (selectedIdEmitter)="onCourseScheduleSelected($event)" [isInvalid]="isScheduleIdValid" [selectedSchedule]="selectedScheduleId"></app-schedule-select>
+                    <small *ngIf="isDealIdInvalid" class="form-text text-muted danger">Deal inquired required</small>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-4 label-control" for="name">Contact<span class="px-required">*</span></label>
+                  <div class="col-md-4">
+                    <app-contact-select [accountId]="accountId" (selectedIdEmitter)="onContactSelected($event)" [isInvalid]="isContactIdInvalid" [selectedContact]="selectedContactId"></app-contact-select>
+                    <small *ngIf="isContactIdInvalid" class="form-text text-muted danger">Contact required</small>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-4 label-control" for="name">Billing Contact<span class="px-required">*</span></label>
+                  <div class="col-md-4">
+                    <app-contact-select [accountId]="accountId" (selectedIdEmitter)="onBillingContactSelected($event)" [isInvalid]="isBillingContactIdInvalid" [selectedContact]="selectedBillingContactId"></app-contact-select>
+                    <small *ngIf="isBillingContactIdInvalid" class="form-text text-muted danger">Billing contact required</small>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-4 label-control" for="name">Status<span class="px-required">*</span></label>
+                  <div class="col-md-4">
+                    <select formControlName="status" class="custom-select">
+                      <option value="PENDING">PENDING</option>
+                      <option value="REGISTERED">REGISTERED</option>
+                      <option value="CONFIRMED">CONFIRMED</option>
+                      <option value="CANCELLED_WITH_REFUND">CANCELLED WITH REFUND</option>
+                      <option value="CANCELLED_WITHOUT_REFUND">CANCELLED WITHOUT REFUND</option>
+                      <option value="RESCHEDULED">RESCHEDULED</option>
+                      <option value="UNDELIVERED">UNDELIVERED</option>
+                      <option value="DELIVERED">DELIVERED</option>
+                    </select>
+                  </div>
+                </div>
+
+
+                <div class="form-group row">
+                  <label class="col-md-4 label-control" for="name">Comment</label>
+                  <div class="col-md-4">
+                    <textarea class="form-control" formControlName="comment"></textarea>
+                  </div>
+                </div>
+
+
+                <div class="form-group row">
+                  <label class="col-md-4 label-control" for="name">&nbsp;</label>
+                  <div class="col-md-4">
+                    <button *ngIf="editForm" type="button" class="btn btn-raised btn-success mr-2" (click)="update()">
+                      <i class="fa fa-check-square-o"></i> Save Changes
+                    </button>
+                    <button type="button" class="btn btn-raised btn-success mr-2" (click)="sendRegistrationEmail()">
+                      <i class="fa fa-check-square-o"></i> Send Registration Link</button>
+                    <button *ngIf="newForm" type="button" class="btn btn-raised btn-success mr-2" (click)="saveNew()">
+                      <i class="fa fa-check-square-o"></i> Save
+                    </button>
+                    <button type="button" class="btn btn-danger btn-raised" (click)="cancel()">
+                      <i class="ft-x"></i> Cancel
+                    </button>
+                  </div>
+                </div>
+                <input type="hidden" formControlName="status">
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="newForm == true" class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-content">
+        <div class="px-3">
+          <div class="card-content">
+            <form class=" form form-horizontal" [formGroup]="currentForm">
+              <input *ngIf="editForm" type="hidden" formControlName="id">
+
+              <div class="form-body">
+
+                <div class="form-group row pt-4">
+                  <label class="col-md-4 label-control">&nbsp;</label>
+                  <div class="col-md-4">
+                    Fields with <span class="px-required">*</span> are required.
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-4 label-control" for="name">Account Name</label>
+                  <div class="col-md-4">
+                    {{accountName}}
+                  </div>
+                </div>
+                <input type="hidden" formControlName="accountManager">
+                <div class="form-group row">
+                  <label class="col-md-4 label-control" for="name">Deal<span class="px-required">*</span></label>
+                  <div class="col-md-4">
+                    <input type="hidden" formControlName="accountId">
+                    <app-deal-select [accountId]="accountId" (selectedIdEmitter)="onDealSelected($event)" [isInvalid]="isDealIdInvalid" [selectedDeal]="selectedDealId"></app-deal-select>
+                    <small *ngIf="isDealIdInvalid" class="form-text text-muted danger">Deal inquired required</small>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-4 label-control" for="name">Available Schedules<span class="px-required">*</span></label>
+                  <div class="col-md-4">
+                    <input type="hidden" formControlName="accountId">
+                    <app-schedule-select [courseId]="selectedCourseId" (scheduleEmitter)="onScheduleLoaded($event)" (selectedIdEmitter)="onCourseScheduleSelected($event)" [isInvalid]="isScheduleIdValid" [selectedSchedule]="selectedScheduleId"></app-schedule-select>
+                    <small *ngIf="isDealIdInvalid" class="form-text text-muted danger">Deal inquired required</small>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-4 label-control" for="name">Contact<span class="px-required">*</span></label>
+                  <div class="col-md-4">
+                    <app-contact-select [accountId]="accountId" (selectedIdEmitter)="onContactSelected($event)" [isInvalid]="isContactIdInvalid" [selectedContact]="selectedContactId"></app-contact-select>
+                    <small *ngIf="isContactIdInvalid" class="form-text text-muted danger">Contact required</small>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-4 label-control" for="name">Billing Contact<span class="px-required">*</span></label>
+                  <div class="col-md-4">
+                    <app-contact-select [accountId]="accountId" (selectedIdEmitter)="onBillingContactSelected($event)" [isInvalid]="isBillingContactIdInvalid" [selectedContact]="selectedBillingContactId"></app-contact-select>
+                    <small *ngIf="isBillingContactIdInvalid" class="form-text text-muted danger">Billing contact required</small>
+                  </div>
+                </div>
+
+
+                <div class="form-group row">
+                  <label class="col-md-4 label-control" for="name">Comment</label>
+                  <div class="col-md-4">
+                    <textarea class="form-control" formControlName="comment"></textarea>
+                  </div>
+                </div>
+
+
+                <div class="form-group row">
+                  <label class="col-md-4 label-control" for="name">&nbsp;</label>
+                  <div class="col-md-4">
+                    <button *ngIf="editForm" type="button" class="btn btn-raised btn-success mr-2" (click)="update()">
+                      <i class="fa fa-check-square-o"></i> Save Changes
+                    </button>
+                    <button *ngIf="newForm" type="button" class="btn btn-raised btn-success mr-2" (click)="saveNew()">
+                      <i class="fa fa-check-square-o"></i> Save
+                    </button>
+                    <button type="button" class="btn btn-danger btn-raised" (click)="cancel()">
+                      <i class="ft-x"></i> Cancel
+                    </button>
+                  </div>
+                </div>
+                <input type="hidden" formControlName="status">
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- VIE FORM -->
+<div *ngIf="viewForm" class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-content">
+        <div class="px-3">
+          <form class=" form form-horizontal" [formGroup]="currentForm">
+
+            <div class="form-body">
+
+              <div class="form-group row pt-4">
+                <label class="col-md-4 label-control" for="name">Account Name</label>
+                <div class="col-md-4">
+                  {{accountName}}
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-md-4 label-control" for="name">Course</label>
+                <div class="col-md-4">
+                    <app-course-detail [id]="selectedCourseId"></app-course-detail>
+                </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-md-4 label-control" for="name">Schedule</label>
+              <div class="col-md-4">
+                  <app-schedule-detail [id]="selectedScheduleId" [showStatus]="true"></app-schedule-detail>
+              </div>
+          </div>
+
+
+            <div class="form-group row">
+              <label class="col-md-4 label-control" for="name">Deal</label>
+              <div class="col-md-4">
+                  <app-deal-detail [id]="selectedDealId"></app-deal-detail>
+              </div>
+          </div>
+
+              <div class="form-group row">
+                  <label class="col-md-4 label-control" for="name">Contact</label>
+                  <div class="col-md-4">
+                      <app-contact-detail [id]="selectedContactId"></app-contact-detail>
+                      <button style="background-color: #FFE57F;" type="button" class="btn btn-raised mr-2 mt-2" (click)="sendRegistrationEmail()"><i class="fa fa-check-square-o"></i> Send Registration Link</button>
+                      <button *ngIf="existingRegistrationScheduleStatus == 'SCHEDULE_CONFIRMED' && f.status.value == 'REGISTERED'" type="button" class="btn btn-raised btn-success mr-2 mt-2" (click)="sendRegistrationEmail()"><i class="fa fa-check-square-o"></i> Send Confirmation Email</button>
+                  </div>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-md-4 label-control" for="name">Billing Contact</label>
+                <div class="col-md-4">
+                    <app-contact-detail [id]="selectedBillingContactId"></app-contact-detail>
+                </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-md-4 label-control" for="name">Comment</label>
+              <div class="col-md-4">
+                  {{this.f.comment.value}}
+              </div>
+             </div>
+
+             <div class="form-group row">
+              <label class="col-md-4 label-control" for="name">Status</label>
+              <div class="col-md-4">
+                  <span *ngIf="f.status.value == 'PENDING'">PENDING</span>
+                  <span *ngIf="f.status.value == 'CONFIRMED'">CONFIRMED</span>
+                  <span *ngIf="f.status.value == 'REGISTERED'">REGISTERED</span>
+                  <span *ngIf="f.status.value == 'CANCELLED_WITH_REFUND'">CANCELLED WITH REFUND</span>
+                  <span *ngIf="f.status.value == 'CANCELLED_WITHOUT_REFUND'">CANCELLED WITHOUT REFUND</span>
+                  <span *ngIf="f.status.value == 'RESCHEDULED'">RESCHEDULED</span>
+                  <span *ngIf="f.status.value == 'DELIVERED'">DELIVERED</span>
+                  <span *ngIf="f.status.value == 'UNDELIVERED'">UNDELIVERED</span>
+              </div>
+             </div>
+
+              <div class="form-body">
+                <div class="form-group row">
+                  <label class="col-md-4 label-control">&nbsp;</label>
+                  <div class="col-md-8">
+                    <button type="button" class="btn btn-raised btn-success mr-2" (click)="showEditForm()"><i class="fa fa-check-square-o"></i> Edit</button>
+                    <button type="button" class="btn btn-danger btn-raised" (click)="cancel()"><i class="ft-x"></i> Cancel</button>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </form>
+        </div>
+        <!---->
+      </div>
+    </div>
+  </div>
+</div>

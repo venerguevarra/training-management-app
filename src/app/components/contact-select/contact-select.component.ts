@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter,Input } from '@angular/core';
+import { Component, Output, EventEmitter,Input, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from "@angular/router";
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
@@ -23,6 +23,7 @@ export class ContactSelectComponent {
     @Input() isInvalid: boolean;
     @Input() accountId: string;
     @Input() selectedContact = '';
+    @Input() showAll = false;
 
     selectedId;
 
@@ -48,17 +49,15 @@ export class ContactSelectComponent {
         }
     }
 
-	initReferences() {
-        if(this.accountId) {
-            this.contactDataService.getActiveByAccountId(this.accountId).subscribe(courses => {
-                this.courses = courses;
-                this.coursesBuffer = this.courses.slice(0, this.bufferSize);
-                if(this.selectedContact && this.selectedContact != '') {
-                    this.selectedId = this.selectedContact;
-                }
-		    });
-        } else {
-            this.contactDataService.getActive().subscribe(courses => {
+    ngOnChanges(changes: SimpleChanges) {
+
+       if(changes['isInvalid']) {
+            return;
+       }
+
+        if (changes['accountId'] && changes['accountId'].currentValue) {
+            this.contactDataService.getActiveByAccountId(changes['accountId'].currentValue).subscribe(courses => {
+                this.accountId = changes['accountId'].currentValue;
                 this.courses = courses;
                 this.coursesBuffer = this.courses.slice(0, this.bufferSize);
                 if(this.selectedContact && this.selectedContact != '') {
@@ -67,7 +66,16 @@ export class ContactSelectComponent {
 		    });
         }
 
-	}
+        if(this.showAll) {
+            this.contactDataService.getActive().subscribe(courses => {
+                this.courses = courses;
+                this.coursesBuffer = this.courses.slice(0, this.bufferSize);
+                if(this.selectedContact && this.selectedContact != '') {
+                    this.selectedId = this.selectedContact;
+                }
+		    });
+        }
+    }
 
 	onScrollToEnd() {
         this.fetchMore();
@@ -88,9 +96,18 @@ export class ContactSelectComponent {
         private formBuilder: FormBuilder,
         private router: Router,
         private route: ActivatedRoute,
-        private contactDataService: ContactDataService) {
-		this.initReferences();
-	}
+        private contactDataService: ContactDataService
+    ) { }
+
+    ngOnInit() {
+        /*this.contactDataService.getActiveByAccountId(this.accountId).subscribe(data => {
+            this.courses = data;
+            this.coursesBuffer = this.courses.slice(0, this.bufferSize);
+            if(this.selectedContact && this.selectedContact != '') {
+                this.selectedId = this.selectedContact;
+            }
+        });*/
+    }
 
 	private fetchMore() {
         const len = this.coursesBuffer.length;

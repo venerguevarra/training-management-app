@@ -21,8 +21,10 @@ import { AccountModule } from './account/account.module';
 import { ContactModule } from './contact/contact.module';
 import { DealModule } from './deal/deal.module';
 import { ScheduleModule } from './schedule/schedule.module';
-
+import { RegistrationModule } from './registration/registration.module';
+import { DealSelectModule } from  '../../components/deal-select/deal-select.module';
 import { FullPageRoutingModule  } from "./full-pages-routing.module";
+
 
 @NgModule({
     imports: [
@@ -43,7 +45,10 @@ import { FullPageRoutingModule  } from "./full-pages-routing.module";
         AccountModule,
         ContactModule,
         DealModule,
-        ScheduleModule
+        ScheduleModule,
+        DealSelectModule,
+        RegistrationModule
+
     ],
     exports: [],
     declarations: [

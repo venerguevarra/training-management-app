@@ -11,7 +11,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
-
+import { NgxSpinnerModule } from "ngx-spinner";
 
 import { ErrorInterceptor } from './interceptor/error-intercept.service';
 import { AuthInterceptor } from './interceptor/auth-intercept.service';
@@ -69,7 +69,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         provide: DateAdapter,
         useFactory: adapterFactory
       }),
-      FullCalendarModule
+      FullCalendarModule,
+       NgxSpinnerModule
     ],
     providers: [
       RoutingStateService,

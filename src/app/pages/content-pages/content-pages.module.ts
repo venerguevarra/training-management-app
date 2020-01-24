@@ -5,6 +5,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ContentPagesRoutingModule } from "./content-pages-routing.module";
 
 import { LoginPageComponent } from "./login/login-page.component";
+import { RegistrationPageComponent } from "./registration/registration.component";
+
 
 @NgModule({
     imports: [
@@ -14,7 +16,8 @@ import { LoginPageComponent } from "./login/login-page.component";
         ReactiveFormsModule
     ],
     declarations: [
-        LoginPageComponent
+        LoginPageComponent,
+        RegistrationPageComponent
     ]
 })
 export class ContentPagesModule { }

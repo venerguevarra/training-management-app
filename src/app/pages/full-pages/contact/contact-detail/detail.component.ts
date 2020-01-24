@@ -63,11 +63,26 @@ export class ContactDetailComponent {
     private routingStateService: RoutingStateService
   ) {
     this.route.params.subscribe(params => {
+
       if (params["id"]) {
         this.modelId = params.id;
         this.newForm = this.modelId == -1;
 
+
         this.initForm();
+
+
+        this.route.queryParams.subscribe(params => {
+          this.httpClient
+            .get(`${this.ACCOUNT_ENDPOINT}/${params.accountId}`)
+            .subscribe(account => {
+                this.accountName = account["name"];
+                this.parentAccountId = account['id'];
+                this.f.accountId.setValue(this.parentAccountId);
+            });
+        });
+
+
 
         if (!this.newForm) {
           this.route.queryParams.subscribe(params => {
@@ -119,16 +134,6 @@ export class ContactDetailComponent {
                     }
                   );
               }
-
-              let existingAccountId = this.parentAccountId
-                ? this.parentAccountId
-                : this.currentModel.accountId;
-              // get account name
-              this.httpClient
-                .get(`${this.ACCOUNT_ENDPOINT}/${existingAccountId}`)
-                .subscribe(account => {
-                  this.accountName = account["name"];
-                });
 
               this.currentForm = this.formBuilder.group({
                 id: [this.currentModel.id],

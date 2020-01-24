@@ -16,6 +16,7 @@ import { StateService } from "../../../../service/state.service";
 import { RoutingStateService } from "../../../../service/routing-state.service"
 import { User } from "../../../../model/user.model";
 import { environment } from "../../../../../environments/environment";
+import { NgxSpinnerService } from "ngx-spinner";
 
 @Component({
   selector: "app-contact-detail",
@@ -41,6 +42,7 @@ export class DealDetailComponent {
   newForm = false;
   editForm = false;
   viewForm = false;
+  accountId;
 
   createdBy = "";
   modifiedBy = "";
@@ -70,9 +72,11 @@ export class DealDetailComponent {
     private formBuilder: FormBuilder,
     private router: Router,
     private route: ActivatedRoute,
-    private routingStateService: RoutingStateService
-
+    private routingStateService: RoutingStateService,
+    private spinner: NgxSpinnerService
   ) {
+
+
     this.previousUrl = this.routingStateService.getPreviousUrl();
 
     this.route.params.subscribe(params => {
@@ -96,6 +100,15 @@ export class DealDetailComponent {
         } else {
           this.f.stage.setValue("PROPOSAL");
         }
+
+        this.route.queryParams.subscribe(params => {
+           this.httpClient
+                .get(`${this.ACCOUNT_ENDPOINT}/${params.accountId}`)
+                .subscribe(account => {
+                  this.accountName = account["name"];
+                  this.accountId = account["id"];
+                });
+        });
 
         if (this.viewForm || this.editForm) {
           this.httpClient.get(`${this.ENDPOINT}/${this.modelId}`).subscribe(
@@ -136,14 +149,6 @@ export class DealDetailComponent {
                   );
               }
 
-              let existingAccountId = (this.parentAccountId) ? this.parentAccountId :  this.currentModel.accountId;
-              // get account name
-              this.httpClient
-                .get(`${this.ACCOUNT_ENDPOINT}/${existingAccountId}`)
-                .subscribe(account => {
-                  this.accountName = account["name"];
-                });
-
               if (this.currentModel.accountId != null) {
                 this.httpClient
                   .get(
@@ -152,6 +157,7 @@ export class DealDetailComponent {
                   .subscribe(
                     data => {
                       this.accountNameLabel = data["name"];
+                      this.accountId = data["id"];
                     },
                     errorData => {
                       this.toastr.error("Error has occurred.", "Failed Request", {
@@ -330,30 +336,33 @@ export class DealDetailComponent {
           allowOutsideClick: false
         })
         .then(e => {
-			let resourceId = this.currentForm.get("id").value;
-			let dealStage = this.f.stage.value;
-			this.httpClient
-				.post(`${this.CHANGE_DEAL_STAGEENDPOINT}/${resourceId}?stage=${dealStage}`, {}, {
-				observe: "response"
-				})
-				.subscribe(
-				data => {
-					if (data.status == 200) {
-					this.toastr.success(
-						`${this.accountName} deal stage successfully updated.`,
-						"Failed Request",
-						{ timeOut: 3000 }
-					);
-					}
-				},
-				error => {
-					this.toastr.error(
-						`Failed to update ${this.accountName} deal stage`,
-						"Failed Request",
-						{ timeOut: 3000 }
-					);
-				}
-				);
+          console.log(e);
+          if(e && e.value) {
+            let resourceId = this.currentForm.get("id").value;
+			      let dealStage = this.f.stage.value;
+            this.httpClient
+                .post(`${this.CHANGE_DEAL_STAGEENDPOINT}/${resourceId}?stage=${dealStage}`, {}, { observe: "response" })
+                .subscribe(
+                  data => {
+                    if (data.status == 200) {
+                    this.toastr.success(
+                      `${this.accountName} deal stage successfully updated.`,
+                      "Success",
+                      { timeOut: 3000 }
+                    );
+                    }
+
+                  },
+                  error => {
+                    this.toastr.error(
+                      `Failed to update ${this.accountName} deal stage`,
+                      "Failed Request",
+                      { timeOut: 3000 }
+                    );
+
+                  }
+              );
+            }
         });
     }
   }

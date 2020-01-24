@@ -153,6 +153,7 @@ export class InquiryListComponent {
   private getSearchFormCriteria() {
     this.criteria = [];
 
+    // TODO: REMOVE WHEN ADMIN
     this.criteria.push({
       name: "accountManager",
       value: this.stateService.getCurrentUser().userId,
@@ -160,8 +161,6 @@ export class InquiryListComponent {
       type: "UUID",
       logical: "AND"
     });
-
-
 
     if (this.searchForm) {
       if (this.searchForm.get("inquiryStatus").value != "") {

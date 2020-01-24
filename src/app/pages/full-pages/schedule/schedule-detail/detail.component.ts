@@ -246,7 +246,6 @@ export class ScheduleDetailComponent {
 					resolve(res);
 				},
 				msg => {
-					this.toastr.error('Failed to fetch revenue information.', 'Invalid Request', { timeOut: 3000 });
 					reject(msg);
 				}
 			);
@@ -335,6 +334,32 @@ export class ScheduleDetailComponent {
             return;
         }
 
+		this.getScheduleFacilitators(this.currentForm.get('id').value).then(data=>{
+			console.log(data);
+			return data.items.length > 0;
+		}).then(hasFacilitator=>{
+			console.log(hasFacilitator);
+			if(this.currentForm.get('status').value == 'SCHEDULE_CONFIRMED' && !hasFacilitator) {
+				swal.fire({
+					title: "No Facilitator",
+					text: `You must assign a facilitator to confirm the schedule.`,
+					type: "info",
+					showCancelButton: false,
+					confirmButtonColor: '#3085d6',
+					cancelButtonColor: '#d33',
+					confirmButtonText: 'Close',
+					allowOutsideClick: false
+				});
+			} else {
+				this.postUpdate();
+			}
+
+		});
+
+
+	}
+
+	postUpdate() {
 		swal.fire({
 			title: "Confirm Schedule Update",
 			text: `Do you wish to continue?`,
@@ -435,6 +460,25 @@ export class ScheduleDetailComponent {
 
 		});
 	}
+
+	getScheduleFacilitators(courseScheduleId:string) {
+		let promise = new Promise((resolve, reject) => {
+			let endpoint = `${this.API_HOST}/course-schedule-facilitators/actions/facilitator-schedule/${courseScheduleId}`;
+			this.httpClient.get(endpoint)
+			.toPromise()
+			.then(
+				res => {
+					resolve(res);
+				},
+				msg => {
+					reject(msg);
+				}
+			);
+		});
+
+		return promise;
+	}
+
 
 	checkFacilitatorScheduleConflict(courseScheduleId:string, startDate:string, endDate: string) {
 		let promise = new Promise((resolve, reject) => {
@@ -602,12 +646,9 @@ export class ScheduleDetailComponent {
 	}
 
 	updateRevenueModel() {
-		if(!this.currentForm.invalid) {
-			this.revenueModel.grossRevenue = parseFloat(this.f.courseFee.value) * parseInt(this.f.registeredParticipants.value);
-			this.revenueModel.netRevenue = this.revenueModel.grossRevenue - this.revenueModel.scheduleCost;
-			this.revenueModel.profitMargin = ((this.revenueModel.netRevenue / this.revenueModel.grossRevenue) * 100);
-		}
-
+		this.revenueModel.grossRevenue = parseFloat(this.f.courseFee.value) * parseInt(this.f.registeredParticipants.value);
+		this.revenueModel.netRevenue = this.revenueModel.grossRevenue - this.revenueModel.scheduleCost;
+		this.revenueModel.profitMargin = ((this.revenueModel.netRevenue / this.revenueModel.grossRevenue) * 100);
 	}
 
 	public onCourseSelected(course: any) {
@@ -635,19 +676,6 @@ export class ScheduleDetailComponent {
 			this.f.venueId.setValue("");
 		}
   	}
-
-	/*public onFacilitatorSelected(facilitator: any) {
-		if (facilitator) {
-			this.f.facilitatorId.setValue(facilitator.id);
-			this.f.facilitatorDailyRate.setValue(facilitator.dailyRate);
-			this.isFacilitatorIdInvalid = false;
-			this.updateRevenueModel();
-		} else {
-			this.isFacilitatorIdInvalid = true;
-			this.f.facilitatorId.setValue("");
-			this.f.facilitatorDailyRate.setValue('');
-		}
-  	}*/
 
 	onDateSelection(date: NgbDate) {
 		if (!this.selectedStartDate && !this.selectedEndDate) {
