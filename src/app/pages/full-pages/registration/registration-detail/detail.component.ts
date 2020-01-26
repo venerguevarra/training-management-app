@@ -162,7 +162,7 @@ export class RegistrationDetailComponent {
 
               this.getCourseSchedule(this.currentModel.courseScheduleId)
                   .then(data => {
-                    this.existingRegistrationScheduleStatus = data.status;
+                    this.existingRegistrationScheduleStatus = data['status'];
                   });
             },
             error => {

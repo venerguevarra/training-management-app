@@ -39,6 +39,7 @@
                 <label class="col-md-4 label-control" for="name">Stage</label>
                 <div class="col-md-8">
                   <span *ngIf="f.stage.value === 'PROPOSAL'">PROPOSAL</span>
+                  <span *ngIf="f.stage.value === 'CLOSING'">CLOSING</span>
                   <span *ngIf="f.stage.value === 'CLOSED_WON'">CLOSED WON</span>
                   <span *ngIf="f.stage.value === 'CLOSED_LOST'">CLOSED LOST</span>
                   <span *ngIf="f.stage.value === 'CLOSED_LOST_TO_COMPETITION'">CLOSED WON TO COMPETITION</span>
@@ -289,6 +290,7 @@
                     <div class="col-md-7">
                       <select formControlName="stage" class="custom-select">
                         <option value="PROPOSAL">Proposal</option>
+                        <option value="CLOSING">Closing</option>
                         <option value="CLOSED_WON">Closed Won</option>
                         <option value="CLOSED_LOST">Closed Lost</option>
                         <option value="CLOSED_LOST_TO_COMPETITION">Closed Lost to Competition</option>
@@ -301,13 +303,6 @@
                         class="form-text text-muted danger">
                         Deal stage required
                       </small>
-                      <!--
-                      <label *ngIf="f.stage.value === 'PROPOSAL'">PROPOSAL</label>
-                      <label *ngIf="f.stage.value === 'CLOSED_WON'">CLOSED WON</label>
-                      <label *ngIf="f.stage.value === 'CLOSED_LOST'">CLOSED LOST</label>
-                      <label *ngIf="f.stage.value === 'CLOSED_LOST_TO_COMPETITION'">CLOSED WON TO COMPETITION</label>
-                      <input formControlName="stage" type="hidden">
-                      -->
                     </div>
                   </div>
                   <div class="form-group row">

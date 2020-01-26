@@ -336,14 +336,14 @@ export class ScheduleDetailComponent {
 
 		this.getScheduleFacilitators(this.currentForm.get('id').value).then(data=>{
 			console.log(data);
-			return data.items.length > 0;
+			return data['items'].length > 0;
 		}).then(hasFacilitator=>{
 			console.log(hasFacilitator);
 			if(this.currentForm.get('status').value == 'SCHEDULE_CONFIRMED' && !hasFacilitator) {
 				swal.fire({
-					title: "No Facilitator",
+					title: `Facilitator Required`,
 					text: `You must assign a facilitator to confirm the schedule.`,
-					type: "info",
+					type: "error",
 					showCancelButton: false,
 					confirmButtonColor: '#3085d6',
 					cancelButtonColor: '#d33',

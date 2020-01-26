@@ -48,7 +48,7 @@ export class ScheduleDetailComponent {
                } else if(data['status'] == 'SCHEDULE_CANCELLED') {
                    this.status = 'CANCELLED';
                } else if(data['status'] == 'SCHEDULE_DELIVERED') {
-                   this.stats = 'DELIVERED';
+                   this.status = 'DELIVERED';
                }
                this.data = data;
 		    });
