@@ -36,6 +36,7 @@
                 <label>Stage</label>
                 <select formControlName="stage" class="custom-select">
                   <option value="PROPOSAL">Propsal</option>
+                  <option value="CLOSING">Closgin</option>
                   <option value="CLOSED_WON">Closed Won</option>
                   <option value="CLOSED_LOST">Closed Lost</option>
                   <option value="CLOSED_LOST_TO_COMPETITION">Closed Lost to Competition</option>
@@ -105,9 +106,8 @@
                   <th scope="col" style="width:20%;">Name</th>
                   <th scope="col" style="width:20%;">Deal Amount</th>
                   <th scope="col" style="width:20%;">Stage</th>
-                  <th scope="col" style="width:15%;">Created Date</th>
-                  <th scope="col" style="width:10%;">Status</th>
-                  <th scope="col" style="width:15%;text-align: center;">Actions</th>
+                  <th scope="col" style="width:20%;">Created Date</th>
+                  <th scope="col" style="width:20%;text-align: center;">Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -116,12 +116,12 @@
                   <td scope="row">{{ row.totalDealAmount | currency: 'PHP ' }}</td>
                   <td scope="row">
                     <span *ngIf="row.stage === 'PROPOSAL'">PROPOSAL</span>
+                    <span *ngIf="row.stage === 'CLOSING'">CLOSING</span>
                     <span *ngIf="row.stage === 'CLOSED_WON'">CLOSED WON</span>
                     <span *ngIf="row.stage === 'CLOSED_LOST'">CLOSED LOST</span>
                     <span *ngIf="row.stage === 'CLOSED_LOST_TO_COMPETITION'">CLOSED WON TO COMPETITION</span>
                   </td>
                   <td scope="row">{{row.createdDate | date: 'MMM d,y'}}</td>
-                  <td scope="row">{{row.active}}</td>
                   <td scope="row" style="text-align: center;">
                     <a [routerLink]="['/app/deal', row.id]" [queryParams]="{action: 'view', accountId: this.accountId}"
                       queryParamsHandling="merge" class="mr-2" placement="top" ngbTooltip="View"><i

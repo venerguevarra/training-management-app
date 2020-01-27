@@ -103,7 +103,9 @@ export class RegistrationDetailComponent {
         if (this.viewForm || this.editForm) {
           this.httpClient.get(`${this.ENDPOINT}/${this.modelId}`).subscribe(
             data => {
+
               this.currentModel = data;
+              console.log(this.currentModel);
 
               if (this.currentModel.createdBy != null) {
                 this.httpClient
@@ -150,7 +152,8 @@ export class RegistrationDetailComponent {
                 billingContactId: [this.currentModel.billingContactId, [Validators.required]],
                 registrationCount: [this.currentModel.registrationCount, [Validators.required]],
                 status: [this.currentModel.status],
-                comment: [this.currentModel.comment]
+                comment: [this.currentModel.comment],
+                actualRegistrationCount: [this.currentModel.actualRegistrationCount]
               });
 
 
@@ -198,7 +201,8 @@ export class RegistrationDetailComponent {
       billingContactId: ["", [Validators.required]],
       registrationCount: ["", [Validators.required]],
       status: [""],
-      comment: [""]
+      comment: [""],
+      actualRegistrationCount: [""]
     });
 
     this.currentUser = this.stateService.getCurrentUser();
@@ -358,7 +362,7 @@ export class RegistrationDetailComponent {
               },
               error => {
                 if (error.status === 409) {
-                  this.toastr.error("Conflict occured.", "Failed Request", {timeOut: 3000});
+                  this.toastr.error("Existing registation exist for the deal.", "Failed Request", {timeOut: 3000});
                 } else if (error.status === 400) {
                   this.toastr.error( "Invalid request received by the server.", "Failed Request", { timeOut: 3000 });
                 } else {
@@ -384,7 +388,7 @@ export class RegistrationDetailComponent {
 
   onScheduleLoaded($event) {
     if($event && $event == 'no_schedules_found') {
-      this.toastr.success( `No schedule found`, "Course Schedule", { timeOut: 3000 });
+      //this.toastr.success( `No schedule found`, "Course Schedule", { timeOut: 3000 });
     }
   }
 

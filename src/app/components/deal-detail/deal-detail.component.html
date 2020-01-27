@@ -1,4 +1,6 @@
 <span *ngIf="data">
     <strong>{{data.name}}</strong><br/>
-    Amount: {{data.totalDealAmount | currency: 'PHP '}}<br/>
+    Total Registration: {{data.numberOfParticipants || 0}}<br/>
+    Course Fee: {{data.courseFee || 0 | currency: 'PHP '}}<br/>
+    Deal Amount: {{data.totalDealAmount | currency: 'PHP '}}
 </span>

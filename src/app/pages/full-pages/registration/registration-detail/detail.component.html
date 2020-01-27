@@ -56,17 +56,24 @@
                     <small *ngIf="isBillingContactIdInvalid" class="form-text text-muted danger">Billing contact required</small>
                   </div>
                 </div>
+
                 <div class="form-group row">
-                  <label class="col-md-4 label-control" for="name">Status<span class="px-required">*</span></label>
+                  <label class="col-md-4 label-control" for="name">Current Status</label>
+                  <div class="col-md-4">
+                    <div>{{f.status.value}}</div>
+                    <button *ngIf="f.status.value == 'PENDING'" style="background-color: #FFE57F;" type="button" class="btn btn-raised mr-2 mt-2" (click)="sendRegistrationEmail()"><i class="fa fa-check-square-o"></i> Send Registration Link</button>
+                    <button *ngIf="f.status.value == 'REGISTERED' && existingRegistrationScheduleStatus == 'SCHEDULE_CONFIRMED'" style="background-color: #FFE57F;" type="button" class="btn btn-raised mr-2 mt-2" (click)="sendRegistrationEmail()"><i class="fa fa-check-square-o"></i> Confirm Registration</button>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-4 label-control" for="name">Status</label>
                   <div class="col-md-4">
                     <select formControlName="status" class="custom-select">
-                      <option value="PENDING">PENDING</option>
-                      <option value="REGISTERED">REGISTERED</option>
                       <option value="CONFIRMED">CONFIRMED</option>
                       <option value="CANCELLED_WITH_REFUND">CANCELLED WITH REFUND</option>
                       <option value="CANCELLED_WITHOUT_REFUND">CANCELLED WITHOUT REFUND</option>
                       <option value="RESCHEDULED">RESCHEDULED</option>
-                      <option value="UNDELIVERED">UNDELIVERED</option>
                       <option value="DELIVERED">DELIVERED</option>
                     </select>
                   </div>
@@ -220,6 +227,27 @@
             </div>
 
             <div class="form-group row">
+              <label class="col-md-4 label-control" for="name">Status</label>
+              <div class="col-md-4">
+                  <span *ngIf="f.status.value == 'PENDING'">PENDING</span>
+                  <span *ngIf="f.status.value == 'CONFIRMED'">CONFIRMED</span>
+                  <span *ngIf="f.status.value == 'REGISTERED'">REGISTERED</span>
+                  <span *ngIf="f.status.value == 'CANCELLED_WITH_REFUND'">CANCELLED WITH REFUND</span>
+                  <span *ngIf="f.status.value == 'CANCELLED_WITHOUT_REFUND'">CANCELLED WITHOUT REFUND</span>
+                  <span *ngIf="f.status.value == 'RESCHEDULED'">RESCHEDULED</span>
+                  <span *ngIf="f.status.value == 'DELIVERED'">DELIVERED</span>
+                  <span *ngIf="f.status.value == 'UNDELIVERED'">UNDELIVERED</span>
+              </div>
+             </div>
+
+             <div class="form-group row">
+              <label class="col-md-4 label-control" for="name">Total Registrations</label>
+              <div class="col-md-4">
+                  {{f.actualRegistrationCount.value}}
+              </div>
+             </div>
+
+            <div class="form-group row">
               <label class="col-md-4 label-control" for="name">Schedule</label>
               <div class="col-md-4">
                   <app-schedule-detail [id]="selectedScheduleId" [showStatus]="true"></app-schedule-detail>
@@ -238,8 +266,6 @@
                   <label class="col-md-4 label-control" for="name">Contact</label>
                   <div class="col-md-4">
                       <app-contact-detail [id]="selectedContactId"></app-contact-detail>
-                      <button style="background-color: #FFE57F;" type="button" class="btn btn-raised mr-2 mt-2" (click)="sendRegistrationEmail()"><i class="fa fa-check-square-o"></i> Send Registration Link</button>
-                      <button *ngIf="existingRegistrationScheduleStatus == 'SCHEDULE_CONFIRMED' && f.status.value == 'REGISTERED'" type="button" class="btn btn-raised btn-success mr-2 mt-2" (click)="sendRegistrationEmail()"><i class="fa fa-check-square-o"></i> Send Confirmation Email</button>
                   </div>
               </div>
 
@@ -254,20 +280,6 @@
               <label class="col-md-4 label-control" for="name">Comment</label>
               <div class="col-md-4">
                   {{this.f.comment.value}}
-              </div>
-             </div>
-
-             <div class="form-group row">
-              <label class="col-md-4 label-control" for="name">Status</label>
-              <div class="col-md-4">
-                  <span *ngIf="f.status.value == 'PENDING'">PENDING</span>
-                  <span *ngIf="f.status.value == 'CONFIRMED'">CONFIRMED</span>
-                  <span *ngIf="f.status.value == 'REGISTERED'">REGISTERED</span>
-                  <span *ngIf="f.status.value == 'CANCELLED_WITH_REFUND'">CANCELLED WITH REFUND</span>
-                  <span *ngIf="f.status.value == 'CANCELLED_WITHOUT_REFUND'">CANCELLED WITHOUT REFUND</span>
-                  <span *ngIf="f.status.value == 'RESCHEDULED'">RESCHEDULED</span>
-                  <span *ngIf="f.status.value == 'DELIVERED'">DELIVERED</span>
-                  <span *ngIf="f.status.value == 'UNDELIVERED'">UNDELIVERED</span>
               </div>
              </div>
 

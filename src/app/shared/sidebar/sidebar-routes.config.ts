@@ -21,7 +21,7 @@ export const ROUTES: RouteInfo[] = [
     isExternalLink: false,
     submenu: []
   },
-  {
+  /*{
     path: "/app/training-calendar",
     title: "Calendar",
     icon: "fas icon-calendar",
@@ -30,7 +30,7 @@ export const ROUTES: RouteInfo[] = [
     badgeClass: "",
     isExternalLink: false,
     submenu: []
-  },
+  },*/
   {
     path: "/app/marketing-inquiry",
     title: "Inquiry",

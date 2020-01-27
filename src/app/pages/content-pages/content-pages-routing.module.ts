@@ -5,6 +5,8 @@ import { AuthGuard } from '../../shared/auth/auth-guard.service';
 
 import { LoginPageComponent } from "./login/login-page.component";
 import { RegistrationPageComponent } from "./registration/registration.component";
+import { RegistrationSuccessPageComponent } from "./registration-success/registration-success.component";
+import { ErrorPageComponent } from "./error/error-page.component";
 
 const routes: Routes = [
   {
@@ -27,6 +29,30 @@ const routes: Routes = [
         component: RegistrationPageComponent,
         data: {
           title: 'Registration Page'
+        }
+      }
+    ]
+  },
+  {
+    path: '',
+    children: [
+      {
+        path: 'error',
+        component: ErrorPageComponent,
+        data: {
+          title: 'Error Page'
+        }
+      }
+    ]
+  },
+  {
+    path: '',
+    children: [
+      {
+        path: 'registration-success',
+        component: RegistrationSuccessPageComponent,
+        data: {
+          title: 'Registration Success Page'
         }
       }
     ]

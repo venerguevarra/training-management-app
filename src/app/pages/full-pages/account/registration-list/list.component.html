@@ -91,6 +91,7 @@
                   <td scope="row">{{row.registrationCount}}</td>
                   <td scope="row">
                     <span *ngIf="row.status == 'PENDING'">PENDING</span>
+                    <span *ngIf="row.status == 'REGISTERED'">REGISTERED</span>
                     <span *ngIf="row.status == 'CONFIRMED'">CONFIRMED</span>
                     <span *ngIf="row.status == 'CANCELLED_WITH_REFUND'">CANCELLED WITH REFUND</span>
                     <span *ngIf="row.status == 'CANCELLED_WITHOUT_REFUND'">CANCELLED WITHOUT REFUND</span>

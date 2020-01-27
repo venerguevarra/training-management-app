@@ -31,7 +31,7 @@ export class AccountDetailComponent {
 	currentModel;
 	newForm = false;
 	editForm = false;
-	viewForm = false;
+	viewForm = true;
 
 	createdBy = "";
 	modifiedBy = "";
