@@ -1,0 +1,194 @@
+<div class="container">
+    <div class="card">
+        <div class="card-body">
+            <form class="form form-horizontal" [formGroup]="searchForm">
+                <div>
+                    <div class="col-12">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6">
+                            <div class="form-group">
+                                <label>Acccount</label>
+                                <app-account-select (selectedIdEmitter)="selectedAccountHandler($event)" [selectedAccount]="selectedAccount"></app-account-select>
+                                <input type="hidden" name="accountId" formControlName="accountId">
+                            </div>
+                            </div>
+
+                            <div class="col-lg-6 col-md-6">
+                            <div class="form-group">
+                                <label>Course</label>
+                                <app-course-select (selectedIdEmitter)="selectedCourseHandler($event)" [selectedCourse]="selectedCourse"></app-course-select>
+                                <input type="hidden" name="courseId" formControlName="courseId">
+                            </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label class="label-control">Status</label>
+                                <div>
+                                    <select formControlName="status" class="custom-select">
+                                    <option value="PENDING">PENDING</option>
+                                    <option value="REGISTERED">REGISTERED</option>
+                                    <option value="CONFIRMED">CONFIRMED</option>
+                                    <option value="RESCHEDULED">RESCHEDULED</option>
+                                    <option value="DELIVERED">DELIVERED</option>
+                                    <option value="UNDELIVERED">UNDELIVERED</option>
+                                    <option value="CANCELLED">CANCELLED</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Registration Date (From)</label>
+                                    <div class="input-group">
+                                    <input name="startDate" id="startDate" class="form-control" placeholder="yyyy-mm-dd" ngbDatepicker formControlName="startDate" #startDatePicker="ngbDatepicker">
+                                    <div class="input-group-append">
+                                        <div class="input-group-text" (click)="startDatePicker.toggle()">
+                                        <i class="fa fa-calendar" style="cursor: pointer;"></i>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                <label>Registration Date (To)</label>
+                                <div class="input-group">
+                                    <input name="endDate" id="endDate" class="form-control" placeholder="yyyy-mm-dd" ngbDatepicker formControlName="endDate" #endDatePicker="ngbDatepicker">
+                                    <div class="input-group-append">
+                                    <div class="input-group-text" (click)="endDatePicker.toggle()">
+                                        <i class="fa fa-calendar" style="cursor: pointer;"></i>
+                                    </div>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <button type="submit" name="submit" value="submit" id="submit" class="btn btn-success btn-raised mr-2" (click)="search($event)"><i class="fa fa-fw fa-check"></i> Submit</button>
+                            <button type="clear" name="clear" value="clear" id="clear" class="btn btn-danger btn-raised mr-2" (click)="clear($event)"><i class="fa fa-fw fa-check"></i> Clear</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div *ngFor="let registration of registeredList; let i = index" class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body p-0">
+                    <div class="row p-5">
+                        <div class="col-md-6">
+                            <table class="reg-table">
+                                <tr class="pb-2">
+                                    <td class="pr-2">
+                                        <strong>Account Name</strong><br/>
+                                        <span class="text-muted">{{registration.account.name}}</span>
+                                    </td>
+                                </tr>
+                                <tr class="pb-2">
+                                    <td class="pr-2">
+                                        <strong>Contact</strong><br/>
+                                        <span class="text-muted">
+                                            {{registration.contact.firstName}} {{registration.contact.lastName}}<br/>
+                                            <i class="icon-envelope pr-2"></i>{{registration.contact.email}}<br/>
+                                            <i class="ft-phone pr-2"></i>{{registration.contact.mobileNumber}}<br/>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr class="pb-2">
+                                    <td class="pr-2">
+                                        <strong>Billing Contact</strong><br/>
+                                        <span class="text-muted">
+                                            {{registration.billingContact.firstName}} {{registration.billingContact.lastName}}<br/>
+                                            <i class="icon-envelope pr-2"></i>{{registration.billingContact.email}}<br/>
+                                            <i class="ft-phone pr-2"></i>{{registration.billingContact.mobileNumber}}<br/>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr class="pb-2">
+                                    <td class="pr-2">
+                                        <strong>Deal</strong><br/>
+                                        <span class="text-muted">
+                                            Course Fee: {{registration.deal.courseFee | currency: 'PHP '}} <br/>
+                                            Total Registrations: {{registration.deal.numberOfParticipants}} <br/>
+                                            Deal Amount: {{registration.deal.totalDealAmount | currency: 'PHP '}} <br/>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div class="col-md-6">
+                            <table class="reg-table col-md-12 text-right">
+                                <tr class="pb-2">
+                                    <td class="pr-2">
+                                        <strong>Course</strong><br/>
+                                        <span class="text-muted">{{registration.course.name}}</span><br/>
+                                        <span class="text-muted">{{registration.course.numberOfDays}} days</span>
+                                    </td>
+                                </tr>
+                                <tr class="pb-2">
+                                    <td class="pr-2">
+                                        <strong>Schedule</strong><br/>
+                                        <span class="text-muted">
+                                            Start Date: {{registration.courseSchedule.startDate}} <br/>
+                                            End Date: {{registration.courseSchedule.endDate}}
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr class="pb-2">
+                                    <td class="pr-2">
+                                        <strong>Account Manager</strong><br/>
+                                        <span class="text-muted">
+                                            {{registration.accountManager.firstName}} {{registration.accountManager.lastName}}<br/>
+                                            <i class="icon-envelope pr-2"></i>{{registration.accountManager.email}}<br/>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row pl-5 pr-5">
+                        <div class="col-md-12">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th class="border-0 text-uppercase small font-weight-bold">#</th>
+                                        <th class="border-0 text-uppercase small font-weight-bold">First Name</th>
+                                        <th class="border-0 text-uppercase small font-weight-bold">Last Name</th>
+                                        <th class="border-0 text-uppercase small font-weight-bold">Middle Initial</th>
+                                        <th class="border-0 text-uppercase small font-weight-bold">Email</th>
+                                        <th class="border-0 text-uppercase small font-weight-bold">Mobile Number</th>
+                                        <th class="border-0 text-uppercase small font-weight-bold">Designation</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let p of registration.participants; let i = index">
+                                        <td>{{ i + 1}}</td>
+                                        <td>{{ p.firstName }}</td>
+                                        <td>{{ p.lastName }}</td>
+                                        <td>{{ p.middleInitial }}</td>
+                                        <td>{{ p.email }}</td>
+                                        <td>{{ p.mobileNumber }}</td>
+                                        <td>{{ p.firstName }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="p-4 row justify-content-center">
+                        <button *ngIf="registration.registration.status != 'CONFIRMED'" type = "button" class = "btn btn-raised btn-success col-md-2  mr-5" style="height: 50px;font-size: 1em;" (click)="confirmRegistrationHandler(registration)">Confirm Registration</button>
+                        <button type = "button" class = "btn btn-raised btn-danger col-md-2" style="height: 50px;font-size: 1em;" (click)="confirmRegistrationHandler(registration)">Cancel Registration</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

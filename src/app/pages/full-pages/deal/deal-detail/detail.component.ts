@@ -65,6 +65,8 @@ export class DealDetailComponent {
   selectedInquiry: string;
   previousUrl: string;
 
+  currentDealStatus = "";
+
   constructor(
     private httpClient: HttpClient,
     private stateService: StateService,
@@ -75,8 +77,6 @@ export class DealDetailComponent {
     private routingStateService: RoutingStateService,
     private spinner: NgxSpinnerService
   ) {
-
-
     this.previousUrl = this.routingStateService.getPreviousUrl();
 
     this.route.params.subscribe(params => {
@@ -234,6 +234,7 @@ export class DealDetailComponent {
               this.isRecordActive = this.currentModel.active === "ACTIVE";
               this.selectedContact = this.currentModel["contactId"];
               this.selectedCourse = this.currentModel["courseId"];
+              this.currentDealStatus = this.currentModel["stage"];
             },
             error => {
               this.toastr.error("Error has occurred.", "Failed Request", {
@@ -320,7 +321,7 @@ export class DealDetailComponent {
     this.currentUser = this.stateService.getCurrentUser();
   }
 
-  updateDealStage() {
+  /*updateDealStage() {
     if (this.f.stage && this.f.stage.value) {
       let selecetedDealStage = this.f.stage.value.replace(/_/g, " ");
 
@@ -365,7 +366,7 @@ export class DealDetailComponent {
             }
         });
     }
-  }
+  }*/
 
   update() {
     this.submitted = true;
@@ -423,8 +424,7 @@ export class DealDetailComponent {
             type: this.currentForm.get("type").value,
             totalDealAmount: this.currentForm.get("totalDealAmount").value,
             courseFee: this.currentForm.get("courseFee").value,
-            numberOfParticipants: this.currentForm.get("numberOfParticipants")
-              .value,
+            numberOfParticipants: this.currentForm.get("numberOfParticipants").value,
             accountId: this.currentForm.get("accountId").value,
             contactId: this.currentForm.get("contactId").value,
             courseId: this.currentForm.get("courseId").value,
@@ -533,8 +533,7 @@ export class DealDetailComponent {
             type: this.currentForm.get("type").value,
             totalDealAmount: this.currentForm.get("totalDealAmount").value,
             courseFee: this.currentForm.get("courseFee").value,
-            numberOfParticipants: this.currentForm.get("numberOfParticipants")
-              .value,
+            numberOfParticipants: this.currentForm.get("numberOfParticipants").value,
             accountId: this.currentForm.get("accountId").value,
             contactId: this.currentForm.get("contactId").value,
             courseId: this.currentForm.get("courseId").value

@@ -21,6 +21,16 @@ export const ROUTES: RouteInfo[] = [
     isExternalLink: false,
     submenu: []
   },
+  {
+    path: "/app/course-registration",
+    title: "Course Registration",
+    icon: "fas fa-list-alt",
+    class: "",
+    badge: "",
+    badgeClass: "",
+    isExternalLink: false,
+    submenu: []
+  },
   /*{
     path: "/app/training-calendar",
     title: "Calendar",

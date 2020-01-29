@@ -43,6 +43,7 @@
                   <span *ngIf="f.stage.value === 'CLOSED_WON'">CLOSED WON</span>
                   <span *ngIf="f.stage.value === 'CLOSED_LOST'">CLOSED LOST</span>
                   <span *ngIf="f.stage.value === 'CLOSED_LOST_TO_COMPETITION'">CLOSED WON TO COMPETITION</span>
+                  <span *ngIf="f.stage.value === 'CANCELLED'">CANCELLED</span>
                 </div>
               </div>
             </div>
@@ -285,19 +286,25 @@
                   </div>
                   <input formControlName="accountManager" type="hidden">
                   <div class="form-group row">
-                    <label class="col-md-5 label-control" for="name">Deal Stage<span
-                        class="px-required">*</span></label>
+                    <label class="col-md-5 label-control" for="name">Deal Stage<span class="px-required">*</span></label>
                     <div class="col-md-7">
-                      <select formControlName="stage" class="custom-select">
+                      <span *ngIf="editForm && (currentDealStatus != 'PROPOSAL' && currentDealStatus != 'CLOSING')">
+                        <span *ngIf="currentDealStatus == 'CLOSED_LOST'">LOST</span>
+                        <span *ngIf="currentDealStatus == 'CLOSED_LOST_WITH_COMPETITION'">LOST WITH COMPETITION</span>
+                      </span>
+                      <select *ngIf="editForm && (currentDealStatus == 'PROPOSAL' || currentDealStatus == 'CLOSING')" formControlName="stage" class="custom-select">
+                        <option value="PROPOSAL">PROPOSAL</option>
+                        <option value="CLOSING">CLOSING</option>
+                        <option value="CLOSED_LOST">CLOSED LOST</option>
+                        <option value="CLOSED_LOST_TO_COMPETITION">CLOSED LOST TO COMPETITION</option>
+                        <option *ngIf="currentDealStatus == 'CLOSED_WON'" value="CANCELLED_WITH_REFUND">CANCELLED WITH REFUND</option>
+                        <option *ngIf="currentDealStatus == 'CLOSED_WON'" value="CANCELLED_WITHOUT_REFUND">CANCELLED WITHOUT REFUND</option>
+                      </select>
+                      <select *ngIf="newForm" formControlName="stage" class="custom-select">
                         <option value="PROPOSAL">Proposal</option>
                         <option value="CLOSING">Closing</option>
-                        <option value="CLOSED_WON">Closed Won</option>
-                        <option value="CLOSED_LOST">Closed Lost</option>
-                        <option value="CLOSED_LOST_TO_COMPETITION">Closed Lost to Competition</option>
                       </select>
-                      <a *ngIf="editForm" class="btn btn-raised btn-info mt-2" (click)="updateDealStage()">
-                        <i class="fa fa-check-square-o"></i> Update Deal Stage
-                      </a>
+                      <span *ngIf="currentDealStatus == 'CLOSED_WON'">CLOSED WON</span>
                       <small
                         *ngIf="editForm && (f.stage.dirty || f.stage.touched || submitted) && f.stage.invalid && f.stage.errors.required"
                         class="form-text text-muted danger">
@@ -344,6 +351,8 @@
                     </div>
                   </div>
 
+
+                  <!--
                   <div *ngIf="editForm" class="form-group row">
                     <label class="col-md-5 label-control" for="status">Active <span class="px-required">*</span></label>
                     <div class="col-md-7">
@@ -355,6 +364,7 @@
                       </div>
                     </div>
                   </div>
+                  -->
 
                   <div class="form-group row">
                     <label class="col-md-5 label-control" for="status">&nbsp;</label>

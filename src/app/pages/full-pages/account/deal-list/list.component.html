@@ -36,6 +36,7 @@
                 <label>Stage</label>
                 <select formControlName="stage" class="custom-select">
                   <option value="PROPOSAL">Propsal</option>
+                  <option value="CANCELLED">Cancelled</option>
                   <option value="CLOSING">Closgin</option>
                   <option value="CLOSED_WON">Closed Won</option>
                   <option value="CLOSED_LOST">Closed Lost</option>
@@ -116,6 +117,7 @@
                   <td scope="row">{{ row.totalDealAmount | currency: 'PHP ' }}</td>
                   <td scope="row">
                     <span *ngIf="row.stage === 'PROPOSAL'">PROPOSAL</span>
+                    <span *ngIf="row.stage === 'CANCELLED'">CANCELLED</span>
                     <span *ngIf="row.stage === 'CLOSING'">CLOSING</span>
                     <span *ngIf="row.stage === 'CLOSED_WON'">CLOSED WON</span>
                     <span *ngIf="row.stage === 'CLOSED_LOST'">CLOSED LOST</span>

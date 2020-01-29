@@ -18,7 +18,7 @@ import { CourseDataService, Course } from '../../service/course-data.service';
 	styleUrls: ['./course-select.component.scss']
 })
 export class CourseSelectComponent {
-    @Output() private selectedIdEmitter = new EventEmitter<any>();
+    @Output() selectedIdEmitter = new EventEmitter<any>();
 
     @Input() isInvalid: boolean;
     @Input() selectedCourse = '';

@@ -15,6 +15,7 @@ import { ScheduleCostingsModule } from '../../../components/schedule-costings/sc
 
 import { ScheduleListComponent } from './schedule-list/list.component';
 import { ScheduleDetailComponent } from './schedule-detail/detail.component';
+import { CourseParticipantListComponent } from '../course-participant-list/course-participant-list.component';
 
 import { ScheduleRoutingModule  } from "./schedule-routing.module";
 
@@ -39,7 +40,8 @@ import { ScheduleRoutingModule  } from "./schedule-routing.module";
     exports: [],
     declarations: [
         ScheduleListComponent,
-        ScheduleDetailComponent
+        ScheduleDetailComponent,
+        CourseParticipantListComponent
     ],
     providers: [],
 })

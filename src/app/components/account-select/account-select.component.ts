@@ -17,7 +17,7 @@ import { AccountDataService, Account } from '../../service/account-data.service'
 	styleUrls: ['./account-select.component.scss']
 })
 export class AccountSelectComponent {
-    @Output() private selectedIdEmitter = new EventEmitter<any>();
+    @Output() selectedIdEmitter = new EventEmitter<any>();
     @Input() isInvalid: boolean;
     @Input() selectedAccount;
 
@@ -47,7 +47,8 @@ export class AccountSelectComponent {
     onChange($event) {
         if($event) {
             this.selectedId = $event.id;
-            this.selectedIdEmitter.emit($event.value);
+            this.selectedIdEmitter.emit($event.data);
+            console.log("a", $event);
         }
     }
 

@@ -9,6 +9,7 @@ import { FullCalendarModule } from '@fullcalendar/angular';
 import { DashboardComponent  } from "./dashboard/dashboard.component";
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
+import { CourseParticipantListComponent } from './course-participant-list/course-participant-list.component';
 import { ScheduleCalendarComponent } from './schedule-calendar/schedule-calendar.component';
 
 import { FacilitatorModule } from './facilitator/facilitator.module';
@@ -23,6 +24,7 @@ import { DealModule } from './deal/deal.module';
 import { ScheduleModule } from './schedule/schedule.module';
 import { RegistrationModule } from './registration/registration.module';
 import { DealSelectModule } from  '../../components/deal-select/deal-select.module';
+import { CourseRegistrationModule } from  '../full-pages/course-registration/course-registration.module';
 import { FullPageRoutingModule  } from "./full-pages-routing.module";
 
 
@@ -47,8 +49,8 @@ import { FullPageRoutingModule  } from "./full-pages-routing.module";
         DealModule,
         ScheduleModule,
         DealSelectModule,
-        RegistrationModule
-
+        RegistrationModule,
+        CourseRegistrationModule
     ],
     exports: [],
     declarations: [

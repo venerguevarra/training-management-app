@@ -55,14 +55,15 @@ export class DealSelectComponent {
         if (this.accountId || (changes['accountId'] && changes['accountId'].currentValue)) {
             if(changes['accountId'] && changes['accountId'].currentValue) {
                 this.accountId = changes['accountId'].currentValue;
+
+                this.referenceDataService.getActiveReferencesByAccountId('deals', this.accountId).subscribe(data => {
+                    this.deals = data;
+                    this.dataBuffer = this.deals.slice(0, this.bufferSize);
+                    if(this.selectedDeal && this.selectedDeal != '') {
+                        this.selectedId = this.selectedDeal;
+                    }
+                });
             }
-            this.referenceDataService.getActiveReferencesByAccountId('deals', this.accountId).subscribe(data => {
-                this.deals = data;
-                this.dataBuffer = this.deals.slice(0, this.bufferSize);
-                if(this.selectedDeal && this.selectedDeal != '') {
-                    this.selectedId = this.selectedDeal;
-                }
-		    });
         } else {
             this.referenceDataService.getActiveReferences('deals').subscribe(data => {
                 this.deals = data;

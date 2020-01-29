@@ -74,6 +74,7 @@
                     </small>
                   </div>
                 </div>
+                <!--
                 <div class="form-group row">
                   <label class="col-md-4 label-control" for="name">Total Cost</label>
                   <div class="col-md-4">
@@ -127,6 +128,7 @@
                       <span>{{revenueModel.actualProfitMargin || 0 | number : '1.2-2' }} %</span>
                   </div>
               </div>
+              -->
 
                 <div class="form-group row">
                   <label class="col-md-4 label-control" for="name">Status<span class="px-required">*</span></label>
@@ -369,6 +371,9 @@
   </div>
 </div>
 
+<div *ngIf="viewForm" class="row">
+  <app-course-participant-list [courseScheduleId]="f.id.value"></app-course-participant-list>
+</div>
 <app-facilitator-schedule *ngIf="editForm"
   [courseScheduleId]="f.id.value"
   [courseId]="f.courseId.value"

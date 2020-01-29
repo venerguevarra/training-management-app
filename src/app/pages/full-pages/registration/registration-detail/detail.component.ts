@@ -56,6 +56,7 @@ export class RegistrationDetailComponent {
 
   previousUrl: string;
   existingRegistrationScheduleStatus;
+  currentRegistrationStatus;
 
   constructor(
     private httpClient: HttpClient,
@@ -105,7 +106,6 @@ export class RegistrationDetailComponent {
             data => {
 
               this.currentModel = data;
-              console.log(this.currentModel);
 
               if (this.currentModel.createdBy != null) {
                 this.httpClient
@@ -156,8 +156,9 @@ export class RegistrationDetailComponent {
                 actualRegistrationCount: [this.currentModel.actualRegistrationCount]
               });
 
-
+              this.currentRegistrationStatus = this.currentModel.status;
               this.selectedDealId = this.currentModel.dealId;
+
               this.selectedCourseId = this.currentModel.courseId;
               this.selectedScheduleId = this.currentModel.courseScheduleId;
               this.selectedContactId = this.currentModel.contactId;
@@ -166,6 +167,19 @@ export class RegistrationDetailComponent {
               this.getCourseSchedule(this.currentModel.courseScheduleId)
                   .then(data => {
                     this.existingRegistrationScheduleStatus = data['status'];
+                  });
+
+              this.getDeal(this.currentModel.dealId)
+                  .then(data => {
+                    if(data['stage'].startsWith('CLOSED_LOST') || data['stage'].startsWith('CANCELLED')) {
+                      this.selectedCourseId = "";
+                      this.f.courseId.setValue("");
+                      this.f.dealId.setValue("");
+                      this.f.registrationCount.setValue("");
+                      this.selectedDeal = null;
+                      this.selectedDealId = null;
+                      this.isDealIdInvalid = true;
+                    }
                   });
             },
             error => {
@@ -410,12 +424,30 @@ export class RegistrationDetailComponent {
 		return promise;
 	}
 
+  getDeal(dealId:string) {
+		let promise = new Promise((resolve, reject) => {
+			let endpoint = `${this.API_HOST}/deals/${dealId}`;
+			this.httpClient.get(endpoint)
+			.toPromise()
+			.then(
+				res => {
+					resolve(res);
+				},
+				msg => {
+					reject(msg);
+				}
+			);
+		});
+
+		return promise;
+	}
+
   isDealIdInvalid = false;
   selectedDeal;
   selectedDealId;
   selectedCourseId;
   public onDealSelected(deal: any) {
-
+    console.log('deal', deal);
 		if (deal) {
       this.selectedCourseId = deal.data.courseId;
       this.f.courseId.setValue(deal.data.courseId);
@@ -452,7 +484,8 @@ export class RegistrationDetailComponent {
     }
   }
 
-  isScheduleIdValid;
+  isScheduleIdValid = false;
+
   selectedSchedule;
   selectedScheduleId;
   public onCourseScheduleSelected(schedule: any) {
