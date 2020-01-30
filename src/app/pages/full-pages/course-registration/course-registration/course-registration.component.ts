@@ -32,11 +32,13 @@ export class CourseRegistrationComponent {
         private formBuilder: FormBuilder,
         private router: Router,
         private route: ActivatedRoute,
-		private routingStateService: RoutingStateService) {
-			this.getRegisteredList('REGISTERED').then(data =>{
-				this.registeredList = data;
-			});
-			this.initForm();
+		private routingStateService: RoutingStateService)
+	{
+		this.getRegisteredList('REGISTERED').then(data =>{
+			this.registeredList = data;
+		});
+		this.initForm();
+		this.initializeRegistrationForm();
 	}
 
 	initForm() {
@@ -60,7 +62,6 @@ export class CourseRegistrationComponent {
 			.toPromise()
 			.then(
 				res => {
-					console.log(res);
 					resolve(res);
 				},
 				msg => {
@@ -127,6 +128,9 @@ export class CourseRegistrationComponent {
 			if(e.value) {
 				this.confirmRegistration(entity.registration.id).then(e => {
 					this.toastr.success(`Course registration confirmed for ${entity.account.name}.`, 'Success', { timeOut: 3000 });
+					this.getRegisteredList('REGISTERED').then(data =>{
+						this.registeredList = data;
+					});
 				}).catch(err => {
 					this.toastr.error('Failed to confirm registratoin for ${entity.account.name}.', 'Failed Request', { timeOut: 3000 });
 				});
@@ -134,7 +138,7 @@ export class CourseRegistrationComponent {
 		});
 	}
 
-	 showConfirmationDialog(title, html, type) {
+	showConfirmationDialog(title, html, type) {
         return swal.fire({
             title,
             html,
@@ -148,6 +152,8 @@ export class CourseRegistrationComponent {
     }
 
 	get f() { return this.searchForm.controls; }
+
+	get registrationForm() { return this.registrationFormGroup.controls; }
 
 	selectedAccountHandler($event) {
 		if($event) {
@@ -168,7 +174,6 @@ export class CourseRegistrationComponent {
 	search($event) {
 		this.searchCourseRegistration().then(data =>{
 			this.registeredList = data;
-			console.log(this.registeredList);
 		});
 	}
 
@@ -219,5 +224,101 @@ export class CourseRegistrationComponent {
 
 	clear($event) {
 		this.initForm();
+		this.registeredList = [];
 	}
+
+	showModal: boolean = false;
+    showRegistrationForm(participant, registration) {
+        this.showModal = true;
+		this.registrationFormGroup = this.formBuilder.group({
+			id: [participant.id, [Validators.required]],
+			courseRegistrationId: [registration.registration.id, [Validators.required]],
+			courseScheduleId: [registration.courseSchedule.id, [Validators.required]],
+			courseId: [registration.course.id, [Validators.required]],
+            firstName: [participant.firstName, [Validators.required]],
+            lastName: [participant.lastName, [Validators.required]],
+            middleInitial: [participant.middleInitial],
+            email: [participant.email, [Validators.required]],
+            designation: [participant.designation, [Validators.required]],
+            mobileNumber: [participant.mobileNumber, [Validators.required]]
+        });
+    }
+
+    hideRegistrationForm() {
+        this.showModal = false;
+		this.registeredList = [];
+    }
+
+	registrationFormGroup: FormGroup;
+	submitted = false;
+	initializeRegistrationForm() {
+		this.registrationFormGroup = this.formBuilder.group({
+			id: ['', [Validators.required]],
+			courseRegistrationId: ['', [Validators.required]],
+			courseScheduleId: ['', [Validators.required]],
+			courseId: ['', [Validators.required]],
+            firstName: ['', [Validators.required]],
+            lastName: ['', [Validators.required]],
+            middleInitial: [''],
+            email: ['', [Validators.required]],
+            designation: ['', [Validators.required]],
+            mobileNumber: ['', [Validators.required]]
+        });
+	}
+
+
+	update() {
+		this.showConfirmationDialog('Confirm Profile Update', `All changes will be permanent for ${this.registrationForm.email.value}`, 'question').then(e => {
+			if(e.value) {
+				this.updateParticipantProfile().then(e => {
+					this.toastr.success(`Participant successfull updated ${this.registrationForm.email.value}.`, 'Success', { timeOut: 3000 });
+					this.registeredList = [];
+					this.hideRegistrationForm();
+				}).catch(err => {
+					this.toastr.error(`Failed to update participant profile ${this.registrationForm.email.value}.`, 'Failed Request', { timeOut: 3000 });
+				});
+			}
+		});
+	}
+	updateParticipantProfile(): Promise<any> {
+		let promise = new Promise((resolve, reject) => {
+		const ACTIVE_ENDPOINT: string = `${this.API_HOST}/course-participants/${this.registrationForm.id.value}`;
+
+		let requestBody = {
+			firstName: this.registrationForm.firstName.value,
+			lastName: this.registrationForm.firstName.value,
+			middleInitial: this.registrationForm.middleInitial.value,
+			email: this.registrationForm.email.value,
+			designation: this.registrationForm.designation.value,
+			mobileNumber: this.registrationForm.mobileNumber.value,
+			courseRegistrationId: this.registrationForm.courseRegistrationId.value,
+			courseScheduleId: this.registrationForm.courseScheduleId.value,
+			courseId: this.registrationForm.courseId.value,
+		}
+
+		this.httpClient
+			.put<any[]>(ACTIVE_ENDPOINT, requestBody)
+			.toPromise()
+			.then(
+				res => {
+					resolve(res);
+				},
+				msg => {
+					reject(msg);
+				}
+			);
+		});
+
+		return promise;
+	}
+
+	close() {
+		this.initializeRegistrationForm();
+		this.hideRegistrationForm();
+	}
+
+	isInvalid(control:any) {
+		return (control.dirty || control.touched || this.submitted) && control.invalid && control.errors.required;
+	}
+
 }

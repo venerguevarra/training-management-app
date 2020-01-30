@@ -57,7 +57,7 @@ export class RegistrationDetailComponent {
   previousUrl: string;
   existingRegistrationScheduleStatus;
   currentRegistrationStatus;
-
+  currentDealName;
   constructor(
     private httpClient: HttpClient,
     private stateService: StateService,
@@ -171,6 +171,7 @@ export class RegistrationDetailComponent {
 
               this.getDeal(this.currentModel.dealId)
                   .then(data => {
+                    this.currentDealName = data['name'];
                     if(data['stage'].startsWith('CLOSED_LOST') || data['stage'].startsWith('CANCELLED')) {
                       this.selectedCourseId = "";
                       this.f.courseId.setValue("");
@@ -180,6 +181,7 @@ export class RegistrationDetailComponent {
                       this.selectedDealId = null;
                       this.isDealIdInvalid = true;
                     }
+
                   });
             },
             error => {
@@ -236,6 +238,10 @@ export class RegistrationDetailComponent {
 
     let hasError = false;
 
+    if(this.currentRegistrationStatus != 'PENDING' && this.currentModel.courseScheduleId != this.selectedScheduleId) {
+      this.toastr.error("Client already registered or confirmed to the schedule.", "Failed Request", { timeOut: 3000 } );
+      return;
+    }
     if (this.currentForm.invalid || hasError) {
       return;
     }
@@ -447,7 +453,6 @@ export class RegistrationDetailComponent {
   selectedDealId;
   selectedCourseId;
   public onDealSelected(deal: any) {
-    console.log('deal', deal);
 		if (deal) {
       this.selectedCourseId = deal.data.courseId;
       this.f.courseId.setValue(deal.data.courseId);

@@ -1,4 +1,5 @@
 <!-- EDIT FORM -->
+<div class="container">
 <h4 class="card-title pt-2" id="basic-layout-form"><span *ngIf="newForm"></span>{{title}} Details</h4>
 <div *ngIf="newForm == true || editForm == true" class="row">
   <div class="col-md-12">
@@ -386,6 +387,7 @@
   *ngIf="editForm"
   [courseScheduleId]="f.id.value">
 </app-schedule-costings>
+</div>
 
 <!-- REVENUE  CARDS -->
 <!--

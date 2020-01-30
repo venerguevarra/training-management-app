@@ -335,10 +335,8 @@ export class ScheduleDetailComponent {
         }
 
 		this.getScheduleFacilitators(this.currentForm.get('id').value).then(data=>{
-			console.log(data);
 			return data['items'].length > 0;
 		}).then(hasFacilitator=>{
-			console.log(hasFacilitator);
 			if(this.currentForm.get('status').value == 'SCHEDULE_CONFIRMED' && !hasFacilitator) {
 				swal.fire({
 					title: `Facilitator Required`,

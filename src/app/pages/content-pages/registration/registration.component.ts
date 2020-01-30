@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 import { HttpClient, HttpHeaders, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import swal from 'sweetalert2';
+import { ToastrService } from 'ngx-toastr';
 
 import { Observable, of, throwError } from 'rxjs';
 import 'rxjs/Rx';
@@ -43,7 +44,8 @@ export class RegistrationPageComponent {
         private formBuilder: FormBuilder,
         private router: Router,
         private route: ActivatedRoute,
-        private http: HttpClient) {
+        private http: HttpClient,
+        private toastr: ToastrService) {
 
         this.route.queryParams.subscribe(params => {
             if(params.registrationToken) {
@@ -51,8 +53,7 @@ export class RegistrationPageComponent {
                     if(res['token'] && res['registration']) {
                         this.courseRegistration = res;
                         this.courseRegisrationToken = params.registrationToken;
-                        console.log(res, this.courseRegistration);
-                        this.courseScheduleId = this.courseRegistration.registration.id;
+                        this.courseScheduleId = this.courseRegistration.registration.courseScheduleId;
                         this.courseRegistrationCount = this.courseRegistration.registration.registrationCount;
                         this.courseRegistrationName = this.courseRegistration.course.name;
                         this.accountName = this.courseRegistration.accountName;
@@ -122,12 +123,13 @@ export class RegistrationPageComponent {
 
         let registration = this.registrationInstance();
         let index: number = this.registrations.filter(e => e.email == registration.email || e.mobileNumber == registration.mobileNumber).length;
-        this.emailTaken = this.registrations.filter(e => e.email == registration.email).length > 0;
-        this.mobileNumberTaken = this.registrations.filter(e => e.mobileNumber == registration.mobileNumber).length > 0;
+        //this.emailTaken = this.registrations.filter(e => e.email == registration.email).length > 0;
+        //this.mobileNumberTaken = this.registrations.filter(e => e.mobileNumber == registration.mobileNumber).length > 0;
 
         if(this.emailTaken || this.mobileNumberTaken) {
             return;
         }
+
 
         this.addRegistration(registration);
         this.initializeForm();
@@ -140,6 +142,18 @@ export class RegistrationPageComponent {
     validateEmailAndMobileNumber() {
         this.emailTaken = this.registrations.filter(e => e.email == this.f.email.value).length > 0;
         this.mobileNumberTaken = this.registrations.filter(e => e.mobileNumber == this.f.mobileNumber.value).length > 0;
+
+        this.checkEmail(this.courseScheduleId, this.f.email.value).then(e=> {
+            this.emailTaken = false;
+        }).catch(err=> {
+             this.emailTaken = true;
+        });
+
+        this.checkMobile(this.courseScheduleId, this.f.mobileNumber.value).then(e => {
+            this.mobileNumberTaken = false;
+        }).catch(err=> {
+             this.mobileNumberTaken = true;
+        });
     }
 
     private addRegistration(registration: Registration) {
@@ -234,13 +248,59 @@ export class RegistrationPageComponent {
         return promise;
     }
 
+    checkEmail(courseScheduleId: string, email: string) {
+        let promise = new Promise((resolve, reject) => {
+        const VALIDATE_TOKEN_ENDPOINT: string = `${this.API_HOST}/course-registration/actions/find-by-email/${courseScheduleId}?email=${email}`;
+        this.http
+            .get<any[]>(VALIDATE_TOKEN_ENDPOINT)
+            .toPromise()
+            .then(
+            res => {
+                reject(res);
+            },
+            msg => {
+                resolve(msg);
+            }
+            );
+        });
+
+        return promise;
+    }
+
+    checkMobile(courseScheduleId: string, mobileNumber: string) {
+        let promise = new Promise((resolve, reject) => {
+        const VALIDATE_TOKEN_ENDPOINT: string = `${this.API_HOST}/course-registration/actions/find-by-mobile/${courseScheduleId}?mobileNumber=${mobileNumber}`;
+
+
+        this.http
+            .get<any[]>(VALIDATE_TOKEN_ENDPOINT)
+            .toPromise()
+            .then(
+            res => {
+                reject(res);
+            },
+            msg => {
+                resolve(msg);
+
+            }
+            );
+        });
+
+        return promise;
+    }
+
     register($event) {
         this.showConfirmationDialog('Confirm Registration', `Register participants to ${this.courseRegistrationName}?`, 'question').then(e=>{
             if(e.value) {
                 this.registerCourseParticipants().then(e=> {
                     this.router.navigateByUrl("/registration-success");
                 }).catch(err => {
-                     this.router.navigateByUrl("/error");
+                    if(err.status && err.status == 409) {
+                        this.toastr.error(`Participant(s) already registered to the course.`, 'Failed Request', { timeOut: 3000 });
+                    } else {
+                        this.router.navigateByUrl("/error");
+                    }
+
                 });
             }
         });

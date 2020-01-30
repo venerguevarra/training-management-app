@@ -1,4 +1,5 @@
-<div class="container">
+<div class="container" [style.display]="showModal ? 'none' : 'block'">
+    <h4><strong>Course Registration</strong></h4>
     <div class="card">
         <div class="card-body">
             <form class="form form-horizontal" [formGroup]="searchForm">
@@ -6,19 +7,21 @@
                     <div class="col-12">
                         <div class="row">
                             <div class="col-lg-6 col-md-6">
-                            <div class="form-group">
-                                <label>Acccount</label>
-                                <app-account-select (selectedIdEmitter)="selectedAccountHandler($event)" [selectedAccount]="selectedAccount"></app-account-select>
-                                <input type="hidden" name="accountId" formControlName="accountId">
-                            </div>
+                                <div class="form-group">
+                                    <label>Acccount</label>
+                                    <app-account-select (selectedIdEmitter)="selectedAccountHandler($event)"
+                                        [selectedAccount]="selectedAccount"></app-account-select>
+                                    <input type="hidden" name="accountId" formControlName="accountId">
+                                </div>
                             </div>
 
                             <div class="col-lg-6 col-md-6">
-                            <div class="form-group">
-                                <label>Course</label>
-                                <app-course-select (selectedIdEmitter)="selectedCourseHandler($event)" [selectedCourse]="selectedCourse"></app-course-select>
-                                <input type="hidden" name="courseId" formControlName="courseId">
-                            </div>
+                                <div class="form-group">
+                                    <label>Course</label>
+                                    <app-course-select (selectedIdEmitter)="selectedCourseHandler($event)"
+                                        [selectedCourse]="selectedCourse"></app-course-select>
+                                    <input type="hidden" name="courseId" formControlName="courseId">
+                                </div>
                             </div>
                         </div>
                         <div class="row">
@@ -26,13 +29,13 @@
                                 <label class="label-control">Status</label>
                                 <div>
                                     <select formControlName="status" class="custom-select">
-                                    <option value="PENDING">PENDING</option>
-                                    <option value="REGISTERED">REGISTERED</option>
-                                    <option value="CONFIRMED">CONFIRMED</option>
-                                    <option value="RESCHEDULED">RESCHEDULED</option>
-                                    <option value="DELIVERED">DELIVERED</option>
-                                    <option value="UNDELIVERED">UNDELIVERED</option>
-                                    <option value="CANCELLED">CANCELLED</option>
+                                        <option value="PENDING">PENDING</option>
+                                        <option value="REGISTERED">REGISTERED</option>
+                                        <option value="CONFIRMED">CONFIRMED</option>
+                                        <option value="RESCHEDULED">RESCHEDULED</option>
+                                        <option value="DELIVERED">DELIVERED</option>
+                                        <option value="UNDELIVERED">UNDELIVERED</option>
+                                        <option value="CANCELLED">CANCELLED</option>
                                     </select>
                                 </div>
                             </div>
@@ -41,40 +44,46 @@
                                 <div class="form-group">
                                     <label>Registration Date (From)</label>
                                     <div class="input-group">
-                                    <input name="startDate" id="startDate" class="form-control" placeholder="yyyy-mm-dd" ngbDatepicker formControlName="startDate" #startDatePicker="ngbDatepicker">
-                                    <div class="input-group-append">
-                                        <div class="input-group-text" (click)="startDatePicker.toggle()">
-                                        <i class="fa fa-calendar" style="cursor: pointer;"></i>
+                                        <input name="startDate" id="startDate" class="form-control"
+                                            placeholder="yyyy-mm-dd" ngbDatepicker formControlName="startDate"
+                                            #startDatePicker="ngbDatepicker">
+                                        <div class="input-group-append">
+                                            <div class="input-group-text" (click)="startDatePicker.toggle()">
+                                                <i class="fa fa-calendar" style="cursor: pointer;"></i>
+                                            </div>
                                         </div>
-                                    </div>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="col-md-4">
                                 <div class="form-group">
-                                <label>Registration Date (To)</label>
-                                <div class="input-group">
-                                    <input name="endDate" id="endDate" class="form-control" placeholder="yyyy-mm-dd" ngbDatepicker formControlName="endDate" #endDatePicker="ngbDatepicker">
-                                    <div class="input-group-append">
-                                    <div class="input-group-text" (click)="endDatePicker.toggle()">
-                                        <i class="fa fa-calendar" style="cursor: pointer;"></i>
+                                    <label>Registration Date (To)</label>
+                                    <div class="input-group">
+                                        <input name="endDate" id="endDate" class="form-control" placeholder="yyyy-mm-dd"
+                                            ngbDatepicker formControlName="endDate" #endDatePicker="ngbDatepicker">
+                                        <div class="input-group-append">
+                                            <div class="input-group-text" (click)="endDatePicker.toggle()">
+                                                <i class="fa fa-calendar" style="cursor: pointer;"></i>
+                                            </div>
+                                        </div>
                                     </div>
-                                    </div>
-                                </div>
                                 </div>
                             </div>
                         </div>
                         <div>
-                            <button type="submit" name="submit" value="submit" id="submit" class="btn btn-success btn-raised mr-2" (click)="search($event)"><i class="fa fa-fw fa-check"></i> Submit</button>
-                            <button type="clear" name="clear" value="clear" id="clear" class="btn btn-danger btn-raised mr-2" (click)="clear($event)"><i class="fa fa-fw fa-check"></i> Clear</button>
+                            <button type="submit" name="submit" value="submit" id="submit"
+                                class="btn btn-success btn-raised mr-2" (click)="search($event)"><i
+                                    class="fa fa-fw fa-check"></i> Submit</button>
+                            <button type="clear" name="clear" value="clear" id="clear"
+                                class="btn btn-danger btn-raised mr-2" (click)="clear($event)"><i
+                                    class="fa fa-fw fa-check"></i> Clear</button>
                         </div>
                     </div>
                 </div>
             </form>
         </div>
     </div>
-
     <div *ngFor="let registration of registeredList; let i = index" class="row">
         <div class="col-12">
             <div class="card">
@@ -84,37 +93,53 @@
                             <table class="reg-table">
                                 <tr class="pb-2">
                                     <td class="pr-2">
-                                        <strong>Account Name</strong><br/>
+                                        <strong>Account Name</strong><br />
                                         <span class="text-muted">{{registration.account.name}}</span>
                                     </td>
                                 </tr>
                                 <tr class="pb-2">
                                     <td class="pr-2">
-                                        <strong>Contact</strong><br/>
+                                        <strong>Contact</strong><br />
                                         <span class="text-muted">
-                                            {{registration.contact.firstName}} {{registration.contact.lastName}}<br/>
-                                            <i class="icon-envelope pr-2"></i>{{registration.contact.email}}<br/>
-                                            <i class="ft-phone pr-2"></i>{{registration.contact.mobileNumber}}<br/>
+                                            {{registration.contact.firstName}} {{registration.contact.lastName}}<br />
+                                            <i class="icon-envelope pr-2"></i>{{registration.contact.email}}<br />
+                                            <i class="ft-phone pr-2"></i>{{registration.contact.mobileNumber}}<br />
                                         </span>
                                     </td>
                                 </tr>
                                 <tr class="pb-2">
                                     <td class="pr-2">
-                                        <strong>Billing Contact</strong><br/>
+                                        <strong>Billing Contact</strong><br />
                                         <span class="text-muted">
-                                            {{registration.billingContact.firstName}} {{registration.billingContact.lastName}}<br/>
-                                            <i class="icon-envelope pr-2"></i>{{registration.billingContact.email}}<br/>
-                                            <i class="ft-phone pr-2"></i>{{registration.billingContact.mobileNumber}}<br/>
+                                            {{registration.billingContact.firstName}}
+                                            {{registration.billingContact.lastName}}<br />
+                                            <i
+                                                class="icon-envelope pr-2"></i>{{registration.billingContact.email}}<br />
+                                            <i
+                                                class="ft-phone pr-2"></i>{{registration.billingContact.mobileNumber}}<br />
                                         </span>
                                     </td>
                                 </tr>
                                 <tr class="pb-2">
                                     <td class="pr-2">
-                                        <strong>Deal</strong><br/>
+                                        <strong>Deal</strong><br />
                                         <span class="text-muted">
-                                            Course Fee: {{registration.deal.courseFee | currency: 'PHP '}} <br/>
-                                            Total Registrations: {{registration.deal.numberOfParticipants}} <br/>
-                                            Deal Amount: {{registration.deal.totalDealAmount | currency: 'PHP '}} <br/>
+                                            Course Fee: {{registration.deal.courseFee | currency: 'PHP '}} <br />
+                                            Total Registrations: {{registration.deal.numberOfParticipants}} <br />
+                                            Deal Amount: {{registration.deal.totalDealAmount | currency: 'PHP '}} <br />
+                                            Stage:
+                                            <span *ngIf="registration.deal.stage == 'PROPOSAL'">PROPOSAL</span>
+                                            <span *ngIf="registration.deal.stage == 'CLOSING'">CLOSING</span>
+                                            <span *ngIf="registration.deal.stage == 'CLOSED_WON'">WON</span>
+                                            <span *ngIf="registration.deal.stage == 'CLOSED_LOST'">LOST</span>
+                                            <span *ngIf="registration.deal.stage == 'CLOSED_LOST_TO_COMPETITION'">LOST
+                                                TO COMPETITION</span>
+                                            <span *ngIf="registration.deal.stage == 'DELIVERED'">DELIVERED</span>
+                                            <span *ngIf="registration.deal.stage == 'CANCELLED_WITH_REFUND'">CANCELLED
+                                                WITH REFUND</span>
+                                            <span
+                                                *ngIf="registration.deal.stage == 'CANCELLED_WITHOUT_REFUND'">CANCELLED
+                                                WITHOUT REFUND</span> <br />
                                         </span>
                                     </td>
                                 </tr>
@@ -122,36 +147,56 @@
                         </div>
 
                         <div class="col-md-6">
-                            <table class="reg-table col-md-12 text-right">
+                            <table class="reg-table col-md-12">
                                 <tr class="pb-2">
                                     <td class="pr-2">
-                                        <strong>Course</strong><br/>
-                                        <span class="text-muted">{{registration.course.name}}</span><br/>
+                                        <strong>Course</strong><br />
+                                        <span class="text-muted">{{registration.course.name}}</span><br />
                                         <span class="text-muted">{{registration.course.numberOfDays}} days</span>
                                     </td>
                                 </tr>
                                 <tr class="pb-2">
                                     <td class="pr-2">
-                                        <strong>Schedule</strong><br/>
+                                        <strong>Schedule</strong><br />
                                         <span class="text-muted">
-                                            Start Date: {{registration.courseSchedule.startDate}} <br/>
-                                            End Date: {{registration.courseSchedule.endDate}}
+                                            Start Date: {{registration.courseSchedule.startDate}} <br />
+                                            End Date: {{registration.courseSchedule.endDate}} <br />
+                                            Status:
+                                            <span
+                                                *ngIf="registration.courseSchedule.status == 'SCHEDULE_WAITING'">WAITING
+                                                CONFIRMATION</span>
+                                            <span
+                                                *ngIf="registration.courseSchedule.status == 'SCHEDULE_CONFIRMED'">CONFIRMED</span>
+                                            <span
+                                                *ngIf="registration.courseSchedule.status == 'SCHEDULE_CANCELLED'">CANCELLED</span>
+                                            <span
+                                                *ngIf="registration.courseSchedule.status == 'SCHEDULE_DELIVERED'">DELIVERED</span>
                                         </span>
                                     </td>
                                 </tr>
                                 <tr class="pb-2">
                                     <td class="pr-2">
-                                        <strong>Account Manager</strong><br/>
+                                        <strong>Account Manager</strong><br />
                                         <span class="text-muted">
-                                            {{registration.accountManager.firstName}} {{registration.accountManager.lastName}}<br/>
-                                            <i class="icon-envelope pr-2"></i>{{registration.accountManager.email}}<br/>
+                                            {{registration.accountManager.firstName}}
+                                            {{registration.accountManager.lastName}}<br />
+                                            <i
+                                                class="icon-envelope pr-2"></i>{{registration.accountManager.email}}<br />
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr class="pb-2">
+                                    <td class="pr-2">
+                                        <strong>Registration Status</strong><br />
+                                        <span class="text-muted">
+                                            {{registration.registration.status}}
                                         </span>
                                     </td>
                                 </tr>
                             </table>
                         </div>
                     </div>
-                    <div class="row pl-5 pr-5">
+                    <div *ngIf="registration.participants.length > 0" class="row pl-5 pr-5">
                         <div class="col-md-12">
                             <table class="table">
                                 <thead>
@@ -163,6 +208,7 @@
                                         <th class="border-0 text-uppercase small font-weight-bold">Email</th>
                                         <th class="border-0 text-uppercase small font-weight-bold">Mobile Number</th>
                                         <th class="border-0 text-uppercase small font-weight-bold">Designation</th>
+                                        <th class="border-0 text-uppercase small font-weight-bold">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -173,7 +219,8 @@
                                         <td>{{ p.middleInitial }}</td>
                                         <td>{{ p.email }}</td>
                                         <td>{{ p.mobileNumber }}</td>
-                                        <td>{{ p.firstName }}</td>
+                                        <td>{{ p.designation }}</td>
+                                        <td><a (click)="showRegistrationForm(p, registration)"><i class="ft-edit-2"></i></a></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -181,9 +228,16 @@
                     </div>
 
                     <div class="p-4 row justify-content-center">
-                        <button *ngIf="registration.registration.status != 'CONFIRMED'" type = "button" class = "btn btn-raised btn-success col-md-2  mr-5" style="height: 50px;font-size: 1em;" (click)="confirmRegistrationHandler(registration)">Confirm Registration</button>
-                        <button type = "button" class = "btn btn-raised btn-danger col-md-2" style="height: 50px;font-size: 1em;" (click)="confirmRegistrationHandler(registration)">Cancel Registration</button>
-
+                        <button
+                            *ngIf="registration.registration.status != 'CONFIRMED' && registration.registration.status == 'REGISTERED' && registration.deal.stage == 'CLOSING'"
+                            type="button" class="btn btn-raised btn-success col-md-2  mr-5"
+                            style="height: 50px;font-size: 1em;"
+                            (click)="confirmRegistrationHandler(registration)">Confirm Registration</button>
+                        <button
+                            *ngIf="registration.deal.stage == 'CLOSED_WON' && (registration.registration.status == 'PENDING' || registration.registration.status == 'REGISTERED' || registration.registration.status == 'CONFIRMED' || registration.registration.status == 'RESCHEDULED')"
+                            type="button" class="btn btn-raised btn-danger col-md-2"
+                            style="height: 50px;font-size: 1em;"
+                            (click)="confirmRegistrationHandler(registration)">Cancel Registration</button>
                     </div>
                 </div>
             </div>
@@ -191,4 +245,73 @@
     </div>
 </div>
 
+<form [style.display]="showModal ? 'block' : 'none'"  class=" form form-horizontal" [formGroup]="registrationFormGroup">
+<div class="container">
+<h4>Update Participant Profile</h4>
+<div class="row text-left">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-content p-2">
+          <div class="px-3">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-body">
+                    <input type="hidden" formControlName="id">
+                    <div class="row">
+                      <div class="form-group col-12 mb-2">
+                        <label class="label-control" for="name">First Name<span class="px-required">*</span></label>
+                        <input name="firstName" formControlName="firstName" type="text" class="form-control">
+                      </div>
+                    </div>
 
+                    <div class="row">
+                      <div class="form-group col-12 mb-2">
+                        <label class="label-control" for="name">Last Name<span class="px-required">*</span></label>
+                        <input name="lastName" formControlName="lastName" type="text" class="form-control">
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="form-group col-12 mb-2">
+                        <label class="label-control" for="name">Middle Initial</label>
+                        <input name="middleInitial" formControlName="middleInitial" type="text" class="form-control">
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="form-group col-12 mb-2">
+                        <label class="label-control" for="name">Designation<span class="px-required">*</span></label>
+                        <input name="designation" formControlName="designation" type="text" class="form-control">
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="form-group col-12 mb-2">
+                        <label class="label-control" for="name">Email<span class="px-required">*</span></label>
+                        <input name="email" formControlName="email" type="text" class="form-control">
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="form-group col-12 mb-2">
+                        <label class="label-control" for="name">Mobile Number<span class="px-required">*</span></label>
+                        <input name="mobileNumber" formControlName="mobileNumber" type="text" class="form-control">
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="form-group col-12 mb-2 mt-2">
+                        <button type="button" class="btn btn-raised btn-info mr-1" (click)="update()">Save</button>
+                        <button type="button" class="btn btn-raised btn-danger mr-1" (click)="close()">Close</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</form>

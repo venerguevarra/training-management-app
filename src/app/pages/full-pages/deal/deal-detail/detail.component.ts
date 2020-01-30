@@ -233,6 +233,7 @@ export class DealDetailComponent {
 
               this.isRecordActive = this.currentModel.active === "ACTIVE";
               this.selectedContact = this.currentModel["contactId"];
+              console.log(this.selectedContact);
               this.selectedCourse = this.currentModel["courseId"];
               this.currentDealStatus = this.currentModel["stage"];
             },
@@ -320,53 +321,6 @@ export class DealDetailComponent {
   ngAfterViewInit() {
     this.currentUser = this.stateService.getCurrentUser();
   }
-
-  /*updateDealStage() {
-    if (this.f.stage && this.f.stage.value) {
-      let selecetedDealStage = this.f.stage.value.replace(/_/g, " ");
-
-      swal
-        .fire({
-          title: "Udpate Deal Stage",
-          text: `Update ${this.accountName} deal stage to ${selecetedDealStage}?`,
-          type: "question",
-          showCancelButton: true,
-          confirmButtonColor: "#3085d6",
-          cancelButtonColor: "#d33",
-          confirmButtonText: "Save",
-          allowOutsideClick: false
-        })
-        .then(e => {
-          console.log(e);
-          if(e && e.value) {
-            let resourceId = this.currentForm.get("id").value;
-			      let dealStage = this.f.stage.value;
-            this.httpClient
-                .post(`${this.CHANGE_DEAL_STAGEENDPOINT}/${resourceId}?stage=${dealStage}`, {}, { observe: "response" })
-                .subscribe(
-                  data => {
-                    if (data.status == 200) {
-                    this.toastr.success(
-                      `${this.accountName} deal stage successfully updated.`,
-                      "Success",
-                      { timeOut: 3000 }
-                    );
-                    }
-
-                  },
-                  error => {
-                    this.toastr.error(
-                      `Failed to update ${this.accountName} deal stage`,
-                      "Failed Request",
-                      { timeOut: 3000 }
-                    );
-
-                  }
-              );
-            }
-        });
-    }
-  }*/
 
   update() {
     this.submitted = true;

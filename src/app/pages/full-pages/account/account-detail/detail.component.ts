@@ -62,14 +62,17 @@ export class AccountDetailComponent {
 				this.modelId = params.id;
 				this.previousUrl = `${this.previousUrl}/${this.modelId}?action=view`;
 				this.newForm = this.modelId == -1;
+				this.viewForm = this.modelId != -1;
 
 				if(!this.newForm) {
 					 this.route.queryParams.subscribe(params => {
 						if(params.action === 'view') {
 							this.viewForm = true;
+							this.editForm = false;
 						}
 						if(params.action === 'edit') {
 							this.editForm = true;
+							this.viewForm = false;
 						}
 					});
 				}

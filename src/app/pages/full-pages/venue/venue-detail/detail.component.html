@@ -1,68 +1,67 @@
-<div class="card">
-  
-  <div class="card-header" style="background-color: #ECEFF1;">
-    <h3 *ngIf="!newForm">{{title}} Details</h3>
-    <h3 *ngIf="newForm">New {{title}}</h3>
-  </div>
 
+<div class="container">
+<h4 *ngIf="!newForm">{{title}} Details</h4>
+<h4 *ngIf="newForm">New {{title}}</h4>
+
+<div class="card">
   <div class="card-body">
     <div class="row text-left justify-content-md-center">
       <!-- view form start -->
-      <div *ngIf="newForm == false && viewForm == true" class="col-md-6">
+      <div *ngIf="newForm == false && viewForm == true" class="col-md-12">
         <form class="form form-horizontal striped-rows">
         <br/>
         <div class="form-body">
             <div class="form-group row">
-              <label class="col-md-3 label-control" for="name">Name</label>
-              <div class="col-md-9">
+              <label class="col-md-4 label-control" for="name">Name</label>
+              <div class="col-md-6">
                 {{f.name.value}}
               </div>
             </div>
         </div>
         <div class="form-body">
             <div class="form-group row">
-              <label class="col-md-3 label-control" for="name">Description</label>
-              <div class="col-md-9">
+              <label class="col-md-4 label-control" for="name">Description</label>
+              <div class="col-md-6">
                 {{f.description.value}}
               </div>
             </div>
         </div>
         <div class="form-body">
             <div class="form-group row">
-              <label class="col-md-3 label-control" for="createdDate">Date Created</label>
-              <div class="col-md-9">
+              <label class="col-md-4 label-control" for="createdDate">Date Created</label>
+              <div class="col-md-6">
                 <span *ngIf="f.createdDate">{{f.createdDate.value | date: 'MMM d, y h:mm:ss a'}}</span>
               </div>
             </div>
         </div>
         <div class="form-body">
             <div class="form-group row">
-              <label class="col-md-3 label-control" for="createdBy">Created By</label>
-              <div class="col-md-9">
+              <label class="col-md-4 label-control" for="createdBy">Created By</label>
+              <div class="col-md-6">
                 {{createdBy}}
               </div>
             </div>
         </div>
         <div class="form-body">
             <div class="form-group row">
-              <label class="col-md-3 label-control" for="modifiedDate">Last Modified Date</label>
-              <div class="col-md-9">
+              <label class="col-md-4 label-control" for="modifiedDate">Last Modified Date</label>
+              <div class="col-md-6">
                 <span *ngIf="f.modifiedDate">{{f.modifiedDate.value | date: 'MMM d, y h:mm:ss a'}}</span>
               </div>
             </div>
         </div>
         <div class="form-body">
             <div class="form-group row">
-              <label class="col-md-3 label-control" for="modifiedBy">Last Modified By</label>
-              <div class="col-md-9">
+              <label class="col-md-4 label-control" for="modifiedBy">Last Modified By</label>
+              <div class="col-md-6">
                 {{modifiedBy}}
               </div>
             </div>
         </div>
         <div class="form-body">
             <div class="form-group row">
-              <label class="col-md-3 label-control" for="status">Status</label>
-              <div class="col-md-9">
+              <label class="col-md-4 label-control" for="status">Status</label>
+              <div class="col-md-6">
                 <span *ngIf="isRecordActive">Active</span>
                 <span *ngIf="!isRecordActive">Inactive</span>
               </div>
@@ -70,8 +69,8 @@
         </div>
         <div class="form-body">
             <div class="form-group row">
-              <label class="col-md-3 label-control">&nbsp;</label>
-              <div class="col-md-9">
+              <label class="col-md-4 label-control">&nbsp;</label>
+              <div class="col-md-6">
                 <button type="button" class="btn btn-raised btn-success mr-2" (click)="showEditForm()">
                   <i class="fa fa-check-square-o"></i> Edit
                 </button>
@@ -86,25 +85,25 @@
       <!-- view form end -->
 
       <!-- new form and edit form start -->
-      <div *ngIf="newForm == true || editForm == true" class="col-md-6">
+      <div *ngIf="newForm == true || editForm == true" class="col-md-12">
         <div class="card">
           <div class="card-content">
             <div class="px-3">
               <form class="form form-horizontal" [formGroup]="currentForm">
-                
+
                 <input *ngIf="editForm" type="hidden" formControlName="id">
-                
+
                 <div class="form-body">
                   <div class="form-group row">
-                    <label class="col-md-3 label-control">&nbsp;</label>
-                    <div class="col-md-9">
+                    <label class="col-md-4 label-control">&nbsp;</label>
+                    <div class="col-md-6">
                       <ngb-alert type="danger" [dismissible]="false" *ngIf="genericError">Unable to update information. Try again.</ngb-alert>
                       Fields with <span class="px-required">*</span> are required.
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-md-3 label-control" for="name">Venue Name<span class="px-required">*</span></label>
-                    <div class="col-md-9">
+                    <label class="col-md-4 label-control" for="name">Venue Name<span class="px-required">*</span></label>
+                    <div class="col-md-6">
                       <input  formControlName="name"  type="text" id="name" class="form-control" name="name"  [ngClass]="{ 'is-invalid': isInvalid(f.name)}">
                       <small *ngIf="(f.name.dirty || f.name.touched || submitted) && f.name.invalid && f.name.errors.required" class="form-text text-muted danger">
                         Venue name required
@@ -112,8 +111,8 @@
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-md-3 label-control" for="name">Description<span class="px-required">*</span></label>
-                    <div class="col-md-9">
+                    <label class="col-md-4 label-control" for="name">Description<span class="px-required">*</span></label>
+                    <div class="col-md-6">
                       <input  formControlName="description"  type="text" id="description" class="form-control" name="description"  [ngClass]="{ 'is-invalid': isInvalid(f.description)}">
                       <small *ngIf="(f.description.dirty || f.description.touched || submitted) && f.description.invalid && f.description.errors.required" class="form-text text-muted danger">
                         Description required
@@ -121,8 +120,8 @@
                     </div>
                   </div>
                    <div *ngIf="editForm" class="form-group row">
-                    <label class="col-md-3 label-control" for="status">Active <span class="px-required">*</span></label>
-                    <div class="col-md-3">
+                    <label class="col-md-4 label-control" for="status">Active <span class="px-required">*</span></label>
+                    <div class="col-md-6">
                       <input type="hidden" formControlName="status">
                       <div class="custom-control custom-checkbox d-inline-block">
                         <input type="checkbox" id="active" (change)="activeCheckbox($event)" [checked]="isRecordActive" name="active" class="custom-control-input" style="zoom: 2;">
@@ -130,10 +129,10 @@
                       </div>
                     </div>
                   </div>
-                  
+
                   <div class="form-group row">
-                    <label class="col-md-3 label-control" for="eventRegInput4">&nbsp;</label>
-                    <div class="col-md-9">
+                    <label class="col-md-4 label-control" for="eventRegInput4">&nbsp;</label>
+                    <div class="col-md-6">
                       <button *ngIf="editForm" type="button" class="btn btn-raised btn-success mr-2" (click)="update()">
                         <i class="fa fa-check-square-o"></i> Save Changes
                       </button>
@@ -156,4 +155,5 @@
     </div>
   </div>
 
+</div>
 </div>

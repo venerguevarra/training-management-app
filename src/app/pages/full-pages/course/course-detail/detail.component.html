@@ -1,81 +1,81 @@
+<div class="container">
+<h4 *ngIf="!newForm">{{title}} Details</h4>
+<h4 *ngIf="newForm">New {{title}}</h4>
+
 <div class="card">
-  <div class="card-header" style="background-color: #ECEFF1;">
-    <h3 *ngIf="!newForm">{{title}} Details</h3>
-    <h3 *ngIf="newForm">New {{title}}</h3>
-  </div>
   <div class="card-body">
     <div class="row text-left justify-content-md-center">
-      <div *ngIf="newForm == false && viewForm == true" class="col-md-6">
+      <div *ngIf="newForm == false && viewForm == true" class="col-md-12">
         <form class="form form-horizontal striped-rows">
         <br/>
         <div class="form-body">
             <div class="form-group row">
-              <label class="col-md-3 label-control" for="name">Course Name</label>
-              <div class="col-md-9">
+              <label class="col-md-4 label-control" for="name">Course Name</label>
+              <div class="col-md-6">
                 {{f.name.value}}
               </div>
             </div>
         </div>
         <div class="form-body">
             <div class="form-group row">
-              <label class="col-md-3 label-control" for="name">Description</label>
-              <div class="col-md-9">
+              <label class="col-md-4 label-control" for="name">Description</label>
+              <div class="col-md-6">
                 {{f.description.value}}
               </div>
             </div>
         </div>
         <div class="form-body">
             <div class="form-group row">
-              <label class="col-md-3 label-control" for="name">Fee</label>
-              <div class="col-md-9">
+              <label class="col-md-4 label-control" for="name">Fee</label>
+              <div class="col-md-6">
                 {{f.fee.value | currency: 'PHP '}}
               </div>
             </div>
         </div>
         <div class="form-body">
             <div class="form-group row">
-              <label class="col-md-3 label-control" for="name">Number of Days</label>
-              <div class="col-md-9">
+              <label class="col-md-4 label-control" for="name">Number of Days</label>
+              <div class="col-md-6">
                 {{f.days.value }}
               </div>
             </div>
         </div>
         <div class="form-body">
             <div class="form-group row">
-              <label class="col-md-3 label-control" for="createdDate">Date Created</label>
-              <div class="col-md-9">
+              <label class="col-md-4 label-control" for="createdDate">Date Created</label>
+              <div class="col-md-6">
                 <span *ngIf="f.createdDate">{{f.createdDate.value | date: 'MMM d, y h:mm:ss a'}}</span>
               </div>
             </div>
         </div>
         <div class="form-body">
             <div class="form-group row">
-              <label class="col-md-3 label-control" for="createdBy">Created By</label>
-              <div class="col-md-9">
+              <label class="col-md-4 label-control" for="createdBy">Created By</label>
+              <div class="col-md-6">
                 {{createdBy}}
               </div>
             </div>
         </div>
         <div class="form-body">
             <div class="form-group row">
-              <label class="col-md-3 label-control" for="modifiedDate">Last Modified Date</label>
-              <div class="col-md-9">
+              <label class="col-md-4 label-control" for="modifiedDate">Last Modified Date</label>
+              <div class="col-md-6">
                 <span *ngIf="f.modifiedDate">{{f.modifiedDate.value | date: 'MMM d, y h:mm:ss a'}}</span>
               </div>
             </div>
         </div>
         <div class="form-body">
             <div class="form-group row">
-              <label class="col-md-3 label-control" for="modifiedBy">Last Modified By</label>
-              <div class="col-md-9">
+              <label class="col-md-4 label-control" for="modifiedBy">Last Modified By</label>
+              <div class="col-md-6">
                 {{modifiedBy}}
               </div>
             </div>
         </div>
         <div class="form-body">
             <div class="form-group row">
-              <label class="col-md-3 label-control" for="status">Status</label>
-              <div class="col-md-9">
+              <label class="col-md-4 label-control" for="status">Status</label>
+              <div class="col-md-6">
                 <span *ngIf="isRecordActive">Active</span>
                 <span *ngIf="!isRecordActive">Inactive</span>
               </div>
@@ -83,8 +83,8 @@
         </div>
         <div class="form-body">
             <div class="form-group row">
-              <label class="col-md-3 label-control">&nbsp;</label>
-              <div class="col-md-9">
+              <label class="col-md-4 label-control">&nbsp;</label>
+              <div class="col-md-6">
                 <button type="button" class="btn btn-raised btn-success mr-2" (click)="showEditForm()">
                   <i class="fa fa-check-square-o"></i> Edit
                 </button>
@@ -97,56 +97,56 @@
         </form>
       </div>
 
-      <div *ngIf="newForm == true || editForm == true" class="col-md-6">
+      <div *ngIf="newForm == true || editForm == true" class="col-md-12">
         <div class="card">
           <div class="card-content">
             <div class="px-3">
               <form class="form form-horizontal" [formGroup]="currentForm" >
-                
+
                 <input *ngIf="editForm" type="hidden" formControlName="id" >
-                
+
                 <div class="form-body">
                   <div class="form-group row">
-                    <label class="col-md-3 label-control">&nbsp;</label>
-                    <div class="col-md-9">
+                    <label class="col-md-4 label-control">&nbsp;</label>
+                    <div class="col-md-6">
                       <ngb-alert type="danger" [dismissible]="false" *ngIf="genericError">Unable to update profile. Try again.</ngb-alert>
                       Fields with <span class="px-required">*</span> are required.
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-md-3 label-control" for="name">Course Name <span class="px-required">*</span></label>
-                    <div class="col-md-9">
+                    <label class="col-md-4 label-control" for="name">Course Name <span class="px-required">*</span></label>
+                    <div class="col-md-6">
                       <input  formControlName="name"  type="text" id="name" class="form-control" name="name"  [ngClass]="{ 'is-invalid': (f.name.dirty || f.name.touched || submitted) && f.name.invalid && f.name.errors.required}">
                       <small *ngIf="(f.name.dirty || f.name.touched || submitted) && f.name.invalid && f.name.errors.required" class="form-text text-muted danger">Course name required</small>
                     </div>
                   </div>
 
                   <div class="form-group row">
-                    <label class="col-md-3 label-control" for="description">Description </label>
-                    <div class="col-md-9">
+                    <label class="col-md-4 label-control" for="description">Description </label>
+                    <div class="col-md-6">
                       <textarea  formControlName="description"  type="text" id="description" class="form-control" name="description"></textarea>
                     </div>
                   </div>
 
                   <div class="form-group row">
-                    <label class="col-md-3 label-control" for="fee">Fee <span class="px-required">*</span></label>
-                    <div class="col-md-9">
+                    <label class="col-md-4 label-control" for="fee">Fee <span class="px-required">*</span></label>
+                    <div class="col-md-6">
                       <input  formControlName="fee"  type="text" id="fee" class="form-control" name="fee"  [ngClass]="{ 'is-invalid': (f.fee.dirty || f.fee.touched || submitted) && f.fee.invalid && f.fee.errors.required}">
                       <small *ngIf="(f.fee.dirty || f.fee.touched || submitted) && f.fee.invalid && f.fee.errors.required" class="form-text text-muted danger">Course fee required</small>
                     </div>
                   </div>
 
                   <div class="form-group row">
-                    <label class="col-md-3 label-control" for="eventRegInput4">Number of Days <span class="px-required">*</span></label>
-                    <div class="col-md-9">
+                    <label class="col-md-4 label-control" for="eventRegInput4">Number of Days <span class="px-required">*</span></label>
+                    <div class="col-md-6">
                       <input formControlName="days"  type="text" id="days" class="form-control" name="days"  [ngClass]="{ 'is-invalid': (f.days.dirty || f.days.touched || submitted) && f.days.invalid && f.days.errors.required}">
                       <small *ngIf="(f.days.dirty || f.days.touched || submitted) && f.days.invalid && f.days.errors.required" class="form-text text-muted danger">Number of days required</small>
                     </div>
                   </div>
 
                   <div *ngIf="editForm" class="form-group row">
-                    <label class="col-md-3 label-control" for="status">Active <span class="px-required">*</span></label>
-                    <div class="col-md-3">
+                    <label class="col-md-4 label-control" for="status">Active <span class="px-required">*</span></label>
+                    <div class="col-md-6">
                       <input type="hidden" formControlName="status">
                       <div class="custom-control custom-checkbox d-inline-block">
                         <input type="checkbox" id="active" (change)="activeCheckbox($event)" [checked]="isRecordActive" name="active" class="custom-control-input" style="zoom: 2;">
@@ -156,9 +156,9 @@
                   </div>
 
                   <div class="form-group row">
-                    <label class="col-md-3 label-control" for="eventRegInput4">&nbsp;</label>
-                    <div class="col-md-9">
-                      
+                    <label class="col-md-4 label-control" for="eventRegInput4">&nbsp;</label>
+                    <div class="col-md-6">
+
                       <button *ngIf="editForm" type="button" class="btn btn-raised btn-success mr-2" (click)="update()">
                         <i class="fa fa-check-square-o"></i> Save Changes
                       </button>
@@ -170,7 +170,7 @@
                       </button>
                     </div>
                   </div>
-                  
+
                 </div>
               </form>
             </div>
@@ -180,7 +180,7 @@
     </div>
   </div>
 </div>
-
+</div>
 
 
 <!-- // Form actions layout section end -->

@@ -47,7 +47,6 @@ export class CourseParticipantListComponent {
 	ngOnChanges(changes: SimpleChanges) {
 		if (changes['courseScheduleId'] && changes['courseScheduleId'].currentValue) {
 			this.getParticipants(changes['courseScheduleId'].currentValue).then(e=>{
-				console.log(e);
 			});
         }
     }
@@ -61,7 +60,6 @@ export class CourseParticipantListComponent {
 			.toPromise()
 			.then(
 				res => {
-					console.log(res);
 					resolve(res);
 				},
 				msg => {

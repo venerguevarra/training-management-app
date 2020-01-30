@@ -1,10 +1,5 @@
-<div class="card">
-  <div class="card-header" style="padding-top: 10px;">
-    <h2><strong>{{title}}</strong></h2>
-  </div>
-</div>
-
-
+<div class="container">
+<h4><strong>{{title}}</strong></h4>
 <div class="card">
   <div class="card-header px-header-color" style="background-color: #ECEFF1;">
     <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
@@ -97,12 +92,14 @@
             <table id="course-table" class="table table-striped">
               <thead>
                 <tr>
-                  <th scope="col" style="width:20%;">Course</th>
+                  <th scope="col" style="width:15%;">Course</th>
                   <th scope="col" style="width:15%;">Venue</th>
-                  <th scope="col" style="width:10%;">Start Date</th>
-                  <th scope="col" style="width:10%;">End Date</th>
+                  <th scope="col" style="width:10%;">Target #</th>
+                  <th scope="col" style="width:10%;">Actual #</th>
+                  <th scope="col" style="width:15%;">Start Date</th>
+                  <th scope="col" style="width:15%;">End Date</th>
                   <th scope="col" style="width:15%;">Status</th>
-                  <th scope="col" style="width:10%;text-align: center;">Actions</th>
+                  <th scope="col" style="width:5%;text-align: center;">Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -112,6 +109,12 @@
                   </td>
                   <td scope="row">
                     <app-venue-detail [id]="row.venueId"></app-venue-detail>
+                  </td>
+                  <td scope="row">
+                    {{row.registeredParticipants}}
+                  </td>
+                  <td scope="row">
+                    {{row.actualRegisteredParticipants || 0}}
                   </td>
                   <td scope="row">{{row.startDate | date: 'MMM d,y'}}</td>
                   <td scope="row">{{row.endDate | date: 'MMM d,y'}}</td>
@@ -152,5 +155,5 @@
       </div>
     </div>
   </div>
-
 </section>
+</div>

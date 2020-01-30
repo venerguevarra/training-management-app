@@ -48,7 +48,6 @@ export class AccountSelectComponent {
         if($event) {
             this.selectedId = $event.id;
             this.selectedIdEmitter.emit($event.data);
-            console.log("a", $event);
         }
     }
 

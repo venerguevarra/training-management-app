@@ -1,3 +1,4 @@
+<div class="container">
 <h4 class="card-title pt-2" id="basic-layout-form"><span *ngIf="newForm"></span>{{title}} Details</h4>
 
 <div class="row" [hidden]="!editForm">
@@ -28,15 +29,16 @@
                   <label class="col-md-4 label-control" for="name">Deal<span class="px-required">*</span></label>
                   <div class="col-md-4">
                     <input type="hidden" formControlName="accountId">
-                    <app-deal-select [accountId]="accountId" (selectedIdEmitter)="onDealSelected($event)" [isInvalid]="isDealIdInvalid" [selectedDeal]="selectedDealId"></app-deal-select>
-                    <small *ngIf="isDealIdInvalid" class="form-text text-muted danger">Deal inquired required</small>
+                    <span *ngIf="editForm">{{currentDealName}}</span>
+                    <app-deal-select *ngIf="newForm" [accountId]="accountId" (selectedIdEmitter)="onDealSelected($event)" [isInvalid]="isDealIdInvalid" [selectedDeal]="selectedDealId"></app-deal-select>
+                    <small *ngIf="isDealIdInvalid && newForm" class="form-text text-muted danger">Deal required</small>
                   </div>
                 </div>
 
+                <input type="hidden" formControlName="accountId">
                 <div class="form-group row">
                   <label class="col-md-4 label-control" for="name">Available Schedules<span class="px-required">*</span></label>
                   <div class="col-md-4">
-                    <input type="hidden" formControlName="accountId">
                     <app-schedule-select [courseId]="selectedCourseId" (scheduleEmitter)="onScheduleLoaded($event)" (selectedIdEmitter)="onCourseScheduleSelected($event)" [isInvalid]="isScheduleIdValid" [selectedSchedule]="selectedScheduleId"></app-schedule-select>
                     <small *ngIf="isDealIdInvalid" class="form-text text-muted danger">Schedule required</small>
                   </div>
@@ -131,7 +133,6 @@
                   <label class="col-md-4 label-control" for="name">Deal<span class="px-required">*</span></label>
                   <div class="col-md-4">
                     <input type="hidden" formControlName="accountId">
-                    {{selectedDealId}}
                     <app-deal-select [accountId]="accountId" (selectedIdEmitter)="onDealSelected($event)" [isInvalid]="isDealIdInvalid" [selectedDeal]="selectedDealId"></app-deal-select>
                     <small *ngIf="isDealIdInvalid" class="form-text text-muted danger">Deal required</small>
                   </div>
@@ -292,4 +293,5 @@
       </div>
     </div>
   </div>
+</div>
 </div>

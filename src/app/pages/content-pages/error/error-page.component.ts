@@ -13,12 +13,9 @@ export class ErrorPageComponent {
         private route: ActivatedRoute,
     ) {
         this.route.queryParams.subscribe(params => {
-            console.log(params);
-
                 let message = params.message;
 
                 if(message == 'invalid_token') {
-                    console.log(message)
                     this.errorMessage = "Unauthorized registration token."
                 }
 

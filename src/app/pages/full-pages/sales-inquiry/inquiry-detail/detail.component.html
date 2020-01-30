@@ -1,84 +1,82 @@
+<div class="container">
+<h4 *ngIf="!newForm">{{title}} Details</h4>
+<h4 *ngIf="newForm">New {{title}}</h4>
+
 <div class="card">
-
-  <div class="card-header" style="background-color: #ECEFF1;">
-    <h3 *ngIf="!newForm">{{title}} Details</h3>
-    <h3 *ngIf="newForm">New {{title}}</h3>
-  </div>
-
   <div class="card-body">
-    <div class="row justify-content-md-center">
+    <div class="row">
       <!-- view form start -->
-      <div *ngIf="newForm == false && viewForm == true" class="col-md-6">
+      <div *ngIf="newForm == false && viewForm == true" class="col-md-12">
         <form class="form form-horizontal striped-rows">
         <br/>
         <div class="form-body">
             <div class="form-group row">
-              <label class="col-md-3 label-control" for="name">First Name</label>
-              <div class="col-md-9">
+              <label class="col-md-4 label-control" for="name">First Name</label>
+              <div class="col-md-4">
                 {{f.firstName.value}}
               </div>
             </div>
         </div>
         <div class="form-body">
             <div class="form-group row">
-              <label class="col-md-3 label-control" for="name">Last Name</label>
-              <div class="col-md-9">
+              <label class="col-md-4 label-control" for="name">Last Name</label>
+              <div class="col-md-4">
                 {{f.lastName.value}}
               </div>
             </div>
         </div>
         <div class="form-body">
           <div class="form-group row">
-            <label class="col-md-3 label-control" for="name">Middle Initial</label>
-            <div class="col-md-9">
+            <label class="col-md-4 label-control" for="name">Middle Initial</label>
+            <div class="col-md-4">
               {{f.middleInitial.value}}
             </div>
           </div>
       </div>
       <div class="form-body">
         <div class="form-group row">
-          <label class="col-md-3 label-control" for="name">Company Name</label>
-          <div class="col-md-9">
+          <label class="col-md-4 label-control" for="name">Company Name</label>
+          <div class="col-md-4">
             {{f.companyName.value}}
           </div>
         </div>
     </div>
     <div class="form-body">
       <div class="form-group row">
-        <label class="col-md-3 label-control" for="name">Office Address</label>
-        <div class="col-md-9">
+        <label class="col-md-4 label-control" for="name">Office Address</label>
+        <div class="col-md-4">
           {{f.lastName.value}}
         </div>
       </div>
   </div>
   <div class="form-body">
     <div class="form-group row">
-      <label class="col-md-3 label-control" for="name">Designation</label>
-      <div class="col-md-9">
+      <label class="col-md-4 label-control" for="name">Designation</label>
+      <div class="col-md-4">
         {{f.designation.value}}
       </div>
     </div>
 </div>
 <div class="form-body">
   <div class="form-group row">
-    <label class="col-md-3 label-control" for="name">Email</label>
-    <div class="col-md-9">
+    <label class="col-md-4 label-control" for="name">Email</label>
+    <div class="col-md-4">
       {{f.email.value}}
     </div>
   </div>
 </div>
 <div class="form-body">
   <div class="form-group row">
-    <label class="col-md-3 label-control" for="name">Mobile Number</label>
-    <div class="col-md-9">
+    <label class="col-md-4 label-control" for="name">Mobile Number</label>
+    <div class="col-md-4">
       {{f.mobileNumber.value}}
     </div>
   </div>
 </div>
 <div class="form-body">
   <div class="form-group row">
-    <label class="col-md-3 label-control" for="name">Office Address</label>
-    <div class="col-md-9">
+    <label class="col-md-4 label-control" for="name">Office Address</label>
+    <div class="col-md-4">
       {{f.officeAddress.value}}
     </div>
   </div>
@@ -86,8 +84,8 @@
 
 <div class="form-body">
   <div class="form-group row">
-    <label class="col-md-3 label-control" for="name">Office Number</label>
-    <div class="col-md-9">
+    <label class="col-md-4 label-control" for="name">Office Number</label>
+    <div class="col-md-4">
       {{f.officeNumber.value}}
     </div>
   </div>
@@ -95,8 +93,8 @@
 
 <div class="form-body">
   <div class="form-group row">
-    <label class="col-md-3 label-control" for="name">Fax Number</label>
-    <div class="col-md-9">
+    <label class="col-md-4 label-control" for="name">Fax Number</label>
+    <div class="col-md-4">
       {{f.faxNumber.value}}
     </div>
   </div>
@@ -104,8 +102,8 @@
 
 <div class="form-body">
   <div class="form-group row">
-    <label class="col-md-3 label-control" for="name">Course</label>
-    <div class="col-md-9">
+    <label class="col-md-4 label-control" for="name">Course</label>
+    <div class="col-md-4">
       {{courseName}}
     </div>
   </div>
@@ -113,8 +111,8 @@
 
 <div class="form-body">
   <div class="form-group row">
-    <label class="col-md-3 label-control" for="name">Inquiry Channel</label>
-    <div class="col-md-9">
+    <label class="col-md-4 label-control" for="name">Inquiry Channel</label>
+    <div class="col-md-4">
       {{f.inquiryChannel.value}}
     </div>
   </div>
@@ -122,8 +120,8 @@
 
 <div class="form-body">
   <div class="form-group row">
-    <label class="col-md-3 label-control" for="createdDate">Date of Inquiry</label>
-    <div class="col-md-9">
+    <label class="col-md-4 label-control" for="createdDate">Date of Inquiry</label>
+    <div class="col-md-4">
       <span *ngIf="f.createdDate">{{dateOfInquiryView | date: 'MMM d, y'}}</span>
     </div>
   </div>
@@ -131,8 +129,8 @@
 
 <div class="form-body">
   <div class="form-group row">
-    <label class="col-md-3 label-control" for="name">Inquiry Status</label>
-    <div class="col-md-9">
+    <label class="col-md-4 label-control" for="name">Inquiry Status</label>
+    <div class="col-md-4">
       {{f.inquiryStatus.value}}
     </div>
   </div>
@@ -140,8 +138,8 @@
 
 <div class="form-body">
   <div class="form-group row">
-    <label class="col-md-3 label-control" for="name">Comment</label>
-    <div class="col-md-9">
+    <label class="col-md-4 label-control" for="name">Comment</label>
+    <div class="col-md-4">
       {{f.comment.value}}
     </div>
   </div>
@@ -149,8 +147,8 @@
 
 <div class="form-body">
   <div class="form-group row">
-    <label class="col-md-3 label-control" for="name">Account Manager</label>
-    <div class="col-md-9">
+    <label class="col-md-4 label-control" for="name">Account Manager</label>
+    <div class="col-md-4">
       {{accountManager}}
     </div>
   </div>
@@ -158,40 +156,40 @@
 
         <div class="form-body">
             <div class="form-group row">
-              <label class="col-md-3 label-control" for="createdDate">Date Created</label>
-              <div class="col-md-9">
+              <label class="col-md-4 label-control" for="createdDate">Date Created</label>
+              <div class="col-md-4">
                 <span *ngIf="f.createdDate">{{f.createdDate.value | date: 'MMM d, y h:mm:ss a'}}</span>
               </div>
             </div>
         </div>
         <div class="form-body">
             <div class="form-group row">
-              <label class="col-md-3 label-control" for="createdBy">Created By</label>
-              <div class="col-md-9">
+              <label class="col-md-4 label-control" for="createdBy">Created By</label>
+              <div class="col-md-4">
                 {{createdBy}}
               </div>
             </div>
         </div>
         <div class="form-body">
             <div class="form-group row">
-              <label class="col-md-3 label-control" for="modifiedDate">Last Modified Date</label>
-              <div class="col-md-9">
+              <label class="col-md-4 label-control" for="modifiedDate">Last Modified Date</label>
+              <div class="col-md-4">
                 <span *ngIf="f.modifiedDate">{{f.modifiedDate.value | date: 'MMM d, y h:mm:ss a'}}</span>
               </div>
             </div>
         </div>
         <div class="form-body">
             <div class="form-group row">
-              <label class="col-md-3 label-control" for="modifiedBy">Last Modified By</label>
-              <div class="col-md-9">
+              <label class="col-md-4 label-control" for="modifiedBy">Last Modified By</label>
+              <div class="col-md-4">
                 {{modifiedBy}}
               </div>
             </div>
         </div>
         <div class="form-body">
             <div class="form-group row">
-              <label class="col-md-3 label-control">&nbsp;</label>
-              <div class="col-md-9">
+              <label class="col-md-4 label-control">&nbsp;</label>
+              <div class="col-md-4">
                 <button type="button" class="btn btn-raised btn-success mr-2" (click)="showEditForm()">
                   <i class="fa fa-check-square-o"></i> Edit
                 </button>
@@ -206,7 +204,7 @@
       <!-- view form end -->
 
       <!-- new form and edit form start -->
-      <div *ngIf="newForm == true || editForm == true" class="col-md-6">
+      <div *ngIf="newForm == true || editForm == true" class="col-md-12">
 
         <div class="card">
           <div class="card-content">
@@ -216,17 +214,16 @@
                 <input *ngIf="editForm" type="hidden" formControlName="id">
 
                 <div class="form-body">
-
                   <div class="form-group row">
                     <label class="col-md-4 label-control">&nbsp;</label>
-                    <div class="col-md-8">
+                    <div class="col-md-4">
                       <ngb-alert type="danger" [dismissible]="false" *ngIf="genericError">Unable to update information. Try again.</ngb-alert>
                       Fields with <span class="px-required">*</span> are required.
                     </div>
                   </div>
                   <div class="form-group row">
                     <label class="col-md-4 label-control" for="name">First Name<span class="px-required">*</span></label>
-                    <div class="col-md-8">
+                    <div class="col-md-4">
                       <input  formControlName="firstName"  type="text" id="firstName" class="form-control" name="firstName"  [ngClass]="{ 'is-invalid': isInvalid(f.firstName)}">
                       <small *ngIf="(f.firstName.dirty || f.firstName.touched || submitted) && f.firstName.invalid && f.firstName.errors.required" class="form-text text-muted danger">
                         First name required
@@ -235,7 +232,7 @@
                   </div>
                   <div class="form-group row">
                     <label class="col-md-4 label-control" for="name">Last Name<span class="px-required">*</span></label>
-                    <div class="col-md-8">
+                    <div class="col-md-4">
                       <input  formControlName="lastName"  type="text" id="lastName" class="form-control" name="lastName"  [ngClass]="{ 'is-invalid': isInvalid(f.lastName)}">
                       <small *ngIf="(f.lastName.dirty || f.lastName.touched || submitted) && f.lastName.invalid && f.lastName.errors.required" class="form-text text-muted danger">
                         Last name required
@@ -244,13 +241,13 @@
                   </div>
                   <div class="form-group row">
                     <label class="col-md-4 label-control" for="name">Middle Initial</label>
-                    <div class="col-md-8">
+                    <div class="col-md-4">
                       <input  formControlName="middleInitial"  type="text" id="middleInitial" class="form-control" name="middleInitial">
                     </div>
                   </div>
                   <div class="form-group row">
                     <label class="col-md-4 label-control" for="name">Company Name<span class="px-required">*</span></label>
-                    <div class="col-md-8">
+                    <div class="col-md-4">
                       <input  formControlName="companyName"  type="text" id="companyName" class="form-control" name="companyName"  [ngClass]="{ 'is-invalid': isInvalid(f.companyName)}">
                       <small *ngIf="(f.companyName.dirty || f.companyName.touched || submitted) && f.companyName.invalid && f.companyName.errors.required" class="form-text text-muted danger">
                         Company name required
@@ -259,7 +256,7 @@
                   </div>
                   <div class="form-group row">
                     <label class="col-md-4 label-control" for="name">Course Inquired<span class="px-required">*</span></label>
-                    <div class="col-md-8">
+                    <div class="col-md-4">
                       <input type="hidden" formControlName="courseId">
                       <app-course-select (selectedIdEmitter)="onCourseSelected($event)" [isInvalid]="isCourseIdInvalid" [selectedCourse]="selectedCourse"></app-course-select>
                       <small *ngIf="isCourseIdInvalid" class="form-text text-muted danger">Course inquired required</small>
@@ -267,7 +264,7 @@
                   </div>
                   <div class="form-group row">
                     <label class="col-md-4 label-control" for="name">Account Manager<span class="px-required">*</span></label>
-                    <div class="col-md-8">
+                    <div class="col-md-4">
                       <input type="hidden" formControlName="accountManager">
                       <app-account-manager-select (selectedIdEmitter)="onAccountManagerSelected($event)" [selectedAccountManager]="selectedAccountManager" [isInvalid]="isAccountManagerIdInvalid"></app-account-manager-select>
                       <small *ngIf="isAccountManagerIdInvalid" class="form-text text-muted danger">Account manager required</small>
@@ -275,19 +272,19 @@
                   </div>
                   <div class="form-group row">
                     <label class="col-md-4 label-control" for="name">Office Address</label>
-                    <div class="col-md-8">
+                    <div class="col-md-4">
                       <textarea  formControlName="officeAddress"  type="text" id="officeAddress" class="form-control" name="officeAddress"></textarea>
                     </div>
                   </div>
                   <div class="form-group row">
                     <label class="col-md-4 label-control" for="name">Designation</label>
-                    <div class="col-md-8">
+                    <div class="col-md-4">
                       <input  formControlName="designation"  type="text" id="designation" class="form-control" name="designation">
                     </div>
                   </div>
                   <div class="form-group row">
                     <label class="col-md-4 label-control" for="name">Email<span class="px-required">*</span></label>
-                    <div class="col-md-8">
+                    <div class="col-md-4">
                       <input  formControlName="email"  type="text" id="email" class="form-control" name="email"  [ngClass]="{ 'is-invalid': isInvalid(f.email)}">
                       <small *ngIf="(f.email.dirty || f.email.touched || submitted) && f.email.invalid && f.email.errors.required" class="form-text text-muted danger">
                         Email required
@@ -296,7 +293,7 @@
                   </div>
                   <div class="form-group row">
                     <label class="col-md-4 label-control" for="name">Mobile Number<span class="px-required">*</span></label>
-                    <div class="col-md-8">
+                    <div class="col-md-4">
                       <input  formControlName="mobileNumber"  type="text" id="mobileNumber" class="form-control" name="mobileNumber"  [ngClass]="{ 'is-invalid': isInvalid(f.mobileNumber)}">
                       <small *ngIf="(f.mobileNumber.dirty || f.mobileNumber.touched || submitted) && f.mobileNumber.invalid && f.mobileNumber.errors.required" class="form-text text-muted danger">
                         Mobile number required
@@ -305,19 +302,19 @@
                   </div>
                   <div class="form-group row">
                     <label class="col-md-4 label-control" for="name">Office Number</label>
-                    <div class="col-md-8">
+                    <div class="col-md-4">
                       <input  formControlName="officeNumber"  type="text" id="officeNumber" class="form-control" name="officeNumber">
                     </div>
                   </div>
                   <div class="form-group row">
                     <label class="col-md-4 label-control" for="name">Fax Number</label>
-                    <div class="col-md-8">
+                    <div class="col-md-4">
                       <input  formControlName="faxNumber"  type="text" id="faxNumber" class="form-control" name="faxNumber">
                     </div>
                   </div>
                   <div class="form-group row">
                     <label class="col-md-4 label-control" for="name">Inquiry Channel<span class="px-required">*</span></label>
-                    <div class="col-md-8">
+                    <div class="col-md-4">
                       <input type="hidden" formControlName="inquiryChannel">
                       <app-channel-select (selectedIdEmitter)="onChannelSelected($event)" [selectedChannel]="selectedChannel" [isInvalid]="isChannelInvalid"></app-channel-select>
                       <small *ngIf="isChannelInvalid" class="form-text text-muted danger">Inquiry channel required</small>
@@ -325,7 +322,7 @@
                   </div>
                   <div class="form-group row">
                     <label class="col-md-4 label-control" for="name">Inquiry Date<span class="px-required">*</span></label>
-                    <div class="col-md-8">
+                    <div class="col-md-4">
                       <div class="input-group">
                         <input
                               name="dateOfInquiry"
@@ -347,14 +344,14 @@
                   <!--<input type="hidden" formControlName="inquiryStatus" [value]="defaultInquiryStatus">-->
                   <div class="form-group row">
                     <label class="col-md-4 label-control" for="name">Comment</label>
-                    <div class="col-md-8">
+                    <div class="col-md-4">
                       <textarea  formControlName="comment"  type="text" id="comment" class="form-control" name="comment"></textarea>
                     </div>
                   </div>
 
                   <div class="form-group row">
                     <label class="col-md-4 label-control" for="name">Inquiry Status</label>
-                    <div class="col-md-8">
+                    <div class="col-md-4">
                       <select formControlName="inquiryStatus" class="custom-select">
                         <option value="ASSIGNED">Assigned</option>
                         <option value="ATTEMPTED_TO_CONTACT">Attempted to Contact</option>
@@ -368,7 +365,7 @@
 
                   <div class="form-group row">
                     <label class="col-md-4 label-control" for="eventRegInput4">&nbsp;</label>
-                    <div class="col-md-8">
+                    <div class="col-md-4">
                       <button *ngIf="editForm" type="button" class="btn btn-raised btn-success mr-2" (click)="update()">
                         <i class="fa fa-check-square-o"></i> Save Changes
                       </button>
@@ -390,5 +387,5 @@
       <!-- new form and edit form end -->
     </div>
   </div>
-
+</div>
 </div>

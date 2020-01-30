@@ -119,9 +119,9 @@
                     <span *ngIf="row.stage === 'PROPOSAL'">PROPOSAL</span>
                     <span *ngIf="row.stage === 'CANCELLED'">CANCELLED</span>
                     <span *ngIf="row.stage === 'CLOSING'">CLOSING</span>
-                    <span *ngIf="row.stage === 'CLOSED_WON'">CLOSED WON</span>
-                    <span *ngIf="row.stage === 'CLOSED_LOST'">CLOSED LOST</span>
-                    <span *ngIf="row.stage === 'CLOSED_LOST_TO_COMPETITION'">CLOSED WON TO COMPETITION</span>
+                    <span *ngIf="row.stage === 'CLOSED_WON'">WON</span>
+                    <span *ngIf="row.stage === 'CLOSED_LOST'">LOST</span>
+                    <span *ngIf="row.stage === 'CLOSED_LOST_TO_COMPETITION'">LOST TO COMPETITION</span>
                   </td>
                   <td scope="row">{{row.createdDate | date: 'MMM d,y'}}</td>
                   <td scope="row" style="text-align: center;">

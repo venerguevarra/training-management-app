@@ -1,9 +1,5 @@
-<div class="card">
-  <div class="card-header" style="padding-top: 10px;">
-    <h2><strong>{{title}}</strong></h2>
-  </div>
-</div>
-
+<div class="container">
+<h4><strong>{{title}}</strong></h4>
 <div class="card">
 
   <div class="card-header px-header-color" style="background-color: #ECEFF1;">
@@ -115,9 +111,6 @@
                         class="ft-eye"></i></a>
                     <a [routerLink]="['/app/account', row.id]" [queryParams]="{action: 'edit'}" placement="top"
                       ngbTooltip="Edit"><i class="ft-edit-2 mr-2"></i></a>
-                    <!--
-                      <a [routerLink]="['/app/contact', -1]" [queryParams]="{accountId: row.id}" placement="top"
-                      ngbTooltip="Add Contact"><i class="ft-user-plus"></i></a>-->
                   </td>
                 </tr>
               </tbody>
@@ -144,12 +137,5 @@
       </div>
     </div>
   </div>
-
-
-  <!--
-  <p>You can pass an existing component as content of the modal window. In this case remember to add content component
-    as an <code>entryComponents</code> section of your <code>NgModule</code>.</p>
-
-    <button class="btn btn-lg btn-outline-primary" (click)="open()">Launch demo modal</button>
--->
 </section>
+</div>

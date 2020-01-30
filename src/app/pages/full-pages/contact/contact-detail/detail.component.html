@@ -1,121 +1,123 @@
+
+<div class="container">
+<h4 *ngIf="viewForm">{{accountName}} Details</h4>
+
 <div class="card" *ngIf="viewForm">
-  <div class="card-header" style="background-color: #ECEFF1;">
-    <h3>{{accountName}} Details</h3>
-  </div>
+
   <div class="card-body">
     <div class="row text-left justify-content-md-center">
       <!-- view form start -->
-      <div *ngIf="newForm == false && viewForm == true" class="col-md-6">
+      <div *ngIf="newForm == false && viewForm == true" class="col-md-12">
         <form class="form form-horizontal striped-rows">
           <br />
           <div class="form-body">
             <div class="form-group row">
-              <label class="col-md-3 label-control" for="name">Account Name</label>
-              <div class="col-md-9">
+              <label class="col-md-4 label-control" for="name">Account Name</label>
+              <div class="col-md-6">
                 {{accountName}}
               </div>
             </div>
           </div>
           <div class="form-body">
             <div class="form-group row">
-              <label class="col-md-3 label-control" for="name">First Name</label>
-              <div class="col-md-9">
+              <label class="col-md-4 label-control" for="name">First Name</label>
+              <div class="col-md-6">
                 {{f.firstName.value}}
               </div>
             </div>
           </div>
           <div class="form-body">
             <div class="form-group row">
-              <label class="col-md-3 label-control" for="name">Last Name</label>
-              <div class="col-md-9">
+              <label class="col-md-4 label-control" for="name">Last Name</label>
+              <div class="col-md-6">
                 {{f.lastName.value}}
               </div>
             </div>
           </div>
           <div class="form-body">
             <div class="form-group row">
-              <label class="col-md-3 label-control" for="name">Middle Initial</label>
-              <div class="col-md-9">
+              <label class="col-md-4 label-control" for="name">Middle Initial</label>
+              <div class="col-md-6">
                 {{f.middleInitial.value}}
               </div>
             </div>
           </div>
           <div class="form-body">
             <div class="form-group row">
-              <label class="col-md-3 label-control" for="name">Email</label>
-              <div class="col-md-9">
+              <label class="col-md-4 label-control" for="name">Email</label>
+              <div class="col-md-6">
                 {{f.email.value}}
               </div>
             </div>
           </div>
           <div class="form-body">
             <div class="form-group row">
-              <label class="col-md-3 label-control" for="name">Mobile Number</label>
-              <div class="col-md-9">
+              <label class="col-md-4 label-control" for="name">Mobile Number</label>
+              <div class="col-md-6">
                 {{f.mobileNumber.value}}
               </div>
             </div>
           </div>
           <div class="form-body">
             <div class="form-group row">
-              <label class="col-md-3 label-control" for="name">Designation</label>
-              <div class="col-md-9">
+              <label class="col-md-4 label-control" for="name">Designation</label>
+              <div class="col-md-6">
                 {{f.designation.value}}
               </div>
             </div>
           </div>
           <div class="form-body">
             <div class="form-group row">
-              <label class="col-md-3 label-control" for="name">Office Number</label>
-              <div class="col-md-9">
+              <label class="col-md-4 label-control" for="name">Office Number</label>
+              <div class="col-md-6">
                 {{f.officeNumber.value}}
               </div>
             </div>
           </div>
           <div class="form-body">
             <div class="form-group row">
-              <label class="col-md-3 label-control" for="name">Fax Number</label>
-              <div class="col-md-9">
+              <label class="col-md-4 label-control" for="name">Fax Number</label>
+              <div class="col-md-6">
                 {{f.faxNumber.value}}
               </div>
             </div>
           </div>
           <div class="form-body">
             <div class="form-group row">
-              <label class="col-md-3 label-control" for="createdDate">Date Created</label>
-              <div class="col-md-9">
+              <label class="col-md-4 label-control" for="createdDate">Date Created</label>
+              <div class="col-md-6">
                 <span *ngIf="f.createdDate">{{f.createdDate.value | date: 'MMM d, y h:mm:ss a'}}</span>
               </div>
             </div>
           </div>
           <div class="form-body">
             <div class="form-group row">
-              <label class="col-md-3 label-control" for="createdBy">Created By</label>
-              <div class="col-md-9">
+              <label class="col-md-4 label-control" for="createdBy">Created By</label>
+              <div class="col-md-6">
                 {{createdBy}}
               </div>
             </div>
           </div>
           <div class="form-body">
             <div class="form-group row">
-              <label class="col-md-3 label-control" for="modifiedDate">Last Modified Date</label>
-              <div class="col-md-9">
+              <label class="col-md-4 label-control" for="modifiedDate">Last Modified Date</label>
+              <div class="col-md-6">
                 <span *ngIf="f.modifiedDate">{{f.modifiedDate.value | date: 'MMM d, y h:mm:ss a'}}</span>
               </div>
             </div>
           </div>
           <div class="form-body">
             <div class="form-group row">
-              <label class="col-md-3 label-control" for="modifiedBy">Last Modified By</label>
-              <div class="col-md-9">
+              <label class="col-md-4 label-control" for="modifiedBy">Last Modified By</label>
+              <div class="col-md-6">
                 {{modifiedBy}}
               </div>
             </div>
           </div>
           <div class="form-body">
             <div class="form-group row">
-              <label class="col-md-3 label-control" for="status">Status</label>
-              <div class="col-md-9">
+              <label class="col-md-4 label-control" for="status">Status</label>
+              <div class="col-md-6">
                 <span *ngIf="isRecordActive">Active</span>
                 <span *ngIf="!isRecordActive">Inactive</span>
               </div>
@@ -123,8 +125,8 @@
           </div>
           <div class="form-body">
             <div class="form-group row">
-              <label class="col-md-3 label-control">&nbsp;</label>
-              <div class="col-md-9">
+              <label class="col-md-4 label-control">&nbsp;</label>
+              <div class="col-md-6">
                 <button type="button" class="btn btn-raised btn-success mr-2" (click)="showEditForm()">
                   <i class="fa fa-check-square-o"></i> Edit
                 </button>
@@ -141,16 +143,16 @@
   </div>
 </div>
 
-<div *ngIf="newForm == true || editForm == true" class="card">
-  <div class="card-header" style="background-color: #ECEFF1;">
-    <h3 *ngIf="editForm">{{accountName}} {{title}} Details</h3>
-    <h3 *ngIf="newForm">New {{title}}</h3>
-  </div>
 
+<h4 *ngIf="editForm">{{accountName}} {{title}} Details</h4>
+<h4 *ngIf="newForm">New {{title}}</h4>
+
+
+<div *ngIf="newForm == true || editForm == true" class="card">
   <div class="card-body">
     <div class="row text-left justify-content-md-center">
       <!-- new form and edit form start -->
-      <div *ngIf="newForm == true || editForm == true" class="col-md-6">
+      <div *ngIf="newForm == true || editForm == true" class="col-md-12">
         <div class="card">
           <div class="card-content">
             <div class="px-3">
@@ -160,21 +162,21 @@
                 <input type="hidden" formControlName="accountId">
                 <div class="form-body">
                   <div class="form-group row">
-                    <label class="col-md-3 label-control">&nbsp;</label>
-                    <div class="col-md-9">
+                    <label class="col-md-4 label-control">&nbsp;</label>
+                    <div class="col-md-6">
                       Fields with <span class="px-required">*</span> are required.
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-md-3 label-control" for="name">Account Name</label>
-                    <div class="col-md-9">
+                    <label class="col-md-4 label-control" for="name">Account Name</label>
+                    <div class="col-md-6">
                       {{accountName}}
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-md-3 label-control" for="name">First Name<span
+                    <label class="col-md-4 label-control" for="name">First Name<span
                         class="px-required">*</span></label>
-                    <div class="col-md-9">
+                    <div class="col-md-6">
                       <input formControlName="firstName" type="text" id="firstName" class="form-control"
                         name="firstName" [ngClass]="{ 'is-invalid': isInvalid(f.firstName)}">
                       <small
@@ -185,8 +187,8 @@
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-md-3 label-control" for="name">Last Name<span class="px-required">*</span></label>
-                    <div class="col-md-9">
+                    <label class="col-md-4 label-control" for="name">Last Name<span class="px-required">*</span></label>
+                    <div class="col-md-6">
                       <input formControlName="lastName" type="text" id="lastName" class="form-control" name="lastName"
                         [ngClass]="{ 'is-invalid': isInvalid(f.lastName)}">
                       <small
@@ -197,15 +199,15 @@
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-md-3 label-control" for="name">Middle Initial</label>
-                    <div class="col-md-9">
+                    <label class="col-md-4 label-control" for="name">Middle Initial</label>
+                    <div class="col-md-6">
                       <input formControlName="middleInitial" type="text" id="middleInitial" class="form-control"
                         name="middleInitial">
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-md-3 label-control" for="name">Email<span class="px-required">*</span></label>
-                    <div class="col-md-9">
+                    <label class="col-md-4 label-control" for="name">Email<span class="px-required">*</span></label>
+                    <div class="col-md-6">
                       <input formControlName="email" type="text" id="email" class="form-control" name="email"
                         [ngClass]="{ 'is-invalid': isInvalid(f.email)}">
                       <small
@@ -216,9 +218,9 @@
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-md-3 label-control" for="name">Mobile Number<span
+                    <label class="col-md-4 label-control" for="name">Mobile Number<span
                         class="px-required">*</span></label>
-                    <div class="col-md-9">
+                    <div class="col-md-6">
                       <input formControlName="mobileNumber" type="text" id="mobileNumber" class="form-control"
                         name="mobileNumber" [ngClass]="{ 'is-invalid': isInvalid(f.mobileNumber)}">
                       <small
@@ -229,23 +231,23 @@
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-md-3 label-control" for="name">Designation</label>
-                    <div class="col-md-9">
+                    <label class="col-md-4 label-control" for="name">Designation</label>
+                    <div class="col-md-6">
                       <input formControlName="designation" type="text" id="designation" class="form-control"
                         name="designation">
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-md-3 label-control" for="name">Office Number</label>
-                    <div class="col-md-9">
+                    <label class="col-md-4 label-control" for="name">Office Number</label>
+                    <div class="col-md-6">
                       <input formControlName="officeNumber" type="text" id="officeNumber" class="form-control"
                         name="officeNumber">
                     </div>
                   </div>
 
                   <div *ngIf="editForm" class="form-group row">
-                    <label class="col-md-3 label-control" for="status">Active <span class="px-required">*</span></label>
-                    <div class="col-md-3">
+                    <label class="col-md-4 label-control" for="status">Active <span class="px-required">*</span></label>
+                    <div class="col-md-6">
                       <input type="hidden" formControlName="status">
                       <div class="custom-control custom-checkbox d-inline-block">
                         <input type="checkbox" id="active" (change)="activeCheckbox($event)" [checked]="isRecordActive"
@@ -256,8 +258,8 @@
                   </div>
 
                   <div class="form-group row">
-                    <label class="col-md-3 label-control" for="eventRegInput4">&nbsp;</label>
-                    <div class="col-md-9">
+                    <label class="col-md-4 label-control" for="eventRegInput4">&nbsp;</label>
+                    <div class="col-md-6">
                       <button *ngIf="editForm" type="button" class="btn btn-raised btn-success mr-2" (click)="update()">
                         <i class="fa fa-check-square-o"></i> Save Changes
                       </button>
@@ -280,4 +282,5 @@
     </div>
   </div>
 
+</div>
 </div>
