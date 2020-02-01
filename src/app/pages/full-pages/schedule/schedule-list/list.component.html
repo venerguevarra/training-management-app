@@ -1,5 +1,5 @@
-<div class="container">
-<h4><strong>{{title}}</strong></h4>
+<div>
+<h4>{{title}}</h4>
 <div class="card">
   <div class="card-header px-header-color" style="background-color: #ECEFF1;">
     <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
@@ -25,7 +25,7 @@
           <div class="col-sm-12">
             <div class="row">
 
-              <div class="col-md-6 col-sm-12">
+              <div class="col-md-4">
                 <div class="form-group">
                   <label>Start Date</label>
                   <div class="input-group">
@@ -46,7 +46,7 @@
                 </div>
               </div>
 
-              <div class="col-md-6 col-sm-3">
+              <div class="col-md-4">
                 <div class="form-group">
                   <label>End Date</label>
                   <div class="input-group">
@@ -66,6 +66,21 @@
                   </div>
                 </div>
               </div>
+
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label>Status</label>
+                  <div class="input-group">
+                    <select formControlName="status" class="custom-select">
+                      <option value="SCHEDULE_WAITING">AWAITING CONFIRMATION</option>
+                      <option value="SCHEDULE_CONFIRMED">CONFIRMED</option>
+                      <option value="SCHEDULE_CANCELLED">CANCELLED</option>
+                      <option value="SCHEDULE_DELIVERED">DELIVERED</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
 
             </div>
             <div>

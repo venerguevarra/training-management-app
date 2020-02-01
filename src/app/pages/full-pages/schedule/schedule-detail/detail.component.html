@@ -1,5 +1,5 @@
 <!-- EDIT FORM -->
-<div class="container">
+<div>
 <h4 class="card-title pt-2" id="basic-layout-form"><span *ngIf="newForm"></span>{{title}} Details</h4>
 <div *ngIf="newForm == true || editForm == true" class="row">
   <div class="col-md-12">
@@ -75,72 +75,22 @@
                     </small>
                   </div>
                 </div>
-                <!--
-                <div class="form-group row">
-                  <label class="col-md-4 label-control" for="name">Total Cost</label>
-                  <div class="col-md-4">
-                      <span>{{revenueModel.scheduleCost || 0 | currency : 'PHP ' }}</span>
-                  </div>
-                </div>
-
-                <div class="form-group row">
-                  <label class="col-md-4 label-control" for="name">Gross Revenue</label>
-                  <div class="col-md-4">
-                    <span>{{revenueModel.grossRevenue || 0 | currency: 'PHP '}}</span>
-                  </div>
-              </div>
-
-              <div class="form-group row">
-                  <label class="col-md-4 label-control" for="name">Net Revenue</label>
-                  <div class="col-md-4">
-                    <span>{{revenueModel.netRevenue || 0 | currency: 'PHP '}}</span>
-                  </div>
-              </div>
-
-              <div class="form-group row">
-                <label class="col-md-4 label-control" for="name">Profit Margin</label>
-                <div class="col-md-4">
-                    <span>{{revenueModel.profitMargin || 0 | number : '1.2-2' }} %</span>
-                </div>
-              </div>
-                <div class="form-group row">
-                  <label class="col-md-4 label-control" for="name">Total Registration</label>
-                  <div class="col-md-4">
-                      <span>{{f.actualRegisteredParticipants.value || 0}}</span>
-                  </div>
-                </div>
-
-                <div class="form-group row">
-                    <label class="col-md-4 label-control" for="name">Actual Gross Revenue</label>
-                    <div class="col-md-4">
-                      <span>{{revenueModel.actualGrossRevenue || 0 | currency: 'PHP '}}</span>
-                    </div>
-                </div>
-                <div class="form-group row">
-                  <label class="col-md-4 label-control" for="name">Actual Net Revenue</label>
-                  <div class="col-md-4">
-                    <span>{{revenueModel.actualNetRevenue || 0 | currency: 'PHP '}}</span>
-                  </div>
-                </div>
-
-                <div class="form-group row">
-                  <label class="col-md-4 label-control" for="name">Actual Profit Margin</label>
-                  <div class="col-md-4">
-                      <span>{{revenueModel.actualProfitMargin || 0 | number : '1.2-2' }} %</span>
-                  </div>
-              </div>
-              -->
 
                 <div class="form-group row">
                   <label class="col-md-4 label-control" for="name">Status<span class="px-required">*</span></label>
                   <div *ngIf="editForm" class="col-md-4">
-                    <select *ngIf="editForm" formControlName="status" class="custom-select"
+                    <select *ngIf="editForm && currentScheduleStatus == 'SCHEDULE_WAITING'" formControlName="status" class="custom-select"
                       [ngClass]="{ 'is-invalid': isInvalid(f.status)}">
                       <option value="SCHEDULE_WAITING">AWAITING CONFIRMATION</option>
                       <option value="SCHEDULE_CONFIRMED">CONFIRMED</option>
                       <option value="SCHEDULE_CANCELLED">CANCELLED</option>
-                      <option value="SCHEDULE_DELIVERED">DELIVERED</option>
                     </select>
+                    <span *ngIf="currentScheduleStatus != 'SCHEDULE_WAITING'">
+                      <span *ngIf="editForm && f.status.value != 'SCHEDULE_WAITING' && f.status.value == 'SCHEDULE_CONFIRMED'">CONFIRMED</span>
+                      <span *ngIf="editForm && f.status.value != 'SCHEDULE_WAITING' && f.status.value == 'SCHEDULE_CANCELLED'">CANCELLED</span>
+                      <span *ngIf="editForm && f.status.value != 'SCHEDULE_WAITING' && f.status.value == 'SCHEDULE_DELIVERED'">DELIVERED</span>
+                      <input type="hidden" formControlName="status" *ngIf="editForm && f.status.value != 'SCHEDULE_WAITING'">
+                    </span>
                     <small
                       *ngIf="editForm && (f.status.dirty || f.status.touched || submitted) && f.status.invalid && f.status.errors.required"
                       class="form-text text-muted danger">
@@ -156,9 +106,7 @@
                   <label class="col-md-4 label-control" for="name">Inclusive Dates<span
                       class="px-required">*</span></label>
                   <div class="col-md-4">
-                    <ngb-datepicker #dp (select)="onDateSelection($event)" [displayMonths]="2" [dayTemplate]="t"
-                      outsideDays="hidden">
-                    </ngb-datepicker>
+                    <ngb-datepicker #dp (select)="onDateSelection($event)" [displayMonths]="2" [dayTemplate]="t" outsideDays="hidden" [startDate]="selectedStartDate"> </ngb-datepicker>
                     <ng-template #t let-date let-focused="focused">
                       <span class="custom-day" [class.focused]="focused" [class.range]="isRange(date)"
                         [class.faded]="isHovered(date) || isInside(date)" (mouseenter)="hoveredDate = date"
@@ -166,8 +114,7 @@
                         {{ date.day }}
                       </span>
                     </ng-template>
-                    <small *ngIf="isTrainingDateInvalid && submitted" class="form-text text-muted danger">Training date
-                      required</small>
+                    <small *ngIf="isTrainingDateInvalid && submitted" class="form-text text-muted danger">Training date required</small>
                   </div>
                 </div>
                 <div class="form-group row">
@@ -191,7 +138,7 @@
                 <div class="form-group row">
                   <label class="col-md-4 label-control" for="name">&nbsp;</label>
                   <div class="col-md-4">
-                    <button *ngIf="editForm" type="button" class="btn btn-raised btn-success mr-2" (click)="update()">
+                    <button *ngIf="editForm && currentScheduleStatus == 'SCHEDULE_WAITING'" type="button" class="btn btn-raised btn-success mr-2" (click)="update()">
                       <i class="fa fa-check-square-o"></i> Save Changes
                     </button>
                     <button *ngIf="newForm" type="button" class="btn btn-raised btn-success mr-2" (click)="saveNew()">
@@ -354,12 +301,8 @@
                 <div class="form-group row">
                   <label class="col-md-4 label-control">&nbsp;</label>
                   <div class="col-md-8">
-                    <button type="button" class="btn btn-raised btn-success mr-2" (click)="showEditForm()">
-                      <i class="fa fa-check-square-o"></i> Edit
-                    </button>
-                    <button type="button" class="btn btn-danger btn-raised" (click)="cancel()">
-                      <i class="ft-x"></i> Cancel
-                    </button>
+                    <button *ngIf="f.status.value == 'SCHEDULE_WAITING'" type="button" class="btn btn-raised btn-success mr-2" (click)="showEditForm()"><i class="fa fa-check-square-o"></i> Edit</button>
+                    <button type="button" class="btn btn-danger btn-raised" (click)="cancel()"><i class="ft-x"></i> Cancel</button>
                   </div>
                 </div>
               </div>
@@ -367,14 +310,15 @@
             </div>
           </form>
         </div>
+
+        <div class="m-3">
+          <app-course-participant-list [canEnroll]="currentScheduleStatus == 'SCHEDULE_CONFIRMED'" [courseScheduleId]="f.id.value"></app-course-participant-list>
+        </div>
       </div>
     </div>
   </div>
 </div>
 
-<div *ngIf="viewForm" class="row">
-  <app-course-participant-list [courseScheduleId]="f.id.value"></app-course-participant-list>
-</div>
 <app-facilitator-schedule *ngIf="editForm"
   [courseScheduleId]="f.id.value"
   [courseId]="f.courseId.value"
@@ -388,66 +332,3 @@
   [courseScheduleId]="f.id.value">
 </app-schedule-costings>
 </div>
-
-<!-- REVENUE  CARDS -->
-<!--
-    <div *ngIf="editForm" class="row justify-content-md-center">
-      <div class="card col-md-6 bg-warning white mr-1">
-        <div class="card-content">
-          <div class="px-3 py-3">
-            <div class="media">
-              <div class="media-body white text-left">
-                <h3 class="mb-1 white" style="color: white;">{{revenueModel.scheduleCost || 0 | currency: 'PHP '}} </h3>
-                <span class="white">Total Cost</span>
-              </div>
-              <div class="media-right align-self-center">
-                <i class="icon-pie-chart font-large-2 float-right"></i>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div *ngIf="editForm" class="row justify-content-md-center">
-      <div class="card col-md-3 bg-success white mr-1">
-        <div class="card-content">
-          <div class="px-3 py-3">
-            <div class="media">
-              <div class="media-body white text-left">
-                <h2 class="mb-1 white" style="color: white;">{{revenueModel.profitMargin || 0 }} %</h2>
-                <span class="white">Target Profit Margin</span>
-                <br/><br/>
-                <h3 class="mb-1 white" style="color: white;">{{revenueModel.grossRevenue || 0 | currency: 'PHP '}}</h3>
-                <span class="white">Target Gross Revenue</span>
-                <br/><br/>
-                <h3 class="mb-1 white" style="color: white;">{{revenueModel.netRevenue || 0 | currency: 'PHP '}}</h3>
-                <span class="white">Target Net Revenue</span>
-              </div>
-              <div class="media-right align-self-center">
-                <i class="icon-pie-chart font-large-2 float-right"></i>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div *ngIf="editForm" class="card col-md-3 bg-danger white mr-1">
-        <div class="card-content">
-          <div class="px-3 py-3">
-            <div class="media">
-              <div class="media-body white text-left">
-                <h2 class="mb-1 white" style="color: white;">{{revenueModel.actualProfitMargin || 0 }} %</h2>
-                <span class="white">Actual Profit Margin</span>
-                <br/><br/>
-                <h3 class="mb-1 white" style="color: white;">{{revenueModel.actualGrossRevenue || 0 | currency: 'PHP '}}</h3>
-                <span class="white">Actual Gross Revenue</span>
-                <br/><br/>
-                <h3 class="mb-1 white" style="color: white;">{{revenueModel.actualNetRevenue || 0 | currency: 'PHP '}}</h3>
-                <span class="white">Actual Net Revenue</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    -->
-<!-- end -->

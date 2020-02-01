@@ -12,18 +12,6 @@
                 <div class="col-sm-12">
                     <div class="card-content">
                       <div class="card-body" style="padding-top: 10px;">
-                        <div class="card black mr-1" style="background-color: #CFD8DC;">
-                          <div class="card-content">
-                            <div class="px-3 py-3">
-                              <div class="media">
-                                <div class="media-body black text-left">
-                                  <h3 class="mb-1 black" style="color: black;">{{getFacilitatorCost() || 0 | currency: 'PHP '}} </h3>
-                                  <span>Total Professional Fee</span>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
 
                         <form class="form" [formGroup]="facilitatorScheduleForm">
 
@@ -91,11 +79,16 @@
                               <td>{{item.rate || 0 | currency: 'PHP '}}</td>
                               <td>{{item.numberOfDays}}</td>
                               <td>{{item.totalProfessionalFee || 0 | currency: 'PHP '}}</td>
-                              <td>
+                              <td align="right">
                                 <button type="button" class="btn btn-raised btn-raised btn-danger mr-1" (click)="removeFacilitator(item.id, item.facilitatorId)">
                                   <i class="ft-x"></i> Remove
                                 </button>
                               </td>
+                            </tr>
+                            <tr>
+                              <td colspan="4">&nbsp;</td>
+                              <td colspan="1">{{getFacilitatorCost() || 0 | currency: 'PHP '}}</td>
+                              <td colspan="1">&nbsp;</td>
                             </tr>
                           </tbody>
                         </table>

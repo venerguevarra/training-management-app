@@ -1,4 +1,4 @@
-<div class="container">
+<div>
 <h4 class="card-title pt-2" id="basic-layout-form"><span *ngIf="newForm"></span>{{title}} Details</h4>
 
 <div class="row" [hidden]="!editForm">
@@ -236,7 +236,7 @@
              <div class="form-group row">
               <label class="col-md-4 label-control" for="name">Total Registrations</label>
               <div class="col-md-4">
-                  {{f.actualRegistrationCount.value}}
+                  {{f.registrationCount.value}}
               </div>
              </div>
 

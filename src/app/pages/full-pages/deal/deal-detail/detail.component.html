@@ -1,5 +1,5 @@
 
-<div class="container">
+<div>
   <h4 *ngIf="viewForm">{{f.name.value}} {{title}} Details</h4>
   <div *ngIf="viewForm" class="card">
 
@@ -302,6 +302,7 @@
                         <option value="CLOSING">Closing</option>
                       </select>
                       <span *ngIf="currentDealStatus == 'CLOSED_WON'">CLOSED WON</span>
+                      <span *ngIf="currentDealStatus == 'CANCELLED'">CANCELLED</span>
                       <small
                         *ngIf="editForm && (f.stage.dirty || f.stage.touched || submitted) && f.stage.invalid && f.stage.errors.required"
                         class="form-text text-muted danger">
@@ -352,7 +353,7 @@
                     <label class="col-md-4 label-control" for="status">&nbsp;</label>
                     <div class="col-md-6">
 
-                      <button *ngIf="editForm" type="button" class="btn btn-raised btn-success mr-2" (click)="update()">
+                      <button *ngIf="editForm && (currentDealStatus == 'CLOSING' || currentDealStatus == 'PROPOSAL')" type="button" class="btn btn-raised btn-success mr-2" (click)="update()">
                         <i class="fa fa-check-square-o"></i> Save Changes
                       </button>
                       <button *ngIf="newForm" type="button" class="btn btn-raised btn-success mr-2" (click)="saveNew()">

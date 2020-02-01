@@ -285,6 +285,10 @@ export class RegistrationDetailComponent {
                     "System",
                     { timeOut: 3000 }
                   );
+
+                  this.router.navigate(["/app/account", this.accountId], {
+                    queryParams: { action: "view" }
+                  });
                 }
               },
               error => {
@@ -312,12 +316,28 @@ export class RegistrationDetailComponent {
   }
 
   sendRegistrationEmail() {
-    this.referenceDataService.sendRegistrationEmail(this.modelId).subscribe(data=>{
-      this.toastr.success(`Success sent registration email to ${this.accountName}.`, "System", { timeOut: 3000 });
-    },
-    error => {
-      this.toastr.error("Failed to sent registration email.", "Failed Request", { timeOut: 3000 });
-    })
+    swal.fire({
+				title: "Send Registration Email",
+				text: `Click send button to proceed.`,
+				type: "info",
+				showCancelButton: true,
+				confirmButtonColor: '#3085d6',
+				cancelButtonColor: '#d33',
+				confirmButtonText: 'Send',
+				allowOutsideClick: false
+			}).then(e => {
+				if(e.value) {
+					this.referenceDataService.sendRegistrationEmail(this.modelId).subscribe(data=>{
+            this.toastr.success(`Success sent registration email to ${this.accountName}.`, "System", { timeOut: 3000 });
+            this.router.navigate(["/app/account", this.accountId], {
+              queryParams: { action: "view" }
+            });
+          },
+          error => {
+            this.toastr.error("Failed to sent registration email.", "Failed Request", { timeOut: 3000 });
+          });
+				}
+			});
   }
 
   showEditForm() {

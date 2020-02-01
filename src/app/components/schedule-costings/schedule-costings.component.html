@@ -13,18 +13,6 @@
                 <div class="col-sm-12">
                     <div class="card-content">
                       <div class="card-body" style="padding-top: 10px;">
-                        <div class="card black mr-1" style="background-color: #CFD8DC;">
-                          <div class="card-content">
-                            <div class="px-3 py-3">
-                              <div class="media">
-                                <div class="media-body black text-left">
-                                  <h3 class="mb-1 black" style="color: black;">{{getTotalCost() || 0 | currency: 'PHP '}} </h3>
-                                  <span>Total Professional Fee</span>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
                         <form class="form" [formGroup]="costingForm">
                           <input type="hidden" formControlName="courseScheduleId">
                           <div class="form-body">
@@ -78,10 +66,10 @@
                             <tr>
                               <th>#</th>
                               <th>Cost ID</th>
+                              <th>Comment</th>
                               <th>Amount</th>
                               <th>Multiplier</th>
                               <th>Total Amount</th>
-                              <th>Comment</th>
                               <th>Action</th>
                             </tr>
                           </thead>
@@ -89,15 +77,20 @@
                             <tr *ngFor="let item of costingsData; index as i">
                               <th scope="row">{{i + 1}}</th>
                               <td><app-cost-detail [id]="item.costId"></app-cost-detail></td>
+                              <td>{{item.comment}}</td>
                               <td>{{item.amount || 0 | currency: 'PHP '}}</td>
                               <td>{{item.multiplier}}</td>
                               <td>{{item.totalAmount || 0 | currency: 'PHP '}}</td>
-                              <td>{{item.comment}}</td>
                               <td>
                                 <button type="button" class="btn btn-raised btn-raised btn-danger mr-1" (click)="removeCosting(item.id, item.costId)">
                                   <i class="ft-x"></i> Remove
                                 </button>
                               </td>
+                            </tr>
+                            <tr>
+                              <td colspan="5">&nbsp;</td>
+                              <td colspan="1">{{getTotalCost() || 0 | currency: 'PHP '}}</td>
+                              <td colspan="2">&nbsp;</td>
                             </tr>
                           </tbody>
                         </table>

@@ -51,7 +51,8 @@ export class ScheduleListComponent {
 
 		this.searchForm = this.formBuilder.group({
 			startDate: [''],
-			endDate: ['']
+			endDate: [''],
+			status: ['']
 		});
 
 		this.criteria = [];
@@ -102,7 +103,7 @@ export class ScheduleListComponent {
 	clearSearchForm() {
 		this.searchForm = this.formBuilder.group({
 			name: [''],
-			status: ['ALL'],
+			status: [''],
 			createdDate: ['']
 		});
 		this.createdDate = '';
@@ -153,6 +154,16 @@ export class ScheduleListComponent {
 				value: this.scheduleDateTo,
 				operator: 'LE',
 				type: 'DATE'
+			});
+		}
+
+		if(this.searchForm.get('status').value != '') {
+			this.criteria.push({
+				name: 'status',
+				paramName: 'status',
+				value: this.searchForm.get('status').value,
+				operator: 'EQ',
+				type: 'ENUM'
 			});
 		}
 

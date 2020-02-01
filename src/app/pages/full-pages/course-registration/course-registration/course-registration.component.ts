@@ -93,6 +93,26 @@ export class CourseRegistrationComponent {
 		return promise;
 	}
 
+	cancelRegistration(id: string): Promise<any> {
+		let promise = new Promise((resolve, reject) => {
+		const ACTIVE_ENDPOINT: string = `${this.API_HOST}/course-registrations/actions/cancel?id=${id}`;
+
+		this.httpClient
+			.post<any[]>(ACTIVE_ENDPOINT, {})
+			.toPromise()
+			.then(
+				res => {
+					resolve(res);
+				},
+				msg => {
+					reject(msg);
+				}
+			);
+		});
+
+		return promise;
+	}
+
 	confirmRegistrationHandler(entity) {
 		let registrationHtml =
 		`
@@ -124,7 +144,7 @@ export class CourseRegistrationComponent {
 			</div>
 		`;
 
-		this.showConfirmationDialog('Confrm Registration', registrationHtml, 'question').then(e => {
+		this.showConfirmationDialog('Confirm Registration', registrationHtml, 'question').then(e => {
 			if(e.value) {
 				this.confirmRegistration(entity.registration.id).then(e => {
 					this.toastr.success(`Course registration confirmed for ${entity.account.name}.`, 'Success', { timeOut: 3000 });
@@ -132,7 +152,62 @@ export class CourseRegistrationComponent {
 						this.registeredList = data;
 					});
 				}).catch(err => {
-					this.toastr.error('Failed to confirm registratoin for ${entity.account.name}.', 'Failed Request', { timeOut: 3000 });
+					this.toastr.error('Failed to confirm registration for ${entity.account.name}.', 'Failed Request', { timeOut: 3000 });
+				});
+			}
+		});
+	}
+
+	cancelRegistrationHandler(entity) {
+
+		let cancellationStatus = '';
+		if((entity.registration.status == 'REGISTERED' || entity.registration.status == 'CONFIRMED') && entity.courseSchedule.status == 'SCHEDULE_WAITING') {
+			cancellationStatus = 'This action will cancel the registration and delete registered participants.';
+		} else if((entity.registration.status == 'REGISTERED' || entity.registration.status == 'CONFIRMED') && entity.courseSchedule.status == 'SCHEDULE_CONFIRMED') {
+			cancellationStatus = 'This action will cancel the registration and registered participants will be retained.';
+		}
+		alert(cancellationStatus);
+		let registrationHtml =
+		`
+			<div class="card">
+				<div class="box">
+					<h2>${entity.account.name}</span></h2>
+					<strong>${cancellationStatus}</strong>
+					<span>
+						<table class="reg-table col-md-12">
+							<tr class="pb-2">
+								<td class="pr-2">
+									<strong>Course</strong><br/>
+									<span class="text-muted">${entity.course.name}</span><br/>
+									<span class="text-muted">(${entity.course.numberOfDays} days)</span>
+								</td>
+							</tr>
+							<tr class="pb-2">
+								<td class="pr-2">
+									<strong>Schedule</strong><br/>
+									<span class="text-muted">
+										Start Date: ${entity.courseSchedule.startDate} <br/>
+										End Date: ${entity.courseSchedule.endDate}
+									</span>
+								</td>
+							</tr>
+						</table>
+					</span>
+					<br/>
+				</div>
+			</div>
+		`;
+
+		this.showConfirmationDialog('Cancel Registration', registrationHtml, 'question').then(e => {
+			if(e.value) {
+				this.cancelRegistration(entity.registration.id).then(e => {
+					this.toastr.success(`${entity.account.name} registration cancelled.`, 'Success', { timeOut: 3000 });
+
+					this.getRegisteredList('REGISTERED').then(data =>{
+						this.registeredList = data;
+					});
+				}).catch(err => {
+					this.toastr.error('Failed to cancel registration for ${entity.account.name}.', 'Failed Request', { timeOut: 3000 });
 				});
 			}
 		});
@@ -173,6 +248,7 @@ export class CourseRegistrationComponent {
 
 	search($event) {
 		this.searchCourseRegistration().then(data =>{
+			console.log(data);
 			this.registeredList = data;
 		});
 	}
@@ -206,6 +282,7 @@ export class CourseRegistrationComponent {
 			queryParams.endDate = scheduleDateTo;
 		}
 
+		console.log(queryParams);
 		this.httpClient
 			.get<any[]>(ACTIVE_ENDPOINT, {params: {...queryParams}})
 			.toPromise()
@@ -272,8 +349,8 @@ export class CourseRegistrationComponent {
 			if(e.value) {
 				this.updateParticipantProfile().then(e => {
 					this.toastr.success(`Participant successfull updated ${this.registrationForm.email.value}.`, 'Success', { timeOut: 3000 });
-					this.registeredList = [];
 					this.hideRegistrationForm();
+					this.search(null);
 				}).catch(err => {
 					this.toastr.error(`Failed to update participant profile ${this.registrationForm.email.value}.`, 'Failed Request', { timeOut: 3000 });
 				});
@@ -286,7 +363,7 @@ export class CourseRegistrationComponent {
 
 		let requestBody = {
 			firstName: this.registrationForm.firstName.value,
-			lastName: this.registrationForm.firstName.value,
+			lastName: this.registrationForm.lastName.value,
 			middleInitial: this.registrationForm.middleInitial.value,
 			email: this.registrationForm.email.value,
 			designation: this.registrationForm.designation.value,
@@ -314,6 +391,7 @@ export class CourseRegistrationComponent {
 
 	close() {
 		this.initializeRegistrationForm();
+		this.search(null);
 		this.hideRegistrationForm();
 	}
 

@@ -1,4 +1,6 @@
-<div class="container" [style.display]="showModal ? 'none' : 'block'">
+
+
+<div [style.display]="showModal ? 'none' : 'block'">
     <h4><strong>Course Registration</strong></h4>
     <div class="card">
         <div class="card-body">
@@ -88,117 +90,102 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body p-0">
-                    <div class="row p-5">
-                        <div class="col-md-6">
-                            <table class="reg-table">
-                                <tr class="pb-2">
-                                    <td class="pr-2">
-                                        <strong>Account Name</strong><br />
-                                        <span class="text-muted">{{registration.account.name}}</span>
-                                    </td>
-                                </tr>
-                                <tr class="pb-2">
-                                    <td class="pr-2">
-                                        <strong>Contact</strong><br />
-                                        <span class="text-muted">
-                                            {{registration.contact.firstName}} {{registration.contact.lastName}}<br />
-                                            <i class="icon-envelope pr-2"></i>{{registration.contact.email}}<br />
-                                            <i class="ft-phone pr-2"></i>{{registration.contact.mobileNumber}}<br />
-                                        </span>
-                                    </td>
-                                </tr>
-                                <tr class="pb-2">
-                                    <td class="pr-2">
-                                        <strong>Billing Contact</strong><br />
-                                        <span class="text-muted">
-                                            {{registration.billingContact.firstName}}
-                                            {{registration.billingContact.lastName}}<br />
-                                            <i
-                                                class="icon-envelope pr-2"></i>{{registration.billingContact.email}}<br />
-                                            <i
-                                                class="ft-phone pr-2"></i>{{registration.billingContact.mobileNumber}}<br />
-                                        </span>
-                                    </td>
-                                </tr>
-                                <tr class="pb-2">
-                                    <td class="pr-2">
-                                        <strong>Deal</strong><br />
-                                        <span class="text-muted">
+                    <div class="row pl-5 pr-5 p-5">
+                        <div class="col-md-12">
+                            <div class="row grid-divider mb-5">
+                                <div class="col-sm-4">
+                                    <div class="col-padding">
+                                        <div class="row mb-3">
+                                            <label class="col-md-4"><strong>Account Name</strong></label>
+                                            <span class="text-muted col-md-8">{{registration.account.name}}</span>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <label class="col-md-4"><strong>Contact</strong></label>
+                                            <span class="text-muted col-md-8">
+                                                {{registration.contact.firstName}} {{registration.contact.lastName}}<br/>
+                                                <i class="icon-envelope pr-2"></i>{{registration.contact.email}}<br />
+                                                <i class="ft-phone pr-2"></i>{{registration.contact.mobileNumber}}<br />
+                                            </span>
+                                        </div>
+                                        <div class="row  mb-3">
+                                            <label class="col-md-4"><strong>Billing Contact</strong></label>
+                                            <span class="text-muted col-md-8">
+                                                {{registration.billingContact.firstName}} {{registration.billingContact.lastName}}<br/>
+                                                <i class="icon-envelope pr-2"></i>{{registration.billingContact.email}}<br />
+                                                <i class="ft-phone pr-2"></i>{{registration.billingContact.mobileNumber}}<br />
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="col-padding">
+                                        <div class="row mb-3">
+                                            <label class="col-md-4"><strong>Course</strong></label>
+                                            <span class="col-md-8">
+                                                <span class="text-muted">{{registration.course.name}}</span><br />
+                                                <span class="text-muted">{{registration.course.numberOfDays}} days</span>
+                                            </span>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <label class="col-md-4"><strong>Registration Status</strong></label>
+                                            <span class="col-md-8 text-muted">
+                                                {{registration.registration.status}}
+                                            </span>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <label class="col-md-4"><strong>Schedule Status</strong></label>
+                                            <span class="col-md-8 text-muted">
+                                                <span *ngIf="registration.courseSchedule.status == 'SCHEDULE_WAITING'">WAITING CONFIRMATION</span>
+                                                <span *ngIf="registration.courseSchedule.status == 'SCHEDULE_CONFIRMED'">CONFIRMED</span>
+                                                <span *ngIf="registration.courseSchedule.status == 'SCHEDULE_CANCELLED'">CANCELLED</span>
+                                                <span *ngIf="registration.courseSchedule.status == 'SCHEDULE_DELIVERED'">DELIVERED</span>
+                                            </span>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <label class="col-md-4"><strong>Schedule</strong></label>
+                                            <span class="col-md-8 text-muted">
+                                                Start Date: {{registration.courseSchedule.startDate}} <br />
+                                                End Date: {{registration.courseSchedule.endDate}} <br />
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="col-padding">
+                                        <div class="row mb-3">
+                                            <label class="col-md-4"><strong>Account Manager</strong></label>
+                                            <span class="col-md-8 text-muted">
+                                                {{registration.accountManager.firstName}}
+                                                {{registration.accountManager.lastName}}<br />
+                                                <i class="icon-envelope pr-2"></i>{{registration.accountManager.email}}
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label class="col-md-4"><strong>Deal</strong></label>
+                                        <span class="text-muted col-md-8">
                                             Course Fee: {{registration.deal.courseFee | currency: 'PHP '}} <br />
                                             Total Registrations: {{registration.deal.numberOfParticipants}} <br />
                                             Deal Amount: {{registration.deal.totalDealAmount | currency: 'PHP '}} <br />
-                                            Stage:
+                                        </span>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label class="col-md-4"><strong>Deal Stage</strong></label>
+                                        <span class="text-muted col-md-8">
                                             <span *ngIf="registration.deal.stage == 'PROPOSAL'">PROPOSAL</span>
                                             <span *ngIf="registration.deal.stage == 'CLOSING'">CLOSING</span>
                                             <span *ngIf="registration.deal.stage == 'CLOSED_WON'">WON</span>
                                             <span *ngIf="registration.deal.stage == 'CLOSED_LOST'">LOST</span>
-                                            <span *ngIf="registration.deal.stage == 'CLOSED_LOST_TO_COMPETITION'">LOST
-                                                TO COMPETITION</span>
+                                            <span *ngIf="registration.deal.stage == 'CLOSED_LOST_TO_COMPETITION'">LOST TO COMPETITION</span>
                                             <span *ngIf="registration.deal.stage == 'DELIVERED'">DELIVERED</span>
-                                            <span *ngIf="registration.deal.stage == 'CANCELLED_WITH_REFUND'">CANCELLED
-                                                WITH REFUND</span>
-                                            <span
-                                                *ngIf="registration.deal.stage == 'CANCELLED_WITHOUT_REFUND'">CANCELLED
-                                                WITHOUT REFUND</span> <br />
+                                            <span *ngIf="registration.deal.stage == 'CANCELLED_WITH_REFUND'">CANCELLED WITH REFUND</span>
+                                            <span *ngIf="registration.deal.stage == 'CANCELLED_WITHOUT_REFUND'">CANCELLED WITHOUT REFUND</span> <br />
                                         </span>
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
-                        <div class="col-md-6">
-                            <table class="reg-table col-md-12">
-                                <tr class="pb-2">
-                                    <td class="pr-2">
-                                        <strong>Course</strong><br />
-                                        <span class="text-muted">{{registration.course.name}}</span><br />
-                                        <span class="text-muted">{{registration.course.numberOfDays}} days</span>
-                                    </td>
-                                </tr>
-                                <tr class="pb-2">
-                                    <td class="pr-2">
-                                        <strong>Schedule</strong><br />
-                                        <span class="text-muted">
-                                            Start Date: {{registration.courseSchedule.startDate}} <br />
-                                            End Date: {{registration.courseSchedule.endDate}} <br />
-                                            Status:
-                                            <span
-                                                *ngIf="registration.courseSchedule.status == 'SCHEDULE_WAITING'">WAITING
-                                                CONFIRMATION</span>
-                                            <span
-                                                *ngIf="registration.courseSchedule.status == 'SCHEDULE_CONFIRMED'">CONFIRMED</span>
-                                            <span
-                                                *ngIf="registration.courseSchedule.status == 'SCHEDULE_CANCELLED'">CANCELLED</span>
-                                            <span
-                                                *ngIf="registration.courseSchedule.status == 'SCHEDULE_DELIVERED'">DELIVERED</span>
-                                        </span>
-                                    </td>
-                                </tr>
-                                <tr class="pb-2">
-                                    <td class="pr-2">
-                                        <strong>Account Manager</strong><br />
-                                        <span class="text-muted">
-                                            {{registration.accountManager.firstName}}
-                                            {{registration.accountManager.lastName}}<br />
-                                            <i
-                                                class="icon-envelope pr-2"></i>{{registration.accountManager.email}}<br />
-                                        </span>
-                                    </td>
-                                </tr>
-                                <tr class="pb-2">
-                                    <td class="pr-2">
-                                        <strong>Registration Status</strong><br />
-                                        <span class="text-muted">
-                                            {{registration.registration.status}}
-                                        </span>
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-                    <div *ngIf="registration.participants.length > 0" class="row pl-5 pr-5">
-                        <div class="col-md-12">
-                            <table class="table">
+                            <table *ngIf="registration.participants.length > 0" class="table">
                                 <thead>
                                     <tr>
                                         <th class="border-0 text-uppercase small font-weight-bold">#</th>
@@ -208,6 +195,7 @@
                                         <th class="border-0 text-uppercase small font-weight-bold">Email</th>
                                         <th class="border-0 text-uppercase small font-weight-bold">Mobile Number</th>
                                         <th class="border-0 text-uppercase small font-weight-bold">Designation</th>
+                                        <th class="border-0 text-uppercase small font-weight-bold">Status</th>
                                         <th class="border-0 text-uppercase small font-weight-bold">Action</th>
                                     </tr>
                                 </thead>
@@ -220,24 +208,33 @@
                                         <td>{{ p.email }}</td>
                                         <td>{{ p.mobileNumber }}</td>
                                         <td>{{ p.designation }}</td>
+                                        <td>
+                                            <span *ngIf="p.status == 'PENDING'">PENDING</span>
+                                            <span *ngIf="p.status == 'REGISTERED'">REGISTERED</span>
+                                            <span *ngIf="p.status == 'CONFIRMED'">CONFIRMED</span>
+                                            <span *ngIf="p.status == 'RESCHEDULED'">RESCHEDULED</span>
+                                            <span *ngIf="p.status == 'UNDELIVERED'">UNDELIVERED</span>
+                                            <span *ngIf="p.status == 'DELIVERED'">DELIVERED</span>
+                                            <span *ngIf="p.status == 'CANCELLED'">CANCELLED</span>
+                                        </td>
                                         <td><a (click)="showRegistrationForm(p, registration)"><i class="ft-edit-2"></i></a></td>
                                     </tr>
                                 </tbody>
                             </table>
-                        </div>
-                    </div>
 
-                    <div class="p-4 row justify-content-center">
-                        <button
-                            *ngIf="registration.registration.status != 'CONFIRMED' && registration.registration.status == 'REGISTERED' && registration.deal.stage == 'CLOSING'"
-                            type="button" class="btn btn-raised btn-success col-md-2  mr-5"
-                            style="height: 50px;font-size: 1em;"
-                            (click)="confirmRegistrationHandler(registration)">Confirm Registration</button>
-                        <button
-                            *ngIf="registration.deal.stage == 'CLOSED_WON' && (registration.registration.status == 'PENDING' || registration.registration.status == 'REGISTERED' || registration.registration.status == 'CONFIRMED' || registration.registration.status == 'RESCHEDULED')"
-                            type="button" class="btn btn-raised btn-danger col-md-2"
-                            style="height: 50px;font-size: 1em;"
-                            (click)="confirmRegistrationHandler(registration)">Cancel Registration</button>
+                            <div class="mt-10 row justify-content-center">
+                                <button
+                                    *ngIf="registration.registration.status != 'CONFIRMED' && registration.registration.status == 'REGISTERED' && registration.deal.stage == 'CLOSING'"
+                                    type="button" class="btn btn-raised btn-success col-md-2  mr-5"
+                                    style="height: 50px;font-size: 1em;"
+                                    (click)="confirmRegistrationHandler(registration)">Confirm Registration</button>
+                                <button
+                                    *ngIf="(registration.deal.stage == 'CLOSED_WON' || registration.deal.stage == 'CLOSING') && (registration.registration.status == 'REGISTERED' || registration.registration.status == 'CONFIRMED') && registration.courseSchedule.status == 'SCHEDULE_WAITING'"
+                                    type="button" class="btn btn-raised btn-danger col-md-2"
+                                    style="height: 50px;font-size: 1em;"
+                                    (click)="cancelRegistrationHandler(registration)">Cancel Registration</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -246,72 +243,80 @@
 </div>
 
 <form [style.display]="showModal ? 'block' : 'none'"  class=" form form-horizontal" [formGroup]="registrationFormGroup">
-<div class="container">
-<h4>Update Participant Profile</h4>
-<div class="row text-left">
-    <div class="col-md-12">
-      <div class="card">
-        <div class="card-content p-2">
-          <div class="px-3">
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="form-body">
-                    <input type="hidden" formControlName="id">
-                    <div class="row">
-                      <div class="form-group col-12 mb-2">
-                        <label class="label-control" for="name">First Name<span class="px-required">*</span></label>
-                        <input name="firstName" formControlName="firstName" type="text" class="form-control">
-                      </div>
-                    </div>
-
-                    <div class="row">
-                      <div class="form-group col-12 mb-2">
-                        <label class="label-control" for="name">Last Name<span class="px-required">*</span></label>
-                        <input name="lastName" formControlName="lastName" type="text" class="form-control">
-                      </div>
-                    </div>
-
-                    <div class="row">
-                      <div class="form-group col-12 mb-2">
-                        <label class="label-control" for="name">Middle Initial</label>
-                        <input name="middleInitial" formControlName="middleInitial" type="text" class="form-control">
-                      </div>
-                    </div>
-
-                    <div class="row">
-                      <div class="form-group col-12 mb-2">
-                        <label class="label-control" for="name">Designation<span class="px-required">*</span></label>
-                        <input name="designation" formControlName="designation" type="text" class="form-control">
-                      </div>
-                    </div>
-
-                    <div class="row">
-                      <div class="form-group col-12 mb-2">
-                        <label class="label-control" for="name">Email<span class="px-required">*</span></label>
-                        <input name="email" formControlName="email" type="text" class="form-control">
-                      </div>
-                    </div>
-
-                    <div class="row">
-                      <div class="form-group col-12 mb-2">
-                        <label class="label-control" for="name">Mobile Number<span class="px-required">*</span></label>
-                        <input name="mobileNumber" formControlName="mobileNumber" type="text" class="form-control">
-                      </div>
-                    </div>
-
-                    <div class="row">
-                      <div class="form-group col-12 mb-2 mt-2">
-                        <button type="button" class="btn btn-raised btn-info mr-1" (click)="update()">Save</button>
-                        <button type="button" class="btn btn-raised btn-danger mr-1" (click)="close()">Close</button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+<div class="col-md-12">
+<div class="card">
+  <div class="card-content">
+    <div>
+        <div class="form-body pt-5 pb-5">
+          <div class="form-group row">
+            <label class="col-md-4 label-control">&nbsp;</label>
+            <div class="col-md-4">
+              Fields with <span class="px-required">*</span> are required.
+            </div>
           </div>
+          <div class="form-group row">
+            <label class="col-md-4 label-control" for="name">First Name<span class="px-required">*</span></label>
+            <div class="col-md-4">
+              <input  formControlName="firstName"  type="text" id="firstName" class="form-control" name="firstName"  [ngClass]="{ 'is-invalid': isInvalid(registrationForm.firstName)}">
+              <small *ngIf="(registrationForm.firstName.dirty || registrationForm.firstName.touched || submitted) && registrationForm.firstName.invalid && registrationForm.firstName.errors.required" class="form-text text-muted danger">
+                First name required
+              </small>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-4 label-control" for="name">Last Name<span class="px-required">*</span></label>
+            <div class="col-md-4">
+              <input  formControlName="lastName"  type="text" id="lastName" class="form-control" name="lastName"  [ngClass]="{ 'is-invalid': isInvalid(registrationForm.lastName)}">
+              <small *ngIf="(registrationForm.lastName.dirty || registrationForm.lastName.touched || submitted) && registrationForm.lastName.invalid && registrationForm.lastName.errors.required" class="form-text text-muted danger">
+                Last name required
+              </small>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-4 label-control" for="name">Middle Initial</label>
+            <div class="col-md-4">
+              <input  formControlName="middleInitial"  type="text" id="middleInitial" class="form-control" name="middleInitial">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-4 label-control" for="name">Designation<span class="px-required">*</span></label>
+            <div class="col-md-4">
+              <input  formControlName="designation"  type="text" id="designation" class="form-control" name="designation"  [ngClass]="{ 'is-invalid': isInvalid(registrationForm.designation)}">
+              <small *ngIf="(registrationForm.designation.dirty || registrationForm.designation.touched || submitted) && registrationForm.designation.invalid && registrationForm.designation.errors.required" class="form-text text-muted danger">
+                Designation required
+              </small>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-4 label-control" for="name">Email<span class="px-required">*</span></label>
+            <div class="col-md-4">
+              <input  formControlName="email"  type="text" id="email" class="form-control" name="email"  [ngClass]="{ 'is-invalid': isInvalid(registrationForm.email)}">
+              <small *ngIf="(registrationForm.email.dirty || registrationForm.email.touched || submitted) && registrationForm.email.invalid && registrationForm.email.errors.required" class="form-text text-muted danger">
+                Email required
+              </small>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-4 label-control" for="name">Mobile Number<span class="px-required">*</span></label>
+            <div class="col-md-4">
+              <input  formControlName="mobileNumber"  type="text" id="mobileNumber" class="form-control" name="mobileNumber"  [ngClass]="{ 'is-invalid': isInvalid(registrationForm.mobileNumber)}">
+              <small *ngIf="(registrationForm.mobileNumber.dirty || registrationForm.mobileNumber.touched || submitted) && registrationForm.mobileNumber.invalid && registrationForm.mobileNumber.errors.required" class="form-text text-muted danger">
+                Mobile number required
+              </small>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-4 label-control" for="eventRegInput4">&nbsp;</label>
+            <div class="col-md-4">
+                <button type="button" class="btn btn-raised btn-info mr-1" (click)="update()">Save</button>
+                <button type="button" class="btn btn-raised btn-danger mr-1" (click)="close()">Close</button>
+            </div>
+          </div>
+
         </div>
-      </div>
     </div>
   </div>
+</div>
 </div>
 </form>

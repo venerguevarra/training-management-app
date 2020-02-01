@@ -69,6 +69,8 @@ export class ScheduleDetailComponent {
 		scheduleCost: 0
 	}
 
+	currentScheduleStatus = "";
+
 	registrationCount = 0;
 	actualRegistrationCount = 0;
 	constructor(
@@ -215,6 +217,7 @@ export class ScheduleDetailComponent {
 							this.formattedEndTime = this.formatTime(this.currentModel.endTime);
 							this.selectedCourse = this.currentModel.courseId;
 							this.selectedVenue = this.currentModel.venueId;
+							this.currentScheduleStatus = this.currentModel.status;
 						},
 						(error) => {
 							this.toastr.error('Error has occurred.', 'Failed Request', { timeOut: 3000 });
@@ -476,7 +479,6 @@ export class ScheduleDetailComponent {
 
 		return promise;
 	}
-
 
 	checkFacilitatorScheduleConflict(courseScheduleId:string, startDate:string, endDate: string) {
 		let promise = new Promise((resolve, reject) => {
