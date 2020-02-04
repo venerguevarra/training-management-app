@@ -1,24 +1,22 @@
 <div>
-<h4>{{title}}</h4>
-
-
-<div class="card">
-  <div class="card-header px-header-color" style="background-color: #ECEFF1;">
-    <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-      <div class="btn-group-md">
-        <a class="btn btn-primary btn-raised mr-2" (click)="navigateToNewForm()">
-          <i class="fa fa-fw fa-plus-circle"></i> New {{title}}
-        </a>
-        <a class="btn btn-success btn-raised mr-2" (click)="isCollapsed = !isCollapsed"
-          [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
-          <i class="fa fa-fw ft-search"></i> Search
-        </a>
-        <a class="btn btn-danger btn-raised" style="background-color: white; color: green;" (click)="clearSearchForm()">
-          <i class="fa fa-repeat"></i> Refresh
-        </a>
+  <div class="card">
+    <div class="card-header px-header-color" style="background-color: #ECEFF1;">
+      <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+        <div class="btn-group-md">
+          <a class="btn btn-primary btn-raised mr-2" (click)="navigateToNewForm()">
+            <i class="fa fa-fw fa-plus-circle"></i> New {{title}}
+          </a>
+          <a class="btn btn-success btn-raised mr-2" (click)="isCollapsed = !isCollapsed"
+            [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
+            <i class="fa fa-fw ft-search"></i> Search
+          </a>
+          <a class="btn btn-danger btn-raised" style="background-color: white; color: green;"
+            (click)="clearSearchForm()">
+            <i class="fa fa-repeat"></i> Refresh
+          </a>
+        </div>
       </div>
     </div>
-  </div>
 
     <div class="card-body" id="collapseExample" [ngbCollapse]="isCollapsed">
       <form class="form form-horizontal" [formGroup]="searchForm">
@@ -60,7 +58,7 @@
             </div>
             <div>
               <button type="submit" name="submit" value="search" id="submit" class="btn btn-success btn-raised mr-2"
-                (click)="submitSearchForm()"><i class="fa fa-fw fa-check"></i> Submit</button>
+                (click)="submitSearchForm($event)"><i class="fa fa-fw fa-check"></i> Submit</button>
             </div>
           </div>
         </div>
@@ -71,61 +69,63 @@
   </div>
 
 
-<section id="paging" class="mb-3">
-  <div class="card">
-    <div class="card-header">
-    </div>
-    <div class="card-body">
-      <div class="col-sm-12">
-        <div class="row">
-          <div class="col-sm-12 table-responsive">
-            <table id="course-table" class="table table-striped">
-              <thead>
-                <tr>
-                  <th scope="col" style="width:30%;">Name</th>
-                  <th scope="col" style="width:30%;">Description</th>
-                  <th scope="col" style="width:20%;">Created Date</th>
-                  <th scope="col" style="width:15%;">Status</th>
-                  <th scope="col" style="width:15%;text-align: center;">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let row of rows">
-                  <td scope="row">{{ row.name }}</td>
-                  <td scope="row">{{ row.description }}</td>
-                  <td scope="row">{{row.createdDate | date: 'MMM d,y'}}</td>
-                  <td scope="row">{{row.active}}</td>
-                  <td scope="row" style="text-align: center;">
-                    <a [routerLink]="['/app/cost', row.id]" [queryParams]="{action: 'view'}" queryParamsHandling="merge"
-                      class="mr-2" placement="top" ngbTooltip="View"><i class="ft-eye"></i></a>
-                    <a [routerLink]="['/app/cost', row.id]" [queryParams]="{action: 'edit'}" placement="top"
-                      ngbTooltip="Edit"><i class="ft-edit-2"></i></a>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            <div class="d-flex justify-content-between p-2">
-              <ngb-pagination [(page)]="page" [(pageSize)]="pageSize" [(collectionSize)]="collectionSize" [maxSize]="5"
-                [rotate]="true" [boundaryLinks]="true" (pageChange)="paginationChange($event)">
-                <ng-template ngbPaginationFirst>First</ng-template>
-                <ng-template ngbPaginationLast>Last</ng-template>
-                <ng-template ngbPaginationPrevious>Prev</ng-template>
-                <ng-template ngbPaginationNext>Next</ng-template>
-                <ng-template ngbPaginationEllipsis>...</ng-template>
-                <ng-template ngbPaginationNumber let-page>{{ page }}</ng-template>
-              </ngb-pagination>
-              <select class="custom-select" style="width: auto" [(ngModel)]="pageSize"
-                (change)="paginationSizeChange()">
-                <option [ngValue]="5">5 items per page</option>
-                <option [ngValue]="10">10 items per page</option>
-                <option [ngValue]="20">20 items per page</option>
-              </select>
+  <section id="paging" class="mb-3">
+    <div class="card">
+      <div class="card-header">
+      </div>
+      <div class="card-body">
+        <div class="col-sm-12">
+          <div class="row">
+            <div class="col-sm-12 table-responsive">
+              <h4 class="mb-4">{{title}}</h4>
+              <table id="course-table" class="table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col" style="width:30%;">Name</th>
+                    <th scope="col" style="width:30%;">Description</th>
+                    <th scope="col" style="width:20%;">Created Date</th>
+                    <th scope="col" style="width:15%;">Status</th>
+                    <th scope="col" style="width:15%;text-align: center;">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let row of rows">
+                    <td scope="row">{{ row.name }}</td>
+                    <td scope="row">{{ row.description }}</td>
+                    <td scope="row">{{row.createdDate | date: 'MMM d,y'}}</td>
+                    <td scope="row">{{row.active}}</td>
+                    <td scope="row" style="text-align: center;">
+                      <a [routerLink]="['/app/administration/cost', row.id]" [queryParams]="{action: 'view'}"
+                        queryParamsHandling="merge" class="mr-2" placement="top" ngbTooltip="View"><i
+                          class="ft-eye"></i></a>
+                      <a [routerLink]="['/app/administration/cost', row.id]" [queryParams]="{action: 'edit'}" placement="top"
+                        ngbTooltip="Edit"><i class="ft-edit-2"></i></a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="d-flex justify-content-between p-2">
+                <ngb-pagination [(page)]="page" [(pageSize)]="pageSize" [(collectionSize)]="collectionSize"
+                  [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="paginationChange($event)">
+                  <ng-template ngbPaginationFirst>First</ng-template>
+                  <ng-template ngbPaginationLast>Last</ng-template>
+                  <ng-template ngbPaginationPrevious>Prev</ng-template>
+                  <ng-template ngbPaginationNext>Next</ng-template>
+                  <ng-template ngbPaginationEllipsis>...</ng-template>
+                  <ng-template ngbPaginationNumber let-page>{{ page }}</ng-template>
+                </ngb-pagination>
+                <select class="custom-select" style="width: auto" [(ngModel)]="pageSize"
+                  (change)="paginationSizeChange()">
+                  <option [ngValue]="5">5 items per page</option>
+                  <option [ngValue]="10">10 items per page</option>
+                  <option [ngValue]="20">20 items per page</option>
+                </select>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
-</section>
+  </section>
 </div>

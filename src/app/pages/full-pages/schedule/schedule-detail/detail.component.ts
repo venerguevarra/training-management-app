@@ -109,124 +109,128 @@ export class ScheduleDetailComponent {
 				}
 
 				if(this.viewForm || this.editForm) {
-					this.httpClient.get(`${this.ENDPOINT}/${this.modelId}`).subscribe(
-						(data) => {
-							this.currentModel = data;
+					this.getCourseScheduleDetails(this.modelId);
+				}
+			}
+		});
+	}
 
-							if(this.currentModel.createdBy != null) {
-								this.httpClient.get(`${this.USERS_ENDPOINT}/${this.currentModel.createdBy}`).subscribe(
-									(auditData) => {
-										let firstName = auditData['userProfile']['firstName'];
-										let lastName = auditData['userProfile']['lastName'];
-										this.createdBy = `${firstName} ${lastName}`;
-									},
-									(errorData) => {
-										this.toastr.error('Error has occurred.', 'Failed Request', { timeOut: 3000 });
-									}
-								);
-							}
+	getCourseScheduleDetails(courseScheduleId: any) {
+		this.httpClient.get(`${this.ENDPOINT}/${courseScheduleId}`).subscribe(
+			(data) => {
 
-							if(this.currentModel.modifiedBy != null) {
-								this.httpClient.get(`${this.USERS_ENDPOINT}/${this.currentModel.modifiedBy}`).subscribe(
-									(auditData) => {
-										let firstName = auditData['userProfile']['firstName'];
-										let lastName = auditData['userProfile']['lastName'];
-										this.modifiedBy = `${firstName} ${lastName}`;
-									},
-									(errorData) => {
-										this.toastr.error('Error has occurred.', 'Failed Request', { timeOut: 3000 });
-									}
-								);
-							}
+				this.currentModel = data;
 
-
-							this.currentForm = this.formBuilder.group({
-								id: [this.currentModel.id],
-								courseId: [this.currentModel.courseId, [Validators.required]],
-								venueId: [this.currentModel.venueId],
-								registeredParticipants: [this.currentModel.registeredParticipants],
-								actualRegisteredParticipants: [this.currentModel.actualRegisteredParticipants],
-								startDate: [this.currentModel.startDate],
-								endDate: [this.currentModel.endDate],
-								startTime: [this.currentModel.startTime],
-								endTime: [this.currentModel.endTime],
-								courseFee: [this.currentModel.courseFee],
-								numberOfDays: [this.currentModel.numberOfDays],
-								createdDate: [this.currentModel.createdDate],
-								createdBy: [this.currentModel.createdBy],
-								modifiedDate: [this.currentModel.modifiedDate],
-								modifiedBy: [this.currentModel.modifiedBy],
-								status: [this.currentModel.status]
-							});
-
-							this.revenueModel = {
-								grossRevenue: this.currentModel.grossRevenue,
-								actualGrossRevenue: this.currentModel.actualGrossRevenue,
-								netRevenue: this.currentModel.netRevenue,
-								actualNetRevenue: this.currentModel.actualNetRevenue,
-								profitMargin: this.currentModel.profitMargin,
-								actualProfitMargin: this.currentModel.actualProfitMargin,
-								scheduleCost: this.currentModel.scheduleCost
-							}
-
-							let startTimeTokens = this.currentModel.startTime.split(':');
-							let startTimeHourParam = parseInt(startTimeTokens[0]);
-							let startTimeMinuteParam = parseInt(startTimeTokens[1]);
-							this.f.startTime.setValue({
-								hour: startTimeHourParam,
-								minute: startTimeMinuteParam
-							});
-
-							let endTimeTokens = this.currentModel.endTime.split(':');
-							let endTimeHourParam = parseInt(endTimeTokens[0]);
-							let endTimeMinuteParam = parseInt(endTimeTokens[1]);
-							this.f.endTime.setValue({
-								hour: endTimeHourParam,
-								minute: endTimeMinuteParam
-							});
-
-							let startDateTokens = this.currentModel.startDate.split('-');
-							let startDateYear = parseInt(startDateTokens[0]);
-							let startDateMonth = parseInt(startDateTokens[1]);
-							let startDateDay = parseInt(startDateTokens[2]);
-							this.startDateText = this.currentModel.startDate;
-							this.selectedStartDate = {
-								year: startDateYear,
-								month: startDateMonth,
-								day: startDateDay,
-								equals: null,
-								before: null,
-								after: null
-							};
-
-							let endDateTokens = this.currentModel.endDate.split('-');
-							let endDateYear = parseInt(endDateTokens[0]);
-							let endDateMonth = parseInt(endDateTokens[1]);
-							let endDateDay = parseInt(endDateTokens[2]);
-							this.endDateText = this.currentModel.endDate;
-							this.selectedEndDate = {
-								year: endDateYear,
-								month: endDateMonth,
-								day: endDateDay,
-								equals: null,
-								before: null,
-								after: null
-							};
-
-							this.formattedStartTime = this.formatTime(this.currentModel.startTime);
-							this.formattedEndTime = this.formatTime(this.currentModel.endTime);
-							this.selectedCourse = this.currentModel.courseId;
-							this.selectedVenue = this.currentModel.venueId;
-							this.currentScheduleStatus = this.currentModel.status;
+				if(this.currentModel.createdBy != null) {
+					this.httpClient.get(`${this.USERS_ENDPOINT}/${this.currentModel.createdBy}`).subscribe(
+						(auditData) => {
+							let firstName = auditData['userProfile']['firstName'];
+							let lastName = auditData['userProfile']['lastName'];
+							this.createdBy = `${firstName} ${lastName}`;
 						},
-						(error) => {
+						(errorData) => {
 							this.toastr.error('Error has occurred.', 'Failed Request', { timeOut: 3000 });
 						}
 					);
 				}
-			}
-		});
 
+				if(this.currentModel.modifiedBy != null) {
+					this.httpClient.get(`${this.USERS_ENDPOINT}/${this.currentModel.modifiedBy}`).subscribe(
+						(auditData) => {
+							let firstName = auditData['userProfile']['firstName'];
+							let lastName = auditData['userProfile']['lastName'];
+							this.modifiedBy = `${firstName} ${lastName}`;
+						},
+						(errorData) => {
+							this.toastr.error('Error has occurred.', 'Failed Request', { timeOut: 3000 });
+						}
+					);
+				}
+
+
+				this.currentForm = this.formBuilder.group({
+					id: [this.currentModel.id],
+					courseId: [this.currentModel.courseId, [Validators.required]],
+					venueId: [this.currentModel.venueId],
+					registeredParticipants: [this.currentModel.registeredParticipants],
+					actualRegisteredParticipants: [this.currentModel.actualRegisteredParticipants],
+					startDate: [this.currentModel.startDate],
+					endDate: [this.currentModel.endDate],
+					startTime: [this.currentModel.startTime],
+					endTime: [this.currentModel.endTime],
+					courseFee: [this.currentModel.courseFee],
+					numberOfDays: [this.currentModel.numberOfDays],
+					createdDate: [this.currentModel.createdDate],
+					createdBy: [this.currentModel.createdBy],
+					modifiedDate: [this.currentModel.modifiedDate],
+					modifiedBy: [this.currentModel.modifiedBy],
+					status: [this.currentModel.status]
+				});
+
+				this.revenueModel = {
+					grossRevenue: this.currentModel.grossRevenue,
+					actualGrossRevenue: this.currentModel.actualGrossRevenue,
+					netRevenue: this.currentModel.netRevenue,
+					actualNetRevenue: this.currentModel.actualNetRevenue,
+					profitMargin: this.currentModel.profitMargin,
+					actualProfitMargin: this.currentModel.actualProfitMargin,
+					scheduleCost: this.currentModel.scheduleCost
+				}
+
+				let startTimeTokens = this.currentModel.startTime.split(':');
+				let startTimeHourParam = parseInt(startTimeTokens[0]);
+				let startTimeMinuteParam = parseInt(startTimeTokens[1]);
+				this.f.startTime.setValue({
+					hour: startTimeHourParam,
+					minute: startTimeMinuteParam
+				});
+
+				let endTimeTokens = this.currentModel.endTime.split(':');
+				let endTimeHourParam = parseInt(endTimeTokens[0]);
+				let endTimeMinuteParam = parseInt(endTimeTokens[1]);
+				this.f.endTime.setValue({
+					hour: endTimeHourParam,
+					minute: endTimeMinuteParam
+				});
+
+				let startDateTokens = this.currentModel.startDate.split('-');
+				let startDateYear = parseInt(startDateTokens[0]);
+				let startDateMonth = parseInt(startDateTokens[1]);
+				let startDateDay = parseInt(startDateTokens[2]);
+				this.startDateText = this.currentModel.startDate;
+				this.selectedStartDate = {
+					year: startDateYear,
+					month: startDateMonth,
+					day: startDateDay,
+					equals: null,
+					before: null,
+					after: null
+				};
+
+				let endDateTokens = this.currentModel.endDate.split('-');
+				let endDateYear = parseInt(endDateTokens[0]);
+				let endDateMonth = parseInt(endDateTokens[1]);
+				let endDateDay = parseInt(endDateTokens[2]);
+				this.endDateText = this.currentModel.endDate;
+				this.selectedEndDate = {
+					year: endDateYear,
+					month: endDateMonth,
+					day: endDateDay,
+					equals: null,
+					before: null,
+					after: null
+				};
+
+				this.formattedStartTime = this.formatTime(this.currentModel.startTime);
+				this.formattedEndTime = this.formatTime(this.currentModel.endTime);
+				this.selectedCourse = this.currentModel.courseId;
+				this.selectedVenue = this.currentModel.venueId;
+				this.currentScheduleStatus = this.currentModel.status;
+			},
+			(error) => {
+				this.toastr.error('Error has occurred.', 'Failed Request', { timeOut: 3000 });
+			}
+		);
 
 	}
 
@@ -356,8 +360,6 @@ export class ScheduleDetailComponent {
 			}
 
 		});
-
-
 	}
 
 	postUpdate() {
@@ -638,7 +640,7 @@ export class ScheduleDetailComponent {
 	}
 
 	cancel() {
-		this.router.navigateByUrl(this.routingStateService.getPreviousUrl());
+		this.router.navigateByUrl(this.LANDING_PAGE);
 	}
 
 	isInvalid(control:any) {
@@ -718,5 +720,120 @@ export class ScheduleDetailComponent {
 
 	isRange(date: NgbDate) {
 		return date.equals(this.selectedStartDate) || date.equals(this.selectedEndDate) || this.isInside(date) || this.isHovered(date);
+	}
+
+	attendanceData: any;
+	tabChange($event) {
+		this.getCourseScheduleDetails(this.modelId);
+		this.getCourseScheduleAttendance(this.modelId).then(data => {
+			this.attendanceData = data;
+		})
+	}
+
+	cancelScheduleHandler() {
+		swal.fire({
+			title: `Schedule Cancellation`,
+			text: `Do you want to cancel the current schedule?`,
+			type: "question",
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Submit',
+			allowOutsideClick: false
+		}).then(e => {
+			if(e.value) {
+				this.cancelSchedule(this.f.id.value).then(data=> {
+					this.toastr.success('Schedule successfully cancelled.', 'Failed Request', { timeOut: 3000 });
+					this.router.navigateByUrl(this.LANDING_PAGE);
+				}).catch(err=> {
+					this.toastr.success('Failed to cancel schedule', 'Failed Request', { timeOut: 3000 });
+				});
+
+			}
+		});
+	}
+
+	cancelSchedule(courseScheduleId:string) {
+		let promise = new Promise((resolve, reject) => {
+			let endpoint = `${this.API_HOST}/course-schedule/action/cancel-schedule/${courseScheduleId}`;
+			this.httpClient.post(endpoint, {})
+			.toPromise()
+			.then(
+				res => {
+					resolve(res);
+				},
+				msg => {
+					reject(msg);
+				}
+			);
+		});
+
+		return promise;
+	}
+
+	getCourseScheduleAttendance(courseScheduleId:string) {
+		let promise = new Promise((resolve, reject) => {
+			let endpoint = `${this.API_HOST}/course-schedules/${courseScheduleId}/attendance`;
+			this.httpClient.get(endpoint)
+			.toPromise()
+			.then(
+				res => {
+					resolve(res);
+				},
+				msg => {
+					reject(msg);
+				}
+			);
+		});
+
+		return promise;
+	}
+
+	onAttendanceChange($event, a) {
+		if ($event.target.checked) {
+			this.checkAttendance(a.id, 'PRESENT').then(e => {
+				this.toastr.info('Participant marked present', 'Attendance', { timeOut: 3000 });
+				this.getCourseScheduleAttendance(this.modelId).then(data => {
+					this.attendanceData = data;
+				});
+			}).catch(err => {
+				this.toastr.error('Failed to marked participant present', 'Attendance', { timeOut: 3000 });
+			});
+		} else {
+			this.checkAttendance(a.id, 'ABSENT').then(e => {
+				this.toastr.info('Participant marked absent', 'Attendance', { timeOut: 3000 });
+				this.getCourseScheduleAttendance(this.modelId).then(data => {
+					this.attendanceData = data;
+				});
+			}).catch(err => {
+				this.toastr.error('Failed to marked participant absent', 'Attendance', { timeOut: 3000 });
+			});
+		}
+
+
+	}
+
+	checkAttendance(attendanceDetailId: string, attendanceStatus: string) {
+		let promise = new Promise((resolve, reject) => {
+			let endpoint = `${this.API_HOST}/course-schedules/actions/check-attendance`;
+
+			let requestBody = {
+				attendanceDetailId,
+    			attendanceStatus
+			}
+
+			this.httpClient.post(endpoint, requestBody)
+			.toPromise()
+			.then(
+				res => {
+					resolve(res);
+				},
+				msg => {
+					reject(msg);
+				}
+			);
+		});
+
+		return promise;
 	}
 }

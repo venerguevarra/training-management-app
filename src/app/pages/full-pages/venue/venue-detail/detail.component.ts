@@ -21,7 +21,7 @@ export class VenueDetailComponent {
 	private readonly API_HOST = environment.API_HOST;
   	private readonly ENDPOINT: string = `${this.API_HOST}/venues`;
 	private readonly USERS_ENDPOINT: string = `${this.API_HOST}/users`;
-	private readonly LANDING_PAGE: string = '/app/venue';
+	private readonly LANDING_PAGE: string = '/app/administration/venue';
 
 	title = 'Venue';
 	currentUser;

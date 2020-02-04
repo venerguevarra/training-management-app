@@ -28,6 +28,9 @@
                     <p class="card-text mb-3">
                       Welcome back, please login to your account.
                     </p>
+                    <p *ngIf="loginError" class="card-text mb-3" style="color: red;">
+                      Invalid username or password
+                    </p>
                     <small class="form-text text-muted danger" *ngIf="hasError('username')">Username required</small>
                     <input
                       name="username"

@@ -18,7 +18,11 @@
       </ng-template>
       <ng-template ng-option-tmp let-item="item" let-index="index">
             <strong>{{item.name}}</strong> <br/>
-            {{item.data.startDate}} to {{item.data.endDate}}
+            {{item.data.startDate | date: 'MMM dd, yyyy'}} to {{item.data.endDate | date: 'MMM dd, yyyy'}} <br/>
+            <span *ngIf="item.data.status == 'SCHEDULE_WAITING'">Status: WAITING CONFIRMATION</span>
+            <span *ngIf="item.data.status == 'SCHEDULE_CONFIRMED'">Status: CONFIRMED</span>
+            <span *ngIf="item.data.status == 'SCHEDULE_CANCELLED'">Status: CANCELLED</span>
+            <span *ngIf="item.data.status == 'SCHEDULE_DELIVERED'">Status: DELIVERED</span>
       </ng-template>
 
 </ng-select>

@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { VenueListComponent } from './venue-list/list.component';
-import { VenueDetailComponent } from './venue-detail/detail.component';
+import { UserManagementListComponent } from './user-management-list/list.component';
+import { UserManagementDetailComponent } from './user-management-detail/detail.component';
 
 import { AuthGuard } from '../../../shared/auth/auth-guard.service';
 
@@ -11,18 +11,18 @@ const routes: Routes = [
     path: '',
     children: [
       {
-        path: 'administration/venue',
-        component: VenueListComponent,
+        path: 'setup/user',
+        component: UserManagementListComponent,
         data: {
-          title: 'Venue List'
+          title: 'User List'
         },
         canActivate: [AuthGuard]
       },
       {
-        path: 'administration/venue/:id',
-        component: VenueDetailComponent,
+        path: 'setup/user/:id',
+        component: UserManagementDetailComponent,
         data: {
-          title: 'Venue Detail'
+          title: 'User Detail'
         },
         canActivate: [AuthGuard]
       }
@@ -34,4 +34,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class VenueRoutingModule { }
+export class UserManagementRoutingModule { }

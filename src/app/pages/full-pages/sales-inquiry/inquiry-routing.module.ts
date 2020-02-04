@@ -11,7 +11,7 @@ const routes: Routes = [
     path: '',
     children: [
       {
-        path: 'inquiry',
+        path: 'sales/inquiry',
         component: InquiryListComponent,
         data: {
           title: 'Inquiry List'
@@ -19,7 +19,7 @@ const routes: Routes = [
         canActivate: [AuthGuard]
       },
       {
-        path: 'inquiry/:id',
+        path: 'sales/inquiry/:id',
         component: InquiryDetailComponent,
         data: {
           title: 'Inquiry Detail'

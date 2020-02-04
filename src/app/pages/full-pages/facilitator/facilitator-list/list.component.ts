@@ -21,7 +21,7 @@ export class FacilitatorListComponent {
 	private readonly API_HOST = environment.API_HOST;
   	private readonly ENDPOINT: string = `${this.API_HOST}/facilitators`;
 	private readonly FIND_ENDPOINT: string = `${this.ENDPOINT}/actions/find`;
-	private readonly LANDING_PAGE: string = `/app/facilitator`;
+	private readonly LANDING_PAGE: string = `/app/administration/facilitator`;
 
 	title: string = "Facilitator";
 	rows: any = [];

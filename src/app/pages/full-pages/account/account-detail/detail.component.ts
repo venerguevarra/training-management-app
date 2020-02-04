@@ -20,7 +20,7 @@ export class AccountDetailComponent {
 	private readonly API_HOST = environment.API_HOST;
   	private readonly ENDPOINT: string = `${this.API_HOST}/accounts`;
 	private readonly USERS_ENDPOINT: string = `${this.API_HOST}/users`;
-	private readonly LANDING_PAGE: string = '/app/account';
+	private readonly LANDING_PAGE: string = '/app/sales/account';
 
 
 	title = 'Account';

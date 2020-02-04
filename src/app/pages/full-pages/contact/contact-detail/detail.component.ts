@@ -312,7 +312,7 @@ export class ContactDetailComponent {
                     "Success",
                     { timeOut: 3000 }
                   );
-                  this.router.navigate(['/app/account', this.currentForm.get('accountId').value]);
+                  this.router.navigate(['/app/sales/account', this.currentForm.get('accountId').value]);
                 }
               },
               error => {

@@ -21,7 +21,7 @@ export class CourseDetailComponent {
 	private readonly API_HOST = environment.API_HOST;
   	private readonly ENDPOINT: string = `${this.API_HOST}/courses`;
 	private readonly USERS_ENDPOINT: string = `${this.API_HOST}/users`;
-	private readonly LANDING_PAGE: string = '/app/course';
+	private readonly LANDING_PAGE: string = '/app/administration/course';
 
 	title = 'Course';
 	currentUser;

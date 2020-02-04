@@ -248,7 +248,6 @@ export class CourseRegistrationComponent {
 
 	search($event) {
 		this.searchCourseRegistration().then(data =>{
-			console.log(data);
 			this.registeredList = data;
 		});
 	}
@@ -282,7 +281,6 @@ export class CourseRegistrationComponent {
 			queryParams.endDate = scheduleDateTo;
 		}
 
-		console.log(queryParams);
 		this.httpClient
 			.get<any[]>(ACTIVE_ENDPOINT, {params: {...queryParams}})
 			.toPromise()

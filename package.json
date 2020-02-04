@@ -84,7 +84,8 @@
     "tslib": "1.9.3",
     "videogular2": "6.4.0",
     "web-animations-js": "github:angular/web-animations-js#release_pr208",
-    "zone.js": "~0.9.1"
+    "zone.js": "~0.9.1",
+    "express": "^4.17.1"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.800.0",

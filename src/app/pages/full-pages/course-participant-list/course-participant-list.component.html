@@ -1,113 +1,112 @@
-<div style=" border-top: 1px solid #EEEEEE;">
+<div>
     <form *ngIf="enrolledList && enrolledList.length > 0" [formGroup]="enrolledListForm">
-    <div *ngIf="enrolledList && enrolledList.length > 0" class=" m-3">
-        <h4 class="">Enrolled Participants</h4>
-        <div class="row">
-            <table *ngIf="enrolledList && enrolledList.length > 0" class="table col-md-12"
-                style="width: 100% !important;">
-                <thead>
-                    <tr>
-                        <th class="border-0 text-uppercase small font-weight-bold">
-                            <input type="checkbox" [checked]="isAllEnrolledSelected" (change)="onEnrolledFormAll($event)" />
-                        </th>
-                        <th class="border-0 text-uppercase small font-weight-bold">#</th>
-                        <th class="border-0 text-uppercase small font-weight-bold">First Name</th>
-                        <th class="border-0 text-uppercase small font-weight-bold">Last Name</th>
-                        <th class="border-0 text-uppercase small font-weight-bold">Middle Initial</th>
-                        <th class="border-0 text-uppercase small font-weight-bold">Email</th>
-                        <th class="border-0 text-uppercase small font-weight-bold">Mobile Number</th>
-                        <th class="border-0 text-uppercase small font-weight-bold">Designation</th>
-                        <th class="border-0 text-uppercase small font-weight-bold">Company</th>
-                        <th class="border-0 text-uppercase small font-weight-bold">Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let p of enrolledList; let i = index">
-                        <td><input type="checkbox" [checked]="p.selected" [value]="p.participant.id" (change)="onEnrolledFormChange($event)" /></td>
-                        <td>{{ i + 1}}</td>
-                        <td>{{ p.participant.firstName }}</td>
-                        <td>{{ p.participant.lastName }}</td>
-                        <td>{{ p.participant.middleInitial }}</td>
-                        <td>{{ p.participant.email }}</td>
-                        <td>{{ p.participant.mobileNumber }}</td>
-                        <td>{{ p.participant.designation }}</td>
-                        <td>{{ p.account.name }}</td>
-                        <td>
-                            <span *ngIf="p.participant.status == 'PENDING'">PENDING</span>
-                            <span *ngIf="p.participant.status == 'REGISTERED'">REGISTERED</span>
-                            <span *ngIf="p.participant.status == 'CONFIRMED'">CONFIRMED</span>
-                            <span *ngIf="p.participant.status == 'RESCHEDULED'">RESCHEDULED</span>
-                            <span *ngIf="p.participant.status == 'UNDELIVERED'">UNDELIVERED</span>
-                            <span *ngIf="p.participant.status == 'DELIVERED'">DELIVERED</span>
-                            <span *ngIf="p.participant.status == 'CANCELLED'">CANCELLED</span>
-                            <span *ngIf="p.participant.status == 'ENROLLED'">ENROLLED</span>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="mt-10 row justify-content-center">
-            <button *ngIf="currentCourseSchedule['status'] != 'SCHEDULE_DELIVERED'" type="button" class="btn btn-raised btn-warning col-md-3 mr-2" style="height: 50px;font-size: 1em;" (click)="sendEnrollmentNotification()">Send Pre-Enrollment Notification</button>
-            <button *ngIf="currentCourseSchedule['status'] == 'SCHEDULE_DELIVERED'" type="button" class="btn btn-raised btn-danger col-md-3 mr-2" style="height: 50px;font-size: 1em;" (click)="sendPostEnrollmentNotification()">Send Post-Enrollment Notification</button>
-            <button *ngIf="currentCourseSchedule['status'] != 'SCHEDULE_DELIVERED'" type="button" class="btn btn-raised btn-success col-md-1 mr-2" style="height: 50px;font-size: 1em;" (click)="delivered()">Delivered</button>
-            <button *ngIf="currentCourseSchedule['status'] != 'SCHEDULE_DELIVERED'" type="button" class="btn btn-raised btn-danger col-md-1" style="height: 50px;font-size: 1em;" (click)="rescheduleEnrolled()">Reschedule</button>
+        <div *ngIf="enrolledList && enrolledList.length > 0" class=" m-3">
+            <h4 class="">Enrolled Participants</h4>
+            <div class="row">
+                <table *ngIf="enrolledList && enrolledList.length > 0" class="table col-md-12"
+                    style="width: 100% !important;">
+                    <thead>
+                        <tr>
+                            <th *ngIf="currentCourseSchedule['status'] != 'SCHEDULE_DELIVERED'" class="border-0 text-uppercase small font-weight-bold">
+                                <input type="checkbox" [checked]="isAllEnrolledSelected" (change)="onEnrolledFormAll($event)" />
+                            </th>
+                            <th class="border-0 text-uppercase small font-weight-bold">#</th>
+                            <th class="border-0 text-uppercase small font-weight-bold">First Name</th>
+                            <th class="border-0 text-uppercase small font-weight-bold">Last Name</th>
+                            <th class="border-0 text-uppercase small font-weight-bold">Middle Initial</th>
+                            <th class="border-0 text-uppercase small font-weight-bold">Email</th>
+                            <th class="border-0 text-uppercase small font-weight-bold">Mobile Number</th>
+                            <th class="border-0 text-uppercase small font-weight-bold">Designation</th>
+                            <th class="border-0 text-uppercase small font-weight-bold">Company</th>
+                            <th class="border-0 text-uppercase small font-weight-bold">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let p of enrolledList; let i = index">
+                            <td *ngIf="currentCourseSchedule['status'] != 'SCHEDULE_DELIVERED'"><input type="checkbox" [checked]="p.selected" [value]="p.participant.id" (change)="onEnrolledFormChange($event)" /></td>
+                            <td>{{ i + 1}}</td>
+                            <td>{{ p.participant.firstName }}</td>
+                            <td>{{ p.participant.lastName }}</td>
+                            <td>{{ p.participant.middleInitial }}</td>
+                            <td>{{ p.participant.email }}</td>
+                            <td>{{ p.participant.mobileNumber }}</td>
+                            <td>{{ p.participant.designation }}</td>
+                            <td>{{ p.account.name }}</td>
+                            <td>
+                                <span *ngIf="p.participant.status == 'PENDING'">PENDING</span>
+                                <span *ngIf="p.participant.status == 'REGISTERED'">REGISTERED</span>
+                                <span *ngIf="p.participant.status == 'CONFIRMED'">CONFIRMED</span>
+                                <span *ngIf="p.participant.status == 'RESCHEDULED'">RESCHEDULED</span>
+                                <span *ngIf="p.participant.status == 'UNDELIVERED'">UNDELIVERED</span>
+                                <span *ngIf="p.participant.status == 'DELIVERED'">DELIVERED</span>
+                                <span *ngIf="p.participant.status == 'CANCELLED'">CANCELLED</span>
+                                <span *ngIf="p.participant.status == 'ENROLLED'">ENROLLED</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="mt-10 row justify-content-center">
+                <button *ngIf="currentCourseSchedule['status'] != 'SCHEDULE_DELIVERED'" type="button" class="btn btn-raised btn-warning mr-2" style="height: 50px;font-size: 1em;" (click)="sendEnrollmentNotification()">Send Pre-Enrollment Notification</button>
+                <button *ngIf="currentCourseSchedule['status'] == 'SCHEDULE_DELIVERED'" type="button" class="btn btn-raised btn-danger mr-2" style="height: 50px;font-size: 1em;" (click)="sendPostEnrollmentNotification()">Send Post-Enrollment Notification</button>
+                <button *ngIf="currentCourseSchedule['status'] != 'SCHEDULE_DELIVERED'" type="button" class="btn btn-raised btn-success mr-2" style="height: 50px;font-size: 1em;" (click)="delivered()">Delivered</button>
+                <button *ngIf="currentCourseSchedule['status'] != 'SCHEDULE_DELIVERED'" type="button" class="btn btn-raised btn-danger" style="height: 50px;font-size: 1em;" (click)="rescheduleEnrolled()">Reschedule</button>
 
+            </div>
         </div>
-    </div>
     </form>
 
-
     <form *ngIf="registeredList && registeredList.length > 0" [formGroup]="confirmedRegistrationListForm">
-    <div *ngIf="registeredList && registeredList.length > 0" class=" m-3">
-        <h4 class="">Confirmed Registrations</h4>
-        <div class="row">
-            <table *ngIf="registeredList && registeredList.length > 0" class="table col-md-12"
-                style="width: 100% !important;">
-                <thead>
-                    <tr>
-                        <th class="border-0 text-uppercase small font-weight-bold">
-                            <input type="checkbox" [checked]="isAllConfirmedSelected" (change)="onConfirmedRegistrationFormAll($event)" />
-                        </th>
-                        <th class="border-0 text-uppercase small font-weight-bold">#</th>
-                        <th class="border-0 text-uppercase small font-weight-bold">First Name</th>
-                        <th class="border-0 text-uppercase small font-weight-bold">Last Name</th>
-                        <th class="border-0 text-uppercase small font-weight-bold">Middle Initial</th>
-                        <th class="border-0 text-uppercase small font-weight-bold">Email</th>
-                        <th class="border-0 text-uppercase small font-weight-bold">Mobile Number</th>
-                        <th class="border-0 text-uppercase small font-weight-bold">Designation</th>
-                        <th class="border-0 text-uppercase small font-weight-bold">Company</th>
-                        <th class="border-0 text-uppercase small font-weight-bold">Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let p of registeredList; let i = index">
-                        <td><input type="checkbox" [checked]="p.selected" [value]="p.participant.id" (change)="onConfirmedRegistrationFormChange($event)" /></td>
-                        <td>{{ i + 1}}</td>
-                        <td>{{ p.participant.firstName }}</td>
-                        <td>{{ p.participant.lastName }}</td>
-                        <td>{{ p.participant.middleInitial }}</td>
-                        <td>{{ p.participant.email }}</td>
-                        <td>{{ p.participant.mobileNumber }}</td>
-                        <td>{{ p.participant.designation }}</td>
-                        <td>{{ p.account.name }}</td>
-                        <td>
-                            <span *ngIf="p.participant.status == 'PENDING'">PENDING</span>
-                            <span *ngIf="p.participant.status == 'REGISTERED'">REGISTERED</span>
-                            <span *ngIf="p.participant.status == 'CONFIRMED'">CONFIRMED</span>
-                            <span *ngIf="p.participant.status == 'RESCHEDULED'">RESCHEDULED</span>
-                            <span *ngIf="p.participant.status == 'UNDELIVERED'">UNDELIVERED</span>
-                            <span *ngIf="p.participant.status == 'DELIVERED'">DELIVERED</span>
-                            <span *ngIf="p.participant.status == 'CANCELLED'">CANCELLED</span>
-                            <span *ngIf="p.participant.status == 'ENROLLED'">ENROLLED</span>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="mt-10 row justify-content-center">
-                <button *ngIf="canEnroll" type="button" class="btn btn-raised btn-success col-md-1  mr-2" style="height: 50px;font-size: 1em;" (click)="addToClass()">Add to Class</button>
-                <button type="button" class="btn btn-raised btn-danger col-md-1" style="height: 50px;font-size: 1em;" (click)="rescheduleConfirmed()">Reschedule</button>
-        </div>
+        <div *ngIf="registeredList && registeredList.length > 0" class=" m-3">
+            <h4 class="">Confirmed Registrations</h4>
+            <div class="row">
+                <table *ngIf="registeredList && registeredList.length > 0" class="table col-md-12"
+                    style="width: 100% !important;">
+                    <thead>
+                        <tr>
+                            <th class="border-0 text-uppercase small font-weight-bold">
+                                <input type="checkbox" [checked]="isAllConfirmedSelected" (change)="onConfirmedRegistrationFormAll($event)" />
+                            </th>
+                            <th class="border-0 text-uppercase small font-weight-bold">#</th>
+                            <th class="border-0 text-uppercase small font-weight-bold">First Name</th>
+                            <th class="border-0 text-uppercase small font-weight-bold">Last Name</th>
+                            <th class="border-0 text-uppercase small font-weight-bold">Middle Initial</th>
+                            <th class="border-0 text-uppercase small font-weight-bold">Email</th>
+                            <th class="border-0 text-uppercase small font-weight-bold">Mobile Number</th>
+                            <th class="border-0 text-uppercase small font-weight-bold">Designation</th>
+                            <th class="border-0 text-uppercase small font-weight-bold">Company</th>
+                            <th class="border-0 text-uppercase small font-weight-bold">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let p of registeredList; let i = index">
+                            <td><input type="checkbox" [checked]="p.selected" [value]="p.participant.id" (change)="onConfirmedRegistrationFormChange($event)" /></td>
+                            <td>{{ i + 1}}</td>
+                            <td>{{ p.participant.firstName }}</td>
+                            <td>{{ p.participant.lastName }}</td>
+                            <td>{{ p.participant.middleInitial }}</td>
+                            <td>{{ p.participant.email }}</td>
+                            <td>{{ p.participant.mobileNumber }}</td>
+                            <td>{{ p.participant.designation }}</td>
+                            <td>{{ p.account.name }}</td>
+                            <td>
+                                <span *ngIf="p.participant.status == 'PENDING'">PENDING</span>
+                                <span *ngIf="p.participant.status == 'REGISTERED'">REGISTERED</span>
+                                <span *ngIf="p.participant.status == 'CONFIRMED'">CONFIRMED</span>
+                                <span *ngIf="p.participant.status == 'RESCHEDULED'">RESCHEDULED</span>
+                                <span *ngIf="p.participant.status == 'UNDELIVERED'">UNDELIVERED</span>
+                                <span *ngIf="p.participant.status == 'DELIVERED'">DELIVERED</span>
+                                <span *ngIf="p.participant.status == 'CANCELLED'">CANCELLED</span>
+                                <span *ngIf="p.participant.status == 'ENROLLED'">ENROLLED</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="mt-10 row justify-content-center">
+                    <button *ngIf="canEnroll && currentCourseSchedule['status'] == 'SCHEDULE_CONFIRMED'" type="button" class="btn btn-raised btn-success mr-2" style="height: 50px;font-size: 1em;" (click)="addToClass()">Add to Class</button>
+                    <button type="button" class="btn btn-raised btn-danger" style="height: 50px;font-size: 1em;" (click)="rescheduleConfirmed()">Reschedule</button>
+            </div>
         </div>
     </form>
 </div>

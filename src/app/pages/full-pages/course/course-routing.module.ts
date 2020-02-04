@@ -11,7 +11,7 @@ const routes: Routes = [
     path: '',
     children: [
       {
-        path: 'course',
+        path: 'administration/course',
         component: CourseListComponent,
         data: {
           title: 'Course List'
@@ -19,7 +19,7 @@ const routes: Routes = [
         canActivate: [AuthGuard]
       },
       {
-        path: 'course/:id',
+        path: 'administration/course/:id',
         component: CourseDetailComponent,
         data: {
           title: 'Course Detail'

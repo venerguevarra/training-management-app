@@ -22,16 +22,16 @@ export const ROUTES: RouteInfo[] = [
     submenu: []
   },
   {
-    path: "/app/course-registration",
+    path: "/app/administration/course-registration",
     title: "Course Registration",
-    icon: "fas fa-list-alt",
+    icon: "fas ft-file-plus",
     class: "",
     badge: "",
     badgeClass: "",
     isExternalLink: false,
     submenu: []
   },
-  /*{
+  {
     path: "/app/training-calendar",
     title: "Calendar",
     icon: "fas icon-calendar",
@@ -40,7 +40,7 @@ export const ROUTES: RouteInfo[] = [
     badgeClass: "",
     isExternalLink: false,
     submenu: []
-  },*/
+  },
   {
     path: "/app/marketing-inquiry",
     title: "Inquiry",
@@ -61,19 +61,9 @@ export const ROUTES: RouteInfo[] = [
     isExternalLink: false,
     submenu: []
   },
-  /*{
-    path: "/app/contact",
-    title: "Contact",
-    icon: "fas fa-mail-bulk",
-    class: "",
-    badge: "",
-    badgeClass: "",
-    isExternalLink: false,
-    submenu: []
-  },*/
   {
     path: "",
-    title: "Administration",
+    title: "Setup",
     icon: "fas fa-users-cog",
     class: "has-sub",
     badge: "",
@@ -81,7 +71,28 @@ export const ROUTES: RouteInfo[] = [
     isExternalLink: false,
     submenu: [
       {
-        path: "/app/course",
+        path: "/app/setup/user",
+        title: "User",
+        icon: "fas ft-users",
+        class: "",
+        badge: "",
+        badgeClass: "",
+        isExternalLink: false,
+        submenu: []
+      }
+    ]
+  },
+  {
+    path: "",
+    title: "Administration",
+    icon: "fas icon-docs",
+    class: "has-sub",
+    badge: "",
+    badgeClass: "",
+    isExternalLink: false,
+    submenu: [
+      {
+        path: "/app/administration/course",
         title: "Course",
         icon: "icon-notebook",
         class: "",
@@ -91,7 +102,7 @@ export const ROUTES: RouteInfo[] = [
         submenu: []
       },
       {
-        path: "/app/facilitator",
+        path: "/app/administration/facilitator",
         title: "Facilitator",
         icon: "icon-users",
         class: "",
@@ -101,7 +112,7 @@ export const ROUTES: RouteInfo[] = [
         submenu: []
       },
       {
-        path: "/app/venue",
+        path: "/app/administration/venue",
         title: "Venue",
         icon: "icon-map",
         class: "",
@@ -111,7 +122,7 @@ export const ROUTES: RouteInfo[] = [
         submenu: []
       },
       {
-        path: "/app/cost",
+        path: "/app/administration/cost",
         title: "Costing",
         icon: "icon-wallet",
         class: "",
@@ -132,7 +143,7 @@ export const ROUTES: RouteInfo[] = [
     isExternalLink: false,
     submenu: [
       {
-        path: "/app/inquiry",
+        path: "/app/sales/inquiry",
         title: "Inquiry",
         icon: "far fa-envelope-open",
         class: "",
@@ -142,7 +153,7 @@ export const ROUTES: RouteInfo[] = [
         submenu: []
       },
       {
-        path: "/app/account",
+        path: "/app/sales/account",
         title: "Account",
         icon: "far fa-file-alt",
         class: "",

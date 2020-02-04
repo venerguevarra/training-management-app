@@ -22,7 +22,7 @@ export class VenueListComponent {
 	private readonly API_HOST = environment.API_HOST;
   	private readonly ENDPOINT: string = `${this.API_HOST}/venues`;
 	private readonly FIND_ENDPOINT: string = `${this.ENDPOINT}/actions/find`;
-	private readonly LANDING_PAGE: string = `/app/venue`;
+	private readonly LANDING_PAGE: string = `/app/administration/venue`;
 
 	title: string = "Venue";
 	rows: any = [];

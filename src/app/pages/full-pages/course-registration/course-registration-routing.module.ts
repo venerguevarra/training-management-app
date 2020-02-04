@@ -10,7 +10,7 @@ const routes: Routes = [
     path: '',
     children: [
       {
-        path: 'course-registration',
+        path: 'administration/course-registration',
         component: CourseRegistrationComponent,
         data: {
           title: 'Course Registration'

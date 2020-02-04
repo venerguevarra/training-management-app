@@ -21,7 +21,7 @@ export class CostDetailComponent {
 	private readonly API_HOST = environment.API_HOST;
   	private readonly ENDPOINT: string = `${this.API_HOST}/costings`;
 	private readonly USERS_ENDPOINT: string = `${this.API_HOST}/users`;
-	private readonly LANDING_PAGE: string = '/app/cost';
+	private readonly LANDING_PAGE: string = '/app/administration/cost';
 
 	title = 'Training Cost';
 	currentUser;

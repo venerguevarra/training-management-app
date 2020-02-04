@@ -1,334 +1,426 @@
-<!-- EDIT FORM -->
-<div>
-<h4 class="card-title pt-2" id="basic-layout-form"><span *ngIf="newForm"></span>{{title}} Details</h4>
-<div *ngIf="newForm == true || editForm == true" class="row">
-  <div class="col-md-12">
+<div class="row text-left">
+  <!--Tabset Starts-->
+  <div class="col-md-12 col-lg-12">
     <div class="card">
       <div class="card-content">
-        <div class="px-3">
-          <div class="card-content">
-            <form class=" form form-horizontal" [formGroup]="currentForm">
-              <input *ngIf="editForm" type="hidden" formControlName="id">
+        <div class="card-body">
+          <ngb-tabset (tabChange)="tabChange($event)">
+            <ngb-tab [title]="newForm? 'New Schedule': 'Info'">
+              <ng-template ngbTabContent>
+                <!-- EDIT FORM -->
+                <div>
+                  <div *ngIf="newForm == true || editForm == true" class="row">
+                    <div class="col-md-12">
+                      <div class="card">
+                        <div class="card-content">
+                          <div class="px-3">
+                            <div class="card-content">
+                              <form class=" form form-horizontal" [formGroup]="currentForm">
+                                <input *ngIf="editForm" type="hidden" formControlName="id">
 
-              <div class="form-body">
+                                <div class="form-body">
 
-                <div class="form-group row pt-4">
-                  <label class="col-md-4 label-control">&nbsp;</label>
-                  <div class="col-md-4">
-                    Fields with <span class="px-required">*</span> are required.
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label class="col-md-4 label-control" for="name">Course<span class="px-required">*</span></label>
-                  <div class="col-md-4">
-                    <input type="hidden" formControlName="courseId">
-                    <app-course-select (selectedIdEmitter)="onCourseSelected($event)" [isInvalid]="isCourseIdInvalid"
-                      [selectedCourse]="selectedCourse"></app-course-select>
-                    <small *ngIf="isCourseIdInvalid" class="form-text text-muted danger">Course inquired
-                      required</small>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label class="col-md-4 label-control" for="name">Course Fee<span class="px-required">*</span></label>
-                  <div class="col-md-4">
-                    <input (blur)="updateRevenueModel()" formControlName="courseFee" type="number" id="courseFee"
-                      class="form-control" name="courseFee" [ngClass]="{ 'is-invalid': isInvalid(f.courseFee)}">
-                    <small
-                      *ngIf="(f.courseFee.dirty || f.courseFee.touched || submitted) && f.courseFee.invalid && f.courseFee.errors.required"
-                      class="form-text text-muted danger">
-                      Course fee required
-                    </small>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label class="col-md-4 label-control" for="name">No. of Days<span class="px-required">*</span></label>
-                  <div class="col-md-4">
-                    <input (blur)="updateRevenueModel()" formControlName="numberOfDays" type="number" id="numberOfDays"
-                      class="form-control" name="numberOfDays" [ngClass]="{ 'is-invalid': isInvalid(f.numberOfDays)}">
-                    <small
-                      *ngIf="(f.numberOfDays.dirty || f.numberOfDays.touched || submitted) && f.numberOfDays.invalid && f.numberOfDays.errors.required"
-                      class="form-text text-muted danger">
-                      Number of days required
-                    </small>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label class="col-md-4 label-control" for="name">Venue<span class="px-required">*</span></label>
-                  <div class="col-md-4">
-                    <input type="hidden" formControlName="venueId">
-                    <app-venue-select (selectedIdEmitter)="onVenueSelected($event)" [isInvalid]="isCourseIdInvalid"
-                      [selectedVenue]="selectedVenue"></app-venue-select>
-                    <small *ngIf="isVenueIdInvalid" class="form-text text-muted danger">Venue required</small>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label class="col-md-4 label-control" for="name">Target Registrations<span
-                      class="px-required">*</span></label>
-                  <div class="col-md-4">
-                    <input (blur)="updateRevenueModel()" formControlName="registeredParticipants" type="number"
-                      id="registeredParticipants" class="form-control" name="registeredParticipants"
-                      [ngClass]="{ 'is-invalid': isInvalid(f.registeredParticipants)}" placeholder="e.g. 10">
-                    <small
-                      *ngIf="(f.registeredParticipants.dirty || f.registeredParticipants.touched || submitted) && f.registeredParticipants.invalid && f.registeredParticipants.errors.required"
-                      class="form-text text-muted danger">
-                      Target registrations required
-                    </small>
-                  </div>
-                </div>
+                                  <div class="form-group row pt-4">
+                                    <label class="col-md-4 label-control">&nbsp;</label>
+                                    <div class="col-md-4">
+                                      Fields with <span class="px-required">*</span> are required.
+                                    </div>
+                                  </div>
+                                  <div class="form-group row">
+                                    <label class="col-md-4 label-control" for="name">Course<span
+                                        class="px-required">*</span></label>
+                                    <div class="col-md-4">
+                                      <input type="hidden" formControlName="courseId">
+                                      <app-course-select (selectedIdEmitter)="onCourseSelected($event)"
+                                        [isInvalid]="isCourseIdInvalid" [selectedCourse]="selectedCourse">
+                                      </app-course-select>
+                                      <small *ngIf="isCourseIdInvalid" class="form-text text-muted danger">Course
+                                        inquired
+                                        required</small>
+                                    </div>
+                                  </div>
+                                  <div class="form-group row">
+                                    <label class="col-md-4 label-control" for="name">Course Fee<span
+                                        class="px-required">*</span></label>
+                                    <div class="col-md-4">
+                                      <input (blur)="updateRevenueModel()" formControlName="courseFee" type="number"
+                                        id="courseFee" class="form-control" name="courseFee"
+                                        [ngClass]="{ 'is-invalid': isInvalid(f.courseFee)}">
+                                      <small
+                                        *ngIf="(f.courseFee.dirty || f.courseFee.touched || submitted) && f.courseFee.invalid && f.courseFee.errors.required"
+                                        class="form-text text-muted danger">
+                                        Course fee required
+                                      </small>
+                                    </div>
+                                  </div>
+                                  <div class="form-group row">
+                                    <label class="col-md-4 label-control" for="name">No. of Days<span
+                                        class="px-required">*</span></label>
+                                    <div class="col-md-4">
+                                      <input (blur)="updateRevenueModel()" formControlName="numberOfDays" type="number"
+                                        id="numberOfDays" class="form-control" name="numberOfDays"
+                                        [ngClass]="{ 'is-invalid': isInvalid(f.numberOfDays)}">
+                                      <small
+                                        *ngIf="(f.numberOfDays.dirty || f.numberOfDays.touched || submitted) && f.numberOfDays.invalid && f.numberOfDays.errors.required"
+                                        class="form-text text-muted danger">
+                                        Number of days required
+                                      </small>
+                                    </div>
+                                  </div>
+                                  <div class="form-group row">
+                                    <label class="col-md-4 label-control" for="name">Venue<span
+                                        class="px-required">*</span></label>
+                                    <div class="col-md-4">
+                                      <input type="hidden" formControlName="venueId">
+                                      <app-venue-select (selectedIdEmitter)="onVenueSelected($event)"
+                                        [isInvalid]="isCourseIdInvalid" [selectedVenue]="selectedVenue">
+                                      </app-venue-select>
+                                      <small *ngIf="isVenueIdInvalid" class="form-text text-muted danger">Venue
+                                        required</small>
+                                    </div>
+                                  </div>
+                                  <div class="form-group row">
+                                    <label class="col-md-4 label-control" for="name">Target Registrations<span
+                                        class="px-required">*</span></label>
+                                    <div class="col-md-4">
+                                      <input (blur)="updateRevenueModel()" formControlName="registeredParticipants"
+                                        type="number" id="registeredParticipants" class="form-control"
+                                        name="registeredParticipants"
+                                        [ngClass]="{ 'is-invalid': isInvalid(f.registeredParticipants)}"
+                                        placeholder="e.g. 10">
+                                      <small
+                                        *ngIf="(f.registeredParticipants.dirty || f.registeredParticipants.touched || submitted) && f.registeredParticipants.invalid && f.registeredParticipants.errors.required"
+                                        class="form-text text-muted danger">
+                                        Target registrations required
+                                      </small>
+                                    </div>
+                                  </div>
 
-                <div class="form-group row">
-                  <label class="col-md-4 label-control" for="name">Status<span class="px-required">*</span></label>
-                  <div *ngIf="editForm" class="col-md-4">
-                    <select *ngIf="editForm && currentScheduleStatus == 'SCHEDULE_WAITING'" formControlName="status" class="custom-select"
-                      [ngClass]="{ 'is-invalid': isInvalid(f.status)}">
-                      <option value="SCHEDULE_WAITING">AWAITING CONFIRMATION</option>
-                      <option value="SCHEDULE_CONFIRMED">CONFIRMED</option>
-                      <option value="SCHEDULE_CANCELLED">CANCELLED</option>
-                    </select>
-                    <span *ngIf="currentScheduleStatus != 'SCHEDULE_WAITING'">
-                      <span *ngIf="editForm && f.status.value != 'SCHEDULE_WAITING' && f.status.value == 'SCHEDULE_CONFIRMED'">CONFIRMED</span>
-                      <span *ngIf="editForm && f.status.value != 'SCHEDULE_WAITING' && f.status.value == 'SCHEDULE_CANCELLED'">CANCELLED</span>
-                      <span *ngIf="editForm && f.status.value != 'SCHEDULE_WAITING' && f.status.value == 'SCHEDULE_DELIVERED'">DELIVERED</span>
-                      <input type="hidden" formControlName="status" *ngIf="editForm && f.status.value != 'SCHEDULE_WAITING'">
-                    </span>
-                    <small
-                      *ngIf="editForm && (f.status.dirty || f.status.touched || submitted) && f.status.invalid && f.status.errors.required"
-                      class="form-text text-muted danger">
-                      Status required
-                    </small>
-                  </div>
-                  <div *ngIf="newForm" class="col-md-4">
-                    <input *ngIf="newForm" type="hidden" formControlName="status">
-                    AWAITING CONFIRMATION
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label class="col-md-4 label-control" for="name">Inclusive Dates<span
-                      class="px-required">*</span></label>
-                  <div class="col-md-4">
-                    <ngb-datepicker #dp (select)="onDateSelection($event)" [displayMonths]="2" [dayTemplate]="t" outsideDays="hidden" [startDate]="selectedStartDate"> </ngb-datepicker>
-                    <ng-template #t let-date let-focused="focused">
-                      <span class="custom-day" [class.focused]="focused" [class.range]="isRange(date)"
-                        [class.faded]="isHovered(date) || isInside(date)" (mouseenter)="hoveredDate = date"
-                        (mouseleave)="hoveredDate = null">
-                        {{ date.day }}
-                      </span>
-                    </ng-template>
-                    <small *ngIf="isTrainingDateInvalid && submitted" class="form-text text-muted danger">Training date required</small>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label class="col-md-4 label-control" for="name">Start Time<span class="px-required">*</span></label>
-                  <div class="col-md-4">
-                    <ngb-timepicker formControlName="startTime" [meridian]="meridian" [minuteStep]="30">
-                    </ngb-timepicker>
-                    <small *ngIf="isStartTimeValid && submitted" class="form-text text-muted danger">Start time
-                      required</small>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label class="col-md-4 label-control" for="name">End Time<span class="px-required">*</span></label>
-                  <div class="col-md-4">
-                    <ngb-timepicker formControlName="endTime" [meridian]="meridian" [minuteStep]="30"></ngb-timepicker>
-                    <small *ngIf="isEndTimeValid && submitted" class="form-text text-muted danger">End time
-                      required</small>
-                  </div>
-                </div>
+                                  <div class="form-group row">
+                                    <label class="col-md-4 label-control" for="name">Status<span
+                                        class="px-required">*</span></label>
+                                    <div *ngIf="editForm" class="col-md-4">
+                                      <select *ngIf="editForm && currentScheduleStatus == 'SCHEDULE_WAITING'"
+                                        formControlName="status" class="custom-select"
+                                        [ngClass]="{ 'is-invalid': isInvalid(f.status)}">
+                                        <option value="SCHEDULE_WAITING">AWAITING CONFIRMATION</option>
+                                        <option value="SCHEDULE_CONFIRMED">CONFIRMED</option>
+                                        <option value="SCHEDULE_CANCELLED">CANCELLED</option>
+                                      </select>
+                                      <span *ngIf="currentScheduleStatus != 'SCHEDULE_WAITING'">
+                                        <span
+                                          *ngIf="editForm && f.status.value != 'SCHEDULE_WAITING' && f.status.value == 'SCHEDULE_CONFIRMED'">CONFIRMED</span>
+                                        <span
+                                          *ngIf="editForm && f.status.value != 'SCHEDULE_WAITING' && f.status.value == 'SCHEDULE_CANCELLED'">CANCELLED</span>
+                                        <span
+                                          *ngIf="editForm && f.status.value != 'SCHEDULE_WAITING' && f.status.value == 'SCHEDULE_DELIVERED'">DELIVERED</span>
+                                        <input type="hidden" formControlName="status"
+                                          *ngIf="editForm && f.status.value != 'SCHEDULE_WAITING'">
+                                      </span>
+                                      <small
+                                        *ngIf="editForm && (f.status.dirty || f.status.touched || submitted) && f.status.invalid && f.status.errors.required"
+                                        class="form-text text-muted danger">
+                                        Status required
+                                      </small>
+                                    </div>
+                                    <div *ngIf="newForm" class="col-md-4">
+                                      <input *ngIf="newForm" type="hidden" formControlName="status">
+                                      AWAITING CONFIRMATION
+                                    </div>
+                                  </div>
+                                  <div class="form-group row">
+                                    <label class="col-md-4 label-control" for="name">Inclusive Dates<span
+                                        class="px-required">*</span></label>
+                                    <div class="col-md-4">
+                                      <ngb-datepicker #dp (select)="onDateSelection($event)" [displayMonths]="2"
+                                        [dayTemplate]="t" outsideDays="hidden" [startDate]="selectedStartDate">
+                                      </ngb-datepicker>
+                                      <ng-template #t let-date let-focused="focused">
+                                        <span class="custom-day" [class.focused]="focused" [class.range]="isRange(date)"
+                                          [class.faded]="isHovered(date) || isInside(date)"
+                                          (mouseenter)="hoveredDate = date" (mouseleave)="hoveredDate = null">
+                                          {{ date.day }}
+                                        </span>
+                                      </ng-template>
+                                      <small *ngIf="isTrainingDateInvalid && submitted"
+                                        class="form-text text-muted danger">Training date required</small>
+                                    </div>
+                                  </div>
+                                  <div class="form-group row">
+                                    <label class="col-md-4 label-control" for="name">Start Time<span
+                                        class="px-required">*</span></label>
+                                    <div class="col-md-4">
+                                      <ngb-timepicker formControlName="startTime" [meridian]="meridian"
+                                        [minuteStep]="30">
+                                      </ngb-timepicker>
+                                      <small *ngIf="isStartTimeValid && submitted"
+                                        class="form-text text-muted danger">Start time
+                                        required</small>
+                                    </div>
+                                  </div>
+                                  <div class="form-group row">
+                                    <label class="col-md-4 label-control" for="name">End Time<span
+                                        class="px-required">*</span></label>
+                                    <div class="col-md-4">
+                                      <ngb-timepicker formControlName="endTime" [meridian]="meridian" [minuteStep]="30">
+                                      </ngb-timepicker>
+                                      <small *ngIf="isEndTimeValid && submitted" class="form-text text-muted danger">End
+                                        time
+                                        required</small>
+                                    </div>
+                                  </div>
 
-                <div class="form-group row">
-                  <label class="col-md-4 label-control" for="name">&nbsp;</label>
-                  <div class="col-md-4">
-                    <button *ngIf="editForm && currentScheduleStatus == 'SCHEDULE_WAITING'" type="button" class="btn btn-raised btn-success mr-2" (click)="update()">
-                      <i class="fa fa-check-square-o"></i> Save Changes
-                    </button>
-                    <button *ngIf="newForm" type="button" class="btn btn-raised btn-success mr-2" (click)="saveNew()">
-                      <i class="fa fa-check-square-o"></i> Save
-                    </button>
-                    <button type="button" class="btn btn-danger btn-raised" (click)="cancel()">
-                      <i class="ft-x"></i> Cancel
-                    </button>
+                                  <div class="form-group row">
+                                    <label class="col-md-4 label-control" for="name">&nbsp;</label>
+                                    <div class="col-md-4">
+                                      <button *ngIf="editForm && currentScheduleStatus == 'SCHEDULE_WAITING'"
+                                        type="button" class="btn btn-raised btn-success mr-2" (click)="update()">
+                                        <i class="fa fa-check-square-o"></i> Save Changes
+                                      </button>
+                                      <button *ngIf="newForm" type="button" class="btn btn-raised btn-success mr-2"
+                                        (click)="saveNew()">
+                                        <i class="fa fa-check-square-o"></i> Save
+                                      </button>
+                                      <button *ngIf="editForm && (!f.actualRegisteredParticipants.value || f.actualRegisteredParticipants.value == '0')  && currentScheduleStatus == 'SCHEDULE_CONFIRMED'"
+                                        type="button" class="btn btn-raised btn-warning mr-2" (click)="cancelScheduleHandler()">
+                                        <i class="fa fa-check-square-o"></i> Cancel Schedule
+                                    </button>
+                                      <button type="button" class="btn btn-danger btn-raised" (click)="cancel()">
+                                        <i class="ft-x"></i> Close
+                                      </button>
+                                    </div>
+                                  </div>
+                                  <input type="hidden" formControlName="status">
+                                </div>
+                              </form>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
+
+                  <!-- VIE FORM -->
+                  <div *ngIf="viewForm" class="row">
+                    <div class="col-md-12">
+                      <div class="card">
+                        <div class="card-content">
+                          <div class="px-3">
+                            <form class=" form form-horizontal" [formGroup]="currentForm">
+
+                              <div class="form-body">
+
+                                <div class="form-group row pt-4">
+                                  <label class="col-md-4 label-control" for="name">Course</label>
+                                  <div class="col-md-4">
+                                    <app-course-detail [id]="f.courseId.value"></app-course-detail>
+                                  </div>
+                                </div>
+
+                                <div class="form-group row">
+                                  <label class="col-md-4 label-control" for="name">Venue</label>
+                                  <div class="col-md-4">
+                                    <app-venue-detail [id]="f.venueId.value"></app-venue-detail>
+                                  </div>
+                                </div>
+
+                                <div class="form-group row">
+                                  <label class="col-md-4 label-control" for="name">Status</label>
+                                  <div class="col-md-4">
+                                    <span *ngIf="f.status.value == 'SCHEDULE_WAITING'">AWAITING CONFIRMATION</span>
+                                    <span *ngIf="f.status.value == 'SCHEDULE_CONFIRMED'">CONFIRMED</span>
+                                    <span *ngIf="f.status.value == 'SCHEDULE_CANCELLED'">CANCELLED</span>
+                                    <span *ngIf="f.status.value == 'SCHEDULE_DELIVERED'">DELIVERED</span>
+                                  </div>
+                                </div>
+
+                                <div class="form-group row">
+                                  <label class="col-md-4 label-control" for="endDate">Start Date</label>
+                                  <div class="col-md-4">
+                                    <span *ngIf="f.startDate">{{f.startDate.value | date: 'MMM d, y'}}</span>
+                                  </div>
+                                </div>
+
+                                <div class="form-group row">
+                                  <label class="col-md-4 label-control" for="endDate">End Date</label>
+                                  <div class="col-md-4">
+                                    <span *ngIf="f.endDate">{{f.endDate.value | date: 'MMM d, y'}}</span>
+                                  </div>
+                                </div>
+
+                                <div class="form-group row">
+                                  <label class="col-md-4 label-control" for="startTime">Start Time</label>
+                                  <div class="col-md-4">
+                                    <span *ngIf="f.startTime">{{formattedStartTime}}</span>
+                                  </div>
+                                </div>
+
+                                <div class="form-group row">
+                                  <label class="col-md-4 label-control" for="endDate">End Time</label>
+                                  <div class="col-md-4">
+                                    <span *ngIf="f.endTime">{{formattedEndTime}}</span>
+                                  </div>
+                                </div>
+
+
+
+                                <div class="form-group row">
+                                  <label class="col-md-4 label-control" for="name">Course Fee</label>
+                                  <div class="col-md-4">
+                                    {{f.courseFee.value | currency: 'PHP '}}
+                                  </div>
+                                </div>
+
+                                <div class="form-group row">
+                                  <label class="col-md-4 label-control" for="name">Total No. of Registration</label>
+                                  <div class="col-md-4">
+                                    <span>{{f.actualRegisteredParticipants.value || 0}}</span>
+                                  </div>
+                                </div>
+
+                                <div class="form-group row">
+                                  <label class="col-md-4 label-control" for="name">Total Cost</label>
+                                  <div class="col-md-4">
+                                    <span>{{revenueModel.scheduleCost || 0 | currency : 'PHP ' }}</span>
+                                  </div>
+                                </div>
+
+
+
+                                <div class="form-group row">
+                                  <label class="col-md-4 label-control" for="name">Actual Gross Revenue</label>
+                                  <div class="col-md-4">
+                                    <span>{{revenueModel.actualGrossRevenue || 0 | currency: 'PHP '}}</span>
+                                  </div>
+                                </div>
+
+                                <div class="form-group row">
+                                  <label class="col-md-4 label-control" for="name">Actual Net Revenue</label>
+                                  <div class="col-md-4">
+                                    <span>{{revenueModel.actualNetRevenue || 0 | currency: 'PHP '}}</span>
+                                  </div>
+                                </div>
+
+
+                                <div class="form-group row">
+                                  <label class="col-md-4 label-control" for="name">Actual Profit Margin</label>
+                                  <div class="col-md-4">
+                                    <span>{{revenueModel.actualProfitMargin || 0 | number : '1.2-2' }} %</span>
+                                  </div>
+                                </div>
+
+
+                                <div class="form-group row">
+                                  <label class="col-md-4 label-control" for="name">Target Registration</label>
+                                  <div class="col-md-4">
+                                    <span>{{f.registeredParticipants.value || 0}}</span>
+                                  </div>
+                                </div>
+
+                                <div class="form-group row">
+                                  <label class="col-md-4 label-control" for="name">Gross Revenue</label>
+                                  <div class="col-md-4">
+                                    <span>{{revenueModel.grossRevenue || 0 | currency: 'PHP '}}</span>
+                                  </div>
+                                </div>
+
+                                <div class="form-group row">
+                                  <label class="col-md-4 label-control" for="name">Net Revenue</label>
+                                  <div class="col-md-4">
+                                    <span>{{revenueModel.netRevenue || 0 | currency: 'PHP '}}</span>
+                                  </div>
+                                </div>
+
+                                <div class="form-group row">
+                                  <label class="col-md-4 label-control" for="name">Profit Margin</label>
+                                  <div class="col-md-4">
+                                    <span>{{revenueModel.profitMargin || 0 | number : '1.2-2' }} %</span>
+                                  </div>
+                                </div>
+
+                                <div class="form-body">
+                                  <div class="form-group row">
+                                    <label class="col-md-4 label-control">&nbsp;</label>
+                                    <div class="col-md-8">
+                                      <button type="button"
+                                        class="btn btn-raised btn-success mr-2" (click)="showEditForm()"><i
+                                          class="fa fa-check-square-o"></i> Edit</button>
+                                      <button type="button" class="btn btn-danger btn-raised" (click)="cancel()"><i
+                                          class="ft-x"></i> Close</button>
+                                    </div>
+                                  </div>
+                                </div>
+
+                              </div>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <app-facilitator-schedule *ngIf="editForm" [courseScheduleId]="f.id.value"
+                    [courseId]="f.courseId.value" [numberOfDays]="f.numberOfDays.value" [startDate]="f.startDate.value"
+                    [endDate]="f.endDate.value">
+                  </app-facilitator-schedule>
+
+                  <app-schedule-costings *ngIf="editForm" [courseScheduleId]="f.id.value">
+                  </app-schedule-costings>
                 </div>
-                <input type="hidden" formControlName="status">
-              </div>
-            </form>
-          </div>
+              </ng-template>
+            </ngb-tab>
+            <ngb-tab *ngIf="editForm || viewForm" title="Participants">
+              <ng-template ngbTabContent>
+                <div class="m-3">
+                  <app-course-participant-list [canEnroll]="currentScheduleStatus == 'SCHEDULE_CONFIRMED'"
+                    [courseScheduleId]="f.id.value"></app-course-participant-list>
+                </div>
+              </ng-template>
+            </ngb-tab>
+            <ngb-tab *ngIf="editForm || viewForm" title="Attendance">
+              <ng-template ngbTabContent>
+                <ngb-tabset *ngIf="attendanceData && attendanceData.length > 0">
+                  <ngb-tab *ngFor="let a of attendanceData; let i = index">
+                  <ng-template ngbTabTitle>
+                    {{a.attendance.date | date: 'MMMM dd, yyyy'}}
+                  </ng-template>
+                  <ng-template ngbTabContent>
+                    <table *ngIf="a.attendees && a.attendees.length > 0" class="table col-md-12" style="width: 100% !important;">
+                    <thead>
+                        <tr>
+                            <th class="border-0 text-uppercase small font-weight-bold">#</th>
+                            <th class="border-0 text-uppercase small font-weight-bold">First Name</th>
+                            <th class="border-0 text-uppercase small font-weight-bold">Last Name</th>
+                            <th class="border-0 text-uppercase small font-weight-bold">Middle Initial</th>
+                            <th class="border-0 text-uppercase small font-weight-bold">Email</th>
+                            <th class="border-0 text-uppercase small font-weight-bold">Company</th>
+                            <th class="border-0 text-uppercase small font-weight-bold text-center">Present</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let p of a.attendees; let i = index">
+
+                            <td>{{ i + 1}}</td>
+                            <td>{{ p.participant.firstName }}</td>
+                            <td>{{ p.participant.lastName }}</td>
+                            <td>{{ p.participant.middleInitial }}</td>
+                            <td>{{ p.participant.email }}</td>
+                            <td>{{ p.account.name }}</td>
+                            <td align="center"><input type="checkbox" [checked]="p.attendanceDetail.present" (change)="onAttendanceChange($event, p.attendanceDetail)"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                  </ng-template>
+                  </ngb-tab>
+                </ngb-tabset>
+
+
+              </ng-template>
+            </ngb-tab>
+          </ngb-tabset>
         </div>
       </div>
     </div>
   </div>
-</div>
-
-<!-- VIE FORM -->
-<div *ngIf="viewForm" class="row">
-  <div class="col-md-12">
-    <div class="card">
-      <div class="card-content">
-        <div class="px-3">
-          <form class=" form form-horizontal" [formGroup]="currentForm">
-
-            <div class="form-body">
-
-              <div class="form-group row pt-4">
-                  <label class="col-md-4 label-control" for="name">Course</label>
-                  <div class="col-md-4">
-                      <app-course-detail [id]="f.courseId.value"></app-course-detail>
-                  </div>
-              </div>
-
-              <div class="form-group row">
-                  <label class="col-md-4 label-control" for="name">Venue</label>
-                  <div class="col-md-4">
-                      <app-venue-detail [id]="f.venueId.value"></app-venue-detail>
-                  </div>
-              </div>
-
-              <div class="form-group row">
-                  <label class="col-md-4 label-control" for="name">Status</label>
-                  <div class="col-md-4">
-                    <span *ngIf="f.status.value == 'SCHEDULE_WAITING'">AWAITING CONFIRMATION</span>
-                    <span *ngIf="f.status.value == 'SCHEDULE_CONFIRMED'">CONFIRMED</span>
-                    <span *ngIf="f.status.value == 'SCHEDULE_CANCELLED'">CANCELLED</span>
-                    <span *ngIf="f.status.value == 'SCHEDULE_DELIVERED'">DELIVERED</span>
-                  </div>
-              </div>
-
-              <div class="form-group row">
-                  <label class="col-md-4 label-control" for="endDate">Start Date</label>
-                  <div class="col-md-4">
-                    <span *ngIf="f.startDate">{{f.startDate.value | date: 'MMM d, y'}}</span>
-                  </div>
-              </div>
-
-              <div class="form-group row">
-                  <label class="col-md-4 label-control" for="endDate">End Date</label>
-                  <div class="col-md-4">
-                    <span *ngIf="f.endDate">{{f.endDate.value | date: 'MMM d, y'}}</span>
-                  </div>
-              </div>
-
-              <div class="form-group row">
-                  <label class="col-md-4 label-control" for="startTime">Start Time</label>
-                  <div class="col-md-4">
-                      <span *ngIf="f.startTime">{{formattedStartTime}}</span>
-                  </div>
-              </div>
-
-              <div class="form-group row">
-                  <label class="col-md-4 label-control" for="endDate">End Time</label>
-                  <div class="col-md-4">
-                      <span *ngIf="f.endTime">{{formattedEndTime}}</span>
-                  </div>
-              </div>
-
-
-
-              <div class="form-group row">
-                <label class="col-md-4 label-control" for="name">Course Fee</label>
-                <div class="col-md-4">
-                    {{f.courseFee.value | currency: 'PHP '}}
-                </div>
-            </div>
-
-            <div class="form-group row">
-              <label class="col-md-4 label-control" for="name">Total No. of Registration</label>
-              <div class="col-md-4">
-                  <span>{{f.actualRegisteredParticipants.value || 0}}</span>
-              </div>
-            </div>
-
-              <div class="form-group row">
-                <label class="col-md-4 label-control" for="name">Total Cost</label>
-                <div class="col-md-4">
-                    <span>{{revenueModel.scheduleCost || 0 | currency : 'PHP ' }}</span>
-                </div>
-              </div>
-
-
-
-              <div class="form-group row">
-                <label class="col-md-4 label-control" for="name">Actual Gross Revenue</label>
-                <div class="col-md-4">
-                  <span>{{revenueModel.actualGrossRevenue || 0 | currency: 'PHP '}}</span>
-                </div>
-            </div>
-
-              <div class="form-group row">
-                <label class="col-md-4 label-control" for="name">Actual Net Revenue</label>
-                <div class="col-md-4">
-                  <span>{{revenueModel.actualNetRevenue || 0 | currency: 'PHP '}}</span>
-                </div>
-            </div>
-
-
-              <div class="form-group row">
-                  <label class="col-md-4 label-control" for="name">Actual Profit Margin</label>
-                  <div class="col-md-4">
-                      <span>{{revenueModel.actualProfitMargin || 0 | number : '1.2-2' }} %</span>
-                  </div>
-              </div>
-
-
-              <div class="form-group row">
-                <label class="col-md-4 label-control" for="name">Target Registration</label>
-                <div class="col-md-4">
-                    <span>{{f.registeredParticipants.value || 0}}</span>
-                </div>
-              </div>
-
-              <div class="form-group row">
-                <label class="col-md-4 label-control" for="name">Gross Revenue</label>
-                <div class="col-md-4">
-                  <span>{{revenueModel.grossRevenue || 0 | currency: 'PHP '}}</span>
-                </div>
-            </div>
-
-              <div class="form-group row">
-                <label class="col-md-4 label-control" for="name">Net Revenue</label>
-                <div class="col-md-4">
-                  <span>{{revenueModel.netRevenue || 0 | currency: 'PHP '}}</span>
-                </div>
-            </div>
-
-              <div class="form-group row">
-                  <label class="col-md-4 label-control" for="name">Profit Margin</label>
-                  <div class="col-md-4">
-                      <span>{{revenueModel.profitMargin || 0 | number : '1.2-2' }} %</span>
-                  </div>
-              </div>
-
-              <div class="form-body">
-                <div class="form-group row">
-                  <label class="col-md-4 label-control">&nbsp;</label>
-                  <div class="col-md-8">
-                    <button *ngIf="f.status.value == 'SCHEDULE_WAITING'" type="button" class="btn btn-raised btn-success mr-2" (click)="showEditForm()"><i class="fa fa-check-square-o"></i> Edit</button>
-                    <button type="button" class="btn btn-danger btn-raised" (click)="cancel()"><i class="ft-x"></i> Cancel</button>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-          </form>
-        </div>
-
-        <div class="m-3">
-          <app-course-participant-list [canEnroll]="currentScheduleStatus == 'SCHEDULE_CONFIRMED'" [courseScheduleId]="f.id.value"></app-course-participant-list>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<app-facilitator-schedule *ngIf="editForm"
-  [courseScheduleId]="f.id.value"
-  [courseId]="f.courseId.value"
-  [numberOfDays]="f.numberOfDays.value"
-  [startDate]="f.startDate.value"
-  [endDate]="f.endDate.value">
-</app-facilitator-schedule>
-
-<app-schedule-costings
-  *ngIf="editForm"
-  [courseScheduleId]="f.id.value">
-</app-schedule-costings>
 </div>

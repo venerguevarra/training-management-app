@@ -233,7 +233,6 @@ export class DealDetailComponent {
 
               this.isRecordActive = this.currentModel.active === "ACTIVE";
               this.selectedContact = this.currentModel["contactId"];
-              console.log(this.selectedContact);
               this.selectedCourse = this.currentModel["courseId"];
               this.currentDealStatus = this.currentModel["stage"];
             },
@@ -503,7 +502,7 @@ export class DealDetailComponent {
                     "Success",
                     { timeOut: 3000 }
                   );
-                  this.router.navigate(["/app/account", this.parentAccountId], {
+                  this.router.navigate(["/app/sales/account", this.parentAccountId], {
                     queryParams: { action: "view" }
                   });
                 }

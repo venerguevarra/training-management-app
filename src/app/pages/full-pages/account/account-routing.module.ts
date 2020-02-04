@@ -13,7 +13,7 @@ const routes: Routes = [
     path: '',
     children: [
       {
-        path: 'account',
+        path: 'sales/account',
         component: AccountListComponent,
         data: {
           title: 'Account List'
@@ -37,7 +37,7 @@ const routes: Routes = [
         canActivate: [AuthGuard]
       },
       {
-        path: 'account/:id',
+        path: 'sales/account/:id',
         component: AccountDetailComponent,
         data: {
           title: 'Account Detail'

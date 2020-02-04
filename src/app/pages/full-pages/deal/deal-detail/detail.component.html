@@ -43,6 +43,7 @@
                   <span *ngIf="f.stage.value === 'CLOSED_LOST'">CLOSED LOST</span>
                   <span *ngIf="f.stage.value === 'CLOSED_LOST_TO_COMPETITION'">CLOSED WON TO COMPETITION</span>
                   <span *ngIf="f.stage.value === 'CANCELLED'">CANCELLED</span>
+                  <span *ngIf="f.stage.value === 'DELIVERED'">DELIVERED</span>
                 </div>
               </div>
             </div>
@@ -165,7 +166,7 @@
                     <i class="fa fa-check-square-o"></i> Edit
                   </button>
                   <button type="button" class="btn btn-danger btn-raised" (click)="cancel()">
-                    <i class="ft-x"></i> Cancel
+                    <i class="ft-x"></i> Close
                   </button>
                 </div>
               </div>
@@ -361,7 +362,7 @@
                       </button>
 
                       <button type="button" class="btn btn-danger btn-raised" (click)="cancel()">
-                        <i class="ft-x"></i> Cancel
+                        <i class="ft-x"></i> Close
                       </button>
                     </div>
                   </div>

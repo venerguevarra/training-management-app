@@ -35,12 +35,26 @@
                   </div>
                 </div>
 
-                <input type="hidden" formControlName="accountId">
                 <div class="form-group row">
+                  <label class="col-md-4 label-control" for="name">Course</label>
+                  <div class="col-md-4">
+                      <app-course-detail [id]="selectedCourseId"></app-course-detail>
+                  </div>
+              </div>
+                <input type="hidden" formControlName="accountId">
+
+              <div [hidden]="currentRegistrationStatus != 'PENDING'" class="form-group row">
                   <label class="col-md-4 label-control" for="name">Available Schedules<span class="px-required">*</span></label>
                   <div class="col-md-4">
                     <app-schedule-select [courseId]="selectedCourseId" (scheduleEmitter)="onScheduleLoaded($event)" (selectedIdEmitter)="onCourseScheduleSelected($event)" [isInvalid]="isScheduleIdValid" [selectedSchedule]="selectedScheduleId"></app-schedule-select>
-                    <small *ngIf="isDealIdInvalid" class="form-text text-muted danger">Schedule required</small>
+                    <small *ngIf="isScheduleIdValid" class="form-text text-muted danger">Schedule required</small>
+                  </div>
+                </div>
+
+                <div *ngIf="existingRegistrationScheduleStatus == 'SCHEDULE_CONFIRMED' || existingRegistrationScheduleStatus == 'SCHEDULE_DELIVERED' || existingRegistrationScheduleStatus == 'SCHEDULE_CANCELLED'" class="form-group row">
+                  <label class="col-md-4 label-control" for="name">Schedule Date<span class="px-required">*</span></label>
+                  <div class="col-md-4">
+                    <app-schedule-detail [id]="selectedScheduleId" [showStatus]="true"></app-schedule-detail>
                   </div>
                 </div>
 
@@ -87,9 +101,9 @@
                       <i class="fa fa-check-square-o"></i> Save
                     </button>
                     <button *ngIf="f.status.value == 'PENDING'" style="background-color: #FFE57F;" type="button" class="btn btn-raised mr-2" (click)="sendRegistrationEmail()"><i class="fa fa-check-square-o"></i> Send Registration Link</button>
-                    <button *ngIf="f.status.value == 'REGISTERED' && existingRegistrationScheduleStatus == 'SCHEDULE_CONFIRMED'" style="background-color: #FFE57F;" type="button" class="btn btn-raised mr-2" (click)="sendRegistrationEmail()"><i class="fa fa-check-square-o"></i> Confirm Registration</button>
+                    <button *ngIf="f.status.value == 'CONFIRMED'" style="background-color: #FFE57F;" type="button" class="btn btn-raised mr-2" (click)="deliverRegistration()"><i class="fa fa-check-square-o"></i> Delivered</button>
                     <button type="button" class="btn btn-danger btn-raised mr-2" (click)="cancel()">
-                      <i class="ft-x"></i> Cancel
+                      <i class="ft-x"></i> Close
                     </button>
                   </div>
                 </div>
@@ -139,11 +153,18 @@
                 </div>
 
                 <div class="form-group row">
+                  <label class="col-md-4 label-control" for="name">Course</label>
+                  <div class="col-md-4">
+                      <app-course-detail [id]="selectedCourseId"></app-course-detail>
+                  </div>
+                </div>
+
+                <div class="form-group row">
                   <label class="col-md-4 label-control" for="name">Available Schedules<span class="px-required">*</span></label>
                   <div class="col-md-4">
                     <input type="hidden" formControlName="accountId">
                     <app-schedule-select [courseId]="selectedCourseId" (scheduleEmitter)="onScheduleLoaded($event)" (selectedIdEmitter)="onCourseScheduleSelected($event)" [isInvalid]="isScheduleIdValid" [selectedSchedule]="selectedScheduleId"></app-schedule-select>
-                    <small *ngIf="isDealIdInvalid" class="form-text text-muted danger">Schedule required</small>
+                    <small *ngIf="isScheduleIdValid" class="form-text text-muted danger">Schedule required</small>
                   </div>
                 </div>
 
@@ -181,7 +202,7 @@
                       <i class="fa fa-check-square-o"></i> Save
                     </button>
                     <button type="button" class="btn btn-danger btn-raised" (click)="cancel()">
-                      <i class="ft-x"></i> Cancel
+                      <i class="ft-x"></i> Close
                     </button>
                   </div>
                 </div>
@@ -281,11 +302,10 @@
                   <label class="col-md-4 label-control">&nbsp;</label>
                   <div class="col-md-8">
                     <button type="button" class="btn btn-raised btn-success mr-2" (click)="showEditForm()"><i class="fa fa-check-square-o"></i> Edit</button>
-                    <button type="button" class="btn btn-danger btn-raised" (click)="cancel()"><i class="ft-x"></i> Cancel</button>
+                    <button type="button" class="btn btn-danger btn-raised" (click)="cancel()"><i class="ft-x"></i> Close</button>
                   </div>
                 </div>
               </div>
-
             </div>
           </form>
         </div>
@@ -294,4 +314,63 @@
     </div>
   </div>
 </div>
+
+<div *ngIf="viewForm && registeredParticipantList && registeredParticipantList.length > 0" class="row">
+  <div class="col-md-12">
+    <h4 class="">Registration Details</h4>
+    <div class="card">
+      <div class="card-content">
+        <div *ngIf="registeredParticipantList && registeredParticipantList.length > 0" class=" m-3">
+          <div class="row">
+                <table *ngIf="registeredParticipantList && registeredParticipantList.length > 0" class="table col-md-12"
+                    style="width: 100% !important;">
+                    <thead>
+                        <tr>
+                            <th class="border-0 text-uppercase small font-weight-bold">#</th>
+                            <th class="border-0 text-uppercase small font-weight-bold">First Name</th>
+                            <th class="border-0 text-uppercase small font-weight-bold">Last Name</th>
+                            <th class="border-0 text-uppercase small font-weight-bold">Middle Initial</th>
+                            <th class="border-0 text-uppercase small font-weight-bold">Email</th>
+                            <th class="border-0 text-uppercase small font-weight-bold">Mobile Number</th>
+                            <th class="border-0 text-uppercase small font-weight-bold">Designation</th>
+                            <th class="border-0 text-uppercase small font-weight-bold">Schedule</th>
+                            <th class="border-0 text-uppercase small font-weight-bold">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let p of registeredParticipantList; let i = index">
+                            <td>{{ i + 1}}</td>
+                            <td>{{ p.participant.firstName }}</td>
+                            <td>{{ p.participant.lastName }}</td>
+                            <td>{{ p.participant.middleInitial }}</td>
+                            <td>{{ p.participant.email }}</td>
+                            <td>{{ p.participant.mobileNumber }}</td>
+                            <td>{{ p.participant.designation }}</td>
+                            <td>
+                              <span *ngIf="p.participant.status == 'RESCHEDULED' || p.participant.status == 'DELIVERED'">
+                              {{ p.schedule.startDate | date:'MMM d, y'}} - {{ p.schedule.endDate | date:'MMM d, y'}}
+                              </span>
+                              <span *ngIf="p.participant.status != 'RESCHEDULED' && p.participant.status != 'DELIVERED'">
+                              --
+                              </span>
+                            </td>
+                            <td>
+                                <span *ngIf="p.participant.status == 'PENDING'">PENDING</span>
+                                <span *ngIf="p.participant.status == 'REGISTERED'">REGISTERED</span>
+                                <span *ngIf="p.participant.status == 'CONFIRMED'">CONFIRMED</span>
+                                <span *ngIf="p.participant.status == 'RESCHEDULED'">RESCHEDULED</span>
+                                <span *ngIf="p.participant.status == 'UNDELIVERED'">UNDELIVERED</span>
+                                <span *ngIf="p.participant.status == 'DELIVERED'">DELIVERED</span>
+                                <span *ngIf="p.participant.status == 'CANCELLED'">CANCELLED</span>
+                                <span *ngIf="p.participant.status == 'ENROLLED'">ENROLLED</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
 </div>

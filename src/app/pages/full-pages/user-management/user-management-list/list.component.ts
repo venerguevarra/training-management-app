@@ -13,17 +13,17 @@ import { environment } from '../../../../../environments/environment';
 import { pageConfig } from '../../../page.config';
 
 @Component({
-	selector: 'app-course-list',
+	selector: 'app-user-list',
 	templateUrl: './list.component.html',
 	styleUrls: ['./list.component.scss']
 })
-export class CourseListComponent {
+export class UserManagementListComponent {
 	private readonly API_HOST = environment.API_HOST;
-  	private readonly ENDPOINT: string = `${this.API_HOST}/courses`;
+  	private readonly ENDPOINT: string = `${this.API_HOST}/users`;
 	private readonly FIND_ENDPOINT: string = `${this.ENDPOINT}/actions/find`;
-	private readonly LANDING_PAGE: string = `/app/administration/course`;
+	private readonly LANDING_PAGE: string = `/app/setup/user`;
 
-	title: string = "Course";
+	title: string = "User Account";
 	rows: any = [];
 	page = 0;
 	pageSize = pageConfig.pageSize;
@@ -116,7 +116,18 @@ export class CourseListComponent {
 
 		if(this.searchForm.get('name').value != '') {
 			this.criteria.push({
-				name: 'name',
+				name: 'username',
+				value: this.searchForm.get('name').value,
+				operator: 'LIKE',
+				type: 'STRING',
+				logical: 'OR'
+			});
+		}
+
+		if(this.searchForm.get('name').value != '') {
+			this.criteria.push({
+				name: 'userProfile.firstName',
+				paramName: 'firstName',
 				value: this.searchForm.get('name').value,
 				operator: 'LIKE',
 				type: 'STRING',
@@ -139,7 +150,7 @@ export class CourseListComponent {
 		}
 
 		if(this.searchForm.get('status').value != '') {
-			if(this.searchForm.get('status').value == 'ALL' || this.searchForm.get('status').value == 'ACTIVE') {
+			if(this.searchForm.get('status').value == 'ACTIVE') {
 				this.criteria.push({
 					name: 'active',
 					value: 'ACTIVE',
@@ -150,7 +161,7 @@ export class CourseListComponent {
 				});
 			}
 
-			if(this.searchForm.get('status').value == 'ALL' || this.searchForm.get('status').value == 'INACTIVE') {
+			if(this.searchForm.get('status').value == 'INACTIVE') {
 				this.criteria.push({
 					name: 'active',
 					value: 'INACTIVE',
@@ -168,14 +179,14 @@ export class CourseListComponent {
 		this.page = 0;
 
 		this.criteria = this.getSearchFormCriteria();
-		if(this.criteria.length === 0) {
-			this.toastr.error('Please provide search criteria', 'Failed Request', { timeOut: 3000 });
-		}
-
 		let jsonBody = {
 			criteria: this.criteria,
 			page: '0',
 			size: this.pageSize.toString()
+		}
+
+		if(this.criteria.length === 0) {
+			this.toastr.error('Please provide search criteria', 'Search', { timeOut: 3000 });
 		}
 
 		if(this.criteria.length > 0) {

@@ -49,6 +49,8 @@ export class DealListComponent {
     page: this.page.toString()
   };
 
+  @Input() showHeader: boolean = true;
+
   constructor(
     private toastr: ToastrService,
     private formBuilder: FormBuilder,

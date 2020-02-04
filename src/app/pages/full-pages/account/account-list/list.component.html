@@ -1,5 +1,4 @@
 <div>
-<h4><strong>{{title}}</strong></h4>
 <div class="card">
 
   <div class="card-header px-header-color" style="background-color: #ECEFF1;">
@@ -89,6 +88,7 @@
       <div class="col-sm-12">
         <div class="row">
           <div class="col-sm-12 table-responsive">
+            <h4 class="mb-4">{{title}}</h4>
             <table id="course-table" class="table table-striped">
               <thead>
                 <tr>
@@ -106,10 +106,10 @@
                   <td scope="row">{{row.createdDate | date: 'MMM d,y'}}</td>
                   <td scope="row">{{row.active}}</td>
                   <td scope="row" style="text-align: center;">
-                    <a [routerLink]="['/app/account', row.id]" [queryParams]="{action: 'view'}"
+                    <a [routerLink]="['/app/sales/account', row.id]" [queryParams]="{action: 'view'}"
                       queryParamsHandling="merge" class="mr-2" placement="top" ngbTooltip="View"><i
                         class="ft-eye"></i></a>
-                    <a [routerLink]="['/app/account', row.id]" [queryParams]="{action: 'edit'}" placement="top"
+                    <a [routerLink]="['/app/sales/account', row.id]" [queryParams]="{action: 'edit'}" placement="top"
                       ngbTooltip="Edit"><i class="ft-edit-2 mr-2"></i></a>
                   </td>
                 </tr>

@@ -26,7 +26,7 @@ export class InquiryDetailComponent {
   	private readonly ENDPOINT: string = `${this.API_HOST}/inquiries`;
 	private readonly USERS_ENDPOINT: string = `${this.API_HOST}/users`;
 	private readonly COURSES_ENDPOINT: string = `${this.API_HOST}/courses`;
-	private readonly LANDING_PAGE: string = '/app/inquiry';
+	private readonly LANDING_PAGE: string = '/app/sales/inquiry';
 
 	defaultInquiryStatus = "ASSIGNED";
 

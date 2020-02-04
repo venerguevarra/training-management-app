@@ -30,7 +30,7 @@ export class InquiryListComponent {
   private readonly API_HOST = environment.API_HOST;
   private readonly ENDPOINT: string = `${this.API_HOST}/inquiries`;
   private readonly FIND_ENDPOINT: string = `${this.ENDPOINT}/actions/find`;
-  private readonly LANDING_PAGE: string = `/app/inquiry`;
+  private readonly LANDING_PAGE: string = `/app/sales/inquiry`;
 
   title: string = "Inquiry";
   rows: any = [];

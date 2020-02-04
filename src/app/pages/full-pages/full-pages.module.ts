@@ -25,6 +25,7 @@ import { ScheduleModule } from './schedule/schedule.module';
 import { RegistrationModule } from './registration/registration.module';
 import { DealSelectModule } from  '../../components/deal-select/deal-select.module';
 import { CourseRegistrationModule } from  '../full-pages/course-registration/course-registration.module';
+import { UserManagementModule } from  '../full-pages/user-management/user-management.module';
 import { FullPageRoutingModule  } from "./full-pages-routing.module";
 
 
@@ -50,7 +51,8 @@ import { FullPageRoutingModule  } from "./full-pages-routing.module";
         ScheduleModule,
         DealSelectModule,
         RegistrationModule,
-        CourseRegistrationModule
+        CourseRegistrationModule,
+        UserManagementModule
     ],
     exports: [],
     declarations: [

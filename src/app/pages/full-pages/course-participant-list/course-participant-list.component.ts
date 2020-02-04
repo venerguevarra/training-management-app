@@ -86,12 +86,12 @@ export class CourseParticipantListComponent {
 
 		} else {
 			this.registeredList.forEach((item) => {
+				item.selected = false;
 				let index: number = 0;
 				this.selectedConfirmedParticipantList.forEach((id) => {
 					this.selectedConfirmedParticipantList.splice(index, 1);
 					index++;
 				});
-
 			})
 			this.isAllConfirmedSelected = false;
 		}
@@ -115,8 +115,6 @@ export class CourseParticipantListComponent {
 				index++;
 			});
 		}
-
-		console.log(this.selectedEnrolledParticipantList);
 	}
 
 	onEnrolledFormAll(e) {
@@ -168,7 +166,6 @@ export class CourseParticipantListComponent {
 
 		if (changes['canEnroll'] && changes['canEnroll'].currentValue) {
 			this.canEnroll = changes['canEnroll'].currentValue;
-			console.log(this.canEnroll);
 		}
     }
 
@@ -213,7 +210,6 @@ export class CourseParticipantListComponent {
 	}
 
 	addToClass(): Promise<any> {
-
 		if(this.selectedConfirmedParticipantList.length == 0) {
 			this.toastr.error("No confirmed registrations selected ", "Failed Request", { timeOut: 3000 });
 			return;
@@ -231,6 +227,7 @@ export class CourseParticipantListComponent {
 				(data) => {
 					this.toastr.success(`Participants successfully enrolled.`, 'Success', { timeOut: 3000 });
 					this.refreshList();
+					this.selectedConfirmedParticipantList = [];
 				},
 				(error) => {
 					this.toastr.error('Failed to enroll participants', 'Failed request', { timeOut: 3000 });
@@ -257,6 +254,7 @@ export class CourseParticipantListComponent {
 				(data) => {
 					this.toastr.success(`Participants successfully rescheduled.`, 'Success', { timeOut: 3000 });
 					this.refreshList();
+					this.selectedEnrolledParticipantList = [];
 				},
 				(error) => {
 					this.toastr.error('Failed to rescheduled participants', 'Failed request', { timeOut: 3000 });

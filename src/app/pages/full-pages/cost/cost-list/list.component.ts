@@ -21,7 +21,7 @@ export class CostListComponent {
 	private readonly API_HOST = environment.API_HOST;
   	private readonly ENDPOINT: string = `${this.API_HOST}/costings`;
 	private readonly FIND_ENDPOINT: string = `${this.ENDPOINT}/actions/find`;
-	private readonly LANDING_PAGE: string = `/app/cost`;
+	private readonly LANDING_PAGE: string = `/app/administration/cost`;
 
 	title: string = "Training Cost";
 	rows: any = [];
@@ -50,7 +50,7 @@ export class CostListComponent {
 		this.searchForm = this.formBuilder.group({
 			name: [''],
 			status: ['ALL'],
-			createdDate: ['']			
+			createdDate: ['']
 		});
 
 		this.criteria = [];
@@ -102,7 +102,7 @@ export class CostListComponent {
 		this.searchForm = this.formBuilder.group({
 			name: [''],
 			status: ['ALL'],
-			createdDate: ['']			
+			createdDate: ['']
 		});
 		this.createdDate = '';
 		this.criteria = [];
@@ -149,7 +149,7 @@ export class CostListComponent {
 					logical: 'OR'
 				});
 			}
-			
+
 			if(this.searchForm.get('status').value == 'ALL' || this.searchForm.get('status').value == 'INACTIVE') {
 				this.criteria.push({
 					name: 'active',
@@ -166,14 +166,14 @@ export class CostListComponent {
 
 	submitSearchForm(params) {
 		this.page = 0;
-		
+
 		this.criteria = this.getSearchFormCriteria();
 		let jsonBody = {
 			criteria: this.criteria,
 			page: '0',
 			size: this.pageSize.toString()
 		}
-		
+
 		if(this.criteria.length === 0) {
 			this.toastr.error('Please provide search criteria', 'Search', { timeOut: 3000 });
 		}

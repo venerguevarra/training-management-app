@@ -26,7 +26,7 @@ export class AccountListComponent {
   private readonly API_HOST = environment.API_HOST;
   private readonly ENDPOINT: string = `${this.API_HOST}/accounts`;
   private readonly FIND_ENDPOINT: string = `${this.ENDPOINT}/actions/find`;
-  private readonly LANDING_PAGE: string = `/app/account`;
+  private readonly LANDING_PAGE: string = `/app/sales/account`;
 
   title: string = "Account";
   rows: any = [];
@@ -114,21 +114,24 @@ export class AccountListComponent {
     this.createdDate = "";
     this.criteria = [];
     this.pageSize = pageConfig.pageSize;
+    this.submitSearchForm();
+    this.selectedAccountManager = null;
     this.toastr.info(`${this.title} list refreshed`, "System", {
       timeOut: 3000
     });
+
   }
 
   private getSearchFormCriteria() {
     this.criteria = [];
 
     this.criteria.push({
-      name: "accountManager",
-      value: this.stateService.getCurrentUser().userId,
-      operator: "EQ",
-      type: "UUID",
-      logical: "AND"
-    });
+          name: "accountManager",
+          value: this.stateService.getCurrentUser().userId,
+          operator: "EQ",
+          type: "UUID",
+          logical: "AND"
+        });
 
     if (this.searchForm) {
       if (this.searchForm.get("name").value != "") {
@@ -144,7 +147,7 @@ export class AccountListComponent {
       if (this.searchForm.get("accountManager").value != "") {
         this.criteria.push({
           name: "accountManager",
-          value: this.searchForm.get("accountManager").value,
+          value: this.searchForm.get("accountManager").value.id,
           operator: "EQ",
           type: "UUID",
           logical: "OR"
@@ -167,9 +170,8 @@ export class AccountListComponent {
         });
       }
 
-      if (this.searchForm.get("status").value != "") {
+      if (this.searchForm.get("status").value != "ALL") {
         if (
-          this.searchForm.get("status").value == "ALL" ||
           this.searchForm.get("status").value == "ACTIVE"
         ) {
           this.criteria.push({
@@ -183,7 +185,6 @@ export class AccountListComponent {
         }
 
         if (
-          this.searchForm.get("status").value == "ALL" ||
           this.searchForm.get("status").value == "INACTIVE"
         ) {
           this.criteria.push({

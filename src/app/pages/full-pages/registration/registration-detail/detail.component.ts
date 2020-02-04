@@ -58,6 +58,9 @@ export class RegistrationDetailComponent {
   existingRegistrationScheduleStatus;
   currentRegistrationStatus;
   currentDealName;
+
+  registeredParticipantList: any[] = [];
+
   constructor(
     private httpClient: HttpClient,
     private stateService: StateService,
@@ -181,8 +184,11 @@ export class RegistrationDetailComponent {
                       this.selectedDealId = null;
                       this.isDealIdInvalid = true;
                     }
-
                   });
+
+              this.getParticipants(this.currentModel.id).then(data => {
+                this.registeredParticipantList = data['items'];
+              });
             },
             error => {
               this.toastr.error("Error has occurred.", "Failed Request", {
@@ -286,7 +292,7 @@ export class RegistrationDetailComponent {
                     { timeOut: 3000 }
                   );
 
-                  this.router.navigate(["/app/account", this.accountId], {
+                  this.router.navigate(["/app/sales/account", this.accountId], {
                     queryParams: { action: "view" }
                   });
                 }
@@ -329,7 +335,7 @@ export class RegistrationDetailComponent {
 				if(e.value) {
 					this.referenceDataService.sendRegistrationEmail(this.modelId).subscribe(data=>{
             this.toastr.success(`Success sent registration email to ${this.accountName}.`, "System", { timeOut: 3000 });
-            this.router.navigate(["/app/account", this.accountId], {
+            this.router.navigate(["/app/sales/account", this.accountId], {
               queryParams: { action: "view" }
             });
           },
@@ -395,7 +401,7 @@ export class RegistrationDetailComponent {
               data => {
                 if (data.status == 201) {
                   this.toastr.success( `New ${this.title} successfully saved.`, "Success", { timeOut: 3000 });
-                  this.router.navigate(["/app/account", this.accountId], {
+                  this.router.navigate(["/app/sales/account", this.accountId], {
                     queryParams: { action: "view" }
                   });
                 }
@@ -466,6 +472,71 @@ export class RegistrationDetailComponent {
 		});
 
 		return promise;
+	}
+
+  getParticipants(courseRegistrationId: string): Promise<any> {
+    let promise = new Promise((resolve, reject) => {
+    const ACTIVE_ENDPOINT: string = `${this.API_HOST}/course-registrations/actions/find-participants/${courseRegistrationId}`;
+
+    this.httpClient
+      .get<any[]>(ACTIVE_ENDPOINT, {})
+      .toPromise()
+      .then(
+        res => {
+          resolve(res);
+        },
+        msg => {
+          reject(msg);
+        }
+      );
+    });
+
+    return promise;
+	}
+
+  deliverRegistration() {
+    swal
+      .fire({
+        text: `Change registration status to DELIVERED?`,
+        type: "question",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Submit",
+        allowOutsideClick: false
+      })
+      .then(e => {
+        if(e.value) {
+          this.submitDeliverRegistration(this.modelId).then(data => {
+            this.toastr.success("Course registration status updated.", "Success", { timeOut: 3000 });
+            this.router.navigate(["/app/sales/account", this.accountId], {
+              queryParams: { action: "view" }
+            });
+          }).catch(err => {
+            this.toastr.error("Failed to update course registration status.", "Failed request", { timeOut: 3000 });
+          })
+        }
+      });
+  }
+
+  submitDeliverRegistration(courseRegistrationId: string): Promise<any> {
+    let promise = new Promise((resolve, reject) => {
+    const ACTIVE_ENDPOINT: string = `${this.API_HOST}/course-registrations/actions/deliver/${courseRegistrationId}`;
+
+    this.httpClient
+      .post<any[]>(ACTIVE_ENDPOINT, {})
+      .toPromise()
+      .then(
+        res => {
+          resolve(res);
+        },
+        msg => {
+          reject(msg);
+        }
+      );
+    });
+
+    return promise;
 	}
 
   isDealIdInvalid = false;

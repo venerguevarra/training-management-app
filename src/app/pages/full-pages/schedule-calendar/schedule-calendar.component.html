@@ -1,4 +1,7 @@
-<div>
+<div class="row">
+<div class="col-md-1"></div>
+<div class="col-md-10 ">
+
 
 <full-calendar
       #calendar
@@ -16,6 +19,10 @@
       [events]="calendarEvents"
       (dateClick)="handleDateClick($event)"
       (eventClick)="eventClicked($event)"
+      (datesRender)="datesRenderHandler($event)"
     ></full-calendar>
+
   </div>
+  <div class="col-md-1"></div>
+</div>
 

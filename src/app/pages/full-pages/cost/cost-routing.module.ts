@@ -11,7 +11,7 @@ const routes: Routes = [
     path: '',
     children: [
       {
-        path: 'cost',
+        path: 'administration/cost',
         component: CostListComponent,
         data: {
           title: 'Cost List'
@@ -19,7 +19,7 @@ const routes: Routes = [
         canActivate: [AuthGuard]
       },
       {
-        path: 'cost/:id',
+        path: 'administration/cost/:id',
         component: CostDetailComponent,
         data: {
           title: 'Cost Detail'

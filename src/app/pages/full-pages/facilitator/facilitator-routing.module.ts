@@ -11,7 +11,7 @@ const routes: Routes = [
     path: '',
     children: [
       {
-        path: 'facilitator',
+        path: 'administration/facilitator',
         component: FacilitatorListComponent,
         data: {
           title: 'Facilitator List'
@@ -19,7 +19,7 @@ const routes: Routes = [
         canActivate: [AuthGuard]
       },
       {
-        path: 'facilitator/:id',
+        path: 'administration/facilitator/:id',
         component: FacilitatorDetailComponent,
         data: {
           title: 'Facilitator Detail'

@@ -69,7 +69,7 @@ export class FacilitatorScheduleComponent {
 		if(this.assignedFacilitators) {
 			for (let i = 0; i < this.assignedFacilitators.length; i++) {
 			sum += this.assignedFacilitators[i].totalProfessionalFee;
-		}
+			}
 		}
 
 		return sum;

@@ -1,9 +1,5 @@
-<section>
-
-
-
+<div>
   <div class="card">
-
     <div class="card-header px-header-color" style="background-color: #ECEFF1;">
       <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
         <div class="btn-group-md">
@@ -23,19 +19,19 @@
     </div>
 
     <div class="card-body" id="collapseExample" [ngbCollapse]="isCollapsed">
-
       <form class="form form-horizontal" [formGroup]="searchForm">
+
         <div>
           <div class="col-sm-12">
             <div class="row">
-              <div class="col-lg-3 col-md-6">
+              <div class="col-md-4 col-sm-12">
                 <div class="form-group">
                   <label>Name</label>
                   <input type="text" formControlName="name" name="name" id="name" class="form-control">
                 </div>
               </div>
 
-              <div class="col-lg-3 col-md-6">
+              <div class="col-md-4 col-sm-12">
                 <label class="label-control">Status</label>
                 <div>
                   <select formControlName="status" class="custom-select">
@@ -47,16 +43,14 @@
               </div>
 
 
-              <div class="col-lg-3 col-md-6">
-                <div class="form-group">
-                  <label>Created Date</label>
-                  <div class="input-group">
-                    <input name="createdDate" id="createdDate" class="form-control" placeholder="yyyy-mm-dd"
-                      ngbDatepicker formControlName="createdDate" #createDatePicker="ngbDatepicker">
-                    <div class="input-group-append">
-                      <div class="input-group-text" (click)="createDatePicker.toggle()">
-                        <i class="fa fa-calendar" style="cursor: pointer;"></i>
-                      </div>
+              <div class="col-md-4 col-sm-12">
+                <label class="label-control">Created Date</label>
+                <div class="input-group">
+                  <input name="createdDate" id="createdDate" class="form-control" placeholder="yyyy-mm-dd" ngbDatepicker
+                    formControlName="createdDate" #createDatePicker="ngbDatepicker">
+                  <div class="input-group-append">
+                    <div class="input-group-text" (click)="createDatePicker.toggle()">
+                      <i class="fa fa-calendar" style="cursor: pointer;"></i>
                     </div>
                   </div>
                 </div>
@@ -68,10 +62,12 @@
             </div>
           </div>
         </div>
+
       </form>
 
     </div>
   </div>
+
 
   <section id="paging" class="mb-3">
     <div class="card">
@@ -81,32 +77,33 @@
         <div class="col-sm-12">
           <div class="row">
             <div class="col-sm-12 table-responsive">
+
               <h4 class="mb-4">{{title}}</h4>
               <table id="course-table" class="table table-striped">
                 <thead>
                   <tr>
-                    <th scope="col" style="width:20%;">First Name</th>
-                    <th scope="col" style="width:20%;">Last Name</th>
-                    <th scope="col" style="width:15%;">Email</th>
-                    <th scope="col" style="width:15%;">Mobile Number</th>
-                    <th scope="col" style="width:15%;">Created Date</th>
-                    <th scope="col" style="width:10%;">Status</th>
-                    <th scope="col" style="width:10%;text-align: center;">Actions</th>
+                    <th scope="col">Username</th>
+                    <th scope="col">First Name</th>
+                    <th scope="col">Last Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Created Date</th>
+                    <th scope="col">Status</th>
+                    <th scope="col" style="text-align: center;">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr *ngFor="let row of rows">
-                    <td scope="row">{{ row.firstName }}</td>
-                    <td scope="row">{{ row.lastName }}</td>
-                    <td scope="row">{{row.email}}</td>
-                    <td scope="row">{{row.mobileNumber}}</td>
+                    <td scope="row">{{ row.username }}</td>
+                    <td scope="row">{{ row.userProfile.firstName }}</td>
+                    <td scope="row">{{ row.userProfile.lastName }}</td>
+                    <td scope="row">{{ row.userProfile.email }}</td>
                     <td scope="row">{{row.createdDate | date: 'MMM d,y'}}</td>
                     <td scope="row">{{row.active}}</td>
                     <td scope="row" style="text-align: center;">
-                      <a [routerLink]="['/app/administration/facilitator', row.id]" [queryParams]="{action: 'view'}"
+                      <a [routerLink]="['/app/setup/user', row.id]" [queryParams]="{action: 'view'}"
                         queryParamsHandling="merge" class="mr-2" placement="top" ngbTooltip="View"><i
                           class="ft-eye"></i></a>
-                      <a [routerLink]="['/app/administration/facilitator', row.id]" [queryParams]="{action: 'edit'}" placement="top"
+                      <a [routerLink]="['/app/setup/user', row.id]" [queryParams]="{action: 'edit'}" placement="top"
                         ngbTooltip="Edit"><i class="ft-edit-2"></i></a>
                     </td>
                   </tr>
@@ -136,4 +133,4 @@
     </div>
 
   </section>
-</section>
+</div>
