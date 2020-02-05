@@ -7,4 +7,7 @@ export class User {
     middleInitial: string;
     email: string;
     token: string;
+    roles: any;
+    urls: any;
+
 }

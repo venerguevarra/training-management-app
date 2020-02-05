@@ -30,28 +30,20 @@ export class ScheduleCalendarComponent {
     }
   }
 
-  ngAfterViewInit() {
-    //console.log(this.fullcalendarComponent);
-  }
-
   datesRenderHandler($event) {
     let startMonth = $event.view.currentStart.getMonth() + 1;
     let startDay = $event.view.currentStart.getDate();
     let startYear = $event.view.currentStart.getFullYear();
     let startDate = `${startYear}` + '-' + `0${startMonth}`.slice(-2) + '-' + `0${startDay}`.slice(-2);
-    console.log(startDate);
 
     let endMonth = $event.view.currentEnd.getMonth() + 1;
     let endDay = $event.view.currentEnd.getDate();
     let endYear = $event.view.currentEnd.getFullYear();
     let endDate = `${endYear}` + '-' + `0${endMonth}`.slice(-2) + '-' + `0${endDay}`.slice(-2);
-    console.log(endDate);
 
     this.getSchedules(startDate, endDate).then(data => {
-      console.log(data);
       this.calendarEvents = data;
     }).catch(err => {
-      console.log(err);
     })
   }
 

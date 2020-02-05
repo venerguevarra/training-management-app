@@ -23,12 +23,15 @@ export class AuthService {
     private httpClient: HttpClient) {}
 
   signinUser(username: string, password: string) {
+    this.token = null;
+    this.stateService.removeCurrentUser();
+
     let loginRequest = {
       username,
       password
     };
 
-    return this.httpClient.post<any>(this.AUTHENTICATE_ENDPOINT, loginRequest);    
+    return this.httpClient.post<any>(this.AUTHENTICATE_ENDPOINT, loginRequest);
   }
 
   logout() {
@@ -44,7 +47,7 @@ export class AuthService {
     this.token = authorizationToken;
   }
 
-  isAuthenticated() {    
+  isAuthenticated() {
     return this.stateService.hasCurrentUser();
   }
 }

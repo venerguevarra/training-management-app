@@ -5,6 +5,8 @@ import { Router, ActivatedRoute } from "@angular/router";
 import { TranslateService } from '@ngx-translate/core';
 import { customAnimations } from "../animations/custom-animations";
 import { ConfigService } from '../services/config.service';
+import { StateService } from '../../service/state.service';
+import { RouteInfo } from "./sidebar.metadata";
 
 @Component({
   selector: "app-sidebar",
@@ -31,6 +33,7 @@ export class SidebarComponent implements OnInit, AfterViewInit {
     private route: ActivatedRoute,
     public translate: TranslateService,
     private configService: ConfigService,
+    private stateService: StateService
   ) {
     if (this.depth === undefined) {
       this.depth = 0;
@@ -38,11 +41,21 @@ export class SidebarComponent implements OnInit, AfterViewInit {
     }
   }
 
-
+  newRoute: Array<RouteInfo> = [];
   ngOnInit() {
     this.config = this.configService.templateConf;
-    // TODO: filter menu items based on user role
-    this.menuItems = ROUTES;
+
+
+    for(let index=0;index<ROUTES.length;index++) {
+      if(
+        (ROUTES[index].title == 'Dashboard' || ROUTES[index].title == 'Deal' || ROUTES[index].title == 'Calendar') ||
+        (this.stateService.getCurrentUser().urls.indexOf(ROUTES[index].title.toUpperCase()) > -1)
+      ) {
+        this.newRoute.push(ROUTES[index]);
+      }
+    }
+
+    this.menuItems = this.newRoute;
     this.logoUrl = 'assets/img/logo.png';
   }
 

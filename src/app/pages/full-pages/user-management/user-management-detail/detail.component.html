@@ -5,7 +5,8 @@
   <div class="row box-row">
     <div class="col-md-6 box-outer">
       <div class="box-inner">
-        <div *ngIf="newForm == true || editForm == true" class="col-md-12">
+        <!-- start: new form-->
+        <div *ngIf="newForm == true" class="col-md-12">
           <form class="form form-horizontal" [formGroup]="currentForm">
 
             <input *ngIf="editForm" type="hidden" formControlName="id">
@@ -34,6 +35,7 @@
                 </div>
               </div>
 
+              <!--
               <div class="form-group row">
                 <label class="col-md-4 label-control" for="name">Password<span class="px-required">*</span></label>
                 <div class="col-md-8">
@@ -58,6 +60,107 @@
                     *ngIf="(f.confirmPassword.dirty || f.confirmPassword.touched || submitted) && f.confirmPassword.invalid && (f.confirmPassword.errors.required || f.confirmPassword.errors.passwordNotMatch)"
                     class="form-text text-muted danger">
                     Please re-type password
+                  </small>
+                </div>
+              </div>
+              -->
+
+              <div class="form-group row">
+                <label class="col-md-4 label-control" for="name">Email<span class="px-required">*</span></label>
+                <div class="col-md-8">
+                  <input formControlName="email" type="text" id="email" class="form-control" name="email" [ngClass]="{ 'is-invalid': isInvalid(f.email) || emailTaken}" (blur)="validateEmail()">
+                  <small
+                    *ngIf="(f.email.dirty || f.email.touched || submitted) && f.email.invalid && f.email.errors.required"
+                    class="form-text text-muted danger">
+                    Email required
+                  </small>
+                  <small
+                    *ngIf="(f.email.dirty || f.email.touched || submitted) && emailTaken"
+                    class="form-text text-muted danger">
+                    Email already registered
+                  </small>
+                  <small
+                    *ngIf="f.email.invalid && f.email.errors.email"
+                    class="form-text text-muted danger">
+                    Invalid email address
+                  </small>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-md-4 label-control" for="name">First Name<span class="px-required">*</span></label>
+                <div class="col-md-8">
+                  <input formControlName="firstName" type="text" id="firstName" class="form-control" name="firstName"
+                    [ngClass]="{ 'is-invalid': isInvalid(f.firstName)}">
+                  <small
+                    *ngIf="(f.firstName.dirty || f.firstName.touched || submitted) && f.firstName.invalid && f.firstName.errors.required"
+                    class="form-text text-muted danger">
+                    First name required
+                  </small>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-md-4 label-control" for="name">Last Name<span class="px-required">*</span></label>
+                <div class="col-md-8">
+                  <input formControlName="lastName" type="text" id="lastName" class="form-control" name="lastName" [ngClass]="{ 'is-invalid': isInvalid(f.lastName)}">
+                  <small
+                    *ngIf="(f.lastName.dirty || f.lastName.touched || submitted) && f.lastName.invalid && f.lastName.errors.required"
+                    class="form-text text-muted danger">
+                    Last name required
+                  </small>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-md-4 label-control" for="name">Middle Initial</label>
+                <div class="col-md-8">
+                  <input formControlName="middleInitial" type="text" id="middleInitial" class="form-control" name="middleInitial">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-4 label-control" for="eventRegInput4">&nbsp;</label>
+                <div class="col-md-8">
+                  <button *ngIf="newForm" type="button" class="btn btn-raised btn-success mr-2" (click)="saveNew()">
+                    <i class="fa fa-check-square-o"></i> Save
+                  </button>
+                  <button type="button" class="btn btn-danger btn-raised" (click)="cancel()">
+                    <i class="ft-x"></i> Close
+                  </button>
+                </div>
+              </div>
+
+            </div>
+          </form>
+        </div>
+        <!-- end: new form-->
+        <!-- start: edit form-->
+        <div *ngIf="editForm == true" class="col-md-12">
+          <form class="form form-horizontal" [formGroup]="currentForm">
+
+            <input *ngIf="editForm" type="hidden" formControlName="id">
+            <input *ngIf="editForm" type="hidden" formControlName="profileId">
+
+            <div class="form-body">
+              <div class="form-group row">
+                <label class="col-md-4 label-control">&nbsp;</label>
+                <div class="col-md-8">
+                  Fields with <span class="px-required">*</span> are required.
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-4 label-control" for="name">Username<span class="px-required">*</span></label>
+                <div class="col-md-8">
+                  <input formControlName="username" type="text" id="username" class="form-control" name="username" [ngClass]="{ 'is-invalid': isInvalid(f.username) || usernameTaken}" (blur)="validateUsername()">
+                  <small
+                    *ngIf="(f.username.dirty || f.username.touched || submitted) && f.username.invalid && f.username.errors.required"
+                    class="form-text text-muted danger">
+                    Username required
+                  </small>
+                  <small
+                    *ngIf="(f.username.dirty || f.username.touched || submitted) && usernameTaken"
+                    class="form-text text-muted danger">
+                    Username already registered
                   </small>
                 </div>
               </div>
@@ -130,6 +233,46 @@
                 </div>
               </div>
 
+              <div *ngIf="editForm && userLockedStatus" class="form-group row">
+                <label class="col-md-4 label-control" for="status">&nbsp;</label>
+                <div class="col-md-8">
+                    <span *ngIf="userLockedStatus" style="font-weight: bold; color: red;">LOCKED</span>
+                </div>
+              </div>
+
+              <div class="form-body">
+                <div class="form-group row">
+                  <label class="col-md-4 label-control" for="createdDate">Date Created</label>
+                  <div class="col-md-6">
+                    <span *ngIf="f.createdDate">{{f.createdDate.value | date: 'MMM d, y h:mm:ss a'}}</span>
+                  </div>
+                </div>
+            </div>
+            <div class="form-body">
+                <div class="form-group row">
+                  <label class="col-md-4 label-control" for="createdBy">Created By</label>
+                  <div class="col-md-6">
+                    {{createdBy}}
+                  </div>
+                </div>
+            </div>
+            <div class="form-body">
+                <div class="form-group row">
+                  <label class="col-md-4 label-control" for="modifiedDate">Last Modified Date</label>
+                  <div class="col-md-6">
+                    <span *ngIf="f.modifiedDate">{{f.modifiedDate.value | date: 'MMM d, y h:mm:ss a'}}</span>
+                  </div>
+                </div>
+            </div>
+            <div class="form-body">
+                <div class="form-group row">
+                  <label class="col-md-4 label-control" for="modifiedBy">Last Modified By</label>
+                  <div class="col-md-6">
+                    {{modifiedBy}}
+                  </div>
+                </div>
+            </div>
+
               <div class="form-group row">
                 <label class="col-md-4 label-control" for="eventRegInput4">&nbsp;</label>
                 <div class="col-md-8">
@@ -137,9 +280,10 @@
                     <i class="fa fa-check-square-o"></i> Save Changes
                   </button>
 
-                  <button *ngIf="newForm" type="button" class="btn btn-raised btn-success mr-2" (click)="saveNew()">
-                    <i class="fa fa-check-square-o"></i> Save
+                  <button *ngIf="editForm" type="button" class="btn btn-raised btn-warning mr-2" (click)="resetPassword()">
+                    <i class="fa fa-check-square-o"></i> Reset Password
                   </button>
+
                   <button type="button" class="btn btn-danger btn-raised" (click)="cancel()">
                     <i class="ft-x"></i> Close
                   </button>
@@ -149,12 +293,14 @@
             </div>
           </form>
         </div>
+        <!-- end: edit form-->
       </div>
     </div>
     <div class="col-md-4 box-outer">
       <div class="box-inner">
         <h2>&nbsp;</h2>
-        <table class="col-md-12 table-condensed" style="width: 100% !important;">
+        <!--existing roles for new form-->
+        <table *ngIf="newForm" class="col-md-12 table-condensed" style="width: 100% !important;">
           <thead>
             <tr>
               <th class="border-0 text-uppercase small font-weight-bold">
@@ -166,6 +312,32 @@
             <tr *ngFor="let role of roleData; let i = index">
               <td><input type="checkbox" (change)="onRoleSelectHandler($event, role)"/></td>
               <td>{{ role.name }}</td>
+            </tr>
+            <tr>
+              <td>&nbsp;</td>
+              <td><small
+                    *ngIf="!hasUserRolesSelected"
+                    class="form-text text-muted danger">
+                    Select at least (1) role
+                  </small>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+
+        <table *ngIf="editForm" class="col-md-12 table-condensed" style="width: 100% !important;">
+          <thead>
+            <tr>
+              <th class="border-0 text-uppercase small font-weight-bold">
+              </th>
+              <th class="border-0 text-uppercase small font-weight-bold">Roles</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let userRole of userRolesData; let i = index">
+              <td><input type="checkbox" [checked]="userRole.selected" (change)="onRoleSelectHandler($event, userRole.role)"/></td>
+              <td>{{ userRole.role.name }}</td>
             </tr>
             <tr>
               <td>&nbsp;</td>

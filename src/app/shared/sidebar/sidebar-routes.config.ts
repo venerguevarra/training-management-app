@@ -23,7 +23,7 @@ export const ROUTES: RouteInfo[] = [
   },
   {
     path: "/app/administration/course-registration",
-    title: "Course Registration",
+    title: "Registration",
     icon: "fas ft-file-plus",
     class: "",
     badge: "",
@@ -60,27 +60,6 @@ export const ROUTES: RouteInfo[] = [
     badgeClass: "",
     isExternalLink: false,
     submenu: []
-  },
-  {
-    path: "",
-    title: "Setup",
-    icon: "fas fa-users-cog",
-    class: "has-sub",
-    badge: "",
-    badgeClass: "",
-    isExternalLink: false,
-    submenu: [
-      {
-        path: "/app/setup/user",
-        title: "User",
-        icon: "fas ft-users",
-        class: "",
-        badge: "",
-        badgeClass: "",
-        isExternalLink: false,
-        submenu: []
-      }
-    ]
   },
   {
     path: "",
@@ -156,6 +135,27 @@ export const ROUTES: RouteInfo[] = [
         path: "/app/sales/account",
         title: "Account",
         icon: "far fa-file-alt",
+        class: "",
+        badge: "",
+        badgeClass: "",
+        isExternalLink: false,
+        submenu: []
+      }
+    ]
+  },
+  {
+    path: "",
+    title: "Setup",
+    icon: "fas fa-users-cog",
+    class: "has-sub",
+    badge: "",
+    badgeClass: "",
+    isExternalLink: false,
+    submenu: [
+      {
+        path: "/app/setup/user",
+        title: "User",
+        icon: "fas ft-users",
         class: "",
         badge: "",
         badgeClass: "",

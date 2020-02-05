@@ -70,7 +70,6 @@ export class LoginPageComponent {
         this.authService.signinUser(this.f.username.value, this.f.password.value)
             .pipe(first())
             .subscribe(response => {
-
                 this.authService.setToken(response.token);
                 let user: User = {
                     userId: response.userId,
@@ -80,14 +79,27 @@ export class LoginPageComponent {
                     middleInitial: response.middleInitial,
                     email: response.email,
                     username: response.username,
-                    token: response.token
+                    token: response.token,
+                    urls: response.urls,
+                    roles: response.roles
                 }
+                console.log(response.urls);
                 this.stateService.setCurrentUser(user);
                 this.router.navigateByUrl(this.returnUrl);
             },
-            error => {
+            err => {
+                this.errorMessage = null;
                 this.loginError = true;
+
+                if(err.error.status == 'user_account_locked') {
+                    this.errorMessage = "User account locked. Kindly, contact your system administrator";
+                } else if(err.error.status == 'invalid_username') {
+                    this.errorMessage = "Authentication failed. Invalid username.";
+                } else if(err.error.status == 'invalid_password') {
+                    this.errorMessage = "Authentication failed. Invalid password.";
+                }
             });
     }
 
+    errorMessage;
 }
