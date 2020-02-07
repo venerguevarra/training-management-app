@@ -3,7 +3,7 @@
   <div class="col-md-12 col-lg-12">
     <div class="card">
       <div class="card-header">
-        <h4 class="card-title">{{f.name.value}} Account</h4>
+        <h4 *ngIf="editForm || viewForm" class="card-title">{{f.name.value}} Account</h4>
       </div>
       <div class="card-content">
         <div class="card-body">
@@ -191,9 +191,10 @@
                                   <div class="form-group row">
                                     <label class="col-md-4 label-control" for="name">Website</label>
                                     <div class="col-md-6">
-                                      <input formControlName="website" type="text" id="website" class="form-control"
-                                        name="website">
+                                      <input formControlName="website" type="text" id="website" class="form-control" name="website" [ngClass]="{ 'is-invalid': f.website.errors && f.website.errors.invalidUrl}">
+                                      <small *ngIf="currentForm.get('website').hasError('invalidUrl')" class="form-text text-muted danger">Invalid url</small>
                                     </div>
+
                                   </div>
                                   <div class="form-group row">
                                     <label class="col-md-4 label-control" for="name">Office Address</label>

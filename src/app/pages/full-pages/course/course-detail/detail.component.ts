@@ -11,6 +11,7 @@ import { StateService } from '../../../../service/state.service';
 import { User } from '../../../../model/user.model';
 import { environment } from '../../../../../environments/environment';
 import { RoutingStateService } from '../../../../service/routing-state.service';
+import { CustomValidator } from '../../../../validator/custom.validator';
 
 @Component({
 	selector: 'app-course-detail',
@@ -104,9 +105,9 @@ export class CourseDetailComponent {
 							this.currentForm = this.formBuilder.group({
 								id: [this.currentModel.id],
 								name: [this.currentModel.name, [Validators.required]],
-								fee: [this.currentModel.courseFee, [Validators.required]],
+								fee: [this.currentModel.courseFee, [Validators.required, CustomValidator.positiveNumberValidator.bind(this)]],
 								description: [this.currentModel.description],
-								days: [this.currentModel.numberOfDays, [Validators.required]],
+								days: [this.currentModel.numberOfDays, [Validators.required, CustomValidator.positiveNumberValidator.bind(this)]],
 								createdDate: [this.currentModel.createdDate],
 								createdBy: [this.currentModel.createdBy],
 								modifiedDate: [this.currentModel.modifiedDate],
@@ -260,9 +261,9 @@ export class CourseDetailComponent {
 		this.currentForm = this.formBuilder.group({
 			id: [''],
 			name: ['', [Validators.required]],
-			fee: ['', [Validators.required]],
+			fee: ['', [Validators.required, CustomValidator.positiveNumberValidator.bind(this)]],
 			description: [''],
-			days: ['', [Validators.required]],
+			days: ['', [Validators.required, CustomValidator.positiveNumberValidator.bind(this)]],
 			status: ['']
 		});
 	}

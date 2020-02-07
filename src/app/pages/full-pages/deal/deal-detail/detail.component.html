@@ -236,13 +236,14 @@
                     <div class="col-md-6">
                       <input formControlName="numberOfParticipants" type="text" id="numberOfParticipants"
                         class="form-control" name="numberOfParticipants"
-                        [ngClass]="{ 'is-invalid': isInvalid(f.numberOfParticipants)}"
+                        [ngClass]="{ 'is-invalid': isInvalid(f.numberOfParticipants) || (f.numberOfParticipants.errors && f.numberOfParticipants.errors.positiveNumberError)}"
                         (blur)="calculateTotalDealAmount()">
                       <small
                         *ngIf="(f.numberOfParticipants.dirty || f.numberOfParticipants.touched || submitted) && f.numberOfParticipants.invalid && f.numberOfParticipants.errors.required"
                         class="form-text text-muted danger">
                         Number of participants required
                       </small>
+                      <small *ngIf="f.numberOfParticipants.errors && f.numberOfParticipants.errors.positiveNumberError" class="form-text text-muted danger">Invalid number of participants</small>
                     </div>
                   </div>
 
@@ -261,12 +262,13 @@
                         class="px-required">*</span></label>
                     <div class="col-md-6">
                       <input formControlName="courseFee" type="text" id="courseFee" class="form-control"
-                        name="courseFee" [ngClass]="{ 'is-invalid': isInvalid(f.courseFee)}">
+                        name="courseFee" [ngClass]="{ 'is-invalid': isInvalid(f.courseFee) || (f.courseFee.errors && f.courseFee.errors.positiveNumberError)}">
                       <small
                         *ngIf="(f.courseFee.dirty || f.courseFee.touched || submitted) && f.courseFee.invalid && f.courseFee.errors.required"
                         class="form-text text-muted danger">
                         Course fee required
                       </small>
+                      <small *ngIf="f.courseFee.errors && f.courseFee.errors.positiveNumberError" class="form-text text-muted danger">Invalid course fee</small>
                     </div>
                   </div>
                   <div class="form-group row">
@@ -274,13 +276,14 @@
                         class="px-required">*</span></label>
                     <div class="col-md-6">
                       <input formControlName="totalDealAmount" type="text" id="totalDealAmount" class="form-control"
-                        name="totalDealAmount" [ngClass]="{ 'is-invalid': isInvalid(f.totalDealAmount)}"
+                        name="totalDealAmount" [ngClass]="{ 'is-invalid': isInvalid(f.totalDealAmount) || (f.totalDealAmount.errors && f.totalDealAmount.errors.positiveNumberError)}"
                         [readonly]="true">
                       <small
                         *ngIf="(f.totalDealAmount.dirty || f.totalDealAmount.touched || submitted) && f.totalDealAmount.invalid && f.totalDealAmount.errors.required"
                         class="form-text text-muted danger">
                         Total deal amount required
                       </small>
+                      <small *ngIf="f.totalDealAmount.errors && f.totalDealAmount.errors.positiveNumberError" class="form-text text-muted danger">Invalid</small>
                     </div>
                   </div>
                   <input formControlName="accountManager" type="hidden">

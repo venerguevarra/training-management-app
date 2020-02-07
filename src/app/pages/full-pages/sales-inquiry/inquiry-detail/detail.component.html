@@ -120,7 +120,7 @@
 
 <div class="form-body">
   <div class="form-group row">
-    <label class="col-md-4 label-control" for="createdDate">Date of Inquiry</label>
+    <label class="col-md-4 label-control" for="createdDate">Inquiry Date</label>
     <div class="col-md-4">
       <span *ngIf="f.createdDate">{{dateOfInquiryView | date: 'MMM d, y'}}</span>
     </div>
@@ -224,7 +224,7 @@
                   <div class="form-group row">
                     <label class="col-md-4 label-control" for="name">First Name<span class="px-required">*</span></label>
                     <div class="col-md-4">
-                      <input  formControlName="firstName"  type="text" id="firstName" class="form-control" name="firstName"  [ngClass]="{ 'is-invalid': isInvalid(f.firstName)}">
+                      <input [attr.maxlength]="75" formControlName="firstName"  type="text" id="firstName" class="form-control" name="firstName"  [ngClass]="{ 'is-invalid': isInvalid(f.firstName)}">
                       <small *ngIf="(f.firstName.dirty || f.firstName.touched || submitted) && f.firstName.invalid && f.firstName.errors.required" class="form-text text-muted danger">
                         First name required
                       </small>
@@ -233,7 +233,7 @@
                   <div class="form-group row">
                     <label class="col-md-4 label-control" for="name">Last Name<span class="px-required">*</span></label>
                     <div class="col-md-4">
-                      <input  formControlName="lastName"  type="text" id="lastName" class="form-control" name="lastName"  [ngClass]="{ 'is-invalid': isInvalid(f.lastName)}">
+                      <input [attr.maxlength]="75" formControlName="lastName"  type="text" id="lastName" class="form-control" name="lastName"  [ngClass]="{ 'is-invalid': isInvalid(f.lastName)}">
                       <small *ngIf="(f.lastName.dirty || f.lastName.touched || submitted) && f.lastName.invalid && f.lastName.errors.required" class="form-text text-muted danger">
                         Last name required
                       </small>
@@ -242,13 +242,13 @@
                   <div class="form-group row">
                     <label class="col-md-4 label-control" for="name">Middle Initial</label>
                     <div class="col-md-4">
-                      <input  formControlName="middleInitial"  type="text" id="middleInitial" class="form-control" name="middleInitial">
+                      <input [attr.maxlength]="5" formControlName="middleInitial"  type="text" id="middleInitial" class="form-control" name="middleInitial">
                     </div>
                   </div>
                   <div class="form-group row">
                     <label class="col-md-4 label-control" for="name">Company Name<span class="px-required">*</span></label>
                     <div class="col-md-4">
-                      <input  formControlName="companyName"  type="text" id="companyName" class="form-control" name="companyName"  [ngClass]="{ 'is-invalid': isInvalid(f.companyName)}">
+                      <input  [attr.maxlength]="200" formControlName="companyName"  type="text" id="companyName" class="form-control" name="companyName"  [ngClass]="{ 'is-invalid': isInvalid(f.companyName)}">
                       <small *ngIf="(f.companyName.dirty || f.companyName.touched || submitted) && f.companyName.invalid && f.companyName.errors.required" class="form-text text-muted danger">
                         Company name required
                       </small>
@@ -273,43 +273,55 @@
                   <div class="form-group row">
                     <label class="col-md-4 label-control" for="name">Office Address</label>
                     <div class="col-md-4">
-                      <textarea  formControlName="officeAddress"  type="text" id="officeAddress" class="form-control" name="officeAddress"></textarea>
+                      <textarea  [attr.maxlength]="500" formControlName="officeAddress"  type="text" id="officeAddress" class="form-control" name="officeAddress"></textarea>
                     </div>
                   </div>
                   <div class="form-group row">
                     <label class="col-md-4 label-control" for="name">Designation</label>
                     <div class="col-md-4">
-                      <input  formControlName="designation"  type="text" id="designation" class="form-control" name="designation">
+                      <input  [attr.maxlength]="100" formControlName="designation"  type="text" id="designation" class="form-control" name="designation">
                     </div>
                   </div>
                   <div class="form-group row">
                     <label class="col-md-4 label-control" for="name">Email<span class="px-required">*</span></label>
                     <div class="col-md-4">
-                      <input  formControlName="email"  type="text" id="email" class="form-control" name="email"  [ngClass]="{ 'is-invalid': isInvalid(f.email)}">
+                      <input  [attr.maxlength]="200" formControlName="email"  type="text" id="email" class="form-control" name="email"  [ngClass]="{ 'is-invalid': isInvalid(f.email) || (f.email.errors && f.email.errors.pattern)}">
                       <small *ngIf="(f.email.dirty || f.email.touched || submitted) && f.email.invalid && f.email.errors.required" class="form-text text-muted danger">
                         Email required
+                      </small>
+                      <small *ngIf="f.email.errors && f.email.errors.pattern" class="form-text text-muted danger">
+                        Invalid email format
                       </small>
                     </div>
                   </div>
                   <div class="form-group row">
                     <label class="col-md-4 label-control" for="name">Mobile Number<span class="px-required">*</span></label>
                     <div class="col-md-4">
-                      <input  formControlName="mobileNumber"  type="text" id="mobileNumber" class="form-control" name="mobileNumber"  [ngClass]="{ 'is-invalid': isInvalid(f.mobileNumber)}">
+                      <input [attr.maxlength]="15" formControlName="mobileNumber"  type="text" id="mobileNumber" class="form-control" name="mobileNumber"  [ngClass]="{ 'is-invalid': isInvalid(f.mobileNumber) || (f.mobileNumber.errors && f.mobileNumber.errors.pattern)}">
                       <small *ngIf="(f.mobileNumber.dirty || f.mobileNumber.touched || submitted) && f.mobileNumber.invalid && f.mobileNumber.errors.required" class="form-text text-muted danger">
                         Mobile number required
+                      </small>
+                      <small *ngIf="f.mobileNumber.errors && f.mobileNumber.errors.pattern" class="form-text text-muted danger">
+                        Invalid mobile number
                       </small>
                     </div>
                   </div>
                   <div class="form-group row">
                     <label class="col-md-4 label-control" for="name">Office Number</label>
                     <div class="col-md-4">
-                      <input  formControlName="officeNumber"  type="text" id="officeNumber" class="form-control" name="officeNumber">
+                      <input  [attr.maxlength]="15" formControlName="officeNumber"  type="text" id="officeNumber" class="form-control" name="officeNumber" [ngClass]="{ 'is-invalid': (f.officeNumber.errors && f.officeNumber.errors.pattern)}">
+                      <small *ngIf="f.officeNumber.errors && f.officeNumber.errors.pattern" class="form-text text-muted danger">
+                        Invalid office number
+                      </small>
                     </div>
                   </div>
                   <div class="form-group row">
                     <label class="col-md-4 label-control" for="name">Fax Number</label>
                     <div class="col-md-4">
-                      <input  formControlName="faxNumber"  type="text" id="faxNumber" class="form-control" name="faxNumber">
+                      <input  [attr.maxlength]="15" formControlName="faxNumber"  type="text" id="faxNumber" class="form-control" name="faxNumber" [ngClass]="{ 'is-invalid': (f.faxNumber.errors && f.faxNumber.errors.pattern)}">
+                      <small *ngIf="f.faxNumber.errors && f.faxNumber.errors.pattern" class="form-text text-muted danger">
+                        Invalid fax number
+                      </small>
                     </div>
                   </div>
                   <div class="form-group row">
@@ -339,13 +351,15 @@
                           </div>
                         </div>
                       </div>
+                      <small *ngIf="f.dateOfInquiry.errors && (f.dateOfInquiry.errors.dateFormatError || f.dateOfInquiry.errors.ngbDate)" class="form-text text-muted danger">Invalid date format</small>
                     </div>
+
                   </div>
                   <!--<input type="hidden" formControlName="inquiryStatus" [value]="defaultInquiryStatus">-->
                   <div class="form-group row">
                     <label class="col-md-4 label-control" for="name">Comment</label>
                     <div class="col-md-4">
-                      <textarea  formControlName="comment"  type="text" id="comment" class="form-control" name="comment"></textarea>
+                      <textarea  style="resize: none;" [attr.maxlength]="500" formControlName="comment"  type="text" id="comment" class="form-control" name="comment"></textarea>
                     </div>
                   </div>
 

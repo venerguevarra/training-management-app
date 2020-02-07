@@ -21,7 +21,7 @@
               <div class="form-group row">
                 <label class="col-md-4 label-control" for="name">Username<span class="px-required">*</span></label>
                 <div class="col-md-8">
-                  <input formControlName="username" type="text" id="username" class="form-control" name="username" [ngClass]="{ 'is-invalid': isInvalid(f.username) || usernameTaken}" (blur)="validateUsername()">
+                  <input [attr.maxlength]="50" formControlName="username" type="text" id="username" class="form-control" name="username" [ngClass]="{ 'is-invalid': isInvalid(f.username) || usernameTaken}" (blur)="validateUsername()">
                   <small
                     *ngIf="(f.username.dirty || f.username.touched || submitted) && f.username.invalid && f.username.errors.required"
                     class="form-text text-muted danger">
@@ -35,40 +35,10 @@
                 </div>
               </div>
 
-              <!--
-              <div class="form-group row">
-                <label class="col-md-4 label-control" for="name">Password<span class="px-required">*</span></label>
-                <div class="col-md-8">
-                  <input formControlName="password" type="password" id="password" class="form-control" name="password"
-                    [ngClass]="{ 'is-invalid': isInvalid(f.password)}">
-                  <small
-                    *ngIf="(f.password.dirty || f.password.touched || submitted) && f.password.invalid && f.password.errors.required"
-                    class="form-text text-muted danger">
-                    Password required
-                  </small>
-                </div>
-              </div>
-
-              <div class="form-group row">
-                <label class="col-md-4 label-control" for="name">Confirm Password<span
-                    class="px-required">*</span></label>
-                <div class="col-md-8">
-                  <input formControlName="confirmPassword" type="password" id="confirmPassword" class="form-control"
-                    name="confirmPassword"
-                    [ngClass]="{ 'is-invalid': isInvalid(f.confirmPassword) || (f.confirmPassword.invalid && f.confirmPassword.errors.passwordNotMatch)}">
-                  <small
-                    *ngIf="(f.confirmPassword.dirty || f.confirmPassword.touched || submitted) && f.confirmPassword.invalid && (f.confirmPassword.errors.required || f.confirmPassword.errors.passwordNotMatch)"
-                    class="form-text text-muted danger">
-                    Please re-type password
-                  </small>
-                </div>
-              </div>
-              -->
-
               <div class="form-group row">
                 <label class="col-md-4 label-control" for="name">Email<span class="px-required">*</span></label>
                 <div class="col-md-8">
-                  <input formControlName="email" type="text" id="email" class="form-control" name="email" [ngClass]="{ 'is-invalid': isInvalid(f.email) || emailTaken}" (blur)="validateEmail()">
+                  <input [attr.maxlength]="200" formControlName="email" type="text" id="email" class="form-control" name="email" [ngClass]="{ 'is-invalid': isInvalid(f.email) || emailTaken}" (blur)="validateEmail()">
                   <small
                     *ngIf="(f.email.dirty || f.email.touched || submitted) && f.email.invalid && f.email.errors.required"
                     class="form-text text-muted danger">
@@ -82,15 +52,17 @@
                   <small
                     *ngIf="f.email.invalid && f.email.errors.email"
                     class="form-text text-muted danger">
-                    Invalid email address
+                    Invalid email format
                   </small>
+
                 </div>
+
               </div>
 
               <div class="form-group row">
                 <label class="col-md-4 label-control" for="name">First Name<span class="px-required">*</span></label>
                 <div class="col-md-8">
-                  <input formControlName="firstName" type="text" id="firstName" class="form-control" name="firstName"
+                  <input [attr.maxlength]="75" formControlName="firstName" type="text" id="firstName" class="form-control" name="firstName"
                     [ngClass]="{ 'is-invalid': isInvalid(f.firstName)}">
                   <small
                     *ngIf="(f.firstName.dirty || f.firstName.touched || submitted) && f.firstName.invalid && f.firstName.errors.required"
@@ -103,7 +75,7 @@
               <div class="form-group row">
                 <label class="col-md-4 label-control" for="name">Last Name<span class="px-required">*</span></label>
                 <div class="col-md-8">
-                  <input formControlName="lastName" type="text" id="lastName" class="form-control" name="lastName" [ngClass]="{ 'is-invalid': isInvalid(f.lastName)}">
+                  <input [attr.maxlength]="75" formControlName="lastName" type="text" id="lastName" class="form-control" name="lastName" [ngClass]="{ 'is-invalid': isInvalid(f.lastName)}">
                   <small
                     *ngIf="(f.lastName.dirty || f.lastName.touched || submitted) && f.lastName.invalid && f.lastName.errors.required"
                     class="form-text text-muted danger">
@@ -115,7 +87,7 @@
               <div class="form-group row">
                 <label class="col-md-4 label-control" for="name">Middle Initial</label>
                 <div class="col-md-8">
-                  <input formControlName="middleInitial" type="text" id="middleInitial" class="form-control" name="middleInitial">
+                  <input [attr.maxlength]="5" formControlName="middleInitial" type="text" id="middleInitial" class="form-control" name="middleInitial">
                 </div>
               </div>
               <div class="form-group row">
@@ -180,9 +152,9 @@
                     Email already registered
                   </small>
                   <small
-                    *ngIf="f.email.invalid && f.email.errors.email"
+                    *ngIf="f.email.invalid && f.email.errors.pattern"
                     class="form-text text-muted danger">
-                    Invalid email address
+                    Invalid email format
                   </small>
                 </div>
               </div>
@@ -216,7 +188,7 @@
               <div class="form-group row">
                 <label class="col-md-4 label-control" for="name">Middle Initial</label>
                 <div class="col-md-8">
-                  <input formControlName="middleInitial" type="text" id="middleInitial" class="form-control"
+                  <input [attr.maxlength]="5" formControlName="middleInitial" type="text" id="middleInitial" class="form-control"
                     name="middleInitial">
                 </div>
               </div>

@@ -177,7 +177,7 @@
                     <label class="col-md-4 label-control" for="name">First Name<span
                         class="px-required">*</span></label>
                     <div class="col-md-6">
-                      <input formControlName="firstName" type="text" id="firstName" class="form-control"
+                      <input [attr.maxlength]="75" formControlName="firstName" type="text" id="firstName" class="form-control"
                         name="firstName" [ngClass]="{ 'is-invalid': isInvalid(f.firstName)}">
                       <small
                         *ngIf="(f.firstName.dirty || f.firstName.touched || submitted) && f.firstName.invalid && f.firstName.errors.required"
@@ -189,7 +189,7 @@
                   <div class="form-group row">
                     <label class="col-md-4 label-control" for="name">Last Name<span class="px-required">*</span></label>
                     <div class="col-md-6">
-                      <input formControlName="lastName" type="text" id="lastName" class="form-control" name="lastName"
+                      <input [attr.maxlength]="75" formControlName="lastName" type="text" id="lastName" class="form-control" name="lastName"
                         [ngClass]="{ 'is-invalid': isInvalid(f.lastName)}">
                       <small
                         *ngIf="(f.lastNamedirty || f.lastName.touched || submitted) && f.lastName.invalid && f.lastName.errors.required"
@@ -201,47 +201,56 @@
                   <div class="form-group row">
                     <label class="col-md-4 label-control" for="name">Middle Initial</label>
                     <div class="col-md-6">
-                      <input formControlName="middleInitial" type="text" id="middleInitial" class="form-control"
+                      <input [attr.maxlength]="5" formControlName="middleInitial" type="text" id="middleInitial" class="form-control"
                         name="middleInitial">
                     </div>
                   </div>
                   <div class="form-group row">
                     <label class="col-md-4 label-control" for="name">Email<span class="px-required">*</span></label>
                     <div class="col-md-6">
-                      <input formControlName="email" type="text" id="email" class="form-control" name="email"
+                      <input [attr.maxlength]="200" formControlName="email" type="text" id="email" class="form-control" name="email"
                         [ngClass]="{ 'is-invalid': isInvalid(f.email)}">
                       <small
                         *ngIf="(f.email.dirty || f.email.touched || submitted) && f.email.invalid && f.email.errors.required"
                         class="form-text text-muted danger">
                         Email required
                       </small>
+                      <small *ngIf="f.email.errors && f.email.errors.pattern" class="form-text text-muted danger">Invalid email format</small>
                     </div>
                   </div>
                   <div class="form-group row">
                     <label class="col-md-4 label-control" for="name">Mobile Number<span
                         class="px-required">*</span></label>
                     <div class="col-md-6">
-                      <input formControlName="mobileNumber" type="text" id="mobileNumber" class="form-control"
+                      <input [attr.maxlength]="11" formControlName="mobileNumber" type="text" id="mobileNumber" class="form-control"
                         name="mobileNumber" [ngClass]="{ 'is-invalid': isInvalid(f.mobileNumber)}">
                       <small
                         *ngIf="(f.mobileNumber.dirty || f.mobileNumber.touched || submitted) && f.mobileNumber.invalid && f.mobileNumber.errors.required"
                         class="form-text text-muted danger">
                         Mobile number required
                       </small>
+                      <small *ngIf="f.mobileNumber.errors && f.mobileNumber.errors.pattern" class="form-text text-muted danger">Invalid mobile number</small>
                     </div>
                   </div>
                   <div class="form-group row">
                     <label class="col-md-4 label-control" for="name">Designation</label>
                     <div class="col-md-6">
-                      <input formControlName="designation" type="text" id="designation" class="form-control"
+                      <input [attr.maxlength]="100" formControlName="designation" type="text" id="designation" class="form-control"
                         name="designation">
                     </div>
                   </div>
                   <div class="form-group row">
                     <label class="col-md-4 label-control" for="name">Office Number</label>
                     <div class="col-md-6">
-                      <input formControlName="officeNumber" type="text" id="officeNumber" class="form-control"
+                      <input [attr.maxlength]="15" formControlName="officeNumber" type="text" id="officeNumber" class="form-control"
                         name="officeNumber">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-md-4 label-control" for="name">Fax Number</label>
+                    <div class="col-md-6">
+                      <input [attr.maxlength]="15" formControlName="faxNumber" type="text" id="faxNumber" class="form-control"
+                        name="faxNumber">
                     </div>
                   </div>
 

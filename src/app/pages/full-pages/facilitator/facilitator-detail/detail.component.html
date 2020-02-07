@@ -129,14 +129,13 @@
                   <div class="form-group row">
                     <label class="col-md-4 label-control">&nbsp;</label>
                     <div class="col-md-6">
-                      <ngb-alert type="danger" [dismissible]="false" *ngIf="genericError">Unable to update information. Try again.</ngb-alert>
                       Fields with <span class="px-required">*</span> are required.
                     </div>
                   </div>
                   <div class="form-group row">
                     <label class="col-md-4 label-control" for="name">First Name<span class="px-required">*</span></label>
                     <div class="col-md-6">
-                      <input  formControlName="firstName"  type="text" id="firstName" class="form-control" name="firstName"  [ngClass]="{ 'is-invalid': isInvalid(f.firstName)}">
+                      <input [attr.maxlength]="75" formControlName="firstName"  type="text" id="firstName" class="form-control" name="firstName"  [ngClass]="{ 'is-invalid': isInvalid(f.firstName)}">
                       <small *ngIf="(f.firstName.dirty || f.firstName.touched || submitted) && f.firstName.invalid && f.firstName.errors.required" class="form-text text-muted danger">
                         First name required
                       </small>
@@ -145,7 +144,7 @@
                   <div class="form-group row">
                     <label class="col-md-4 label-control" for="name">Last Name<span class="px-required">*</span></label>
                     <div class="col-md-6">
-                      <input  formControlName="lastName"  type="text" id="lastName" class="form-control" name="lastName"  [ngClass]="{ 'is-invalid': isInvalid(f.lastName)}">
+                      <input  [attr.maxlength]="75" formControlName="lastName"  type="text" id="lastName" class="form-control" name="lastName"  [ngClass]="{ 'is-invalid': isInvalid(f.lastName)}">
                       <small *ngIf="(f.lastName.dirty || f.lastName.touched || submitted) && f.lastName.invalid && f.lastName.errors.required" class="form-text text-muted danger">
                         Last name required
                       </small>
@@ -154,34 +153,37 @@
                   <div class="form-group row">
                     <label class="col-md-4 label-control" for="name">Middle Initial</label>
                     <div class="col-md-6">
-                      <input  formControlName="middleInitial"  type="text" id="middleInitial" class="form-control" name="middleInitial">
+                      <input [attr.maxlength]="5" formControlName="middleInitial"  type="text" id="middleInitial" class="form-control" name="middleInitial">
                     </div>
                   </div>
                   <div class="form-group row">
                     <label class="col-md-4 label-control" for="name">Email<span class="px-required">*</span></label>
                     <div class="col-md-6">
-                      <input  formControlName="email"  type="text" id="email" class="form-control" name="email"  [ngClass]="{ 'is-invalid': isInvalid(f.email)}">
+                      <input  [attr.maxlength]="200" formControlName="email"  type="text" id="email" class="form-control" name="email"  [ngClass]="{ 'is-invalid': isInvalid(f.email) || (f.email.errors && f.email.errors.pattern)}">
                       <small *ngIf="(f.email.dirty || f.email.touched || submitted) && f.email.invalid && f.email.errors.required" class="form-text text-muted danger">
                         Email address required
                       </small>
+                      <small *ngIf="f.email.errors && f.email.errors.pattern" class="form-text text-muted danger">Invalid email format</small>
                     </div>
                   </div>
                   <div class="form-group row">
                     <label class="col-md-4 label-control" for="name">Mobile Number<span class="px-required">*</span></label>
                     <div class="col-md-6">
-                      <input formControlName="mobileNumber" id="mobileNumber" class="form-control" name="mobileNumber" [ngClass]="{ 'is-invalid': isInvalid(f.email)}" type="text">
+                      <input [attr.maxlength]="11" formControlName="mobileNumber" id="mobileNumber" class="form-control" name="mobileNumber" [ngClass]="{ 'is-invalid': isInvalid(f.email) || (f.mobileNumber.errors.pattern && f.mobileNumber.errors.pattern)}" type="text">
                       <small *ngIf="(f.mobileNumber.dirty || f.mobileNumber.touched || submitted) && f.mobileNumber.invalid && f.mobileNumber.errors.required" class="form-text text-muted danger">
                         Mobile number required
                       </small>
+                      <small *ngIf="f.mobileNumber.errors && f.mobileNumber.errors.pattern" class="form-text text-muted danger">Invalid mobile number</small>
                     </div>
                   </div>
                   <div class="form-group row">
                     <label class="col-md-4 label-control" for="name">Daily Rate<span class="px-required">*</span></label>
                     <div class="col-md-6">
-                      <input formControlName="dailyRate" id="dailyRate" class="form-control" name="dailyRate" [ngClass]="{ 'is-invalid': isInvalid(f.dailyRate)}" type="text">
+                      <input formControlName="dailyRate" id="dailyRate" class="form-control" name="dailyRate" [ngClass]="{ 'is-invalid': isInvalid(f.dailyRate) || (f.dailyRate.errors && f.dailyRate.errors.positiveNumberError)}" type="text">
                       <small *ngIf="(f.dailyRate.dirty || f.dailyRate.touched || submitted) && f.dailyRate.invalid && f.dailyRate.errors.required" class="form-text text-muted danger">
                         Daily rate required
                       </small>
+                      <small *ngIf="f.dailyRate.errors && f.dailyRate.errors.positiveNumberError" class="form-text text-muted danger">Invalid daily rate</small>
                     </div>
                   </div>
                    <div *ngIf="editForm" class="form-group row">

@@ -16,6 +16,7 @@ import { StateService } from "../../../../service/state.service";
 import { User } from "../../../../model/user.model";
 import { environment } from "../../../../../environments/environment";
 import { pageConfig } from "../../../page.config";
+import { CustomValidator } from '../../../../validator/custom.validator';
 
 @Component({
   selector: "app-registration-list",
@@ -63,7 +64,7 @@ export class RegistrationListComponent {
       status: [""],
       stage: [""],
       type: [""],
-      createdDate: [""]
+      createdDate: ["", [CustomValidator.dateValidator.bind(this)]]
     });
 
     this.criteria = [];
@@ -117,7 +118,7 @@ export class RegistrationListComponent {
       status: ["ALL"],
       stage: [""],
       type: [""],
-      createdDate: [""]
+      createdDate: ["", [CustomValidator.dateValidator.bind(this)]]
     });
     this.createdDate = "";
     this.criteria = [];

@@ -109,14 +109,13 @@
                   <div class="form-group row">
                     <label class="col-md-4 label-control">&nbsp;</label>
                     <div class="col-md-6">
-                      <ngb-alert type="danger" [dismissible]="false" *ngIf="genericError">Unable to update profile. Try again.</ngb-alert>
                       Fields with <span class="px-required">*</span> are required.
                     </div>
                   </div>
                   <div class="form-group row">
                     <label class="col-md-4 label-control" for="name">Course Name <span class="px-required">*</span></label>
                     <div class="col-md-6">
-                      <input  formControlName="name"  type="text" id="name" class="form-control" name="name"  [ngClass]="{ 'is-invalid': (f.name.dirty || f.name.touched || submitted) && f.name.invalid && f.name.errors.required}">
+                      <input  [attr.maxlength]="100" formControlName="name"  type="text" id="name" class="form-control" name="name"  [ngClass]="{ 'is-invalid': (f.name.dirty || f.name.touched || submitted) && f.name.invalid && f.name.errors.required}">
                       <small *ngIf="(f.name.dirty || f.name.touched || submitted) && f.name.invalid && f.name.errors.required" class="form-text text-muted danger">Course name required</small>
                     </div>
                   </div>
@@ -124,23 +123,25 @@
                   <div class="form-group row">
                     <label class="col-md-4 label-control" for="description">Description </label>
                     <div class="col-md-6">
-                      <textarea  formControlName="description"  type="text" id="description" class="form-control" name="description"></textarea>
+                      <textarea  [attr.maxlength]="100" style="resize: none;" formControlName="description"  type="text" id="description" class="form-control" name="description"></textarea>
                     </div>
                   </div>
 
                   <div class="form-group row">
                     <label class="col-md-4 label-control" for="fee">Fee <span class="px-required">*</span></label>
                     <div class="col-md-6">
-                      <input  formControlName="fee"  type="text" id="fee" class="form-control" name="fee"  [ngClass]="{ 'is-invalid': (f.fee.dirty || f.fee.touched || submitted) && f.fee.invalid && f.fee.errors.required}">
+                      <input  formControlName="fee"  type="number" id="fee" class="form-control" name="fee"  [ngClass]="{ 'is-invalid': (f.fee.dirty || f.fee.touched || submitted) && f.fee.invalid && (f.fee.errors.required || f.fee.errors.positiveNumberError)}">
                       <small *ngIf="(f.fee.dirty || f.fee.touched || submitted) && f.fee.invalid && f.fee.errors.required" class="form-text text-muted danger">Course fee required</small>
+                      <small *ngIf="currentForm.get('fee').hasError('positiveNumberError')" class="form-text text-muted danger">Invalid course fee</small>
                     </div>
                   </div>
 
                   <div class="form-group row">
                     <label class="col-md-4 label-control" for="eventRegInput4">Number of Days <span class="px-required">*</span></label>
                     <div class="col-md-6">
-                      <input formControlName="days"  type="text" id="days" class="form-control" name="days"  [ngClass]="{ 'is-invalid': (f.days.dirty || f.days.touched || submitted) && f.days.invalid && f.days.errors.required}">
+                      <input formControlName="days"  type="text" id="days" class="form-control" name="days"  [ngClass]="{ 'is-invalid': (f.days.dirty || f.days.touched || submitted) && f.days.invalid && (f.days.errors.required || f.days.errors.positiveNumberError)}">
                       <small *ngIf="(f.days.dirty || f.days.touched || submitted) && f.days.invalid && f.days.errors.required" class="form-text text-muted danger">Number of days required</small>
+                      <small *ngIf="currentForm.get('days').hasError('positiveNumberError')" class="form-text text-muted danger">Invalid number of days</small>
                     </div>
                   </div>
 

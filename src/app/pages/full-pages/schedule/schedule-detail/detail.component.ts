@@ -14,6 +14,8 @@ import { environment } from '../../../../../environments/environment';
 import { RoutingStateService } from '../../../../service/routing-state.service';
 import * as moment from "moment";
 import { EventService } from '../../../../service/event.service';
+import { CustomValidator } from '../../../../validator/custom.validator';
+import { NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
 	selector: 'app-schedule',
@@ -73,6 +75,8 @@ export class ScheduleDetailComponent {
 
 	registrationCount = 0;
 	actualRegistrationCount = 0;
+	minDate;
+
 	constructor(
 		private httpClient: HttpClient,
         private stateService: StateService,
@@ -82,7 +86,15 @@ export class ScheduleDetailComponent {
         private route: ActivatedRoute,
 		private routingStateService: RoutingStateService,
 		private dateParser: NgbDateParserFormatter,
-		private eventService: EventService) {
+		private eventService: EventService,
+		private config: NgbDatepickerConfig) {
+
+		const current = new Date();
+		this.minDate = {
+			year: current.getFullYear(),
+			month: current.getMonth() + 1,
+			day: current.getDate()
+		};
 
 		this.initForm();
 
@@ -147,19 +159,18 @@ export class ScheduleDetailComponent {
 					);
 				}
 
-
 				this.currentForm = this.formBuilder.group({
 					id: [this.currentModel.id],
 					courseId: [this.currentModel.courseId, [Validators.required]],
 					venueId: [this.currentModel.venueId],
-					registeredParticipants: [this.currentModel.registeredParticipants],
+					registeredParticipants: [this.currentModel.registeredParticipants, [Validators.required, CustomValidator.positiveNumberValidator.bind(this)]],
 					actualRegisteredParticipants: [this.currentModel.actualRegisteredParticipants],
 					startDate: [this.currentModel.startDate],
 					endDate: [this.currentModel.endDate],
 					startTime: [this.currentModel.startTime],
 					endTime: [this.currentModel.endTime],
-					courseFee: [this.currentModel.courseFee],
-					numberOfDays: [this.currentModel.numberOfDays],
+					courseFee: [this.currentModel.courseFee, [Validators.required, CustomValidator.positiveNumberValidator.bind(this)]],
+					numberOfDays: [this.currentModel.numberOfDays, [Validators.required, CustomValidator.positiveNumberValidator.bind(this)]],
 					createdDate: [this.currentModel.createdDate],
 					createdBy: [this.currentModel.createdBy],
 					modifiedDate: [this.currentModel.modifiedDate],
@@ -270,7 +281,7 @@ export class ScheduleDetailComponent {
 			id: [''],
 			courseId: ['', [Validators.required]],
 			venueId: ['', [Validators.required]],
-			registeredParticipants: ['', [Validators.required]],
+			registeredParticipants: ['', [Validators.required, CustomValidator.positiveNumberValidator.bind(this)]],
 			actualRegisteredParticipants: [''],
 			scheduleCost: [''],
 			status: ['SCHEDULE_WAITING', [Validators.required]],
@@ -278,8 +289,8 @@ export class ScheduleDetailComponent {
 			endDate: ['', [Validators.required]],
 			startTime: [this.defaultStartTime, [Validators.required]],
 			endTime: [this.defaultEndTime, [Validators.required]],
-			courseFee: ['', [Validators.required]],
-			numberOfDays: ['', [Validators.required]]
+			courseFee: ['', [Validators.required, CustomValidator.positiveNumberValidator.bind(this)]],
+			numberOfDays: ['', [Validators.required, CustomValidator.positiveNumberValidator.bind(this)]]
 		});
 	}
 

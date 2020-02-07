@@ -3,9 +3,6 @@
     <div class="card">
       <div class="card-content">
         <div class="px-3">
-          <div class="card-header">
-            <h4 class="card-title" id="basic-layout-form">Training Costs</h4>
-          </div>
           <div>
             <!--Striped rows Light Starts-->
             <section id="striped-light">
@@ -23,6 +20,7 @@
                                 <small *ngIf="(f.amount.dirty || f.amount.touched || submitted) && f.amount.invalid && f.amount.errors.required" class="form-text text-muted danger">
                                   Daily rate required
                                 </small>
+                                <small *ngIf="costingForm.get('amount').hasError('positiveNumberError')" class="form-text text-muted danger">Invalid amount</small><br />
                               </div>
 
                               <div class="col-md-2">
@@ -31,6 +29,7 @@
                                 <small *ngIf="(f.multiplier.dirty || f.multiplier.touched || submitted) && f.multiplier.invalid && f.multiplier.errors.required" class="form-text text-muted danger">
                                   Multiplier required
                                 </small>
+                                <small *ngIf="costingForm.get('multiplier').hasError('positiveNumberError')" class="form-text text-muted danger">Invalid multiplier</small><br />
                               </div>
 
                               <div class="col-md-3">
@@ -42,11 +41,12 @@
                               <div class="col-md-2">
                                 <label for="rate">Total Amount</label>
                                 <input class="form-control" type="number" formControlName="totalAmount" [disabled]="true">
+                                <small *ngIf="costingForm.get('totalAmount').hasError('positiveNumberError')" class="form-text text-muted danger">Invalid total amount</small><br />
                               </div>
 
                               <div class="col-md-3">
-                                <label for="facilitatorId">Note</label>
-                                <input class="form-control" type="text" formControlName="comment" [disabled]="true">
+                                <label for="facilitatorId">Description</label>
+                                <input class="form-control" type="text" formControlName="comment" [disabled]="true" [attr.maxlength]="5">
                               </div>
                             </div>
                           </div>

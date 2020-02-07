@@ -20,6 +20,7 @@ import {
   Course
 } from "../../../../service/course-data.service";
 import { StateService } from "../../../../service/state.service";
+import { CustomValidator } from '../../../../validator/custom.validator';
 
 @Component({
   selector: "app-venue-list",
@@ -48,31 +49,31 @@ export class InquiryListComponent {
   customInquiryStatusData = [
     {
       key: "ASSIGNED",
-      label: "Assigned"
+      label: "ASSIGNED"
     },
     {
       key: "ATTEMPTED_TO_CONTACT",
-      label: "Attempted to contact"
+      label: "ATTEMPTED TO CONTACT"
     },
     {
       key: "CONTACTED",
-      label: "Contacted"
+      label: "CONTACTED"
     },
     {
       key: "SALES_UNQUALIFIED",
-      label: "Sales Unqualified"
+      label: "SALES UNQUALIFIED"
     },
     {
       key: "SALES_QUALIFIED",
-      label: "Sales Qualified"
+      label: "SALES QUALIFIED"
     },
     {
       key: "DEAL",
-      label: "Deal"
+      label: "DEAL"
     },
     {
       key: "CLOSED",
-      label: "Closed"
+      label: "CLOSED"
     }
   ];
 
@@ -96,8 +97,8 @@ export class InquiryListComponent {
     this.searchForm = this.formBuilder.group({
       name: [""],
       channel: [""],
-      inquiryDateFrom: [""],
-      inquiryDateTo: [""],
+      inquiryDateFrom: ["", [CustomValidator.dateValidator.bind(this)]],
+      inquiryDateTo: ["", [CustomValidator.dateValidator.bind(this)]],
       inquiryStatus: [""]
     });
 
@@ -136,8 +137,8 @@ export class InquiryListComponent {
   clearSearchForm() {
     this.searchForm = this.formBuilder.group({
       name: [""],
-      inquiryDateFrom: [""],
-      inquiryDateTo: [""],
+      inquiryDateFrom: ["", [CustomValidator.dateValidator.bind(this)]],
+      inquiryDateTo: ["", [CustomValidator.dateValidator.bind(this)]],
       channel: [""],
       inquiryStatus: [""]
     });
@@ -153,7 +154,6 @@ export class InquiryListComponent {
   private getSearchFormCriteria() {
     this.criteria = [];
 
-    // TODO: REMOVE WHEN ADMIN
     this.criteria.push({
       name: "accountManager",
       value: this.stateService.getCurrentUser().userId,

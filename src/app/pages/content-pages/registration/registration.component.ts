@@ -16,6 +16,7 @@ import { StateService } from '../../../service/state.service';
 import { User } from '../../../model/user.model';
 import { Registration } from '../../../model/registration.model';
 import { environment } from '../../../../environments/environment';
+import { CustomValidator } from '../../../validator/custom.validator';
 
 @Component({
     selector: 'app-registration-page',
@@ -90,9 +91,9 @@ export class RegistrationPageComponent {
             firstName: ['', [Validators.required]],
             lastName: ['', [Validators.required]],
             middleInitial: [''],
-            email: ['', [Validators.required]],
+            email: ['', [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')]],
             designation: ['', [Validators.required]],
-            mobileNumber: ['', [Validators.required]]
+            mobileNumber: ['', [Validators.required, Validators.pattern("[0][0-9]{10}")]]
         });
         this.registrationForm.markAsPristine();
         this.registrationForm.markAsUntouched();
@@ -122,9 +123,9 @@ export class RegistrationPageComponent {
         }
 
         let registration = this.registrationInstance();
-        let index: number = this.registrations.filter(e => e.email == registration.email || e.mobileNumber == registration.mobileNumber).length;
-        //this.emailTaken = this.registrations.filter(e => e.email == registration.email).length > 0;
-        //this.mobileNumberTaken = this.registrations.filter(e => e.mobileNumber == registration.mobileNumber).length > 0;
+        //let index: number = this.registrations.filter(e => e.email == registration.email || e.mobileNumber == registration.mobileNumber).length;
+        this.emailTaken = this.registrations.filter(e => e.email == registration.email).length > 0;
+        this.mobileNumberTaken = this.registrations.filter(e => e.mobileNumber == registration.mobileNumber).length > 0;
 
         if(this.emailTaken || this.mobileNumberTaken) {
             return;
@@ -169,9 +170,9 @@ export class RegistrationPageComponent {
             firstName: [this.registrationModel.firstName, [Validators.required]],
             lastName: [this.registrationModel.lastName, [Validators.required]],
             middleInitial: [this.registrationModel.middleInitial],
-            email: [this.registrationModel.email, [Validators.required]],
+            email: [this.registrationModel.email, [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')]],
             designation: [this.registrationModel.designation, [Validators.required]],
-            mobileNumber: [this.registrationModel.mobileNumber, [Validators.required]]
+            mobileNumber: [this.registrationModel.mobileNumber, [Validators.required, Validators.pattern("[0][0-9]{10}")]]
         });
 
         this.showRegistrationForm('edit');

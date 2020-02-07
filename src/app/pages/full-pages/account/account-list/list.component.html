@@ -28,7 +28,7 @@
             <div class="col-lg-3 col-md-6">
               <div class="form-group">
                 <label>Name</label>
-                <input type="text" formControlName="name" name="name" id="name" class="form-control">
+                <input [attr.maxlength]="50" type="text" formControlName="name" name="name" id="name" class="form-control">
               </div>
             </div>
 
@@ -63,6 +63,7 @@
                     </div>
                   </div>
                 </div>
+                <small *ngIf="searchForm.get('createdDate').hasError('dateFormatError')" class="form-text text-muted danger">Invalid date format</small>
               </div>
             </div>
           </div>

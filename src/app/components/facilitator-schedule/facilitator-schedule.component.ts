@@ -11,6 +11,7 @@ import { ToastrService } from 'ngx-toastr';
 import { environment } from '../../../environments/environment';
 import { ReferenceDataService } from '../../service/reference-data.service';
 import { EventService } from '../../service/event.service';
+import { CustomValidator } from '../../validator/custom.validator';
 
 let facilitatorSchedule = {
 	facilitatorId: '',
@@ -103,11 +104,11 @@ export class FacilitatorScheduleComponent {
 			facilitatorId: ['', Validators.required],
       		courseId: ['', Validators.required],
 			courseScheduleId: ['', Validators.required],
-			rate: ['', Validators.required],
-			days: [this.numberOfDays, Validators.required],
+			rate: ['', [Validators.required, CustomValidator.positiveNumberValidator.bind(this)]],
+			days: [this.numberOfDays, [Validators.required]],
 			startDate: [this.startDate, Validators.required],
-			endDate: [this.endDate, Validators.required],
-			professionalFee: ['']
+			endDate: [this.endDate, [Validators.required]],
+			professionalFee: ['', [Validators.required, CustomValidator.positiveNumberValidator.bind(this)]]
 		});
 	}
 

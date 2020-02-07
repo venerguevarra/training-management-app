@@ -17,6 +17,7 @@ import { RoutingStateService } from "../../../../service/routing-state.service"
 import { User } from "../../../../model/user.model";
 import { environment } from "../../../../../environments/environment";
 import { NgxSpinnerService } from "ngx-spinner";
+import { CustomValidator} from '../../../../validator/custom.validator';
 
 @Component({
   selector: "app-contact-detail",
@@ -214,12 +215,12 @@ export class DealDetailComponent {
                 type: [this.currentModel.type, [Validators.required]],
                 totalDealAmount: [
                   this.currentModel.totalDealAmount,
-                  [Validators.required]
+                  [Validators.required, CustomValidator.positiveNumberValidator.bind(this)]
                 ],
-                courseFee: [this.currentModel.courseFee, [Validators.required]],
+                courseFee: [this.currentModel.courseFee, [Validators.required, CustomValidator.positiveNumberValidator.bind(this)]],
                 numberOfParticipants: [
                   this.currentModel.numberOfParticipants,
-                  [Validators.required]
+                  [Validators.required, CustomValidator.positiveNumberValidator.bind(this)]
                 ],
                 accountId: [this.currentModel.accountId, [Validators.required]],
                 contactId: [this.currentModel.contactId, [Validators.required]],
@@ -300,9 +301,9 @@ export class DealDetailComponent {
       stage: ["", [Validators.required]],
       vatRegistration: [""],
       type: ["", [Validators.required]],
-      totalDealAmount: ["", [Validators.required]],
-      courseFee: ["", [Validators.required]],
-      numberOfParticipants: ["", [Validators.required]],
+      totalDealAmount: ["", [Validators.required, CustomValidator.positiveNumberValidator.bind(this)]],
+      courseFee: ["", [Validators.required, CustomValidator.positiveNumberValidator.bind(this)]],
+      numberOfParticipants: ["", [Validators.required, CustomValidator.positiveNumberValidator.bind(this)]],
       accountId: ["", [Validators.required]],
       contactId: ["", [Validators.required]],
       courseId: ["", [Validators.required]],

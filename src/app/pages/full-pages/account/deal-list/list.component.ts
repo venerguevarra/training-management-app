@@ -16,6 +16,7 @@ import { StateService } from "../../../../service/state.service";
 import { User } from "../../../../model/user.model";
 import { environment } from "../../../../../environments/environment";
 import { pageConfig } from "../../../page.config";
+import { CustomValidator } from '../../../../validator/custom.validator';
 
 @Component({
   selector: "app-deal-list",
@@ -66,7 +67,7 @@ export class DealListComponent {
       status: ["ALL"],
       stage: [""],
       type: [""],
-      createdDate: [""]
+      createdDate: ["", [CustomValidator.dateValidator.bind(this)]]
     });
 
     this.criteria = [];
@@ -109,7 +110,7 @@ export class DealListComponent {
       status: ["ALL"],
       stage: [""],
       type: [""],
-      createdDate: [""]
+      createdDate: ["", [CustomValidator.dateValidator.bind(this)]]
     });
     this.createdDate = "";
     this.criteria = [];

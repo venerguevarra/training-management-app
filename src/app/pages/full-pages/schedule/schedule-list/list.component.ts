@@ -6,6 +6,7 @@ import { catchError, tap, map, first } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 import 'rxjs/Rx';
 import swal from 'sweetalert2';
+import { CustomValidator } from '../../../../validator/custom.validator';
 
 import { StateService } from '../../../../service/state.service';
 import { User } from '../../../../model/user.model';
@@ -50,8 +51,8 @@ export class ScheduleListComponent {
 		this.retrieveList(this.defaultPaginationParams);
 
 		this.searchForm = this.formBuilder.group({
-			startDate: [''],
-			endDate: [''],
+			startDate: ['', [CustomValidator.dateValidator.bind(this)]],
+			endDate: ['', [CustomValidator.dateValidator.bind(this)]],
 			status: ['']
 		});
 
@@ -104,7 +105,7 @@ export class ScheduleListComponent {
 		this.searchForm = this.formBuilder.group({
 			name: [''],
 			status: [''],
-			createdDate: ['']
+			createdDate: ['', [CustomValidator.dateValidator.bind(this)]]
 		});
 		this.createdDate = '';
 		this.criteria = [];

@@ -10,6 +10,7 @@ import { ToastrService } from 'ngx-toastr';
 import { StateService } from '../../../../service/state.service';
 import { User } from '../../../../model/user.model';
 import { environment } from '../../../../../environments/environment';
+import { CustomValidator } from '../../../../validator/custom.validator';
 
 @Component({
 	selector: 'app-account-detail',
@@ -151,7 +152,7 @@ export class AccountDetailComponent {
 			officeAddress: [''],
 			billingAddress: [''],
 			tin: [''],
-			website: [''],
+			website: ['', [CustomValidator.urlValidator.bind(this)]],
 			companySize: [''],
 			channel: [''],
 			accountManager: ['', [Validators.required]],

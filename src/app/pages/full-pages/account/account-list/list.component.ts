@@ -16,6 +16,7 @@ import { StateService } from "../../../../service/state.service";
 import { User } from "../../../../model/user.model";
 import { environment } from "../../../../../environments/environment";
 import { pageConfig } from "../../../page.config";
+import { CustomValidator } from '../../../../validator/custom.validator';
 
 @Component({
   selector: "app-account-list",
@@ -61,7 +62,7 @@ export class AccountListComponent {
       name: [""],
       status: ["ALL"],
       accountManager: [""],
-      createdDate: [""]
+      createdDate: ["", [CustomValidator.dateValidator.bind(this)]]
     });
 
     this.criteria = [];
@@ -109,7 +110,7 @@ export class AccountListComponent {
       name: [""],
       status: ["ALL"],
       accountManager: [""],
-      createdDate: [""]
+      createdDate: ["", [CustomValidator.dateValidator.bind(this)]]
     });
     this.createdDate = "";
     this.criteria = [];

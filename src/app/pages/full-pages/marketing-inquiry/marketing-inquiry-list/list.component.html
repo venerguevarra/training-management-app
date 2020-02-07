@@ -55,6 +55,7 @@
                       </div>
                     </div>
                   </div>
+                  <small *ngIf="searchForm.get('inquiryDateFrom').hasError('dateFormatError')" class="form-text text-muted danger">Invalid date format</small>
                 </div>
               </div>
 
@@ -70,6 +71,7 @@
                       </div>
                     </div>
                   </div>
+                  <small *ngIf="searchForm.get('inquiryDateTo').hasError('dateFormatError')" class="form-text text-muted danger">Invalid date format</small>
                 </div>
               </div>
 

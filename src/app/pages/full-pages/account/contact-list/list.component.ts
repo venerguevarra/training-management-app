@@ -16,6 +16,7 @@ import { StateService } from "../../../../service/state.service";
 import { User } from "../../../../model/user.model";
 import { environment } from "../../../../../environments/environment";
 import { pageConfig } from "../../../page.config";
+import { CustomValidator } from '../../../../validator/custom.validator';
 
 @Component({
   selector: "app-contact-list",
@@ -66,7 +67,7 @@ export class ContactListComponent {
     this.searchForm = this.formBuilder.group({
       name: [""],
       status: ["ALL"],
-      createdDate: [""]
+      createdDate: ["", [CustomValidator.dateValidator.bind(this)]]
     });
 
     this.criteria = [];
@@ -108,7 +109,7 @@ export class ContactListComponent {
       name: [""],
       status: ["ALL"],
       accountId: [""],
-      createdDate: [""]
+      createdDate: ["", [CustomValidator.dateValidator.bind(this)]]
     });
     this.createdDate = "";
     this.criteria = [];

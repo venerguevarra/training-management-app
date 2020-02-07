@@ -13,6 +13,7 @@ import { environment } from '../../../../../environments/environment';
 import { pageConfig } from '../../../page.config';
 import { CourseDataService, Course } from '../../../../service/course-data.service';
 import { StateService } from '../../../../service/state.service';
+import { CustomValidator } from '../../../../validator/custom.validator';
 
 @Component({
 	selector: 'app-venue-list',
@@ -41,31 +42,31 @@ export class MarketingInquiryListComponent {
 	customInquiryStatusData = [
         {
             key: "ASSIGNED",
-            label: "Assigned"
+            label: "ASSIGNED"
         },
         {
             key: "ATTEMPTED_TO_CONTACT",
-            label: "Attempted to contact"
+            label: "ATTEMPTED TO CONTACT"
         },
         {
             key: "CONTACTED",
-            label: "Contacted"
+            label: "CONTACTED"
         },
         {
             key: "SALES_UNQUALIFIED",
-            label: "Sales Unqualified"
+            label: "SALES UNQUALIFIED"
         },
         {
             key: "SALES_QUALIFIED",
-            label: "Sales Qualified"
+            label: "SALES QUALIFIED"
         },
         {
             key: "DEAL",
-            label: "Deal"
+            label: "DEAL"
         },
         {
             key: "CLOSED",
-            label: "Closed"
+            label: "CLOSED"
         }
     ];
 
@@ -86,8 +87,8 @@ export class MarketingInquiryListComponent {
 		this.searchForm = this.formBuilder.group({
 			name: [''],
 			channel: [''],
-			inquiryDateFrom: [''],
-			inquiryDateTo: [''],
+			inquiryDateFrom: ['', [CustomValidator.dateValidator.bind(this)]],
+			inquiryDateTo: ['', [CustomValidator.dateValidator.bind(this)]],
 			inquiryStatus: ['']
 		});
 
@@ -139,8 +140,8 @@ export class MarketingInquiryListComponent {
 	clearSearchForm() {
 		this.searchForm = this.formBuilder.group({
 			name: [''],
-			inquiryDateFrom: [''],
-			inquiryDateTo: [''],
+			inquiryDateFrom: ['', [CustomValidator.dateValidator.bind(this)]],
+			inquiryDateTo: ['', [CustomValidator.dateValidator.bind(this)]],
 			channel: [''],
 			inquiryStatus: ['']
 		});

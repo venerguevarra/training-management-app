@@ -11,6 +11,7 @@ import { ToastrService } from 'ngx-toastr';
 import { environment } from '../../../environments/environment';
 import { ReferenceDataService } from '../../service/reference-data.service';
 import { EventService } from '../../service/event.service';
+import { CustomValidator } from '../../validator/custom.validator';
 
 @Component({
 	selector: 'app-schedule-costings',
@@ -118,9 +119,9 @@ export class SchedulingCostingsComponent {
 		return this.formBuilder.group({
 			costId: ['', Validators.required],
 			courseScheduleId: [this.courseScheduleId, Validators.required],
-			amount: ['', Validators.required],
-			totalAmount: [''],
-			multiplier: ['', Validators.required],
+			amount: ['', [Validators.required, CustomValidator.positiveNumberValidator.bind(this)]],
+			totalAmount: ['', [CustomValidator.positiveNumberValidator.bind(this)]],
+			multiplier: ['', [Validators.required, CustomValidator.positiveNumberValidator.bind(this)]],
 			comment: ['']
 		});
 	}

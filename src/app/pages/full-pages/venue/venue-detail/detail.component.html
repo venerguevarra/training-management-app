@@ -97,14 +97,13 @@
                   <div class="form-group row">
                     <label class="col-md-4 label-control">&nbsp;</label>
                     <div class="col-md-6">
-                      <ngb-alert type="danger" [dismissible]="false" *ngIf="genericError">Unable to update information. Try again.</ngb-alert>
                       Fields with <span class="px-required">*</span> are required.
                     </div>
                   </div>
                   <div class="form-group row">
                     <label class="col-md-4 label-control" for="name">Venue Name<span class="px-required">*</span></label>
                     <div class="col-md-6">
-                      <input  formControlName="name"  type="text" id="name" class="form-control" name="name"  [ngClass]="{ 'is-invalid': isInvalid(f.name)}">
+                      <input [attr.maxlength]="100" formControlName="name"  type="text" id="name" class="form-control" name="name"  [ngClass]="{ 'is-invalid': isInvalid(f.name)}">
                       <small *ngIf="(f.name.dirty || f.name.touched || submitted) && f.name.invalid && f.name.errors.required" class="form-text text-muted danger">
                         Venue name required
                       </small>
@@ -113,7 +112,7 @@
                   <div class="form-group row">
                     <label class="col-md-4 label-control" for="name">Description<span class="px-required">*</span></label>
                     <div class="col-md-6">
-                      <input  formControlName="description"  type="text" id="description" class="form-control" name="description"  [ngClass]="{ 'is-invalid': isInvalid(f.description)}">
+                      <textarea style="resize: none;" [attr.maxlength]="200" formControlName="description"  type="text" id="description" class="form-control" name="description"  [ngClass]="{ 'is-invalid': isInvalid(f.description)}"></textarea>
                       <small *ngIf="(f.description.dirty || f.description.touched || submitted) && f.description.invalid && f.description.errors.required" class="form-text text-muted danger">
                         Description required
                       </small>

@@ -12,6 +12,7 @@ import { StateService } from '../../../../service/state.service';
 import { User } from '../../../../model/user.model';
 import { environment } from '../../../../../environments/environment';
 import { pageConfig } from '../../../page.config';
+import { CustomValidator } from '../../../../validator/custom.validator';
 
 @Component({
 	selector: 'app-venue-list',
@@ -51,7 +52,7 @@ export class VenueListComponent {
 		this.searchForm = this.formBuilder.group({
 			name: [''],
 			status: ['ALL'],
-			createdDate: ['']
+			createdDate: ['', [CustomValidator.dateValidator.bind(this)]]
 		});
 
 		this.criteria = [];
@@ -103,7 +104,7 @@ export class VenueListComponent {
 		this.searchForm = this.formBuilder.group({
 			name: [''],
 			status: ['ALL'],
-			createdDate: ['']
+			createdDate: ['', [CustomValidator.dateValidator.bind(this)]]
 		});
 		this.createdDate = '';
 		this.criteria = [];
@@ -140,7 +141,7 @@ export class VenueListComponent {
 		}
 
 		if(this.searchForm.get('status').value != '') {
-			if(this.searchForm.get('status').value == 'ALL' || this.searchForm.get('status').value == 'ACTIVE') {
+			if(this.searchForm.get('status').value == 'ACTIVE') {
 				this.criteria.push({
 					name: 'active',
 					value: 'ACTIVE',
@@ -151,7 +152,7 @@ export class VenueListComponent {
 				});
 			}
 
-			if(this.searchForm.get('status').value == 'ALL' || this.searchForm.get('status').value == 'INACTIVE') {
+			if(this.searchForm.get('status').value == 'INACTIVE') {
 				this.criteria.push({
 					name: 'active',
 					value: 'INACTIVE',

@@ -26,23 +26,23 @@ export class ChannelSelectComponent {
     data = [
         {
             key: "EMAIL",
-            label: "Email"
+            label: "EMAIL"
         },
         {
             key: "PHONE",
-            label: "Phone"
+            label: "PHONE"
         },
         {
             key: "WEBSITE",
-            label: "Website"
+            label: "WEBSITE"
         },
         {
             key: "LINKEDIN",
-            label: "LinkedIn"
+            label: "LINKEDIN"
         },
         {
             key: "FACEBOOK",
-            label: "Facebook"
+            label: "FACEBOOK"
         },
     ];
 

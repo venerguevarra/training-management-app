@@ -34,23 +34,20 @@
                                       <app-course-select (selectedIdEmitter)="onCourseSelected($event)"
                                         [isInvalid]="isCourseIdInvalid" [selectedCourse]="selectedCourse">
                                       </app-course-select>
-                                      <small *ngIf="isCourseIdInvalid" class="form-text text-muted danger">Course
-                                        inquired
-                                        required</small>
+                                      <small *ngIf="isCourseIdInvalid" class="form-text text-muted danger">Course inquired required</small>
                                     </div>
                                   </div>
                                   <div class="form-group row">
                                     <label class="col-md-4 label-control" for="name">Course Fee<span
                                         class="px-required">*</span></label>
                                     <div class="col-md-4">
-                                      <input (blur)="updateRevenueModel()" formControlName="courseFee" type="number"
-                                        id="courseFee" class="form-control" name="courseFee"
-                                        [ngClass]="{ 'is-invalid': isInvalid(f.courseFee)}">
+                                      <input (blur)="updateRevenueModel()" formControlName="courseFee" type="number" id="courseFee" class="form-control" name="courseFee" [ngClass]="{ 'is-invalid': isInvalid(f.courseFee)}">
                                       <small
                                         *ngIf="(f.courseFee.dirty || f.courseFee.touched || submitted) && f.courseFee.invalid && f.courseFee.errors.required"
                                         class="form-text text-muted danger">
                                         Course fee required
                                       </small>
+                                      <small *ngIf="currentForm.get('courseFee').hasError('positiveNumberError')" class="form-text text-muted danger">Invalid course fee</small><br />
                                     </div>
                                   </div>
                                   <div class="form-group row">
@@ -65,6 +62,7 @@
                                         class="form-text text-muted danger">
                                         Number of days required
                                       </small>
+                                      <small *ngIf="currentForm.get('numberOfDays').hasError('positiveNumberError')" class="form-text text-muted danger">Invalid no. of days</small><br />
                                     </div>
                                   </div>
                                   <div class="form-group row">
@@ -87,12 +85,13 @@
                                         type="number" id="registeredParticipants" class="form-control"
                                         name="registeredParticipants"
                                         [ngClass]="{ 'is-invalid': isInvalid(f.registeredParticipants)}"
-                                        placeholder="e.g. 10">
+                                        placeholder="10">
                                       <small
                                         *ngIf="(f.registeredParticipants.dirty || f.registeredParticipants.touched || submitted) && f.registeredParticipants.invalid && f.registeredParticipants.errors.required"
                                         class="form-text text-muted danger">
                                         Target registrations required
                                       </small>
+                                      <small *ngIf="currentForm.get('registeredParticipants').hasError('positiveNumberError')" class="form-text text-muted danger">Invalid no. of days</small><br />
                                     </div>
                                   </div>
 
@@ -132,7 +131,7 @@
                                     <label class="col-md-4 label-control" for="name">Inclusive Dates<span
                                         class="px-required">*</span></label>
                                     <div class="col-md-4">
-                                      <ngb-datepicker #dp (select)="onDateSelection($event)" [displayMonths]="2"
+                                      <ngb-datepicker #dp [minDate]="minDate" (select)="onDateSelection($event)" [displayMonths]="2"
                                         [dayTemplate]="t" outsideDays="hidden" [startDate]="selectedStartDate">
                                       </ngb-datepicker>
                                       <ng-template #t let-date let-focused="focused">
@@ -358,15 +357,24 @@
                       </div>
                     </div>
                   </div>
-
-                  <app-facilitator-schedule *ngIf="editForm" [courseScheduleId]="f.id.value"
-                    [courseId]="f.courseId.value" [numberOfDays]="f.numberOfDays.value" [startDate]="f.startDate.value"
-                    [endDate]="f.endDate.value">
-                  </app-facilitator-schedule>
-
-                  <app-schedule-costings *ngIf="editForm" [courseScheduleId]="f.id.value">
-                  </app-schedule-costings>
                 </div>
+              </ng-template>
+            </ngb-tab>
+            <ngb-tab *ngIf="editForm || viewForm" title="Facilitator">
+              <ng-template ngbTabContent>
+                <app-facilitator-schedule
+                  *ngIf="editForm"
+                  [courseScheduleId]="f.id.value"
+                  [courseId]="f.courseId.value"
+                  [numberOfDays]="f.numberOfDays.value"
+                  [startDate]="f.startDate.value"
+                  [endDate]="f.endDate.value">
+              </app-facilitator-schedule>
+              </ng-template>
+            </ngb-tab>
+            <ngb-tab *ngIf="editForm || viewForm" title="Training Costing">
+              <ng-template ngbTabContent>
+                <app-schedule-costings *ngIf="editForm" [courseScheduleId]="f.id.value"></app-schedule-costings>
               </ng-template>
             </ngb-tab>
             <ngb-tab *ngIf="editForm || viewForm" title="Participants">

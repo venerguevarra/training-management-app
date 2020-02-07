@@ -79,7 +79,7 @@
                   <div class="form-group row">
                     <label class="col-md-3 label-control" for="middleInitial">Middle Initial</label>
                     <div class="col-md-9">
-                      <input formControlName="middleInitial"
+                      <input [attr.maxlength]="5" formControlName="middleInitial"
                              type="text"
                              id="middleInitial"
                              class="form-control"

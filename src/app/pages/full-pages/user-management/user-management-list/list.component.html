@@ -54,6 +54,7 @@
                     </div>
                   </div>
                 </div>
+                <small *ngIf="searchForm.get('createdDate').hasError('dateFormatError')" class="form-text text-muted danger">Invalid date format</small>
               </div>
             </div>
             <div>

@@ -6,6 +6,7 @@ import { catchError, tap, map, first } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 import 'rxjs/Rx';
 import swal from 'sweetalert2';
+import { CustomValidator } from '../../../../validator/custom.validator';
 
 import { StateService } from '../../../../service/state.service';
 import { User } from '../../../../model/user.model';
@@ -50,7 +51,7 @@ export class CourseListComponent {
 		this.searchForm = this.formBuilder.group({
 			name: [''],
 			status: ['ALL'],
-			createdDate: ['']
+			createdDate: ['', [CustomValidator.dateValidator.bind(this)]]
 		});
 
 		this.criteria = [];
@@ -102,7 +103,7 @@ export class CourseListComponent {
 		this.searchForm = this.formBuilder.group({
 			name: [''],
 			status: ['ALL'],
-			createdDate: ['']
+			createdDate: ['', [CustomValidator.dateValidator.bind(this)]]
 		});
 		this.createdDate = '';
 		this.criteria = [];
@@ -139,7 +140,7 @@ export class CourseListComponent {
 		}
 
 		if(this.searchForm.get('status').value != '') {
-			if(this.searchForm.get('status').value == 'ALL' || this.searchForm.get('status').value == 'ACTIVE') {
+			if(this.searchForm.get('status').value == 'ACTIVE') {
 				this.criteria.push({
 					name: 'active',
 					value: 'ACTIVE',
@@ -150,7 +151,7 @@ export class CourseListComponent {
 				});
 			}
 
-			if(this.searchForm.get('status').value == 'ALL' || this.searchForm.get('status').value == 'INACTIVE') {
+			if(this.searchForm.get('status').value == 'INACTIVE') {
 				this.criteria.push({
 					name: 'active',
 					value: 'INACTIVE',

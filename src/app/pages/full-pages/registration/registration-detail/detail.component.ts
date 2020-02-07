@@ -17,6 +17,7 @@ import { ReferenceDataService } from '../../../../service/reference-data.service
 import { RoutingStateService } from "../../../../service/routing-state.service"
 import { User } from "../../../../model/user.model";
 import { environment } from "../../../../../environments/environment";
+import { CustomValidator } from "../../../../validator/custom.validator";
 
 @Component({
   selector: "app-registration-detail",

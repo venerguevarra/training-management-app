@@ -11,6 +11,7 @@ import { StateService } from '../../../../service/state.service';
 import { User } from '../../../../model/user.model';
 import { environment } from '../../../../../environments/environment';
 import { RoutingStateService } from '../../../../service/routing-state.service';
+import { CustomValidator } from '../../../../validator/custom.validator';
 
 @Component({
 	selector: 'app-course-registration',
@@ -44,8 +45,8 @@ export class CourseRegistrationComponent {
 	initForm() {
 		this.searchForm = this.formBuilder.group({
 			status: [""],
-			startDate: [""],
-			endDate: [""],
+			startDate: ["", [CustomValidator.dateValidator.bind(this)]],
+			endDate: ["", [CustomValidator.dateValidator.bind(this)]],
 			accountId: [""],
 			courseId: [""]
 		});

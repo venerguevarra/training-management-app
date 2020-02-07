@@ -22,6 +22,7 @@ import { StateService } from "../../../../service/state.service";
 import { User } from "../../../../model/user.model";
 import { environment } from "../../../../../environments/environment";
 import { RoutingStateService } from "../../../../service/routing-state.service";
+import { CustomValidator} from '../../../../validator/custom.validator';
 
 @Component({
   selector: "app-contact-detail",
@@ -140,10 +141,10 @@ export class ContactDetailComponent {
                 firstName: [this.currentModel.firstName, [Validators.required]],
                 lastName: [this.currentModel.lastName, [Validators.required]],
                 middleInitial: [this.currentModel.middleInitial],
-                email: [this.currentModel.email, [Validators.required]],
+                email: [this.currentModel.email, [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')]],
                 mobileNumber: [
                   this.currentModel.mobileNumber,
-                  [Validators.required]
+                  [Validators.required, Validators.pattern("[0][0-9]{10}")]
                 ],
                 designation: [this.currentModel.designation],
                 officeNumber: [this.currentModel.officeNumber],
@@ -175,8 +176,8 @@ export class ContactDetailComponent {
       firstName: ["", [Validators.required]],
       lastName: ["", [Validators.required]],
       middleInitial: [""],
-      email: ["", [Validators.required]],
-      mobileNumber: ["", [Validators.required]],
+      email: ["", [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')]],
+      mobileNumber: ["", [Validators.required, Validators.pattern("[0][0-9]{10}")]],
       designation: [""],
       officeNumber: [""],
       faxNumber: [""],

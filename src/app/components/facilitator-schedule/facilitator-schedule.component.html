@@ -3,9 +3,6 @@
     <div class="card">
       <div class="card-content">
         <div class="px-3">
-          <div class="card-header pb-1">
-            <h4 class="card-title" id="basic-layout-form">Facilitators</h4>
-          </div>
           <div>
             <section id="striped-light">
               <div class="row text-left">
@@ -29,8 +26,7 @@
                                 <app-facilitator-select (selectedIdEmitter)="onFacilitatorSelected($event)"
                                   [isInvalid]="isFacilitatorIdInvalid" [selectedFacilitator]="selectedFacilitator">
                                 </app-facilitator-select>
-                                <small *ngIf="isFacilitatorIdInvalid" class="form-text text-muted danger">Facilitator
-                                  required</small><br />
+                                <small *ngIf="isFacilitatorIdInvalid" class="form-text text-muted danger">Facilitator required</small><br />
                               </div>
 
                               <div class="col-md-4">
@@ -42,11 +38,13 @@
                                   class="form-text text-muted danger">
                                   Daily rate required
                                 </small>
+                                <small *ngIf="facilitatorScheduleForm.get('rate').hasError('positiveNumberError')" class="form-text text-muted danger">Invalid rate</small><br />
                               </div>
 
                               <div class="col-md-4">
                                 <label for="professionalFee">Professional Fee</label>
                                 <input class="form-control" type="number" formControlName="professionalFee" [disabled]="true">
+                                <small *ngIf="facilitatorScheduleForm.get('professionalFee').hasError('positiveNumberError')" class="form-text text-muted danger">Invalid professional fee</small><br />
                               </div>
                             </div>
                           </div>

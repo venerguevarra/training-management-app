@@ -6,6 +6,7 @@ import { catchError, tap, map, first } from 'rxjs/operators';
 import 'rxjs/Rx';
 import swal from 'sweetalert2';
 import { ToastrService } from 'ngx-toastr';
+import { CustomValidator } from '../../../../validator/custom.validator';
 
 import { StateService } from '../../../../service/state.service';
 import { User } from '../../../../model/user.model';
@@ -105,9 +106,9 @@ export class FacilitatorDetailComponent {
 								firstName: [this.currentModel.firstName, [Validators.required]],
 								lastName: [this.currentModel.lastName, [Validators.required]],
 								middleInitial: [this.currentModel.middleInitial],
-								email: [this.currentModel.email, [Validators.required]],
-								mobileNumber: [this.currentModel.mobileNumber, [Validators.required]],
-								dailyRate: [this.currentModel.dailyRate, [Validators.required]],
+								email: [this.currentModel.email, [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')]],
+								mobileNumber: [this.currentModel.mobileNumber, [Validators.required, Validators.pattern("[0][0-9]{10}")]],
+								dailyRate: [this.currentModel.dailyRate, [Validators.required, CustomValidator.positiveNumberValidator.bind(this)]],
 								createdDate: [this.currentModel.createdDate],
 								createdBy: [this.currentModel.createdBy],
 								modifiedDate: [this.currentModel.modifiedDate],
@@ -133,9 +134,9 @@ export class FacilitatorDetailComponent {
 			firstName: ['', [Validators.required]],
 			lastName: ['', [Validators.required]],
 			middleInitial: [''],
-			email: ['', [Validators.required]],
-			mobileNumber: ['', [Validators.required]],
-			dailyRate: ['', [Validators.required]],
+			email: ['', [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')]],
+			mobileNumber: ['', [Validators.required, Validators.pattern("[0][0-9]{10}")]],
+			dailyRate: ['', [Validators.required, CustomValidator.positiveNumberValidator.bind(this)]],
 			status: ['']
 		});
 	}

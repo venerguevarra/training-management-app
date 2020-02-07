@@ -7,6 +7,7 @@ import 'rxjs/Rx';
 import { Observable } from 'rxjs';
 import swal from 'sweetalert2';
 import { ToastrService } from 'ngx-toastr';
+import { CustomValidator } from '../../../../validator/custom.validator';
 
 import { StateService } from '../../../../service/state.service';
 import { User } from '../../../../model/user.model';
@@ -67,13 +68,13 @@ export class InquiryDetailComponent {
 			companyName: ['', [Validators.required]],
 			officeAddress: [''],
 			designation: [''],
-			email: ['', [Validators.required]],
-			mobileNumber: ['', [Validators.required]],
-			officeNumber: [''],
-			faxNumber: [''],
+			email: ['', [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')]],
+			mobileNumber: ['', [Validators.required, Validators.pattern("[0][0-9]{10}")]],
+			officeNumber: ['', Validators.pattern("[0-9]{15}")],
+			faxNumber: ['', Validators.pattern("[0-9]{15}")],
 			courseId: ['', [Validators.required]],
 			inquiryChannel: ['', [Validators.required]],
-			dateOfInquiry: ['', [Validators.required]],
+			dateOfInquiry: ['', [Validators.required, CustomValidator.dateValidator.bind(this)]],
 			inquiryStatus: ['ASSIGNED', [Validators.required]],
 			comment: [''],
 			accountManager: ['', [Validators.required]],
@@ -215,10 +216,10 @@ export class InquiryDetailComponent {
 								companyName: [this.currentModel.companyName, [Validators.required]],
 								officeAddress: [this.currentModel.officeAddress],
 								designation: [this.currentModel.designation],
-								email: [this.currentModel.email, [Validators.required]],
-								mobileNumber: [this.currentModel.mobileNumber, [Validators.required]],
-								officeNumber: [this.currentModel.officeNumber],
-								faxNumber: [this.currentModel.faxNumber],
+								email: [this.currentModel.email, [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')]],
+								mobileNumber: [this.currentModel.mobileNumber, [Validators.required, Validators.pattern("[0][0-9]{10}")]],
+								officeNumber: [this.currentModel.officeNumber, [Validators.pattern("[0-9]{15}")]],
+								faxNumber: [this.currentModel.faxNumber, [Validators.pattern("[0-9]{15}")]],
 								courseId: [this.currentModel.courseId, [Validators.required]],
 								inquiryChannel: [this.currentModel.inquiryChannel, [Validators.required]],
 								dateOfInquiry: [this.currentModel.dateOfInquiry, [Validators.required]],
