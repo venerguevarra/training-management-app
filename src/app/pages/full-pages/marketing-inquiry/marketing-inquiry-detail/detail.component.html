@@ -315,6 +315,9 @@
                     <label class="col-md-3 label-control" for="name">Office Number</label>
                     <div class="col-md-9">
                       <input  formControlName="officeNumber"  type="text" id="officeNumber" class="form-control" name="officeNumber">
+                      <small *ngIf="f.officeNumber.errors && f.officeNumber.errors.invalidPhone" class="form-text text-muted danger">
+                        Invalid office number
+                      </small>
                     </div>
                   </div>
                   <div class="form-group row">

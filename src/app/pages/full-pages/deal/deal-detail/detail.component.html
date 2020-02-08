@@ -234,7 +234,7 @@
                     <label class="col-md-4 label-control" for="name">No. of Participants<span
                         class="px-required">*</span></label>
                     <div class="col-md-6">
-                      <input formControlName="numberOfParticipants" type="text" id="numberOfParticipants"
+                      <input formControlName="numberOfParticipants" type="number" id="numberOfParticipants"
                         class="form-control" name="numberOfParticipants"
                         [ngClass]="{ 'is-invalid': isInvalid(f.numberOfParticipants) || (f.numberOfParticipants.errors && f.numberOfParticipants.errors.positiveNumberError)}"
                         (blur)="calculateTotalDealAmount()">
@@ -261,7 +261,7 @@
                     <label class="col-md-4 label-control" for="name">Course Fee<span
                         class="px-required">*</span></label>
                     <div class="col-md-6">
-                      <input formControlName="courseFee" type="text" id="courseFee" class="form-control"
+                      <input formControlName="courseFee" type="number" id="courseFee" class="form-control"
                         name="courseFee" [ngClass]="{ 'is-invalid': isInvalid(f.courseFee) || (f.courseFee.errors && f.courseFee.errors.positiveNumberError)}">
                       <small
                         *ngIf="(f.courseFee.dirty || f.courseFee.touched || submitted) && f.courseFee.invalid && f.courseFee.errors.required"

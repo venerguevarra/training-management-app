@@ -170,6 +170,78 @@
                                   </div>
 
                                   <div class="form-group row">
+                                    <label class="col-md-4 label-control" for="name">Course Fee</label>
+                                    <div class="col-md-4">
+                                      {{f.courseFee.value | currency: 'PHP '}}
+                                    </div>
+                                  </div>
+
+                                  <div class="form-group row">
+                                    <label class="col-md-4 label-control" for="name">Total No. of Registration</label>
+                                    <div class="col-md-4">
+                                      <span>{{f.actualRegisteredParticipants.value || 0}}</span>
+                                    </div>
+                                  </div>
+
+                                  <div class="form-group row">
+                                    <label class="col-md-4 label-control" for="name">Total Cost</label>
+                                    <div class="col-md-4">
+                                      <span>{{revenueModel.scheduleCost || 0 | currency : 'PHP ' }}</span>
+                                    </div>
+                                  </div>
+
+                                  <div class="form-group row">
+                                    <label class="col-md-4 label-control" for="name">Actual Gross Revenue</label>
+                                    <div class="col-md-4">
+                                      <span>{{revenueModel.actualGrossRevenue || 0 | currency: 'PHP '}}</span>
+                                    </div>
+                                  </div>
+
+                                  <div class="form-group row">
+                                    <label class="col-md-4 label-control" for="name">Actual Net Revenue</label>
+                                    <div class="col-md-4">
+                                      <span>{{revenueModel.actualNetRevenue || 0 | currency: 'PHP '}}</span>
+                                    </div>
+                                  </div>
+
+
+                                  <div class="form-group row">
+                                    <label class="col-md-4 label-control" for="name">Actual Profit Margin</label>
+                                    <div class="col-md-4">
+                                      <span>{{revenueModel.actualProfitMargin || 0 | number : '1.2-2' }} %</span>
+                                    </div>
+                                  </div>
+
+
+                                  <div class="form-group row">
+                                    <label class="col-md-4 label-control" for="name">Target Registration</label>
+                                    <div class="col-md-4">
+                                      <span>{{f.registeredParticipants.value || 0}}</span>
+                                    </div>
+                                  </div>
+
+                                  <div class="form-group row">
+                                    <label class="col-md-4 label-control" for="name">Gross Revenue</label>
+                                    <div class="col-md-4">
+                                      <span>{{revenueModel.grossRevenue || 0 | currency: 'PHP '}}</span>
+                                    </div>
+                                  </div>
+
+                                  <div class="form-group row">
+                                    <label class="col-md-4 label-control" for="name">Net Revenue</label>
+                                    <div class="col-md-4">
+                                      <span>{{revenueModel.netRevenue || 0 | currency: 'PHP '}}</span>
+                                    </div>
+                                  </div>
+
+                                  <div class="form-group row">
+                                    <label class="col-md-4 label-control" for="name">Profit Margin</label>
+                                    <div class="col-md-4">
+                                      <span>{{revenueModel.profitMargin || 0 | number : '1.2-2' }} %</span>
+                                    </div>
+                                  </div>
+
+                                  <div class="form-group row">
                                     <label class="col-md-4 label-control" for="name">&nbsp;</label>
                                     <div class="col-md-4">
                                       <button *ngIf="editForm && currentScheduleStatus == 'SCHEDULE_WAITING'"
@@ -198,7 +270,6 @@
                       </div>
                     </div>
                   </div>
-
                   <!-- VIE FORM -->
                   <div *ngIf="viewForm" class="row">
                     <div class="col-md-12">
@@ -261,8 +332,6 @@
                                   </div>
                                 </div>
 
-
-
                                 <div class="form-group row">
                                   <label class="col-md-4 label-control" for="name">Course Fee</label>
                                   <div class="col-md-4">
@@ -283,8 +352,6 @@
                                     <span>{{revenueModel.scheduleCost || 0 | currency : 'PHP ' }}</span>
                                   </div>
                                 </div>
-
-
 
                                 <div class="form-group row">
                                   <label class="col-md-4 label-control" for="name">Actual Gross Revenue</label>
@@ -360,7 +427,7 @@
                 </div>
               </ng-template>
             </ngb-tab>
-            <ngb-tab *ngIf="editForm || viewForm" title="Facilitator">
+            <ngb-tab *ngIf="editForm" title="Facilitator">
               <ng-template ngbTabContent>
                 <app-facilitator-schedule
                   *ngIf="editForm"
@@ -372,12 +439,12 @@
               </app-facilitator-schedule>
               </ng-template>
             </ngb-tab>
-            <ngb-tab *ngIf="editForm || viewForm" title="Training Costing">
+            <ngb-tab *ngIf="editForm" title="Training Costing">
               <ng-template ngbTabContent>
                 <app-schedule-costings *ngIf="editForm" [courseScheduleId]="f.id.value"></app-schedule-costings>
               </ng-template>
             </ngb-tab>
-            <ngb-tab *ngIf="editForm || viewForm" title="Participants">
+            <ngb-tab *ngIf="editForm" title="Participants">
               <ng-template ngbTabContent>
                 <div class="m-3">
                   <app-course-participant-list [canEnroll]="currentScheduleStatus == 'SCHEDULE_CONFIRMED'"
@@ -385,14 +452,15 @@
                 </div>
               </ng-template>
             </ngb-tab>
-            <ngb-tab *ngIf="editForm || viewForm" title="Attendance">
+            <ngb-tab *ngIf="editForm" title="Attendance">
               <ng-template ngbTabContent>
-                <ngb-tabset *ngIf="attendanceData && attendanceData.length > 0">
-                  <ngb-tab *ngFor="let a of attendanceData; let i = index">
-                  <ng-template ngbTabTitle>
+
+                <div *ngIf="attendanceData && attendanceData.length > 0">
+                  <div *ngFor="let a of attendanceData; let i = index">
+                  <h6>
                     {{a.attendance.date | date: 'MMMM dd, yyyy'}}
-                  </ng-template>
-                  <ng-template ngbTabContent>
+                  </h6>
+                  <div>
                     <table *ngIf="a.attendees && a.attendees.length > 0" class="table col-md-12" style="width: 100% !important;">
                     <thead>
                         <tr>
@@ -419,9 +487,9 @@
                     </tbody>
                 </table>
 
-                  </ng-template>
-                  </ngb-tab>
-                </ngb-tabset>
+                  </div>
+                  </div>
+               </div>
 
 
               </ng-template>

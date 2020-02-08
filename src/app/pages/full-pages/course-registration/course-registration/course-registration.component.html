@@ -286,19 +286,21 @@
           <div class="form-group row">
             <label class="col-md-4 label-control" for="name">Email<span class="px-required">*</span></label>
             <div class="col-md-4">
-              <input  formControlName="email"  type="text" id="email" class="form-control" name="email"  [ngClass]="{ 'is-invalid': isInvalid(registrationForm.email)}">
+              <input  formControlName="email"  type="text" id="email" class="form-control" name="email"  [ngClass]="{ 'is-invalid': isInvalid(registrationForm.email) || (registrationForm.email.errors && registrationForm.email.errors.pattern)}">
               <small *ngIf="(registrationForm.email.dirty || registrationForm.email.touched || submitted) && registrationForm.email.invalid && registrationForm.email.errors.required" class="form-text text-muted danger">
                 Email required
               </small>
+              <small *ngIf="registrationForm.email.errors && registrationForm.email.errors.pattern" class="form-text text-muted danger">Invalid email format</small>
             </div>
           </div>
           <div class="form-group row">
             <label class="col-md-4 label-control" for="name">Mobile Number<span class="px-required">*</span></label>
             <div class="col-md-4">
-              <input  formControlName="mobileNumber"  type="text" id="mobileNumber" class="form-control" name="mobileNumber"  [ngClass]="{ 'is-invalid': isInvalid(registrationForm.mobileNumber)}">
+              <input  formControlName="mobileNumber"  type="text" id="mobileNumber" class="form-control" name="mobileNumber"  [ngClass]="{ 'is-invalid': isInvalid(registrationForm.mobileNumber) || (registrationForm.mobileNumber.errors && registrationForm.mobileNumber.errors.invalidMobile)}">
               <small *ngIf="(registrationForm.mobileNumber.dirty || registrationForm.mobileNumber.touched || submitted) && registrationForm.mobileNumber.invalid && registrationForm.mobileNumber.errors.required" class="form-text text-muted danger">
                 Mobile number required
               </small>
+              <small *ngIf="registrationForm.mobileNumber.errors && registrationForm.mobileNumber.errors.invalidMobile" class="form-text text-muted danger">Invalid mobile number format</small>
             </div>
           </div>
 

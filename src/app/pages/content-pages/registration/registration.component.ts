@@ -93,7 +93,7 @@ export class RegistrationPageComponent {
             middleInitial: [''],
             email: ['', [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')]],
             designation: ['', [Validators.required]],
-            mobileNumber: ['', [Validators.required, Validators.pattern("[0][0-9]{10}")]]
+            mobileNumber: ['', [Validators.required, CustomValidator.mobileValidator.bind(this)]]
         });
         this.registrationForm.markAsPristine();
         this.registrationForm.markAsUntouched();
@@ -172,7 +172,7 @@ export class RegistrationPageComponent {
             middleInitial: [this.registrationModel.middleInitial],
             email: [this.registrationModel.email, [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')]],
             designation: [this.registrationModel.designation, [Validators.required]],
-            mobileNumber: [this.registrationModel.mobileNumber, [Validators.required, Validators.pattern("[0][0-9]{10}")]]
+            mobileNumber: [this.registrationModel.mobileNumber, [Validators.required, CustomValidator.mobileValidator.bind(this)]]
         });
 
         this.showRegistrationForm('edit');

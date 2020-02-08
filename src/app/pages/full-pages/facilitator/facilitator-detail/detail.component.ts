@@ -107,7 +107,7 @@ export class FacilitatorDetailComponent {
 								lastName: [this.currentModel.lastName, [Validators.required]],
 								middleInitial: [this.currentModel.middleInitial],
 								email: [this.currentModel.email, [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')]],
-								mobileNumber: [this.currentModel.mobileNumber, [Validators.required, Validators.pattern("[0][0-9]{10}")]],
+								mobileNumber: [this.currentModel.mobileNumber, [Validators.required, CustomValidator.mobileValidator.bind(this)]],
 								dailyRate: [this.currentModel.dailyRate, [Validators.required, CustomValidator.positiveNumberValidator.bind(this)]],
 								createdDate: [this.currentModel.createdDate],
 								createdBy: [this.currentModel.createdBy],
@@ -135,7 +135,7 @@ export class FacilitatorDetailComponent {
 			lastName: ['', [Validators.required]],
 			middleInitial: [''],
 			email: ['', [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')]],
-			mobileNumber: ['', [Validators.required, Validators.pattern("[0][0-9]{10}")]],
+			mobileNumber: ['', [Validators.required, CustomValidator.mobileValidator.bind(this)]],
 			dailyRate: ['', [Validators.required, CustomValidator.positiveNumberValidator.bind(this)]],
 			status: ['']
 		});

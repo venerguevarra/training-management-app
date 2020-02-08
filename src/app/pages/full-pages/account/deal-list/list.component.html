@@ -35,12 +35,12 @@
               <div class="form-group">
                 <label>Stage</label>
                 <select formControlName="stage" class="custom-select">
-                  <option value="PROPOSAL">Propsal</option>
-                  <option value="CANCELLED">Cancelled</option>
-                  <option value="CLOSING">Closgin</option>
-                  <option value="CLOSED_WON">Closed Won</option>
-                  <option value="CLOSED_LOST">Closed Lost</option>
-                  <option value="CLOSED_LOST_TO_COMPETITION">Closed Lost to Competition</option>
+                  <option value="PROPOSAL">PROPOSAL</option>
+                  <option value="CANCELLED">CANCELLED</option>
+                  <option value="CLOSING">CLOSING</option>
+                  <option value="CLOSED_WON">WON</option>
+                  <option value="CLOSED_LOST">LOST</option>
+                  <option value="CLOSED_LOST_TO_COMPETITION">LOST TO COMPETITION</option>
                 </select>
               </div>
             </div>
@@ -49,8 +49,8 @@
               <label class="label-control">Deal Type</label>
               <div>
                 <select formControlName="type" class="custom-select">
-                  <option value="NEW_BUSINESS">New Business</option>
-                  <option value="EXISTING_BUSINESS">Existing Business</option>
+                  <option value="NEW_BUSINESS">NEW BUSINESS</option>
+                  <option value="EXISTING_BUSINESS">EXISTING BUSINESS</option>
                 </select>
               </div>
             </div>
@@ -120,11 +120,12 @@
                   <td scope="row">{{ row.totalDealAmount | currency: 'PHP ' }}</td>
                   <td scope="row">
                     <span *ngIf="row.stage === 'PROPOSAL'">PROPOSAL</span>
-                    <span *ngIf="row.stage === 'CANCELLED'">CANCELLED</span>
                     <span *ngIf="row.stage === 'CLOSING'">CLOSING</span>
+                    <span *ngIf="row.stage === 'CANCELLED'">CANCELLED</span>
                     <span *ngIf="row.stage === 'CLOSED_WON'">WON</span>
                     <span *ngIf="row.stage === 'CLOSED_LOST'">LOST</span>
                     <span *ngIf="row.stage === 'CLOSED_LOST_TO_COMPETITION'">LOST TO COMPETITION</span>
+                    <span *ngIf="row.stage === 'DELIVERED'">DELIVERED</span>
                   </td>
                   <td scope="row">{{row.createdDate | date: 'MMM d,y'}}</td>
                   <td scope="row" style="text-align: center;">

@@ -1,4 +1,4 @@
-import { Component, SimpleChanges } from '@angular/core';
+import { Component, SimpleChanges, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl, FormArray, NgForm } from '@angular/forms';
 import { Router, ActivatedRoute } from "@angular/router";
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
@@ -847,4 +847,5 @@ export class ScheduleDetailComponent {
 
 		return promise;
 	}
+
 }

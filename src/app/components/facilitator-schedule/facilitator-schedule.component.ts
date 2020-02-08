@@ -303,4 +303,9 @@ export class FacilitatorScheduleComponent {
 		});
 	}
 
+	updateProfessionalFee() {
+		let newRate = this.facilitatorScheduleForm.get('days').value * this.facilitatorScheduleForm.get('rate').value;
+		this.f.professionalFee.setValue(newRate);
+	}
+
 }

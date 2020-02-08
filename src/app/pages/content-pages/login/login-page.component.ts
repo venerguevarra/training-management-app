@@ -83,7 +83,7 @@ export class LoginPageComponent {
                     urls: response.urls,
                     roles: response.roles
                 }
-                console.log(response.urls);
+
                 this.stateService.setCurrentUser(user);
                 this.router.navigateByUrl(this.returnUrl);
             },

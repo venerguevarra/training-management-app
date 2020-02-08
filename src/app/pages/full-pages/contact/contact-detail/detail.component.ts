@@ -144,10 +144,10 @@ export class ContactDetailComponent {
                 email: [this.currentModel.email, [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')]],
                 mobileNumber: [
                   this.currentModel.mobileNumber,
-                  [Validators.required, Validators.pattern("[0][0-9]{10}")]
+                  [Validators.required, CustomValidator.mobileValidator.bind(this)]
                 ],
                 designation: [this.currentModel.designation],
-                officeNumber: [this.currentModel.officeNumber],
+                officeNumber: [this.currentModel.officeNumber, [CustomValidator.phoneNumberValidator.bind(this)]],
                 faxNumber: [this.currentModel.faxNumber],
                 accountId: [this.currentModel.accountId, [Validators.required]],
                 createdDate: [this.currentModel.createdDate],
@@ -177,10 +177,10 @@ export class ContactDetailComponent {
       lastName: ["", [Validators.required]],
       middleInitial: [""],
       email: ["", [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')]],
-      mobileNumber: ["", [Validators.required, Validators.pattern("[0][0-9]{10}")]],
+      mobileNumber: ["", [Validators.required, CustomValidator.mobileValidator.bind(this)]],
       designation: [""],
-      officeNumber: [""],
-      faxNumber: [""],
+      officeNumber: ["", [CustomValidator.phoneNumberValidator.bind(this)]],
+      faxNumber: ["", [CustomValidator.phoneNumberValidator.bind(this)]],
       accountId: [this.parentAccountId],
       status: [""]
     });

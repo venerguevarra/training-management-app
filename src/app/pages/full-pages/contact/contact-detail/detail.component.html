@@ -229,7 +229,7 @@
                         class="form-text text-muted danger">
                         Mobile number required
                       </small>
-                      <small *ngIf="f.mobileNumber.errors && f.mobileNumber.errors.pattern" class="form-text text-muted danger">Invalid mobile number</small>
+                      <small *ngIf="f.mobileNumber.errors && f.mobileNumber.errors.invalidMobile" class="form-text text-muted danger">Invalid mobile number</small>
                     </div>
                   </div>
                   <div class="form-group row">
@@ -242,15 +242,19 @@
                   <div class="form-group row">
                     <label class="col-md-4 label-control" for="name">Office Number</label>
                     <div class="col-md-6">
-                      <input [attr.maxlength]="15" formControlName="officeNumber" type="text" id="officeNumber" class="form-control"
-                        name="officeNumber">
+                      <input [attr.maxlength]="15" formControlName="officeNumber" type="text" id="officeNumber" class="form-control" name="officeNumber" [ngClass]="{'is-invalid': f.officeNumber.errors && f.officeNumber.errors.invalidPhone}">
+                        <small *ngIf="f.officeNumber.errors && f.officeNumber.errors.invalidPhone" class="form-text text-muted danger">
+                          Invalid office number
+                        </small>
                     </div>
                   </div>
                   <div class="form-group row">
                     <label class="col-md-4 label-control" for="name">Fax Number</label>
                     <div class="col-md-6">
-                      <input [attr.maxlength]="15" formControlName="faxNumber" type="text" id="faxNumber" class="form-control"
-                        name="faxNumber">
+                      <input [attr.maxlength]="15" formControlName="faxNumber" type="text" id="faxNumber" class="form-control" name="faxNumber" [ngClass]="{'is-invalid': f.faxNumber.errors && f.faxNumber.errors.invalidPhone}">
+                      <small *ngIf="f.faxNumber.errors && f.faxNumber.errors.invalidPhone" class="form-text text-muted danger">
+                        Invalid fax number
+                      </small>
                     </div>
                   </div>
 

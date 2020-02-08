@@ -52,4 +52,32 @@ export class CustomValidator {
 
     return undefined;
   }
+
+  static mobileValidator(control: AbstractControl) {
+    if(control && control.value) {
+      let phoneRegEx = "[0][0-9]{10}$";
+
+      if(control.value.match(phoneRegEx) == null) {
+        return { 'invalidMobile': true };
+      } else {
+        return undefined;
+      }
+    }
+
+    return undefined;
+  }
+
+  static phoneNumberValidator(control: AbstractControl) {
+    if(control && control.value) {
+      let phoneRegEx = "[0-9]{15}$";
+
+      if(control.value.match(phoneRegEx) == null) {
+        return { 'invalidPhone': true };
+      } else {
+        return undefined;
+      }
+    }
+
+    return undefined;
+  }
 }

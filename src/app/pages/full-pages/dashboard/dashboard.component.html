@@ -1,1 +1,237 @@
-<div class="content-header">Dashboard</div>
+
+
+<div class="container card col-md-12">
+    <div class="card-content">
+        <div class="card-body pt-2 pb-0">
+            <div class="row">
+                <div class="col-md-6 align-self-center">
+                    <div class="card bg-success">
+                        <div class="card-content">
+                          <div class="card-body pt-2 pb-0">
+                            <div class="media">
+                              <div class="media-body white text-left">
+                                <h3 class="font-large-1 mb-0">{{yearToDateSales || 0 | currency: 'PHP '}}</h3>
+                                <span>Sales YTD - {{currentYear}}</span>
+                              </div>
+                              <div class="media-right white text-right">
+                                <i class="icon-pie-chart font-large-1"></i>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="height-25 WidgetlineChart WidgetlineChartShadow mb-3">
+                        </div>
+                        </div>
+                    </div>
+
+                    <div class="card bg-warning">
+                      <div class="card-content">
+                        <div class="card-body pt-2 pb-0">
+                          <div class="media">
+                            <div class="media-body white text-left">
+                              <h3 class="font-large-1 mb-0">{{yearToDateDealProposal || 0 | currency: 'PHP '}}</h3>
+                              <span>Deal Proposal YTD - {{currentYear}}</span>
+                            </div>
+                            <div class="media-right white text-right">
+                              <i class="icon-pie-chart font-large-1"></i>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="height-25 WidgetlineChart WidgetlineChartShadow mb-3">
+                      </div>
+                      </div>
+                    </div>
+
+                    <div class="card bg-primary">
+                      <div class="card-content">
+                        <div class="card-body pt-2 pb-0">
+                          <div class="media">
+                            <div class="media-body white text-left">
+                              <h3 class="font-large-1 mb-0">{{yearToDateDealClosing || 0 | currency: 'PHP '}}</h3>
+                              <span>Deal Closing YTD - {{currentYear}}</span>
+                            </div>
+                            <div class="media-right white text-right">
+                              <i class="icon-pie-chart font-large-1"></i>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="height-25 WidgetlineChart WidgetlineChartShadow mb-3">
+                      </div>
+                      </div>
+                  </div>
+                </div>
+                <div class="col-md-6 height-400">
+                    <ngx-charts-bar-vertical
+                    [scheme]="colorScheme"
+                    [results]="quarterlySalesYtd"
+                    [gradient]="gradient"
+                    [xAxis]="showXAxis"
+                    [yAxis]="showYAxis"
+                    [legend]="showLegend"
+                    [showXAxisLabel]="showXAxisLabel"
+                    [showYAxisLabel]="showYAxisLabel"
+                    [xAxisLabel]="xAxisLabel"
+                    [yAxisLabel]="yAxisLabel">
+                    </ngx-charts-bar-vertical>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container card col-md-12">
+  <div class="card-header">
+    <h4>Waiting Confirmation Schedules</h4>
+  </div>
+  <div class="card-body">
+      <div class="row">
+        <div class="col-md-12 table-responsive">
+          <span *ngIf="waitingData.length == 0" class="text-muted">0 results found</span>
+          <table *ngIf="waitingData.length > 0" class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col" style="width:15%;">Course</th>
+                <th scope="col" style="width:15%;">Venue</th>
+                <th scope="col" style="width:15%;">Start Date</th>
+                <th scope="col" style="width:15%;">End Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let row of waitingData">
+                <td scope="row">
+                  <app-course-detail [id]="row.courseId"></app-course-detail>
+                </td>
+                <td scope="row">
+                  <app-venue-detail [id]="row.venueId"></app-venue-detail>
+                </td>
+                <td scope="row">{{row.startDate | date: 'MMM d, y'}}</td>
+                <td scope="row">{{row.endDate | date: 'MMM d, y'}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+  </div>
+</div>
+
+<div class="container card col-md-12">
+  <div class="card-header">
+    <h4>Confirmed Schedules</h4>
+  </div>
+  <div class="card-body">
+      <div class="row">
+        <div class="col-md-12 table-responsive">
+          <span *ngIf="confirmedData.length == 0" class="text-muted">0 results found</span>
+          <table *ngIf="confirmedData.length > 0" class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col" style="width:15%;">Course</th>
+                <th scope="col" style="width:15%;">Venue</th>
+                <th scope="col" style="width:15%;">Start Date</th>
+                <th scope="col" style="width:15%;">End Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let row of confirmedData">
+                <td scope="row">
+                  <app-course-detail [id]="row.courseId"></app-course-detail>
+                </td>
+                <td scope="row">
+                  <app-venue-detail [id]="row.venueId"></app-venue-detail>
+                </td>
+                <td scope="row">{{row.startDate | date: 'MMM d, y'}}</td>
+                <td scope="row">{{row.endDate | date: 'MMM d, y'}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+  </div>
+</div>
+
+<div class="container card col-md-12">
+  <div class="card-header">
+    <h4>Delivered Schedules</h4>
+  </div>
+  <div class="card-body">
+      <div class="row">
+        <div class="col-md-12 table-responsive">
+          <span *ngIf="deliveredData.length == 0" class="text-muted">0 results found</span>
+          <table *ngIf="deliveredData.length > 0" class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col" style="width:15%;">Course</th>
+                <th scope="col" style="width:15%;">Venue</th>
+                <th scope="col" style="width:15%;">Start Date</th>
+                <th scope="col" style="width:15%;">End Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let row of deliveredData">
+                <td scope="row">
+                  <app-course-detail [id]="row.courseId"></app-course-detail>
+                </td>
+                <td scope="row">
+                  <app-venue-detail [id]="row.venueId"></app-venue-detail>
+                </td>
+                <td scope="row">{{row.startDate | date: 'MMM d, y'}}</td>
+                <td scope="row">{{row.endDate | date: 'MMM d, y'}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+  </div>
+</div>
+
+<div class="container card col-md-12">
+  <div class="card-header">
+    <h4>Cancelled Schedules</h4>
+  </div>
+  <div class="card-body">
+      <div class="row">
+        <div class="col-md-12 table-responsive">
+          <span *ngIf="cancelledData.length == 0" class="text-muted">0 results found</span>
+          <table *ngIf="cancelledData.length > 0" class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col" style="width:15%;">Course</th>
+                <th scope="col" style="width:15%;">Venue</th>
+                <th scope="col" style="width:15%;">Start Date</th>
+                <th scope="col" style="width:15%;">End Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let row of deliveredData">
+                <td scope="row">
+                  <app-course-detail [id]="row.courseId"></app-course-detail>
+                </td>
+                <td scope="row">
+                  <app-venue-detail [id]="row.venueId"></app-venue-detail>
+                </td>
+                <td scope="row">{{row.startDate | date: 'MMM d, y'}}</td>
+                <td scope="row">{{row.endDate | date: 'MMM d, y'}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+  </div>
+</div>
+
+<!--
+<div class="row">
+    <ngx-charts-bar-vertical-2d
+    [view]="view"
+    [scheme]="colorScheme"
+    [results]="multi"
+    [gradient]="gradient"
+    [xAxis]="showXAxis"
+    [yAxis]="showYAxis"
+    [legend]="showLegend"
+    [showXAxisLabel]="showXAxisLabel"
+    [showYAxisLabel]="showYAxisLabel"
+    [xAxisLabel]="xAxisLabel"
+    [yAxisLabel]="yAxisLabel">
+    </ngx-charts-bar-vertical-2d>
+  </div>
+-->

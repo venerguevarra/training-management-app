@@ -297,11 +297,11 @@
                   <div class="form-group row">
                     <label class="col-md-4 label-control" for="name">Mobile Number<span class="px-required">*</span></label>
                     <div class="col-md-4">
-                      <input [attr.maxlength]="15" formControlName="mobileNumber"  type="text" id="mobileNumber" class="form-control" name="mobileNumber"  [ngClass]="{ 'is-invalid': isInvalid(f.mobileNumber) || (f.mobileNumber.errors && f.mobileNumber.errors.pattern)}">
+                      <input [attr.maxlength]="15" formControlName="mobileNumber"  type="text" id="mobileNumber" class="form-control" name="mobileNumber"  [ngClass]="{ 'is-invalid': isInvalid(f.mobileNumber) || (f.mobileNumber.errors && f.mobileNumber.errors.invalidMobile)}">
                       <small *ngIf="(f.mobileNumber.dirty || f.mobileNumber.touched || submitted) && f.mobileNumber.invalid && f.mobileNumber.errors.required" class="form-text text-muted danger">
                         Mobile number required
                       </small>
-                      <small *ngIf="f.mobileNumber.errors && f.mobileNumber.errors.pattern" class="form-text text-muted danger">
+                      <small *ngIf="f.mobileNumber.errors && f.mobileNumber.errors.invalidMobile" class="form-text text-muted danger">
                         Invalid mobile number
                       </small>
                     </div>
@@ -309,8 +309,8 @@
                   <div class="form-group row">
                     <label class="col-md-4 label-control" for="name">Office Number</label>
                     <div class="col-md-4">
-                      <input  [attr.maxlength]="15" formControlName="officeNumber"  type="text" id="officeNumber" class="form-control" name="officeNumber" [ngClass]="{ 'is-invalid': (f.officeNumber.errors && f.officeNumber.errors.pattern)}">
-                      <small *ngIf="f.officeNumber.errors && f.officeNumber.errors.pattern" class="form-text text-muted danger">
+                      <input  [attr.maxlength]="15" formControlName="officeNumber"  type="text" id="officeNumber" class="form-control" name="officeNumber" [ngClass]="{ 'is-invalid': isInvalid(f.officeNumber) ||  (f.officeNumber.errors && f.officeNumber.errors.invalidPhone)}">
+                      <small *ngIf="f.officeNumber.errors && f.officeNumber.errors.invalidPhone" class="form-text text-muted danger">
                         Invalid office number
                       </small>
                     </div>
@@ -318,8 +318,8 @@
                   <div class="form-group row">
                     <label class="col-md-4 label-control" for="name">Fax Number</label>
                     <div class="col-md-4">
-                      <input  [attr.maxlength]="15" formControlName="faxNumber"  type="text" id="faxNumber" class="form-control" name="faxNumber" [ngClass]="{ 'is-invalid': (f.faxNumber.errors && f.faxNumber.errors.pattern)}">
-                      <small *ngIf="f.faxNumber.errors && f.faxNumber.errors.pattern" class="form-text text-muted danger">
+                      <input  [attr.maxlength]="15" formControlName="faxNumber"  type="text" id="faxNumber" class="form-control" name="faxNumber" [ngClass]="{ 'is-invalid': isInvalid(f.faxNumber) || (f.faxNumber.errors && f.faxNumber.errors.invalidPhone)}">
+                      <small *ngIf="f.faxNumber.errors && f.faxNumber.errors.invalidPhone" class="form-text text-muted danger">
                         Invalid fax number
                       </small>
                     </div>
@@ -351,7 +351,10 @@
                           </div>
                         </div>
                       </div>
-                      <small *ngIf="f.dateOfInquiry.errors && (f.dateOfInquiry.errors.dateFormatError || f.dateOfInquiry.errors.ngbDate)" class="form-text text-muted danger">Invalid date format</small>
+                      <small *ngIf="(f.dateOfInquiry.dirty || f.dateOfInquiry.touched || submitted) && f.dateOfInquiry.invalid && f.dateOfInquiry.errors.required" class="form-text text-muted danger">
+                        Inquiry date required
+                      </small>
+                      <small *ngIf="currentForm.get('dateOfInquiry').hasError('dateFormatError')" class="form-text text-muted danger">Invalid date format</small>
                     </div>
 
                   </div>
@@ -367,12 +370,12 @@
                     <label class="col-md-4 label-control" for="name">Inquiry Status</label>
                     <div class="col-md-4">
                       <select formControlName="inquiryStatus" class="custom-select">
-                        <option value="ASSIGNED">Assigned</option>
-                        <option value="ATTEMPTED_TO_CONTACT">Attempted to Contact</option>
-                        <option value="CONTACTED">Contacted</option>
-                        <option value="SALES_UNQUALIFIED">Unqualified</option>
-                        <option value="CONVERTED_TO_ACCOUNT">Converted to Account</option>
-                        <option value="DEAL">Deal</option>
+                        <option value="ASSIGNED">ASSIGNED</option>
+                        <option value="ATTEMPTED_TO_CONTACT">ATTEMPTED TO CONTACT</option>
+                        <option value="CONTACTED">CONTACTED</option>
+                        <option value="SALES_QUALIFIED">UNQUALIFIED</option>
+                        <option value="SALES_UNQUALIFIED">UNQUALIFIED</option>
+                        <option value="DEAL">DEAL</option>
                       </select>
                     </div>
                   </div>

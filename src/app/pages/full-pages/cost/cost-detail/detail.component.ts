@@ -173,7 +173,7 @@ export class CostDetailComponent {
 							},
 							(error) => {
 								if(error.status === 409) {
-									this.toastr.error('Email or mobile number already exist.', 'Failed Request', { timeOut: 3000 });
+									this.toastr.error('Cost name already exist.', 'Failed Request', { timeOut: 3000 });
 								} else if(error.status === 400) {
 									this.toastr.error('Invalid request received by the server.', 'Failed Request', { timeOut: 3000 });
 								}	else {
@@ -227,7 +227,7 @@ export class CostDetailComponent {
 							},
 							(error) => {
 								if(error.status === 409) {
-									this.toastr.error('Email or mobile number already exist.', 'Failed Request', { timeOut: 3000 });
+									this.toastr.error('Cost name already exist.', 'Failed Request', { timeOut: 3000 });
 								} else if(error.status === 400) {
 									this.toastr.error('Invalid request received by the server.', 'Failed Request', { timeOut: 3000 });
 								} else {

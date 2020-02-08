@@ -27,39 +27,35 @@ export class InquiryStatusSelectComponent {
     data = [
         {
             key: "NEW",
-            label: "New"
+            label: "NEW"
         },
         {
             key: "ASSIGNED",
-            label: "Assigned"
+            label: "ASSIGNED"
         },
         {
             key: "ATTEMPTED_TO_CONTACT",
-            label: "Attempted to contact"
+            label: "ATTEMPTED TO CONTACT"
         },
         {
             key: "CONTACTED",
-            label: "Contacted"
+            label: "CONTACTED"
         },
         {
             key: "SALES_UNQUALIFIED",
-            label: "Sales Unqualified"
+            label: "SALES UNQUALIFIED"
         },
         {
             key: "SALES_QUALIFIED",
-            label: "Sales Qualified"
-        },
-        {
-            key: "CONVERTED_TO_ACCOUNT",
-            label: "Converted to account"
+            label: "QUALIFIED"
         },
         {
             key: "DEAL",
-            label: "Deal"
+            label: "DEAL"
         },
         {
             key: "CLOSED",
-            label: "Closed"
+            label: "CLOSED"
         }
     ];
 

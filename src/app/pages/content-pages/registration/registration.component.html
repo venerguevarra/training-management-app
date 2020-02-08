@@ -131,7 +131,7 @@
                                     <div class="form-group row">
                                         <div class="col-md">
                                             <label class="label-control" for="name">Mobile Number<span class="px-required">*</span></label>
-                                            <input name="mobileNumber" (blur)="validateEmailAndMobileNumber()" formControlName="mobileNumber" type="text" class="form-control" [ngClass]="{ 'is-invalid': isInvalid(f.mobileNumber) || mobileNumberTaken || (f.mobileNumber.errors && f.mobileNumber.errors.pattern)}">
+                                            <input name="mobileNumber" (blur)="validateEmailAndMobileNumber()" formControlName="mobileNumber" type="text" class="form-control" [ngClass]="{ 'is-invalid': isInvalid(f.mobileNumber) || mobileNumberTaken || (f.mobileNumber.errors && f.mobileNumber.errors.invalidMobile)}">
                                             <small
                                                 *ngIf="(f.mobileNumber.dirty || f.mobileNumber.touched || submitted) && f.mobileNumber.invalid && f.mobileNumber.errors.required"
                                                 class="form-text text-muted danger">Mobile number
@@ -139,7 +139,7 @@
                                             <small
                                                 *ngIf="mobileNumberTaken"
                                                 class="form-text text-muted danger">Mobile number already registered</small>
-                                            <small *ngIf="f.mobileNumber.errors && f.mobileNumber.errors.pattern" class="form-text text-muted danger">Invalid mobile number format</small>
+                                            <small *ngIf="f.mobileNumber.errors && f.mobileNumber.errors.invalidMobile" class="form-text text-muted danger">Invalid mobile number format</small>
                                         </div>
                                     </div>
                                 </div>

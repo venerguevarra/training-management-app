@@ -12,6 +12,7 @@ import { StateService } from '../../../../service/state.service';
 import { User } from '../../../../model/user.model';
 import { environment } from '../../../../../environments/environment';
 import { DatePipe } from '@angular/common';
+import { CustomValidator } from '../../../../validator/custom.validator';
 
 declare var $: any;
 
@@ -70,8 +71,8 @@ export class MarketingInquiryDetailComponent {
 			designation: [''],
 			email: ['', [Validators.required]],
 			mobileNumber: ['', [Validators.required]],
-			officeNumber: [''],
-			faxNumber: [''],
+			officeNumber: ['', [CustomValidator.phoneNumberValidator.bind(this)]],
+			faxNumber: ['', [CustomValidator.phoneNumberValidator.bind(this)]],
 			courseId: ['', [Validators.required]],
 			inquiryChannel: ['', [Validators.required]],
 			dateOfInquiry: ['', [Validators.required]],

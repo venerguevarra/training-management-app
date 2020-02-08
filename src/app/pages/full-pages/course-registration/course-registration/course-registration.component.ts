@@ -314,9 +314,9 @@ export class CourseRegistrationComponent {
             firstName: [participant.firstName, [Validators.required]],
             lastName: [participant.lastName, [Validators.required]],
             middleInitial: [participant.middleInitial],
-            email: [participant.email, [Validators.required]],
+            email: [participant.email, [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')]],
             designation: [participant.designation, [Validators.required]],
-            mobileNumber: [participant.mobileNumber, [Validators.required]]
+            mobileNumber: [participant.mobileNumber, [Validators.required, CustomValidator.mobileValidator.bind(this)]]
         });
     }
 
@@ -336,9 +336,9 @@ export class CourseRegistrationComponent {
             firstName: ['', [Validators.required]],
             lastName: ['', [Validators.required]],
             middleInitial: [''],
-            email: ['', [Validators.required]],
+            email: ['', [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')]],
             designation: ['', [Validators.required]],
-            mobileNumber: ['', [Validators.required]]
+            mobileNumber: ['', [Validators.required, CustomValidator.mobileValidator.bind(this)]]
         });
 	}
 

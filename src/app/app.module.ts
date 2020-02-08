@@ -34,6 +34,8 @@ import { StateService } from './service/state.service';
 import { RoutingStateService } from './service/routing-state.service';
 import { ToastrModule } from 'ngx-toastr';
 
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+
 import 'default-passive-events';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -70,7 +72,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         useFactory: adapterFactory
       }),
       FullCalendarModule,
-       NgxSpinnerModule
+      NgxSpinnerModule,
+      NgxChartsModule
     ],
     providers: [
       RoutingStateService,

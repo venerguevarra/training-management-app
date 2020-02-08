@@ -32,7 +32,7 @@
                               <div class="col-md-4">
                                 <label for="rate">Daily Rate</label>
                                 <input class="form-control" type="number" formControlName="rate"
-                                  [ngClass]="{ 'is-invalid': isInvalid(f.rate)}">
+                                  (blur)="updateProfessionalFee()" [ngClass]="{ 'is-invalid': isInvalid(f.rate)}">
                                 <small
                                   *ngIf="(f.rate.dirty || f.rate.touched || submitted) && f.rate.invalid && f.rate.errors.required"
                                   class="form-text text-muted danger">

@@ -27,6 +27,10 @@ import { DealSelectModule } from  '../../components/deal-select/deal-select.modu
 import { CourseRegistrationModule } from  '../full-pages/course-registration/course-registration.module';
 import { UserManagementModule } from  '../full-pages/user-management/user-management.module';
 import { FullPageRoutingModule  } from "./full-pages-routing.module";
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { CourseDetailModule } from '../../components/course-detail/course-detail.module';
+import { VenueDetailModule } from '../../components/venue-detail/venue-detail.module';
+
 
 
 @NgModule({
@@ -52,7 +56,10 @@ import { FullPageRoutingModule  } from "./full-pages-routing.module";
         DealSelectModule,
         RegistrationModule,
         CourseRegistrationModule,
-        UserManagementModule
+        UserManagementModule,
+        NgxChartsModule,
+        CourseDetailModule,
+        VenueDetailModule
     ],
     exports: [],
     declarations: [
