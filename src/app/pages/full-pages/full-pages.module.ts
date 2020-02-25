@@ -31,8 +31,6 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { CourseDetailModule } from '../../components/course-detail/course-detail.module';
 import { VenueDetailModule } from '../../components/venue-detail/venue-detail.module';
 
-
-
 @NgModule({
     imports: [
         FullCalendarModule,

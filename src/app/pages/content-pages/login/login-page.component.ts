@@ -38,8 +38,8 @@ export class LoginPageComponent {
             password: ['', Validators.required]
         });
 
-        this.loginForm.get("username").setValue('admin');
-        this.loginForm.get("password").setValue('Work6ten');
+        //this.loginForm.get("username").setValue('admin');
+        //this.loginForm.get("password").setValue('Work6ten');
         this.authService.logout();
 
         // get return url from route parameters or default to '/'

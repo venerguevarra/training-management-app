@@ -23,7 +23,7 @@ export const ROUTES: RouteInfo[] = [
   },
   {
     path: "/app/administration/course-registration",
-    title: "Registration",
+    title: "Course Registration",
     icon: "fas ft-file-plus",
     class: "",
     badge: "",
@@ -63,7 +63,7 @@ export const ROUTES: RouteInfo[] = [
   },
   {
     path: "",
-    title: "Administration",
+    title: "Training Setup",
     icon: "fas icon-docs",
     class: "has-sub",
     badge: "",
@@ -145,7 +145,7 @@ export const ROUTES: RouteInfo[] = [
   },
   {
     path: "",
-    title: "Setup",
+    title: "System Setup",
     icon: "fas fa-users-cog",
     class: "has-sub",
     badge: "",

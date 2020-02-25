@@ -6,7 +6,6 @@ import { ScheduleCalendarComponent } from './schedule-calendar/schedule-calendar
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { CourseParticipantListComponent } from './course-participant-list/course-participant-list.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
-
 import { AuthGuard } from '../../shared/auth/auth-guard.service';
 
 const routes: Routes = [

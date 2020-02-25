@@ -104,9 +104,6 @@
                       <span *ngIf="row.loginAttempt < 3">{{row.active}}</span>
                     </td>
                     <td scope="row" style="text-align: center;">
-                      <a [routerLink]="['/app/setup/user', row.id]" [queryParams]="{action: 'view'}"
-                        queryParamsHandling="merge" class="mr-2" placement="top" ngbTooltip="View"><i
-                          class="ft-eye"></i></a>
                       <a [routerLink]="['/app/setup/user', row.id]" [queryParams]="{action: 'edit'}" placement="top"
                         ngbTooltip="Edit"><i class="ft-edit-2"></i></a>
                     </td>

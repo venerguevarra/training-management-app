@@ -297,4 +297,6 @@ export class InquiryListComponent {
       });
     }
   }
+
+
 }

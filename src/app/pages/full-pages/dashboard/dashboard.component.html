@@ -59,6 +59,7 @@
                       </div>
                   </div>
                 </div>
+
                 <div class="col-md-6 height-400">
                     <ngx-charts-bar-vertical
                     [scheme]="colorScheme"
@@ -85,14 +86,15 @@
   <div class="card-body">
       <div class="row">
         <div class="col-md-12 table-responsive">
-          <span *ngIf="waitingData.length == 0" class="text-muted">0 results found</span>
-          <table *ngIf="waitingData.length > 0" class="table table-striped">
+          <span *ngIf="waitingData && waitingData.length == 0" class="text-muted">0 results found</span>
+          <table *ngIf="waitingData && waitingData.length > 0" class="table table-striped">
             <thead>
               <tr>
                 <th scope="col" style="width:15%;">Course</th>
                 <th scope="col" style="width:15%;">Venue</th>
                 <th scope="col" style="width:15%;">Start Date</th>
                 <th scope="col" style="width:15%;">End Date</th>
+                <th scope="col" style="width:15%;">Created Date</th>
               </tr>
             </thead>
             <tbody>
@@ -105,6 +107,7 @@
                 </td>
                 <td scope="row">{{row.startDate | date: 'MMM d, y'}}</td>
                 <td scope="row">{{row.endDate | date: 'MMM d, y'}}</td>
+                <td scope="row">{{row.createdDate | date: 'MMM d, y'}}</td>
               </tr>
             </tbody>
           </table>
@@ -120,14 +123,15 @@
   <div class="card-body">
       <div class="row">
         <div class="col-md-12 table-responsive">
-          <span *ngIf="confirmedData.length == 0" class="text-muted">0 results found</span>
-          <table *ngIf="confirmedData.length > 0" class="table table-striped">
+          <span *ngIf="confirmedData && confirmedData.length == 0" class="text-muted">0 results found</span>
+          <table *ngIf="confirmedData && confirmedData.length > 0" class="table table-striped">
             <thead>
               <tr>
                 <th scope="col" style="width:15%;">Course</th>
                 <th scope="col" style="width:15%;">Venue</th>
                 <th scope="col" style="width:15%;">Start Date</th>
                 <th scope="col" style="width:15%;">End Date</th>
+                <th scope="col" style="width:15%;">Created Date</th>
               </tr>
             </thead>
             <tbody>
@@ -140,6 +144,7 @@
                 </td>
                 <td scope="row">{{row.startDate | date: 'MMM d, y'}}</td>
                 <td scope="row">{{row.endDate | date: 'MMM d, y'}}</td>
+                <td scope="row">{{row.createdDate | date: 'MMM d, y'}}</td>
               </tr>
             </tbody>
           </table>
@@ -155,14 +160,15 @@
   <div class="card-body">
       <div class="row">
         <div class="col-md-12 table-responsive">
-          <span *ngIf="deliveredData.length == 0" class="text-muted">0 results found</span>
-          <table *ngIf="deliveredData.length > 0" class="table table-striped">
+          <span *ngIf="deliveredData && deliveredData.length == 0" class="text-muted">0 results found</span>
+          <table *ngIf="deliveredData && deliveredData.length > 0" class="table table-striped">
             <thead>
               <tr>
                 <th scope="col" style="width:15%;">Course</th>
                 <th scope="col" style="width:15%;">Venue</th>
                 <th scope="col" style="width:15%;">Start Date</th>
                 <th scope="col" style="width:15%;">End Date</th>
+                <th scope="col" style="width:15%;">Created Date</th>
               </tr>
             </thead>
             <tbody>
@@ -175,6 +181,7 @@
                 </td>
                 <td scope="row">{{row.startDate | date: 'MMM d, y'}}</td>
                 <td scope="row">{{row.endDate | date: 'MMM d, y'}}</td>
+                <td scope="row">{{row.createdDate | date: 'MMM d, y'}}</td>
               </tr>
             </tbody>
           </table>
@@ -190,14 +197,15 @@
   <div class="card-body">
       <div class="row">
         <div class="col-md-12 table-responsive">
-          <span *ngIf="cancelledData.length == 0" class="text-muted">0 results found</span>
-          <table *ngIf="cancelledData.length > 0" class="table table-striped">
+          <span *ngIf="confirmedData && confirmedData.length == 0" class="text-muted">0 results found</span>
+          <table *ngIf="confirmedData && cancelledData.length > 0" class="table table-striped">
             <thead>
               <tr>
                 <th scope="col" style="width:15%;">Course</th>
                 <th scope="col" style="width:15%;">Venue</th>
                 <th scope="col" style="width:15%;">Start Date</th>
                 <th scope="col" style="width:15%;">End Date</th>
+                <th scope="col" style="width:15%;">Created Date</th>
               </tr>
             </thead>
             <tbody>
@@ -210,6 +218,7 @@
                 </td>
                 <td scope="row">{{row.startDate | date: 'MMM d, y'}}</td>
                 <td scope="row">{{row.endDate | date: 'MMM d, y'}}</td>
+                <td scope="row">{{row.createdDate | date: 'MMM d, y'}}</td>
               </tr>
             </tbody>
           </table>
