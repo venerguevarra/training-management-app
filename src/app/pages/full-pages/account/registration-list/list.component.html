@@ -32,8 +32,6 @@
                   <option value="PENDING">PENDING</option>
                   <option value="REGISTERED">REGISTERED</option>
                   <option value="CONFIRMED">CONFIRMED</option>
-                  <option value="CANCELLED_WITH_REFUND">CANCELLED WITH REFUND</option>
-                  <option value="CANCELLED_WITHOUT_REFUND">CANCELLED WITHOUT REFUND</option>
                   <option value="RESCHEDULED">RESCHEDULED</option>
                   <option value="UNDELIVERED">UNDELIVERED</option>
                   <option value="DELIVERED">DELIVERED</option>
@@ -41,7 +39,7 @@
               </div>
             </div>
 
-            <div class="col-sm-2">
+            <div class="col-sm-4">
               <div class="form-group">
                 <label>Registration Date</label>
                 <div class="input-group">
@@ -94,8 +92,6 @@
                     <span *ngIf="row.status == 'PENDING'">PENDING</span>
                     <span *ngIf="row.status == 'REGISTERED'">REGISTERED</span>
                     <span *ngIf="row.status == 'CONFIRMED'">CONFIRMED</span>
-                    <span *ngIf="row.status == 'CANCELLED_WITH_REFUND'">CANCELLED WITH REFUND</span>
-                    <span *ngIf="row.status == 'CANCELLED_WITHOUT_REFUND'">CANCELLED WITHOUT REFUND</span>
                     <span *ngIf="row.status == 'RESCHEDULE'">RESCHEDULED</span>
                     <span *ngIf="row.status == 'DELIVERED'">DELIVERED</span>
                     <span *ngIf="row.status == 'UNDELIVERED'">UNDELIVERED</span>

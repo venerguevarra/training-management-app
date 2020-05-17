@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter,Input } from '@angular/core';
+import { Component, Output, EventEmitter,Input, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from "@angular/router";
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
@@ -35,6 +35,22 @@ export class VenueSelectComponent {
         if($event) {
             this.selectedId = $event.id;
             this.selectedIdEmitter.emit($event);
+        }
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
+       if(changes['isInvalid']) {
+            return;
+        }
+
+        if (changes['selectedVenue'] && changes['selectedVenue'].currentValue) {
+            this.referenceDataService.getActiveReferenceData('venues').subscribe(data => {
+			this.venues = data;
+            this.dataBuffer = this.venues.slice(0, this.bufferSize);
+            if(this.selectedVenue && this.selectedVenue != '') {
+                this.selectedId = this.selectedVenue;
+            }
+		});
         }
     }
 

@@ -232,6 +232,7 @@ export class InquiryDetailComponent {
 								modifiedBy: [this.currentModel.modifiedBy],
 							});
 							this.selectedCourse = this.currentModel.courseId;
+							console.log(this.selectedCourse);
 							this.selectedAccountManager = this.currentModel.accountManager;
 							this.selectedChannel = this.currentModel.inquiryChannel;
 							this.dateOfInquiryView = this.currentModel.dateOfInquiry;

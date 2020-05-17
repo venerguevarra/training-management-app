@@ -103,7 +103,7 @@ export class VenueDetailComponent {
 							this.currentForm = this.formBuilder.group({
 								id: [this.currentModel.id],
 								name: [this.currentModel.name, [Validators.required]],
-								description: [this.currentModel.description],
+								description: [this.currentModel.description, [Validators.required]],
 								createdDate: [this.currentModel.createdDate],
 								createdBy: [this.currentModel.createdBy],
 								modifiedDate: [this.currentModel.modifiedDate],
@@ -127,7 +127,7 @@ export class VenueDetailComponent {
 		this.currentForm = this.formBuilder.group({
 			id: [''],
 			name: ['', [Validators.required]],
-			description: [''],
+			description: ['', [Validators.required]],
 			status: ['']
 		});
 	}

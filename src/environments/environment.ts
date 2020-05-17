@@ -5,5 +5,6 @@
 
 export const environment = {
   production: false,
-  API_HOST: 'http://localhost:8000'
+  API_HOST: 'http://18.136.87.117:8000',
+  //API_HOST: 'http://localhost:8000'
 };

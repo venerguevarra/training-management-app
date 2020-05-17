@@ -7,6 +7,7 @@ import { environment } from '../../../../environments/environment';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Router, ActivatedRoute } from "@angular/router";
 import swal from 'sweetalert2';
+import { ToastrService } from "ngx-toastr";
 
 @Component({
   selector: "app-schedule-calendar",
@@ -19,32 +20,44 @@ export class ScheduleCalendarComponent {
 
   calendarPlugins = [dayGridPlugin, interactionPlugin];
 
-  calendarOptions: any;
+  options: any;
   meridian = true;
 
-   @ViewChild('calendar', { static: false })
-   fullcalendarComponent: FullCalendarComponent;
-
-  constructor(private httpClient: HttpClient,  private router: Router) {
-    this.calendarOptions = {
-    }
+  constructor(private httpClient: HttpClient,  private router: Router, private toastr: ToastrService) {
+    this.options = {
+      customButtons: {
+        refreshButton: {
+          text: 'Referesh',
+          click: this.refreshEventHandler
+        }
+      }
+    };
   }
 
+  startMonth: any;
+  startDay: any;
+  startYear: any;
+  startDate: any;
+  endMonth: any;
+  endDay: any;
+  endYear: any;
+  endDate: any;
+
   datesRenderHandler($event) {
-    let startMonth = $event.view.currentStart.getMonth() + 1;
-    let startDay = $event.view.currentStart.getDate();
-    let startYear = $event.view.currentStart.getFullYear();
-    let startDate = `${startYear}` + '-' + `0${startMonth}`.slice(-2) + '-' + `0${startDay}`.slice(-2);
+    this.startMonth = $event.view.currentStart.getMonth() + 1;
+    this.startDay = $event.view.currentStart.getDate();
+    this.startYear = $event.view.currentStart.getFullYear();
+    this.startDate = `${this.startYear}` + '-' + `0${this.startMonth}`.slice(-2) + '-' + `0${this.startDay}`.slice(-2);
 
-    let endMonth = $event.view.currentEnd.getMonth() + 1;
-    let endDay = $event.view.currentEnd.getDate();
-    let endYear = $event.view.currentEnd.getFullYear();
-    let endDate = `${endYear}` + '-' + `0${endMonth}`.slice(-2) + '-' + `0${endDay}`.slice(-2);
+    this.endMonth = $event.view.currentEnd.getMonth() + 1;
+    this.endDay = $event.view.currentEnd.getDate();
+    this.endYear = $event.view.currentEnd.getFullYear();
+    this.endDate = `${this.endYear}` + '-' + `0${this.endMonth}`.slice(-2) + '-' + `0${this.endDay}`.slice(-2);
 
-    this.getSchedules(startDate, endDate).then(data => {
+    this.getSchedules(this.startDate, this.endDate).then(data => {
       this.calendarEvents = data;
     }).catch(err => {
-    })
+    });
   }
 
   getSchedules(startDate: string, endDate: string) {
@@ -72,8 +85,17 @@ export class ScheduleCalendarComponent {
       this.meridian = !this.meridian;
   }
 
-  customFunction() {
-
+  refreshEventHandler = () => {
+    this.getSchedules(this.startDate, this.endDate).then(data => {
+      this.calendarEvents = data;
+      this.toastr.success(
+        `Calendar successfully refreshed.`,
+        "System",
+        { timeOut: 3000 }
+      );
+    }).catch(err => {
+      // exception
+    });
   }
 
   calendarEvents;

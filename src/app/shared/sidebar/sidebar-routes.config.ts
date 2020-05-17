@@ -33,7 +33,7 @@ export const ROUTES: RouteInfo[] = [
   },
   {
     path: "/app/training-calendar",
-    title: "Training Calendar",
+    title: "Calendar",
     icon: "fas icon-calendar",
     class: "",
     badge: "",

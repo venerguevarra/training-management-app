@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter,Input } from '@angular/core';
+import { Component, Output, EventEmitter,Input, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from "@angular/router";
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
@@ -69,6 +69,16 @@ export class CourseSelectComponent {
 
         if (end + this.numberOfItemsFromEndBeforeFetchingMore >= this.coursesBuffer.length) {
             this.fetchMore();
+        }
+    }
+
+     ngOnChanges(changes: SimpleChanges) {
+        if(changes['isInvalid']) {
+            return;
+        }
+
+        if (this.selectedCourse || (changes['selectedCourse'] && changes['selectedCourse'].currentValue)) {
+            this.selectedId = changes['selectedCourse'].currentValue;
         }
     }
 

@@ -520,7 +520,53 @@ export class RegistrationDetailComponent {
       });
   }
 
+
   submitDeliverRegistration(courseRegistrationId: string): Promise<any> {
+    let promise = new Promise((resolve, reject) => {
+    const ACTIVE_ENDPOINT: string = `${this.API_HOST}/course-registrations/actions/deliver/${courseRegistrationId}`;
+
+    this.httpClient
+      .post<any[]>(ACTIVE_ENDPOINT, {})
+      .toPromise()
+      .then(
+        res => {
+          resolve(res);
+        },
+        msg => {
+          reject(msg);
+        }
+      );
+    });
+
+    return promise;
+	}
+
+  undeliverRegistration() {
+    swal
+      .fire({
+        text: `Change registration status to UNDELIVERED?`,
+        type: "question",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Submit",
+        allowOutsideClick: false
+      })
+      .then(e => {
+        if(e.value) {
+          this.submitUndeliverRegistration(this.modelId).then(data => {
+            this.toastr.success("Course registration status updated.", "Success", { timeOut: 3000 });
+            this.router.navigate(["/app/sales/account", this.accountId], {
+              queryParams: { action: "view" }
+            });
+          }).catch(err => {
+            this.toastr.error("Failed to update course registration status.", "Failed request", { timeOut: 3000 });
+          })
+        }
+      });
+  }
+
+  submitUndeliverRegistration(courseRegistrationId: string): Promise<any> {
     let promise = new Promise((resolve, reject) => {
     const ACTIVE_ENDPOINT: string = `${this.API_HOST}/course-registrations/actions/deliver/${courseRegistrationId}`;
 

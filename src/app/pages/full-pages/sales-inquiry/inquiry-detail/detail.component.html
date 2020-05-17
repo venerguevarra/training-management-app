@@ -309,7 +309,7 @@
                   <div class="form-group row">
                     <label class="col-md-4 label-control" for="name">Office Number</label>
                     <div class="col-md-4">
-                      <input  [attr.maxlength]="15" formControlName="officeNumber"  type="text" id="officeNumber" class="form-control" name="officeNumber" [ngClass]="{ 'is-invalid': isInvalid(f.officeNumber) ||  (f.officeNumber.errors && f.officeNumber.errors.invalidPhone)}">
+                      <input  [attr.maxlength]="15" formControlName="officeNumber"  type="text" id="officeNumber" class="form-control" name="officeNumber" [ngClass]="{ 'is-invalid': isInvalid(f.officeNumber) ||  (f.officeNumber.errors && f.officeNumber.errors?.invalidPhone)}">
                       <small *ngIf="f.officeNumber.errors && f.officeNumber.errors.invalidPhone" class="form-text text-muted danger">
                         Invalid office number
                       </small>

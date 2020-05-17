@@ -1,9 +1,0 @@
-{
-    "version": 3,
-    "mappings": "",
-    "sources": [
-        "account-manager-select.component.scss"
-    ],
-    "names": [],
-    "file": "account-manager-select.component.css"
-}

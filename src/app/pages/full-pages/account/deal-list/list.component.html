@@ -126,6 +126,7 @@
                     <span *ngIf="row.stage === 'CLOSED_LOST'">LOST</span>
                     <span *ngIf="row.stage === 'CLOSED_LOST_TO_COMPETITION'">LOST TO COMPETITION</span>
                     <span *ngIf="row.stage === 'DELIVERED'">DELIVERED</span>
+                    <span *ngIf="row.stage === 'UNDELIVERED'">UNDELIVERED</span>
                   </td>
                   <td scope="row">{{row.createdDate | date: 'MMM d,y'}}</td>
                   <td scope="row" style="text-align: center;">

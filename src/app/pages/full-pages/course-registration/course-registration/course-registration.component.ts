@@ -167,7 +167,7 @@ export class CourseRegistrationComponent {
 		} else if((entity.registration.status == 'REGISTERED' || entity.registration.status == 'CONFIRMED') && entity.courseSchedule.status == 'SCHEDULE_CONFIRMED') {
 			cancellationStatus = 'This action will cancel the registration and registered participants will be retained.';
 		}
-		alert(cancellationStatus);
+		//alert(cancellationStatus);
 		let registrationHtml =
 		`
 			<div class="card">
